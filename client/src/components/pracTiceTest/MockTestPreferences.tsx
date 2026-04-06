@@ -68,21 +68,21 @@ export const MockTestPreferences = ({
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto p-8 space-y-8 custom-scrollbar">
+        <div className="flex-1 overflow-y-auto p-4 md:p-8 space-y-4 md:space-y-8 custom-scrollbar">
           
           {/* Instructions Box */}
-          <section className="space-y-4">
+          <section className="space-y-2 md:space-y-4">
             <div className="flex items-center gap-2 text-on-surface dark:text-white font-bold">
               <Info size={18} className="text-[#16a34a]" />
               <h3>Exam Instructions</h3>
             </div>
-            <div className="bg-surface-container-low dark:bg-slate-800/50 p-6 rounded-3xl  dark:border-slate-700/50">
+            <div className="bg-surface-container-low dark:bg-slate-800/50 p-4 md:p-6 rounded-3xl  dark:border-slate-700/50">
               {loading ? (
                 <div className="h-20 flex items-center justify-center">
                   <div className="size-6 border-2 border-[#16a34a] border-t-transparent rounded-full animate-spin" />
                 </div>
               ) : (
-                <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed whitespace-pre-wrap">
+                <p className="text-slate-600 dark:text-slate-300 text-xs leading-relaxed whitespace-pre-wrap">
                   {instructions}
                 </p>
               )}
@@ -94,7 +94,7 @@ export const MockTestPreferences = ({
                 onChange={(e) => setHasRead(e.target.checked)}
                 className="size-5 rounded border-slate-300 text-[#16a34a] focus:ring-[#16a34a] transition-all"
               />
-              <span className="text-sm font-bold text-slate-600 dark:text-slate-400 group-hover:text-on-surface dark:group-hover:text-white transition-colors">
+              <span className="text-xs font-bold text-slate-600 dark:text-slate-400 group-hover:text-on-surface dark:group-hover:text-white transition-colors">
                 I have read and understood all instructions properly.
               </span>
             </label>
@@ -102,14 +102,14 @@ export const MockTestPreferences = ({
 
           <div className="grid md:grid-cols-3 gap-6">
             {/* Difficulty */}
-            <div className="space-y-3">
+            <div className="space-y-1 md:space-y-3">
               <label className="flex items-center gap-2 text-sm font-black uppercase tracking-wider text-slate-400">
                 <Gauge size={14} /> Difficulty
               </label>
               <select 
                 value={difficulty}
                 onChange={(e) => setDifficulty(e.target.value as any)}
-                className="w-full bg-surface-container-low dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 rounded-2xl p-4 font-bold focus:border-[#16a34a] outline-hidden transition-all"
+                className="w-full bg-surface-container-low dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 rounded-2xl px-1 py-2 md:p-4 font-bold focus:border-[#16a34a] outline-hidden transition-all"
               >
                 <option value="Easy">Easy (60% Seen)</option>
                 <option value="Moderate">Moderate (40% Seen)</option>

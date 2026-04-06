@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../store";
 import { useFormContext } from "react-hook-form";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Info } from "lucide-react";
 
 type QuestionListProps = {
   questionRef: React.RefObject<(HTMLDivElement | null)[]>;
@@ -22,7 +22,8 @@ export const QuestionList = ({
   language,
 }: QuestionListProps) => {
   const [lastSelected, setLastSelected] = useState<Record<number, string>>({});
-  const filteredQuestionData = useSelector((state: RootState) => state.questions.filteredQuestionData)
+  const [expandedExplanations, setExpandedExplanations] = useState<Record<number, boolean>>({});
+  const filteredQuestionData = useSelector((state: RootState) => state.questions.filteredQuestionData);
   console.log("filteredQuestionData.....", filteredQuestionData)
   const { data: questionData } = useSelector(
     (state: RootState) => state.questions,
@@ -45,6 +46,8 @@ export const QuestionList = ({
 
         const isOdia = language === "od";
         const odiaData = Array.isArray(q.odia_questions) ? q.odia_questions[0] : q.odia_questions;
+
+        console.log(`[DEBUG] Question ${i + 1} Explanations:`, q.question_explanations);
 
         return (
           <div
@@ -83,23 +86,25 @@ export const QuestionList = ({
             </div>
 
             {/* Body: High Legibility */}
-            <div className="flex-1 max-w-4xl">
-              <div className="space-y-8 mb-8 lg:mb-12">
+            <div className="flex-1 max-w-4xl flex flex-col transition-all duration-700">
+              <div className={`space-y-8 mb-8 lg:mb-12 transition-all duration-700 origin-left ${expandedExplanations[q.id] ? "scale-90 opacity-60" : ""}`}>
                 {!isOdia && (
-                <p className="text-on-surface font-semibold text-md lg:text-xl leading-relaxed tracking-tight">
-                  {q.question}
-                </p>
+                <p 
+                  className="text-on-surface font-semibold text-md lg:text-xl leading-relaxed tracking-tight"
+                  dangerouslySetInnerHTML={{ __html: q.question }}
+                />
                 )}
                 {isOdia && odiaData?.question && (
                   <div className="bg-primary/5 p-1 rounded-xl border-l-5 border-primary">
-                    <p className="ml-4 md:ml-0 text-primary font-bold text-md leading-relaxed">
-                      {odiaData.question}
-                    </p>
+                    <p 
+                      className="ml-4 md:ml-0 text-primary font-bold text-md leading-relaxed"
+                      dangerouslySetInnerHTML={{ __html: odiaData.question }}
+                    />
                   </div>
                 )}
               </div>
 
-              <div className="grid gap-4">
+              <div className={`grid gap-4 transition-all duration-700 overflow-hidden ${expandedExplanations[q.id] ? "max-h-0 opacity-0 pointer-events-none" : "max-h-[2000px] opacity-100"}`}>
                 {q.options.map((opt: any) => (
                   <div key={opt.l} className="relative flex items-center">
                     <label className={`
@@ -128,12 +133,16 @@ export const QuestionList = ({
                           <span className="hidden md:flex items-center justify-center size-8 rounded-xl bg-surface-container-high font-technical font-black text-xs text-on-surface-variant">
                             {opt.l}
                           </span>
-                          <span className="font-bold text-sm lg:text-lg text-on-surface">{opt.v}</span>
+                          <span 
+                            className="font-bold text-sm lg:text-lg text-on-surface"
+                            dangerouslySetInnerHTML={{ __html: opt.v }}
+                          />
                         </div>
                         {isOdia && odiaData?.options?.find((o: any) => o.l === opt.l) && (
-                          <div className="ml-0 lg:ml-13 text-primary text-base font-bold opacity-80">
-                            {odiaData.options.find((o: any) => o.l === opt.l)?.v}
-                          </div>
+                          <div 
+                            className="ml-0 lg:ml-13 text-primary text-base font-bold opacity-80"
+                            dangerouslySetInnerHTML={{ __html: odiaData.options.find((o: any) => o.l === opt.l)?.v || '' }}
+                          />
                         )}
                       </div>
 
@@ -165,11 +174,30 @@ export const QuestionList = ({
 
               {/* Status Indicator */}
               {confirmedAnswers[q.id] && (
-                <div className="flex items-center gap-3 mt-10">
-                  <div className="flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full border border-primary/20">
-                    <div className="size-2 rounded-full bg-primary animate-ping" />
-                    <span className="text-[10px] font-technical font-black text-primary uppercase tracking-[0.2em]">Validated • Recorded</span>
+                <div className="flex flex-col gap-6 mt-10">
+                  <div className="flex justify-between items-center bg-primary/10 px-6 py-4 rounded-3xl border border-primary/20">
+                    <div className="flex items-center gap-4">
+                      <div className="size-3 rounded-full bg-primary animate-ping shadow-[0_0_15px_rgba(34,197,94,0.6)]" />
+                      <span className="text-[12px] font-technical font-black text-primary uppercase tracking-[0.2em]">Validated • Recorded</span>
+                    </div>
+                    {q.question_explanations?.length > 0 && !expandedExplanations[q.id] && (
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setExpandedExplanations(prev => ({...prev, [q.id]: true}));
+                        }}
+                        className="px-6 py-2 rounded-full bg-primary text-white hover:bg-primary/90 text-[10px] font-mono font-black uppercase tracking-widest transition-all cursor-pointer shadow-ambient-lg hover:scale-105 active:scale-95"
+                      >
+                        Explain
+                      </button>
+                    )}
                   </div>
+                  {q.question_explanations?.length > 0 && expandedExplanations[q.id] && (
+                    <ExplanationViewer
+                      explanations={q.question_explanations}
+                      onClose={() => setExpandedExplanations(prev => ({...prev, [q.id]: false}))}
+                    />
+                  )}
                 </div>
               )}
             </div>
@@ -177,5 +205,53 @@ export const QuestionList = ({
         );
       })}
     </section>
+  );
+};
+
+const ExplanationViewer = ({ explanations, onClose }: { explanations: string[], onClose?: () => void }) => {
+  const [index, setIndex] = useState(0);
+  const validExplanations = explanations.filter(Boolean); // Filter out nulls
+
+  if (validExplanations.length === 0) return null;
+
+  return (
+    <div className="bg-surface-container-high/40 p-6 md:p-8 rounded-4xl border-2 border-dashed border-on-surface-variant/10 animate-in zoom-in-95 duration-500 w-full overflow-hidden">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+        <div className="flex items-center gap-3 text-primary">
+          <Info size={18} className="shrink-0" />
+          <span className="text-[10px] font-mono font-black uppercase tracking-[0.3em]">
+            Botanical Insights {validExplanations.length > 1 && `(${index + 1}/${validExplanations.length})`}
+          </span>
+        </div>
+        <div className="flex flex-wrap items-center gap-3">
+          {validExplanations.length > 1 && (
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setIndex((prev) => (prev + 1) % validExplanations.length);
+              }}
+              className="px-4 py-2 rounded-full bg-primary/10 text-primary hover:bg-primary/20 text-[10px] font-mono font-black uppercase tracking-widest transition-colors cursor-pointer"
+            >
+              Check another
+            </button>
+          )}
+          {onClose && (
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                onClose();
+              }}
+              className="px-4 py-2 rounded-full bg-error/10 text-error hover:bg-error/20 text-[10px] font-mono font-black uppercase tracking-widest transition-colors cursor-pointer"
+            >
+              Close
+            </button>
+          )}
+        </div>
+      </div>
+      <div 
+        className="text-sm font-medium text-on-surface-variant/80 leading-relaxed italic pr-0 md:pr-6"
+        dangerouslySetInnerHTML={{ __html: validExplanations[index] }}
+      />
+    </div>
   );
 };

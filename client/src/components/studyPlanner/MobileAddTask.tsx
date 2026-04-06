@@ -46,7 +46,8 @@ type FormValues = {
   end_time: string;
   chapter_id?: string;
   date?: string; 
-  is_recurring: boolean;
+  end_date?: string;
+  duration_type: "DAILY" | "WEEKLY" | "MONTHLY" | "CUSTOM";
   syncToCalendar: boolean;
 };
 
@@ -115,13 +116,41 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
   const [aiParsing, setAiParsing] = useState(false);
   const [chapters, setChapters] = useState<any[]>([]);
   const [useChapter, setUseChapter] = useState(false);
+  const [computedEndDate, setComputedEndDate] = useState<string>("");
 
   const { reset, register, handleSubmit, setValue, watch, control, formState: { isSubmitting, errors } } = useForm<FormValues>({
-    defaultValues: { priority: "MEDIUM", start_time: "09:00", end_time: "10:00", is_recurring: true, syncToCalendar: connected },
+    defaultValues: { priority: "MEDIUM", start_time: "09:00", end_time: "10:00", duration_type: "MONTHLY", syncToCalendar: connected },
   });
 
   const priority = watch("priority");
-  const isRecurring = watch("is_recurring");
+  const durationType = watch("duration_type");
+  const dateValue = watch("date");
+
+  useEffect(() => {
+    if (!dateValue) return;
+    const start = new Date(dateValue);
+    
+    if (durationType === "DAILY" || useChapter) {
+       setComputedEndDate("");
+    } else if (durationType === "WEEKLY") {
+       const end = new Date(start);
+       end.setDate(end.getDate() + 6);
+       setComputedEndDate(getLocalDateString(end));
+    } else if (durationType === "MONTHLY") {
+       const end = new Date(start);
+       end.setMonth(end.getMonth() + 1);
+       end.setDate(end.getDate() - 1);
+       setComputedEndDate(getLocalDateString(end));
+    } else if (durationType === "CUSTOM") {
+       setComputedEndDate("");
+    }
+  }, [dateValue, durationType, useChapter]);
+
+  useEffect(() => {
+      if (durationType === "DAILY" && !editingHabitId) {
+          setValue("date", getLocalDateString(new Date()));
+      }
+  }, [durationType, editingHabitId, setValue]);
 
   useEffect(() => {
     if (examId && isOpen) {
@@ -137,7 +166,7 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
         setValue("priority", h.priority as any);
         setValue("start_time", h.start_time || "09:00");
         setValue("end_time", h.end_time || "10:00");
-        setValue("is_recurring", (h as any).is_recurring !== false);
+        setValue("duration_type", (h as any).duration_type || ((h as any).is_recurring === false ? "DAILY" : "MONTHLY"));
         if (h.chapter_id) { setUseChapter(true); setValue("chapter_id", h.chapter_id); }
       }
     } else if (isOpen) {
@@ -147,7 +176,7 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
 
       reset({ 
         priority: "MEDIUM", 
-        is_recurring: true, 
+        duration_type: "MONTHLY", 
         syncToCalendar: connected,
         date: getLocalDateString(new Date(viewYear, viewMonth - 1, initialDay))
       });
@@ -169,23 +198,49 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
         const habit = initialHabits.find(h => h.id === editingHabitId);
         if (!habit) return;
         const table = habit.is_mastery ? "user_mastery" : "study_habits";
-        await supabase.from(table).update({ 
+        const updateData: any = { 
           name: habit.is_mastery ? undefined : name, 
           priority: data.priority, 
           start_time: data.start_time, 
           end_time: data.end_time,
           chapter_id: useChapter ? data.chapter_id : null,
-          is_recurring: data.is_recurring,
-        }).eq("id", editingHabitId);
+          is_recurring: data.duration_type !== "DAILY",
+          duration_type: useChapter ? "DAILY" : data.duration_type,
+        };
+        
+        if (data.date) {
+           const newDate = new Date(data.date);
+           const newDayIdx = newDate.getDate() - 1;
+           const newProgress = Array(31).fill(false);
+           if (data.duration_type === "DAILY" || habit.is_mastery) newProgress[newDayIdx] = true;
+           updateData.scheduled_date = newDate.toISOString().split('T')[0];
+           if (data.duration_type === "CUSTOM" && data.end_date) {
+              updateData.scheduled_end_date = new Date(data.end_date).toISOString().split('T')[0];
+           } else {
+              updateData.scheduled_end_date = null;
+           }
+           updateData.month = newDate.getMonth() + 1;
+           updateData.year = newDate.getFullYear();
+           updateData.progress = newProgress;
+        }
+
+        await supabase.from(table).update(updateData).eq("id", editingHabitId);
       } else {
         const table = useChapter ? "user_mastery" : "study_habits";
+        const scheduledDate = data.date ? new Date(data.date) : new Date();
         const habitData: any = { 
           user_id: user.id, priority: data.priority, start_time: data.start_time, end_time: data.end_time, 
           category: "theory", progress: Array(31).fill(false), month: viewMonth, year: viewYear, exam_id: examId,
-          chapter_id: useChapter ? data.chapter_id : null, is_recurring: data.is_recurring,
+          chapter_id: useChapter ? data.chapter_id : null, is_recurring: data.duration_type !== "DAILY",
+          duration_type: useChapter ? "DAILY" : data.duration_type,
+          scheduled_date: scheduledDate.toISOString().split('T')[0]
         };
+
+        if (data.duration_type === "CUSTOM" && data.end_date) {
+           habitData.scheduled_end_date = new Date(data.end_date).toISOString().split('T')[0];
+        }
+
         if (!useChapter) habitData.name = name;
-        const scheduledDate = data.date ? new Date(data.date) : new Date();
         if (scheduledDate.getMonth() + 1 === viewMonth) habitData.progress[scheduledDate.getDate() - 1] = true;
         await supabase.from(table).insert(habitData);
       }
@@ -266,9 +321,11 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
 
         {/* ── Manual Manifest Form ─────────────────────────────────────────── */}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-          <div className="flex bg-surface-container-low p-1.5 rounded-2xl">
-            <button type="button" onClick={() => setValue("is_recurring", true)} className={`flex-1 py-3 text-[10px] font-black uppercase rounded-xl transition-all ${isRecurring ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Recurring</button>
-            <button type="button" onClick={() => setValue("is_recurring", false)} className={`flex-1 py-3 text-[10px] font-black uppercase rounded-xl transition-all ${!isRecurring ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Today Only</button>
+          <div className="flex bg-surface-container-low p-1.5 rounded-2xl flex-wrap">
+            <button type="button" onClick={() => setValue("duration_type", "DAILY")} className={`flex-1 py-3 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "DAILY" ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Daily</button>
+            <button type="button" onClick={() => setValue("duration_type", "WEEKLY")} className={`flex-1 py-3 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "WEEKLY" ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Weekly</button>
+            <button type="button" onClick={() => setValue("duration_type", "MONTHLY")} className={`flex-1 py-3 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "MONTHLY" ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Monthly</button>
+            <button type="button" onClick={() => setValue("duration_type", "CUSTOM")} className={`flex-1 py-3 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "CUSTOM" ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Custom</button>
           </div>
 
           <div className="space-y-3">
@@ -276,6 +333,45 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
              <div className="flex bg-surface-container-low p-1.5 rounded-2xl">
                <button type="button" onClick={() => setUseChapter(false)} className={`flex-1 py-3 text-[10px] font-black uppercase rounded-xl transition-all ${!useChapter ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Manual Ritual</button>
                <button type="button" onClick={() => setUseChapter(true)} className={`flex-1 py-3 text-[10px] font-black uppercase rounded-xl transition-all ${useChapter ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Syllabus Mastery</button>
+             </div>
+          </div>
+
+          <div className="space-y-3">
+             <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1 flex items-center justify-between">
+               <span>{useChapter || durationType === "DAILY" ? "Scheduled Date" : "Start Date"}</span>
+               {computedEndDate && <span className="opacity-60">Auto End Date</span>}
+               {durationType === "CUSTOM" && <span className="opacity-60">Set End Date</span>}
+             </label>
+             <div className="flex flex-col gap-3">
+               <input 
+                 type="date" 
+                 {...register("date", { required: true })} 
+                 className="w-full py-5 px-6 bg-surface-container-low rounded-3xl text-sm font-bold border-none outline-none focus:ring-2 ring-primary/20 transition-all" 
+               />
+               {computedEndDate && (
+                 <div className="flex items-center gap-3">
+                   <div className="text-primary/40 font-black animate-in fade-in zoom-in-50 duration-500 pl-4 shrink-0">→</div>
+                   <div 
+                     className="w-full bg-surface-container-lowest px-6 py-5 rounded-3xl text-sm font-technical font-black text-on-surface-variant/60 border border-outline-variant/10 shadow-inner flex items-center animate-in fade-in slide-in-from-right-4 duration-500"
+                   >
+                     {computedEndDate}
+                   </div>
+                 </div>
+               )}
+               {durationType === "CUSTOM" && (
+                 <div className="flex items-center gap-3">
+                   <div className="text-primary/40 font-black animate-in fade-in zoom-in-50 duration-500 pl-4 shrink-0">→</div>
+                   <input 
+                     type="date" 
+                     {...register("end_date", { 
+                        required: durationType === "CUSTOM",
+                        validate: value => !value || !dateValue || new Date(value) >= new Date(dateValue) || "End Date cannot be before Start Date"
+                     })} 
+                     className={`w-full py-5 px-6 bg-surface-container-low rounded-3xl text-sm font-bold border-none outline-none focus:ring-2 ring-primary/20 transition-all animate-in fade-in slide-in-from-right-4 duration-500 ${errors.end_date ? "ring-2 ring-red-400 focus:ring-red-500" : ""}`} 
+                   />
+                 </div>
+               )}
+               {errors.end_date && <p className="text-red-500 text-[10px] ml-4 animate-in fade-in">{errors.end_date.message}</p>}
              </div>
           </div>
 

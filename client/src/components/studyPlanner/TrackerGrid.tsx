@@ -53,6 +53,9 @@ export interface Habit {
   is_mastery?: boolean;
   chapter_id?: string;
   is_recurring?: boolean;
+  duration_type?: "DAILY" | "WEEKLY" | "MONTHLY" | "CUSTOM";
+  scheduled_date?: string;
+  scheduled_end_date?: string;
 }
 
 type FormValues = {
@@ -205,6 +208,13 @@ export default function TrackerGrid({
   const filteredHabits = initialHabits.filter((h) =>
     h.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
+  console.log("🛤️ [TrackerGrid] Habits for Grid:", { 
+    total: initialHabits.length, 
+    filtered: filteredHabits.length, 
+    viewMode, 
+    viewMonth, 
+    viewYear 
+  });
 
   const dailyStats = useMemo(() => {
     return rotatedDays.map((_, dayIdx) => {

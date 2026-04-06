@@ -259,20 +259,20 @@ const UserDashboard = () => {
         <section className="relative px-2">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
             <div className="animate-greeting">
-              <h1 className="text-4xl lg:text-6xl font-black tracking-tighter text-on-surface leading-[0.85] mb-8">
-                Namaskar,<br />
+              <h1 className="text-2xl lg:text-6xl font-black tracking-tighter text-on-surface leading-[0.85] mb-4">
+                Namaskar,<br/>
                 <span className="text-primary italic font-serif -ml-2 lg:-ml-4 drop-shadow-sm select-none">
                   {(profile?.full_name || user?.identities?.[0]?.identity_data?.name)?.split(' ')[0]}
                 </span>
               </h1>
-              <p className="text-on-surface-variant max-w-xl text-md lg:text-2xl leading-relaxed opacity-0 animate-greeting-delay font-medium font-narrative">
+              <p className="text-on-surface-variant max-w-xl text-sm lg:text-2xl leading-relaxed opacity-0 animate-greeting-delay font-medium font-narrative">
                 Your OPSC preparation is <span className="font-technical font-black text-primary border-b-2 border-primary/20">65%</span> complete.
                 You are currently in the top <span className="font-technical font-black text-primary border-b-2 border-primary/20">5%</span> of botanical aspirants.
               </p>
             </div>
 
             <div className="flex  gap-4">
-              <div className="bg-surface-container-low px-2 py-4 md:px-8 md:py-6 rounded-[2.5rem] shadow-ambient hover:scale-105 transition-transform duration-500 group">
+              <div className="bg-surface-container-low px-3 py-3 md:px-8 md:py-6 rounded-xl shadow-ambient hover:scale-105 transition-transform duration-500 group">
                 <p className="text-[9px] font-technical text-on-surface-variant uppercase font-black tracking-[0.2em] mb-2 opacity-50 group-hover:opacity-100 transition-opacity">
                   Daily Streak
                 </p>
@@ -282,7 +282,7 @@ const UserDashboard = () => {
                 </div>
               </div>
 
-              <div className="bg-surface-container-low px-2 py-4 md:px-8 md:py-6 rounded-[2.5rem] shadow-ambient hover:scale-105 transition-transform duration-500 group">
+              <div className="bg-surface-container-low px-3 py-3 md:px-8 md:py-6 rounded-xl shadow-ambient hover:scale-105 transition-transform duration-500 group">
                 <p className="text-[9px] font-technical text-on-surface-variant uppercase font-black tracking-[0.2em] mb-2 opacity-50 group-hover:opacity-100 transition-opacity">
                   Daily Goal
                 </p>
@@ -297,23 +297,29 @@ const UserDashboard = () => {
           </div>
         </section>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pt-8">
-          <div className="lg:col-span-8 space-y-12">
-           <ExamSelectorCard targetRef={targetRef} targetedExams={targetedExams} />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pt-0 md:pt-8">
+          <div className="lg:col-span-8 space-y-4 md:space-y-12">
+            <ExamSelectorCard 
+              targetRef={targetRef} 
+              targetedExams={targetedExams} 
+              onSelect={(exam) => navigate(`exam/${exam.id}`)}
+              onViewAll={() => navigate("/select-exams")}
+              loading={examsLoading}
+            />
 
             <section>
-              <h3 className="text-[11px] font-technical font-black uppercase tracking-[0.4em] text-on-surface-variant opacity-60 mb-8 px-2">Growth Analytics</h3>
-              <div className="bg-surface-container-high rounded-[3rem] p-10 shadow-ambient">
-                <div className="space-y-10">
+              <h3 className="text-[11px] font-technical pt-4 font-black uppercase tracking-[0.4em] text-on-surface-variant opacity-60 mb-4 px-2">Growth Analytics</h3>
+              <div className="bg-surface-container-high rounded-3xl p-5 md:p-10 shadow-ambient">
+                <div className="space-y-5 md:space-y-10">
                   {subjectProgress.map((subject, index) => (
                     <div key={index}>
-                      <div className="flex justify-between items-end mb-4 px-1">
-                        <span className="font-bold text-on-surface tracking-tight">{subject.name}</span>
+                      <div className="flex justify-between items-end mb-2 px-1">
+                        <span className="text-sm font-bold text-on-surface tracking-tight">{subject.name}</span>
                         <span className="text-xs font-technical font-black text-primary tracking-widest">
                           {subject.percent}%
                         </span>
                       </div>
-                      <div className="w-full h-6 bg-surface-container-high rounded-full overflow-hidden p-1.5 shadow-inner ring-1 ring-black/5">
+                      <div className="w-full h-4 bg-surface-container-high rounded-full overflow-hidden p-1 shadow-inner ring-1 ring-black/5">
                         <div
                           className="bg-linear-to-r from-primary to-primary-container h-full rounded-full shadow-sm transition-all duration-2000 ease-out shadow-primary/20"
                           style={{ width: `${subject.percent}%` }}

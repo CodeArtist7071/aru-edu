@@ -96,10 +96,36 @@ export const MobileStudyPlanner: React.FC<MobileStudyPlannerProps> = ({
 
   const dailyTasks = useMemo(() => {
     const dayIndex = selectedDate.getDate() - 1;
-    return habits.map(h => ({
-      ...h,
-      isCompleted: progress[h.id]?.[dayIndex] || false
-    }));
+    const selectedMonth = selectedDate.getMonth() + 1;
+    const selectedYear = selectedDate.getFullYear();
+    const dayNum = selectedDate.getDate();
+
+    return habits
+      .filter((h) => {
+        if (!h.scheduled_date) return true;
+
+        const startDate = new Date(h.scheduled_date);
+        const startDayNum = startDate.getDate();
+        const startMonth = startDate.getMonth() + 1;
+        const startYear = startDate.getFullYear();
+
+        if (h.is_mastery || h.duration_type === 'DAILY' || (h as any).is_recurring === false) {
+          return dayNum === startDayNum && selectedMonth === startMonth && selectedYear === startYear;
+        } else if (h.duration_type === 'WEEKLY') {
+          return dayNum >= startDayNum && dayNum <= (startDayNum + 6) && selectedMonth === startMonth && selectedYear === startYear;
+        } else if (h.duration_type === 'CUSTOM' && h.scheduled_end_date) {
+          const endDate = new Date(h.scheduled_end_date);
+          const targetDateObj = new Date(selectedYear, selectedMonth - 1, dayNum);
+          return targetDateObj >= new Date(startYear, startMonth - 1, startDayNum) && targetDateObj <= new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(), 23, 59, 59);
+        } else if (!h.duration_type || h.duration_type === 'MONTHLY') {
+          return dayNum >= startDayNum && dayNum <= (startDayNum + 29);
+        }
+        return true;
+      })
+      .map(h => ({
+        ...h,
+        isCompleted: progress[h.id]?.[dayIndex] || false
+      }));
   }, [habits, progress, selectedDate]);
 
   return (
@@ -137,73 +163,73 @@ export const MobileStudyPlanner: React.FC<MobileStudyPlannerProps> = ({
             </div>
           </div>
         )}
-      <div className="sticky top-0 z-30 bg-surface/80 backdrop-blur-xl pb-2 animate-reveal">
-        {/* 1. Month Ritual: Botanical Header */}
-        <header className="flex items-center justify-between p-4 whitespace-nowrap overflow-x-auto custom-scrollbar-hide">
-          <div className="flex flex-col">
-            <h2 className="text-2xl font-black text-on-surface tracking-tighter leading-none">
-              {monthName} <span className="text-primary/40 font-technical text-lg">{viewYear}</span>
-            </h2>
-            <p className="text-[10px] font-technical font-black uppercase tracking-[0.3em] text-on-surface-variant opacity-40 mt-1">
-              Persisting Rituals
-            </p>
-          </div>
-          <div className="flex gap-2">
-            <button
-              onClick={() => onMonthChange("prev")}
-              className="size-10 rounded-full bg-surface-container-low flex items-center justify-center text-on-surface-variant active:bg-primary active:text-white transition-all shadow-sm"
-            >
-              <ChevronLeft size={18} />
-            </button>
-            <button
-              onClick={() => onMonthChange("next")}
-              className="size-10 rounded-full bg-surface-container-low flex items-center justify-center text-on-surface-variant active:bg-primary active:text-white transition-all shadow-sm"
-            >
-              <ChevronRight size={18} />
-            </button>
-          </div>
-        </header>
-
-        {/* 2. Date Ribbon: Horizontal Scroller */}
-        <section
-          ref={scrollRef}
-          className="flex gap-3 overflow-x-auto custom-scrollbar-hide px-4 py-2"
-        >
-          {days.map((d) => {
-            const isSelected = selectedDate.getDate() === d.dayNum;
-            const isToday = isCurrentMonth && today.getDate() === d.dayNum;
-
-            return (
+        <div className="sticky top-0 z-30 bg-surface/80 backdrop-blur-xl pb-2 animate-reveal">
+          {/* 1. Month Ritual: Botanical Header */}
+          <header className="flex items-center justify-between p-4 whitespace-nowrap overflow-x-auto custom-scrollbar-hide">
+            <div className="flex flex-col">
+              <h2 className="text-xl font-black text-on-surface tracking-tighter leading-none">
+                {monthName} <span className="text-primary/40 font-technical text-lg">{viewYear}</span>
+              </h2>
+              <p className="text-[8px] font-technical font-black uppercase tracking-[0.3em] text-on-surface-variant opacity-40 mt-1">
+                Persisting Rituals
+              </p>
+            </div>
+            <div className="flex gap-2">
               <button
-                key={d.dayNum}
-                data-selected={isSelected}
-                onClick={() => onSelectDate(d.date)}
-                className={`min-w-[50px] min-h-[50px] flex flex-col items-center gap-2 p-4 rounded-4xl transition-all duration-500 ease-botanical relative group touch-manipulation cursor-pointer ${isSelected
-                    ? "bg-primary text-white shadow-ambient-lg scale-110 z-10"
-                    : "bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high active:scale-95"
-                  }`}
+                onClick={() => onMonthChange("prev")}
+                className="size-8 rounded-full bg-surface-container-low flex items-center justify-center text-on-surface-variant active:bg-primary active:text-white transition-all shadow-sm"
               >
-                {/* Visual Manifestation: Liquid Background */}
-                {isSelected && (
-                  <div className="absolute inset-0 bg-primary rounded-4xl -z-10 animate-in fade-in zoom-in-95 duration-500 ease-botanical" />
-                )}
-                <span className={`text-[10px] font-technical font-black uppercase tracking-widest ${isSelected ? "text-white/60" : "opacity-40"}`}>
-                  {d.dayName}
-                </span>
-                <span className="text-2xl font-technical font-black tracking-tighter">
-                  {d.dayNum}
-                </span>
-                {isToday && !isSelected && (
-                  <div className="absolute -top-1 size-3 bg-primary rounded-full ring-2 ring-surface animate-pulse" />
-                )}
-                {isSelected && (
-                  <div className="absolute -bottom-1 size-2 bg-white rounded-full" />
-                )}
+                <ChevronLeft size={18} />
               </button>
-            );
-          })}
-        </section>
-      </div>
+              <button
+                onClick={() => onMonthChange("next")}
+                className="size-8 rounded-full bg-surface-container-low flex items-center justify-center text-on-surface-variant active:bg-primary active:text-white transition-all shadow-sm"
+              >
+                <ChevronRight size={18} />
+              </button>
+            </div>
+          </header>
+
+          {/* 2. Date Ribbon: Horizontal Scroller */}
+          <section
+            ref={scrollRef}
+            className="flex gap-3 overflow-x-auto custom-scrollbar-hide px-3 py-1"
+          >
+            {days.map((d) => {
+              const isSelected = selectedDate.getDate() === d.dayNum;
+              const isToday = isCurrentMonth && today.getDate() === d.dayNum;
+
+              return (
+                <button
+                  key={d.dayNum}
+                  data-selected={isSelected}
+                  onClick={() => onSelectDate(d.date)}
+                  className={`w-[40px] h-[70px] flex flex-col items-center gap-2 p-4 rounded-4xl transition-all duration-500 ease-botanical relative group touch-manipulation cursor-pointer ${isSelected
+                    ? "bg-primary text-white shadow-ambient-lg scale-110 z-10"
+                    : "bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high active:scale-80"
+                    }`}
+                >
+                  {/* Visual Manifestation: Liquid Background */}
+                  {isSelected && (
+                    <div className="absolute inset-0 bg-primary rounded-4xl -z-10 animate-in fade-in zoom-in-95 duration-500 ease-botanical" />
+                  )}
+                  <span className={`text-[8px] font-technical font-black uppercase tracking-widest ${isSelected ? "text-white/60" : "opacity-40"}`}>
+                    {d.dayName}
+                  </span>
+                  <span className="text-md font-technical font-black tracking-tighter">
+                    {d.dayNum}
+                  </span>
+                  {isToday && !isSelected && (
+                    <div className="absolute -top-1 size-3 bg-primary rounded-full ring-2 ring-surface animate-pulse" />
+                  )}
+                  {isSelected && (
+                    <div className="absolute -bottom-1 size-2 bg-white rounded-full" />
+                  )}
+                </button>
+              );
+            })}
+          </section>
+        </div>
 
         {/* 3. Growth Summary Pod */}
         {/* <section className="bg-surface-container-low rounded-[3rem] p-6 shadow-ambient mx-2">
@@ -272,7 +298,7 @@ export const MobileStudyPlanner: React.FC<MobileStudyPlannerProps> = ({
                     style={{ animationDelay: `${index * 50}ms` }}
                   >
                     <div className="flex items-center gap-4">
-                      <span className={`text-2xl font-technical font-black transition-opacity duration-500 ${selectedDate.getDate() === test.scheduledDay ? "opacity-100" : "opacity-40"}`}>{test.scheduledDay}</span>
+                      <span className={`text-xl font-technical font-black transition-opacity duration-500 ${selectedDate.getDate() === test.scheduledDay ? "opacity-100" : "opacity-40"}`}>{test.scheduledDay}</span>
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-black tracking-tight truncate">{test.name}</p>
                         <p className={`text-[9px] font-technical font-black uppercase tracking-widest opacity-60 transition-colors ${selectedDate.getDate() === test.scheduledDay ? "text-white" : "text-primary"}`}>Day {test.scheduledDay} • {test.start_time || "Flexible"}</p>
@@ -290,87 +316,87 @@ export const MobileStudyPlanner: React.FC<MobileStudyPlannerProps> = ({
             </div>
           </div>
         </div>
-      {/* 4. Task Manifest Card Stack */}
-      <section className="space-y-4 px-2 pb-20">
-        <div className="flex items-center justify-between px-2 opacity-60">
-          <h3 className="text-[10px] font-technical font-black uppercase tracking-[0.4em] text-on-surface-variant">Daily Task Manifesto</h3>
-          <div className="flex items-center gap-4">
-            <button
-              onClick={onSyncAll}
-              className="text-[10px] font-technical font-black text-primary hover:underline uppercase tracking-widest active:scale-95 transition-all"
-            >
-              Sync All
-            </button>
-            <span className="text-[10px] font-technical font-black text-on-surface-variant/40">
-              {dailyTasks.filter(t => t.isCompleted).length} / {dailyTasks.length} Done
-            </span>
+        {/* 4. Task Manifest Card Stack */}
+        <section className="space-y-4 px-1 pb-20">
+          <div className="flex items-center justify-between px-2 opacity-60">
+            <h3 className="text-[8px] font-technical font-black uppercase tracking-[0.4em] text-on-surface-variant">Daily Task Manifesto</h3>
+            <div className="flex items-center gap-4">
+              <button
+                onClick={onSyncAll}
+                className="text-[8px] font-technical font-black text-primary hover:underline uppercase tracking-widest active:scale-95 transition-all"
+              >
+                Sync All
+              </button>
+              <span className="text-[8px] font-technical font-black text-on-surface-variant/40">
+                {dailyTasks.filter(t => t.isCompleted).length} / {dailyTasks.length} Done
+              </span>
+            </div>
           </div>
-        </div>
 
-        {dailyTasks.length === 0 ? (
-          <div className="py-20 text-center bg-surface-container-low rounded-4xl border border-dashed border-primary/20 p-8">
-            <Award className="size-10 text-primary/40 mx-auto mb-4 opacity-40" />
-            <p className="text-[10px] font-technical font-black uppercase tracking-widest text-on-surface-variant opacity-40">Zero manifests observed for this date</p>
-            <button
-              onClick={() => onAddHabit("routine")}
-              className="mt-6 text-xs font-black text-primary uppercase tracking-widest hover:underline"
-            >
-              + Initialize Ritual
-            </button>
-          </div>
-        ) : (
-          <div className="flex flex-col gap-4">
-            {dailyTasks.map((task, index) => (
-              <div
-                key={task.id}
-                onClick={() => onToggle(task.id, selectedDate.getDate() - 1)}
-                className={`group p-4 rounded-4xl transition-all duration-500 ease-botanical border border-outline-variant/10 active:scale-95 shadow-sm flex items-center justify-between animate-in fade-in slide-in-from-bottom-4 fill-mode-forwards ${task.isCompleted
+          {dailyTasks.length === 0 ? (
+            <div className="py-20 text-center bg-surface-container-low rounded-4xl border border-dashed border-primary/20 p-8">
+              <Award className="size-10 text-primary/40 mx-auto mb-4 opacity-40" />
+              <p className="text-[10px] font-technical font-black uppercase tracking-widest text-on-surface-variant opacity-40">Zero manifests observed for this date</p>
+              <button
+                onClick={() => onAddHabit("routine")}
+                className="mt-6 text-xs font-black text-primary uppercase tracking-widest hover:underline"
+              >
+                + Initialize Ritual
+              </button>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-2">
+              {dailyTasks.map((task, index) => (
+                <div
+                  key={task.id}
+                  onClick={() => onToggle(task.id, selectedDate.getDate() - 1)}
+                  className={`group p-2 rounded-3xl transition-all duration-500 ease-botanical border border-outline-variant/10 active:scale-95 shadow-sm flex items-center justify-between animate-in fade-in slide-in-from-bottom-4 fill-mode-forwards ${task.isCompleted
                     ? "bg-primary/5 border-primary/20 scale-[0.98] opacity-80"
                     : "bg-surface-container-lowest hover:scale-[1.01] hover:shadow-ambient"
-                  }`}
-                style={{ 
-                  animationDelay: `${index * 80}ms`,
-                  animationDuration: '600ms'
-                }}
-              >
-                <div className="flex items-center gap-5">
-                  <div className={`size-10 rounded-2xl flex items-center justify-center transition-all duration-500 ease-botanical ${task.isCompleted ? "bg-primary text-white scale-110 shadow-lg shadow-primary/20" : "bg-surface-container-high text-on-surface-variant/40"
-                    }`}>
-                    {task.isCompleted ? <CheckCircle2 size={24} className="animate-in zoom-in-50 duration-300" /> : <Target size={24} />}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h4 className={`text-sm font-black tracking-tight leading-none mb-1.5 transition-all duration-500 ${task.isCompleted ? "text-primary/60 line-through grayscale italic" : "text-on-surface"
+                    }`}
+                  style={{
+                    animationDelay: `${index * 80}ms`,
+                    animationDuration: '600ms'
+                  }}
+                >
+                  <div className="flex items-center gap-5">
+                    <div className={`size-10 rounded-2xl flex items-center justify-center transition-all duration-500 ease-botanical ${task.isCompleted ? "bg-primary text-white scale-110 shadow-lg shadow-primary/20" : "bg-surface-container-high text-on-surface-variant/40"
                       }`}>
-                      {task.name}
-                    </h4>
-                    <div className="flex items-center gap-3">
-                      <span className={`text-[8px] font-technical font-black uppercase tracking-widest px-2 py-0.5 rounded-full transition-colors duration-500 ${task.priority === 'HIGH' ? 'bg-red-500/10 text-red-600' : 'bg-surface-container-highest text-on-surface-variant/60'
+                      {task.isCompleted ? <CheckCircle2 size={24} className="animate-in zoom-in-50 duration-300" /> : <Target size={24} />}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className={`text-xs font-black tracking-tight leading-none mb-1.5 transition-all duration-500 ${task.isCompleted ? "text-primary/60 line-through grayscale italic" : "text-on-surface"
                         }`}>
-                        {task.priority}
-                      </span>
-                      <span className="text-[8px] font-technical font-black uppercase tracking-widest text-on-surface-variant opacity-40">
-                        {task.start_time || "Flexible"}
-                      </span>
+                        {task.name}
+                      </h4>
+                      <div className="flex items-center gap-3">
+                        <span className={`text-[8px] font-technical font-black uppercase tracking-widest px-2 py-0.5 rounded-full transition-colors duration-500 ${task.priority === 'HIGH' ? 'bg-red-500/10 text-red-600' : 'bg-surface-container-highest text-on-surface-variant/60'
+                          }`}>
+                          {task.priority}
+                        </span>
+                        <span className="text-[8px] font-technical font-black uppercase tracking-widest text-on-surface-variant opacity-40">
+                          {task.start_time || "Flexible"}
+                        </span>
+                      </div>
                     </div>
                   </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={(e) => { e.stopPropagation(); onSync(task); }}
+                      className="size-10 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant/60 hover:text-primary active:scale-90 transition-all duration-300"
+                    >
+                      <Calendar size={16} />
+                    </button>
+                    <button className="text-on-surface-variant/20 hover:text-primary transition-colors duration-300">
+                      <MoreVertical size={18} />
+                    </button>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={(e) => { e.stopPropagation(); onSync(task); }}
-                    className="size-10 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant/60 hover:text-primary active:scale-90 transition-all duration-300"
-                  >
-                    <Calendar size={16} />
-                  </button>
-                  <button className="text-on-surface-variant/20 hover:text-primary transition-colors duration-300">
-                    <MoreVertical size={18} />
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
-    </div>
+              ))}
+            </div>
+          )}
+        </section>
+      </div>
     </>
   );
 };

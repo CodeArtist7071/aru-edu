@@ -269,7 +269,7 @@ export default function UserPanelLayout() {
       {/* Main Content Area */}
       <main className="flex-1 flex flex-col relative overflow-hidden bg-surface transition-colors duration-500">
         {/* Editorial Dynamic Header - Now Multi-State */}
-        <header className="h-32 bg-surface/40 backdrop-blur-3xl flex items-center justify-between px-5 md:px-10 sticky top-0 z-20 border-b border-outline-variant/10">
+        <header className="h-20 md:h-32 bg-surface/40 backdrop-blur-3xl flex items-center justify-between px-5 md:px-10 sticky top-0 z-20 border-b border-outline-variant/10">
           {!isTestActive ? (
             // Standard View: Page Context
             <>
@@ -298,7 +298,7 @@ export default function UserPanelLayout() {
                   </div>
                 </div>
                 <div
-                  className="size-14 bg-linear-to-br from-primary to-primary-container rounded-2xl flex items-center justify-center text-white font-technical font-bold text-xl shadow-lg shadow-primary/20 hover:scale-110 active:scale-95 transition-all cursor-pointer group relative overflow-hidden"
+                  className="size-7 md:size-14 bg-linear-to-br from-primary to-primary-container rounded-2xl flex items-center justify-center text-white font-technical font-bold text-xl shadow-lg shadow-primary/20 hover:scale-110 active:scale-95 transition-all cursor-pointer group relative overflow-hidden"
                   onClick={() => navigate("/user/profile")}
                 >
                   {user?.user_metadata?.avatar_url || user?.identities?.[0]?.identity_data?.avatar_url ? (
