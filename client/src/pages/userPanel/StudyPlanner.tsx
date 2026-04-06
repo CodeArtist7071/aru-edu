@@ -19,6 +19,7 @@ import {
   Award,
   Zap,
   PlusIcon,
+  MoreVertical,
 } from "lucide-react";
 import { useNavigate, useParams, useOutlet, Outlet } from "react-router";
 import { supabase } from "../../utils/supabase";
@@ -509,7 +510,8 @@ export default function StudyPlannerPage() {
 
   const onAddHabit = (mode: "routine" | "test") => {
     setAddMode(mode);
-    navigate("add");
+    const targetEid = examId || localStorage.getItem("last_exam_id") || "default";
+    navigate(`/user/plan-study/${targetEid}/add`);
   };
 
   const [isAddExpanded, setIsAddExpanded] = useState(false);
@@ -579,6 +581,11 @@ export default function StudyPlannerPage() {
             onMonthChange={handleMonthChange}
             stats={stats}
             onAddHabit={onAddHabit}
+            onEditHabit={(habit) => {
+              setEditingHabitId(habit.id);
+              setAddMode(habit.is_mastery ? "test" : "routine");
+              setAutoOpenAddModal(true);
+            }}
             onSync={handleSyncTaskToCalendar}
             onSyncAll={handleSyncAllTasks}
             isSettingUp={isSettingUp}
@@ -649,7 +656,7 @@ export default function StudyPlannerPage() {
 
         {/* OVERLAY PANEL: The Side-Sheet Ritual / Mobile Full-Screen manifest */}
         <div
-          className={`fixed inset-y-0 right-0 z-100 transition-all duration-700 ease-in-out transform will-change-[transform,opacity] ${outlet ? "translate-x-0 opacity-100 pointer-events-auto" : "translate-x-full opacity-0 pointer-events-none"} w-full md:max-w-[540px]`}
+          className={`hidden lg:block fixed inset-y-0 right-0 z-100 transition-all duration-700 ease-in-out transform will-change-[transform,opacity] ${outlet ? "translate-x-0 opacity-100 pointer-events-auto" : "translate-x-full opacity-0 pointer-events-none"} w-full md:max-w-[540px]`}
           style={{ transitionTimingFunction: 'var(--ease-premium)' }}
         >
           <Suspense fallback={<div className="h-full bg-surface/80 backdrop-blur-3xl border-l border-on-surface/5 animate-pulse" />}>
@@ -675,27 +682,19 @@ export default function StudyPlannerPage() {
         </div>
       </main>
 
-      {/* FIXED FAB: Monthly Milestones Trigger */}
-      <AddMileStone
-        isMilestoneOpen={isMilestoneDrawerOpen}
-        setIsMilestoneOpen={setIsMilestoneDrawerOpen}
-        isAddExpanded={isAddExpanded}
-        setIsAddExpanded={setIsAddExpanded}
-        onAddHabit={onAddHabit}
-        masteryOnly={masteryOnly}
-      />
-      <div className="hidden fixed bottom-20 lg:bottom-10 right-6 md:flex flex-col gap-4 items-end z-50">
-           <button
-            onClick={() => setIsMilestoneDrawerOpen(true)}
-            className="hidden size-14 bg-tertiary text-on-tertiary rounded-[1.75rem] shadow-ambient-lg shadow-tertiary/20 lg:flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-500 overflow-hidden relative"
-          >
-            <Award className="size-5" />
-            {masteryOnly.length > 0 && (
-              <div className="absolute -top-1 -right-1 size-5 bg-primary text-white rounded-full border-2 border-white flex items-center justify-center animate-bounce">
-                <span className="text-[9px] font-black">{masteryOnly.length}</span>
-              </div>
-            )}
-          </button>
+      {/* FIXED FAB: Monthly Milestones Trigger (Desktop Only) */}
+      <div className="hidden lg:flex fixed bottom-10 right-6 flex-col gap-4 items-end z-50">
+        <button
+          onClick={() => setIsMilestoneDrawerOpen(true)}
+          className="size-14 bg-tertiary text-on-tertiary rounded-[1.75rem] shadow-ambient-lg shadow-tertiary/20 flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-500 overflow-hidden relative"
+        >
+          <Award className="size-5" />
+          {masteryOnly.length > 0 && (
+            <div className="absolute -top-1 -right-1 size-5 bg-primary text-white rounded-full border-2 border-white flex items-center justify-center animate-bounce">
+              <span className="text-[9px] font-black">{masteryOnly.length}</span>
+            </div>
+          )}
+        </button>
       </div>
 
       {/* MILESTONE DRAWER: Monthly Test Overview */}
@@ -779,9 +778,12 @@ export default function StudyPlannerPage() {
                             Day {test.scheduledDay}
                           </span>
                           {test.start_time && (
-                            <span className="text-[9px] font-technical font-black">
-                              • {test.start_time}
-                            </span>
+                            <div
+                              onClick={(e) => { e.stopPropagation(); setEditingHabitId(test.id); setAddMode("test"); setAutoOpenAddModal(true); setIsMilestoneDrawerOpen(false); }}
+                              className="size-10 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant/40 hover:text-primary active:scale-90 transition-all duration-300"
+                            >
+                              <MoreVertical size={18} />
+                            </div>
                           )}
                         </div>
                       </div>
@@ -805,9 +807,19 @@ export default function StudyPlannerPage() {
           </div>
         </div>
       </div>
+
+      {/* MOBILE SPEED DIAL */}
+      <AddMileStone
+        isMilestoneOpen={isMilestoneDrawerOpen}
+        setIsMilestoneOpen={setIsMilestoneDrawerOpen}
+        isAddExpanded={isAddExpanded}
+        setIsAddExpanded={setIsAddExpanded}
+        onAddHabit={onAddHabit}
+        masteryOnly={masteryOnly}
+      />
     </div>
   );
-}
+};
 
 const AddMileStone = ({
   isMilestoneOpen,
@@ -818,32 +830,11 @@ const AddMileStone = ({
   masteryOnly
 }: any) => {
   return (
-    <div className="fixed bottom-20 lg:bottom-10 right-6 flex flex-col gap-4 items-end z-50">
-      {/* Milestone Drawer Trigger */}
+    <div className="lg:hidden fixed bottom-20 right-6 flex flex-col gap-4 items-end z-50">
       {/* Speed Dial Actions */}
       <div className={`flex flex-col gap-3 transition-all duration-500 ease-botanical transform ${isAddExpanded ? "scale-100 opacity-100 translate-y-0" : "scale-50 opacity-0 translate-y-10 pointer-events-none"}`}>
-        {/* Add Test Milestone */}
-        <div
-          className="flex items-center gap-3 group"
-          style={{ transitionDelay: isAddExpanded ? '100ms' : '0ms' }}
-        >
-          {masteryOnly.length < 0 &&
-            <>          <span className="bg-surface/95 backdrop-blur-md px-3 py-1.5 rounded-xl text-[10px] font-technical font-black text-tertiary uppercase tracking-widest shadow-sm">Manifest Test</span>
-              <button
-                onClick={() => setIsMilestoneOpen(true)}
-                className="size-14 bg-tertiary text-on-tertiary rounded-[1.75rem] shadow-ambient-lg shadow-tertiary/20 flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-500 overflow-hidden relative"
-              >
-                <Award className="size-5" />
-                {masteryOnly.length > 0 && (
-                  <div className="absolute -top-1 -right-1 size-5 bg-primary text-white rounded-full border-2 border-white flex items-center justify-center animate-bounce">
-                    <span className="text-[9px] font-black">{masteryOnly.length}</span>
-                  </div>
-                )}
-              </button>
-            </>
-
-          }
-        </div>
+        
+        {/* Manifest Test (Mastery) */}
         <div
           className="flex items-center gap-3 group"
           style={{ transitionDelay: isAddExpanded ? '100ms' : '0ms' }}
@@ -857,7 +848,7 @@ const AddMileStone = ({
           </button>
         </div>
 
-        {/* Add Daily Routine */}
+        {/* Manifest Routine */}
         <div
           className="flex items-center gap-3 group"
           style={{ transitionDelay: isAddExpanded ? '50ms' : '0ms' }}
@@ -875,7 +866,7 @@ const AddMileStone = ({
       {/* Main Speed Dial FAB */}
       <button
         onClick={() => setIsAddExpanded(!isAddExpanded)}
-        className={`lg:hidden size-12 rounded-4xl shadow-ambient-lg flex items-center justify-center transition-all duration-500 ${isAddExpanded ? 'bg-on-surface text-surface rotate-45' : 'bg-primary text-white'}`}
+        className={`size-12 rounded-4xl shadow-ambient-lg flex items-center justify-center transition-all duration-500 ${isAddExpanded ? 'bg-on-surface text-surface rotate-45' : 'bg-primary text-white'}`}
       >
         <PlusIcon className="size-6" />
       </button>

@@ -8,7 +8,7 @@ export const ExamTicker = ({
   setSelectedExam: (id: string) => void;
 }) => {
   return (
-    <div className="bg-surface-container-high rounded-full p-2 w-fit shadow-ambient backdrop-blur-xl border border-outline-variant/5">
+    <div className="bg-surface-container-high over rounded-full p-2 w-fit shadow-ambient backdrop-blur-xl border border-outline-variant/5">
       <div className="flex flex-wrap gap-2">
         {targetedExams?.map((item: any, index: number) => (
           <button

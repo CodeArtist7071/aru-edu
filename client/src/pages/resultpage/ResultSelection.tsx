@@ -18,7 +18,7 @@ const cardData: cardDataProps[] = [
         description: "Track your chapter-wise performance with accuracy, speed, and topic mastery.",
         completed: 124,
         avgScore: "78%",
-        icon: <Edit3Icon />,
+        icon: <Edit3Icon className="size-4 md:size-20" />,
         buttonText: "View Results"
     },
     {
@@ -26,7 +26,7 @@ const cardData: cardDataProps[] = [
         description: "Full-length simulated exams. Analyze ranking and readiness.",
         completed: 8,
         avgScore: "#42",
-        icon: <Layers />,
+        icon: <Layers className="size-4 md:size-20" />,
         buttonText: "Explore Analytics"
     }
 ]
@@ -60,21 +60,21 @@ const ResultSelection = () => {
                 </div>
 
                 {/* Cards - Tonal Sectioning */}
-                <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
+                <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
                     {cardData.map((el, index) => (
-                        <div key={index} className="bg-surface-container-low p-4 md:p-12 rounded-[2.5rem] flex flex-col justify-between hover:bg-surface-container-high transition-all duration-500 group shadow-ambient-sm hover:shadow-ambient-lg">
-                            <div className="">
+                        <div key={index} className="bg-surface-container-low p-1 md:p-12 rounded-xl flex flex-col justify-between hover:bg-surface-container-high transition-all duration-500 group shadow-ambient-sm hover:shadow-ambient-lg">
+                            <div className="flex justify-between items-center">
                                 <div className="w-full flex flex-row md:flex-col gap-4">
-                                    <div className="w-5 h-5 md:w-20 md:h-20 bg-surface-container-high rounded-3xl flex items-center justify-center mb-10 group-hover:scale-110 transition-transform duration-500 shadow-sm">
-                                        <div className="w-5 h-5 md:text-primary">
-                                            {React.cloneElement(el.icon as React.ReactElement)}
+                                    <div className="w-10 h-10 md:w-20 md:h-20 bg-surface-container-high rounded-3xl flex items-center justify-center mb-10 group-hover:scale-110 transition-transform duration-500 shadow-sm">
+                                        <div className="w-10 flex justify-center items-center h-5 md:text-primary">
+                                            {el.icon}
                                         </div>
                                     </div>
                                     <div>
                                         <h3 className="text-md md:text-3xl font-bold mb-3 tracking-tight">
                                             {el.title}
                                         </h3>
-                                        <p className="text-on-surface-variant/70 mb-5 md:mb-10 text-sm md:text-lg leading-relaxed">
+                                        <p className="text-on-surface-variant/70 mb-5 md:mb-10 text-xs md:text-lg leading-relaxed">
                                             {el.description}
                                         </p>
                                     </div>

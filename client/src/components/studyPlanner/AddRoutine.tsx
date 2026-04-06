@@ -313,7 +313,7 @@ export const AddRoutine = () => {
       <div className="flex items-center justify-between px-8 pt-6 pb-6">
         <div>
           <h2 className="text-2xl font-black tracking-tighter text-on-surface leading-none">
-            {editingHabitId ? "Refine Routine" : "Manifest Ritual"}
+            {editingHabitId ? "Refine Routine" : "Manifest Rituals"}
           </h2>
           <p className="text-[9px] font-technical uppercase tracking-[0.3em] text-on-surface-variant opacity-40 mt-2">
             {editingHabitId ? "Optimize Patterns" : "Design Persistence"}

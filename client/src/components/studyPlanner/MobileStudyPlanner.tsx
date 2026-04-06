@@ -29,6 +29,7 @@ interface MobileStudyPlannerProps {
     xpInLevel: number;
   };
   onAddHabit: (mode: "routine" | "test") => void;
+  onEditHabit: (habit: Habit) => void;
   onSync: (habit: Habit) => void;
   onSyncAll: () => void;
   isSettingUp: boolean;
@@ -49,6 +50,7 @@ export const MobileStudyPlanner: React.FC<MobileStudyPlannerProps> = ({
   onMonthChange,
   stats,
   onAddHabit,
+  onEditHabit,
   onSync,
   onSyncAll,
   isSettingUp,
@@ -193,7 +195,7 @@ export const MobileStudyPlanner: React.FC<MobileStudyPlannerProps> = ({
           {/* 2. Date Ribbon: Horizontal Scroller */}
           <section
             ref={scrollRef}
-            className="flex gap-3 overflow-x-auto custom-scrollbar-hide px-3 py-1"
+            className="flex gap-1 overflow-x-auto custom-scrollbar-hide px-1 py-1"
           >
             {days.map((d) => {
               const isSelected = selectedDate.getDate() === d.dayNum;
@@ -204,7 +206,7 @@ export const MobileStudyPlanner: React.FC<MobileStudyPlannerProps> = ({
                   key={d.dayNum}
                   data-selected={isSelected}
                   onClick={() => onSelectDate(d.date)}
-                  className={`w-[40px] h-[70px] flex flex-col items-center gap-2 p-4 rounded-4xl transition-all duration-500 ease-botanical relative group touch-manipulation cursor-pointer ${isSelected
+                  className={`w-[40px] h-[60px] flex flex-col items-center p-4 rounded-4xl transition-all duration-500 ease-botanical relative group touch-manipulation cursor-pointer ${isSelected
                     ? "bg-primary text-white shadow-ambient-lg scale-110 z-10"
                     : "bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high active:scale-80"
                     }`}
@@ -382,13 +384,16 @@ export const MobileStudyPlanner: React.FC<MobileStudyPlannerProps> = ({
                   </div>
                   <div className="flex items-center gap-2">
                     <button
+                      onClick={(e) => { e.stopPropagation(); onEditHabit(task); }}
+                      className="size-10 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant/60 hover:text-primary active:scale-90 transition-all duration-300"
+                    >
+                      <MoreVertical size={18} />
+                    </button>
+                    <button
                       onClick={(e) => { e.stopPropagation(); onSync(task); }}
                       className="size-10 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant/60 hover:text-primary active:scale-90 transition-all duration-300"
                     >
                       <Calendar size={16} />
-                    </button>
-                    <button className="text-on-surface-variant/20 hover:text-primary transition-colors duration-300">
-                      <MoreVertical size={18} />
                     </button>
                   </div>
                 </div>

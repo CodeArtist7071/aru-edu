@@ -91,7 +91,7 @@ export default function AdvancedProctoring({
         zIndex: 9999,
         cursor: dragging ? "grabbing" : "grab",
         userSelect: "none",
-        width: minimized ? "48px" : "192px",
+        width: minimized ? "var(--ap-min-w, 48px)" : "var(--ap-w, 192px)",
         transition: "width 0.25s ease, box-shadow 0.2s ease",
       }}
     >
@@ -299,8 +299,18 @@ export default function AdvancedProctoring({
         </div>
       </div>
  
-      {/* Keyframe styles */}
+      {/* Keyframe styles & Responsive Variables */}
       <style>{`
+        :root {
+          --ap-w: 192px;
+          --ap-min-w: 48px;
+        }
+        @media (max-width: 768px) {
+          :root {
+            --ap-w: 140px;
+            --ap-min-w: 36px;
+          }
+        }
         @keyframes ap-pulse {
           0%, 100% { opacity: 1; }
           50% { opacity: 0.4; }
