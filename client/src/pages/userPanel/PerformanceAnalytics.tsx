@@ -267,19 +267,19 @@ const PerformanceAnalytics = () => {
 
   if (!metrics) {
     return (
-      <main className="pb-20 px-6 lg:px-12 max-w-7xl mx-auto space-y-16 animate-reveal">
+      <main className="flex-1 pt-10 px-4 lg:px-12 max-w-7xl mx-auto space-y-10 animate-reveal">
         <section className="pt-8 text-center py-20 bg-surface-container-high rounded-[3rem]">
           <FlaskConical className="size-16 text-primary/20 mx-auto mb-6" />
-          <h2 className="text-3xl font-black text-on-surface">
+          <h2 className="text-2xl font-black text-on-surface">
             Data Seedlings Needed
           </h2>
-          <p className="text-on-surface-variant max-w-md mx-auto mt-4">
+          <p className="text-on-surface-variant max-w-md text-sm mx-auto mt-4">
             Complete your first exam to begin generating growth trends and AI
             insights.
           </p>
           <button
             onClick={() => navigate("/user/dashboard")}
-            className="mt-8 px-8 py-4 bg-primary text-white rounded-full font-technical font-black uppercase tracking-widest text-[11px] shadow-lg shadow-primary/20 hover:scale-105 transition-all"
+            className="mt-10 px-8 py-3 bg-primary text-white rounded-full font-technical font-black uppercase tracking-widest text-[11px] shadow-lg shadow-primary/20 hover:scale-105 transition-all"
           >
             Start Preparation
           </button>

@@ -119,24 +119,24 @@ const Exam = () => {
       {/* Main Content */}
       <main className="max-w-300 mx-auto w-full px-4 md:px-10">
         {/* Page Header - Asymmetrical & Editorial */}
-        <div className="mb-16 max-w-2xl">
-          <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-6 leading-[0.9] text-on-surface animate-reveal">
+        <div className="md:mb-16 mb-6 max-w-2xl">
+          <h1 className="text-xl mt-3 md:text-6xl font-black tracking-tight mb-6 leading-[0.9] text-on-surface animate-reveal">
             Subject-wise <span className="text-primary italic">Curriculum</span>
           </h1>
-          <p className="text-on-surface-variant text-lg leading-relaxed max-w-md animate-reveal opacity-80" style={{ animationDelay: '0.1s' }}>
+          <p className="text-on-surface-variant text-sm md:text-lg leading-relaxed max-w-md animate-reveal opacity-80" style={{ animationDelay: '0.1s' }}>
             Target your weak areas and track your growth across the OSSC CGL
             ecosystem.
           </p>
         </div>
 
         {/* --- STICKY EXAM PREFERENCE TICKER --- */}
-        <div className="sticky -top-6 lg:-top-10 z-40 dark:bg-surface-container-low/80 backdrop-blur-3xl border-b border-on-surface/5 -mx-6 lg:-mx-10 px-6 lg:px-10 py-6 mb-12 shadow-sm transition-all duration-500">
+        <div className="sticky -top-3 md:-top-6 lg:-top-10 z-40 dark:bg-surface-container-low/80 backdrop-blur-3xl border-b border-on-surface/5 -mx-6 lg:-mx-10 px-6 lg:px-10 py-6 mb-12 shadow-sm transition-all duration-500">
           <div className="flex-col md:flex-row max-w-300 mx-auto overflow-x-auto custom-scrollbar-hide flex items-center justify-between gap-2">
             <div className="flex items-center gap-3 mr-6 shrink-0">
               <Target className="size-4 text-primary" />
               <span className="text-[10px] font-technical uppercase tracking-[0.3em] font-black opacity-40">Active Landscapes:</span>
             </div>
-            <div className="overflow-x-auto">
+            <div className="overflow-x-scroll">
               <ExamTicker
                 targetedExams={targetedExams}
                 selectedExam={eid || ""}
@@ -155,24 +155,24 @@ const Exam = () => {
             return (
               <section
                 key={index}
-                className="bg-surface-container-low rounded-3xl overflow-hidden hover-bloom mb-12 transition-all duration-500 ease-botanical"
+                className="bg-surface-container-low rounded-3xl overflow-hidden hover-bloom mb-5 md:mb-12 transition-all duration-500 ease-botanical"
               >
                 {/* Subject Header - Accordion Toggle */}
                 <div
                   onClick={() => toggleSubject(subject.subjects.id)}
-                  className="p-8 bg-surface-container-high/40 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 cursor-pointer group"
+                  className="p-4 md:p-8 bg-surface-container-high/40 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 cursor-pointer group"
                 >
-                  <div className="flex items-center gap-4 flex-1">
-                    <div className="size-14 bg-primary/10 rounded-2xl flex text-black items-center justify-center transition-transform duration-500 group-hover:scale-110">
+                  <div className="flex items-center gap-2 md:gap-4 flex-1">
+                    <div className="md:size-14 size-10 bg-primary/10 rounded-xl md:rounded-2xl flex text-black items-center justify-center transition-transform duration-500 group-hover:scale-110">
                       <span className="text-primary text-2xl">
-                        <BookCopy size={28} />
+                        <BookCopy className="md:w-[50px] md:h-[50px] w-[20px] h-[20px]" />
                       </span>
                     </div>
                     <div>
-                      <h2 className="text-2xl font-bold tracking-tight text-on-surface">
+                      <h2 className="text-sm md:text-2xl font-bold tracking-tight text-on-surface">
                         {subject.subjects.name}
                       </h2>
-                      <p className="text-sm text-on-surface-variant max-w-sm opacity-60">
+                      <p className="text-xs md:text-sm text-on-surface-variant max-w-sm opacity-60">
                         {subject.subjects.description}
                       </p>
                     </div>

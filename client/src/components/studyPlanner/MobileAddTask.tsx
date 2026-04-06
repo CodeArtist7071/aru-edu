@@ -120,6 +120,7 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
 
   const { reset, register, handleSubmit, setValue, watch, control, formState: { isSubmitting, errors } } = useForm<FormValues>({
     defaultValues: { priority: "MEDIUM", start_time: "09:00", end_time: "10:00", duration_type: "MONTHLY", syncToCalendar: connected },
+    shouldUnregister: true
   });
 
   const priority = watch("priority");
@@ -146,6 +147,13 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
     }
   }, [dateValue, durationType, useChapter]);
 
+  // Mobile Debug: Watch errors
+  useEffect(() => {
+    if (Object.keys(errors).length > 0) {
+      console.warn("⚠️ [MobileAddTask] Form Validation Errors:", errors);
+    }
+  }, [errors]);
+
   useEffect(() => {
       if (durationType === "DAILY" && !editingHabitId) {
           setValue("date", getLocalDateString(new Date()));
@@ -170,10 +178,12 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
         if (h.chapter_id) { setUseChapter(true); setValue("chapter_id", h.chapter_id); }
       }
     } else if (isOpen) {
+      console.log("🔍 [MobileAddTask] Opening New Ritual Manifestation, Mode:", initialUseChapter ? "Mastery" : "Routine", "ExamID:", examId);
       const now = new Date();
       const isCurrentView = now.getMonth() + 1 === viewMonth && now.getFullYear() === viewYear;
       const initialDay = isCurrentView ? now.getDate() : 1;
 
+      setToast({ type: "loading", message: "Updating Mother Nature..." });
       reset({ 
         priority: "MEDIUM", 
         duration_type: "MONTHLY", 
@@ -182,21 +192,50 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
       });
       setUseChapter(initialUseChapter || false);
     }
-  }, [editingHabitId, isOpen, initialHabits, reset, setValue, connected, viewYear, viewMonth, initialUseChapter]);
+  }, [editingHabitId, isOpen, initialHabits, reset, setValue, connected, viewYear, viewMonth, initialUseChapter, examId]);
 
   const onSubmit = async (data: FormValues) => {
+    console.log("🚀 [MobileAddTask] Form Submitted Successfully:", data);
+    setToast({ type: "loading", message: "Updating Mother Nature..." });
+    
+    // Safety check for examId
+    const finalExamId = examId === "add" ? undefined : examId;
     let name = data.habit?.trim() || "";
     if (useChapter && data.chapter_id) {
        const ch = chapters.find(c => c.id === data.chapter_id);
        if (ch) name = ch.name;
+       else name = "Syllabus Mastery Quest"; // Fallback if chapter not found in local state
     }
-    if (!user?.id || !name) { setToast({ type: "error", message: "Name or Chapter is required" }); return; }
+    
+    if (!user?.id) {
+      console.error("❌ [MobileAddTask] Missing User ID");
+      setToast({ type: "error", message: "Authenticating ritual..." });
+      return;
+    }
 
-    setToast({ type: "loading", message: "Updating Mother Nature..." });
+    if (!name && !useChapter) {
+      console.error("❌ [MobileAddTask] Missing Routine Name");
+      setToast({ type: "error", message: "Ritual name is required" });
+      return;
+    }
+
     try {
+      // 1. New Ritual Initialization Sync (Matches AddRoutine logic)
+      if (!editingHabitId && !profile?.planner_start_date) {
+        console.log("🌱 [MobileAddTask] Initializing first planner start date...");
+        const startDate = new Date().toISOString();
+        const { error: profErr } = await supabase.from("profiles").update({ planner_start_date: startDate }).eq("id", user.id);
+        if (profErr) console.error("❌ [MobileAddTask] Profile update error:", profErr);
+        dispatch(updateUserLocally({ planner_start_date: startDate }));
+      }
+
       if (editingHabitId) {
+        console.log("📝 [MobileAddTask] Updating existing habit:", editingHabitId);
         const habit = initialHabits.find(h => h.id === editingHabitId);
-        if (!habit) return;
+        if (!habit) {
+          console.error("❌ [MobileAddTask] Habit not found in initialHabits");
+          return;
+        }
         const table = habit.is_mastery ? "user_mastery" : "study_habits";
         const updateData: any = { 
           name: habit.is_mastery ? undefined : name, 
@@ -219,21 +258,34 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
            } else {
               updateData.scheduled_end_date = null;
            }
-           updateData.month = newDate.getMonth() + 1;
-           updateData.year = newDate.getFullYear();
+           updateData.month = String(newDate.getMonth() + 1);
+           updateData.year = String(newDate.getFullYear());
            updateData.progress = newProgress;
         }
 
-        await supabase.from(table).update(updateData).eq("id", editingHabitId);
+        console.log(`📡 [MobileAddTask] Supabase Update to ${table}:`, updateData);
+        if (habit.is_mastery) updateData.is_mastery = true;
+        const { error } = await supabase.from(table).update(updateData).eq("id", editingHabitId);
+        if (error) throw error;
       } else {
+        console.log("🆕 [MobileAddTask] Inserting new ritual");
         const table = useChapter ? "user_mastery" : "study_habits";
         const scheduledDate = data.date ? new Date(data.date) : new Date();
         const habitData: any = { 
-          user_id: user.id, priority: data.priority, start_time: data.start_time, end_time: data.end_time, 
-          category: "theory", progress: Array(31).fill(false), month: viewMonth, year: viewYear, exam_id: examId,
-          chapter_id: useChapter ? data.chapter_id : null, is_recurring: data.duration_type !== "DAILY",
+          user_id: user.id, 
+          priority: data.priority, 
+          start_time: data.start_time, 
+          end_time: data.end_time, 
+          category: "theory", 
+          progress: Array(31).fill(false), 
+          month: String(viewMonth), 
+          year: String(viewYear), 
+          exam_id: examId,
+          chapter_id: useChapter ? data.chapter_id : null, 
+          is_recurring: data.duration_type !== "DAILY",
           duration_type: useChapter ? "DAILY" : data.duration_type,
-          scheduled_date: scheduledDate.toISOString().split('T')[0]
+          scheduled_date: scheduledDate.toISOString().split('T')[0],
+          is_mastery: useChapter
         };
 
         if (data.duration_type === "CUSTOM" && data.end_date) {
@@ -241,13 +293,22 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
         }
 
         if (!useChapter) habitData.name = name;
-        if (scheduledDate.getMonth() + 1 === viewMonth) habitData.progress[scheduledDate.getDate() - 1] = true;
-        await supabase.from(table).insert(habitData);
+        if (scheduledDate.getMonth() + 1 === viewMonth && scheduledDate.getFullYear() === viewYear) {
+           habitData.progress[scheduledDate.getDate() - 1] = true;
+        }
+        
+        console.log(`📡 [MobileAddTask] Supabase Insert to ${table}:`, habitData);
+        const { error } = await supabase.from(table).insert(habitData);
+        if (error) throw error;
       }
+      console.log("✅ [MobileAddTask] Manifestation Successful");
       setToast({ type: "success", message: "Momentum manifested!" });
+      window.alert("✅ Ritual Manifested Successfully!");
       setTimeout(() => { onClose(); onRefresh?.(); }, 1200);
-    } catch (e) {
-      setToast({ type: "error", message: "Botanical glitch. Try again." });
+    } catch (e: any) {
+      console.error("❌ [MobileAddTask] Manifestation Failed:", e);
+      setToast({ type: "error", message: e.message || "Botanical glitch. Try again." });
+      window.alert("❌ Manifestation Failed: " + (e.message || "Unknown error"));
     }
   };
 
@@ -256,35 +317,39 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
   return (
     <div className="fixed inset-0 z-100 bg-surface flex flex-col animate-in slide-in-from-bottom duration-500 ease-botanical overflow-y-auto">
       {/* ── Mobile Header ────────────────────────────────────────────────── */}
-      <header className="px-6 pt-10 pb-6 flex items-center justify-between sticky top-0 bg-surface/80 backdrop-blur-3xl z-10">
-        <button onClick={onClose} className="size-10 rounded-full bg-on-surface/5 flex items-center justify-center">
+      <header className="px-6 pt-2 pb-4 flex items-center justify-between sticky top-0 bg-surface/80 backdrop-blur-3xl z-10 transition-all duration-500">
+        <button onClick={onClose} className="size-10 rounded-full bg-on-surface/5 flex items-center justify-center active:scale-95 transition-transform">
           <ChevronLeft className="size-5" />
         </button>
-        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Add Ritual</span>
-        <div className="size-10" />
+        <span className="text-sm font-black uppercase tracking-[0.3em] text-primary">Add Ritual</span>
       </header>
 
-      <main className="px-6 pb-20 space-y-10">
-        <div className="space-y-2">
-          <h2 className="text-4xl font-black tracking-tighter text-on-surface leading-none">
+      {toast && (
+        <div className="sticky top-16 mx-4 z-50 animate-in fade-in slide-in-from-top-2">
+          <div className={`p-4 rounded-3xl border flex items-center gap-3 shadow-lg ${
+            toast.type === 'success' ? 'bg-green-50 border-green-200 text-green-800' : 
+            toast.type === 'loading' ? 'bg-primary/5 border-primary/20 text-primary' :
+            'bg-red-50 border-red-200 text-red-800'
+          }`}>
+            {toast.type === 'loading' ? <Loader className="animate-spin" size={16} /> : <Zap size={16} />}
+            <span className="text-xs font-bold">{toast.message}</span>
+            <button onClick={() => setToast(null)} className="ml-auto opacity-40"><X size={14} /></button>
+          </div>
+        </div>
+      )}
+
+      <main className="px-3 pb-10 space-y-5 animate-reveal">
+        <div className="space-y-1">
+          <h2 className="text-xl font-black tracking-tighter text-on-surface leading-none">
             {editingHabitId ? "Refine Momentum" : "Manifest Ritual"}
           </h2>
-          <p className="text-sm font-medium text-on-surface-variant opacity-60">
+          <p className="text-xs font-medium text-on-surface-variant opacity-60">
             {useChapter ? "Scheduling from syllabus mastery." : "Your daily botanical routines."}
           </p>
         </div>
 
-        {toast && (
-          <div className={`p-4 rounded-3xl border flex items-center gap-3 animate-in fade-in slide-in-from-top-2 ${
-            toast.type === 'success' ? 'bg-green-50 border-green-100 text-green-800' : 'bg-red-50 border-red-100 text-red-800'
-          }`}>
-            {toast.type === 'loading' ? <Loader className="animate-spin" size={16} /> : <Zap size={16} />}
-            <span className="text-xs font-bold">{toast.message}</span>
-          </div>
-        )}
-
         {/* ── AI Action Center ─────────────────────────────────────────────── */}
-        <section className="bg-primary/5 rounded-[2.5rem] p-6 border border-primary/10 space-y-4">
+        <section className="bg-primary/5 rounded-2xl p-4 border border-primary/10 space-y-2">
           <div className="flex items-center gap-2">
             <Sparkles className="size-4 text-primary" />
             <span className="text-[10px] font-black uppercase tracking-widest text-primary">AI Natural Language</span>
@@ -294,7 +359,7 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
               value={aiInput}
               onChange={(e) => setAiInput(e.target.value)}
               placeholder="e.g. Wake up at 6am, solve physics questions at 12pm..."
-              className="w-full h-24 bg-surface rounded-3xl p-4 text-sm font-medium border-none outline-none focus:ring-2 ring-primary/20 transition-all placeholder:opacity-30"
+              className="w-full h-24 bg-surface rounded-xl p-4 text-sm font-medium border-none outline-none focus:ring-2 ring-primary/20 transition-all placeholder:opacity-30"
             />
             <button 
               onClick={async () => {
@@ -311,7 +376,7 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
                 } finally { setAiParsing(false); }
               }}
               disabled={aiParsing || !aiInput.trim()}
-              className="w-full py-4 bg-primary text-white rounded-2xl font-black uppercase text-xs tracking-widest flex items-center justify-center gap-2"
+              className="w-full py-3 bg-primary text-white rounded-2xl font-black uppercase text-xs tracking-widest flex items-center justify-center gap-2"
             >
               {aiParsing ? <Loader className="animate-spin" size={14} /> : <Sparkles size={14} />}
               Manifest AI Parse
@@ -320,23 +385,33 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
         </section>
 
         {/* ── Manual Manifest Form ─────────────────────────────────────────── */}
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+        <form 
+          onSubmit={handleSubmit(
+            onSubmit,
+            (err) => {
+              console.error("❌ [MobileAddTask] Validation Errors:", err);
+              const firstErr = Object.values(err)[0];
+              if (firstErr) setToast({ type: "error", message: String(firstErr.message || "Please fill all required fields") });
+            }
+          )} 
+          className="space-y-4"
+        >
           <div className="flex bg-surface-container-low p-1.5 rounded-2xl flex-wrap">
-            <button type="button" onClick={() => setValue("duration_type", "DAILY")} className={`flex-1 py-3 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "DAILY" ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Daily</button>
-            <button type="button" onClick={() => setValue("duration_type", "WEEKLY")} className={`flex-1 py-3 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "WEEKLY" ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Weekly</button>
-            <button type="button" onClick={() => setValue("duration_type", "MONTHLY")} className={`flex-1 py-3 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "MONTHLY" ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Monthly</button>
-            <button type="button" onClick={() => setValue("duration_type", "CUSTOM")} className={`flex-1 py-3 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "CUSTOM" ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Custom</button>
+            <button type="button" onClick={() => setValue("duration_type", "DAILY")} className={`flex-1 py-2 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "DAILY" ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Daily</button>
+            <button type="button" onClick={() => setValue("duration_type", "WEEKLY")} className={`flex-1 py-2 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "WEEKLY" ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Weekly</button>
+            <button type="button" onClick={() => setValue("duration_type", "MONTHLY")} className={`flex-1 py-2 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "MONTHLY" ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Monthly</button>
+            <button type="button" onClick={() => setValue("duration_type", "CUSTOM")} className={`flex-1 py-2 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "CUSTOM" ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Custom</button>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-2">
              <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1">Manifest Type</label>
              <div className="flex bg-surface-container-low p-1.5 rounded-2xl">
-               <button type="button" onClick={() => setUseChapter(false)} className={`flex-1 py-3 text-[10px] font-black uppercase rounded-xl transition-all ${!useChapter ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Manual Ritual</button>
-               <button type="button" onClick={() => setUseChapter(true)} className={`flex-1 py-3 text-[10px] font-black uppercase rounded-xl transition-all ${useChapter ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Syllabus Mastery</button>
+               <button type="button" onClick={() => setUseChapter(false)} className={`flex-1 py-2 text-[10px] font-black uppercase rounded-xl transition-all ${!useChapter ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Manual Ritual</button>
+               <button type="button" onClick={() => setUseChapter(true)} className={`flex-1 py-2 text-[10px] font-black uppercase rounded-xl transition-all ${useChapter ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Syllabus Mastery</button>
              </div>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-2">
              <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1 flex items-center justify-between">
                <span>{useChapter || durationType === "DAILY" ? "Scheduled Date" : "Start Date"}</span>
                {computedEndDate && <span className="opacity-60">Auto End Date</span>}
@@ -345,9 +420,10 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
              <div className="flex flex-col gap-3">
                <input 
                  type="date" 
-                 {...register("date", { required: true })} 
-                 className="w-full py-5 px-6 bg-surface-container-low rounded-3xl text-sm font-bold border-none outline-none focus:ring-2 ring-primary/20 transition-all" 
+                 {...register("date", { required: "Date is required" })} 
+                 className={`w-full py-3 px-6 bg-surface-container-low rounded-3xl text-sm font-bold border-none outline-none focus:ring-2 ring-primary/20 transition-all ${errors.date ? "ring-2 ring-red-400" : ""}`} 
                />
+               {errors.date && <p className="text-red-500 text-[10px] ml-4 animate-in fade-in">{errors.date.message}</p>}
                {computedEndDate && (
                  <div className="flex items-center gap-3">
                    <div className="text-primary/40 font-black animate-in fade-in zoom-in-50 duration-500 pl-4 shrink-0">→</div>
@@ -367,7 +443,7 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
                         required: durationType === "CUSTOM",
                         validate: value => !value || !dateValue || new Date(value) >= new Date(dateValue) || "End Date cannot be before Start Date"
                      })} 
-                     className={`w-full py-5 px-6 bg-surface-container-low rounded-3xl text-sm font-bold border-none outline-none focus:ring-2 ring-primary/20 transition-all animate-in fade-in slide-in-from-right-4 duration-500 ${errors.end_date ? "ring-2 ring-red-400 focus:ring-red-500" : ""}`} 
+                     className={`w-full py-3 px-6 bg-surface-container-low rounded-3xl text-sm font-bold border-none outline-none focus:ring-2 ring-primary/20 transition-all animate-in fade-in slide-in-from-right-4 duration-500 ${errors.end_date ? "ring-2 ring-red-400 focus:ring-red-500" : ""}`} 
                    />
                  </div>
                )}
@@ -378,23 +454,36 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
           <div className="space-y-3">
             <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1">{useChapter ? "Chapter Selection" : "Ritual Name"}</label>
             {useChapter ? (
-              <select {...register("chapter_id", { required: useChapter })} className="w-full py-5 px-6 bg-surface-container-low rounded-3xl text-sm font-black border-none outline-none focus:ring-2 ring-primary/20 appearance-none">
-                <option value="">Choose your quest...</option>
-                {chapters.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
-              </select>
+              <>
+                <select 
+                  {...register("chapter_id", { required: "Please select a chapter" })} 
+                  className={`w-full py-3 px-6 bg-surface-container-low rounded-3xl text-sm font-bold border-none outline-none focus:ring-2 ring-primary/20 appearance-none ${errors.chapter_id ? "ring-2 ring-red-400" : ""}`}
+                >
+                  <option value="">Choose your quest...</option>
+                  {chapters.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                </select>
+                {errors.chapter_id && <p className="text-red-500 text-[10px] ml-4 animate-in fade-in">{errors.chapter_id.message}</p>}
+              </>
             ) : (
-              <input {...register("habit", { required: !useChapter })} placeholder="e.g. Botanical Review" className="w-full py-5 px-6 bg-surface-container-low rounded-3xl text-sm font-bold border-none outline-none focus:ring-2 ring-primary/20" />
+              <>
+                <input 
+                  {...register("habit", { required: "Routine name is required" })} 
+                  placeholder="e.g. Botanical Review" 
+                  className={`w-full py-3 px-6 bg-surface-container-low rounded-3xl text-sm font-bold border-none outline-none focus:ring-2 ring-primary/20 ${errors.habit ? "ring-2 ring-red-400" : ""}`} 
+                />
+                {errors.habit && <p className="text-red-500 text-[10px] ml-4 animate-in fade-in">{errors.habit.message}</p>}
+              </>
             )}
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-             <div className="space-y-3">
+             <div className="space-y-2">
                <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1">Start Ritual</label>
-               <input type="time" {...register("start_time")} className="w-full py-5 px-6 bg-surface-container-low rounded-3xl text-sm font-bold border-none outline-none focus:ring-2 ring-primary/20" />
+               <input type="time" {...register("start_time")} className="w-full py-3 px-6 bg-surface-container-low rounded-3xl text-sm font-bold border-none outline-none focus:ring-2 ring-primary/20" />
              </div>
-             <div className="space-y-3">
+             <div className="space-y-2">
                <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1">End Ritual</label>
-               <input type="time" {...register("end_time")} className="w-full py-5 px-6 bg-surface-container-low rounded-3xl text-sm font-bold border-none outline-none focus:ring-2 ring-primary/20" />
+               <input type="time" {...register("end_time")} className="w-full py-3 px-6 bg-surface-container-low rounded-3xl text-sm font-bold border-none outline-none focus:ring-2 ring-primary/20" />
              </div>
           </div>
 
@@ -416,20 +505,30 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
                    <p className="text-[10px] font-medium opacity-40">Persistence mapping</p>
                 </div>
               </div>
-              <input type="checkbox" {...register("syncToCalendar")} className="size-6 rounded-lg text-primary focus:ring-primary/20 border-outline-variant" />
+              <input type="checkbox" {...register("syncToCalendar")} className="size-5 accent-primary" />
             </div>
           )}
-
-          <button 
-            type="submit" 
-            disabled={isSubmitting}
-            className="w-full py-6 bg-primary text-white rounded-4xl font-black uppercase text-sm tracking-[0.2em] shadow-ambient-lg shadow-primary/20 flex items-center justify-center gap-3 transition-all active:scale-95"
-          >
-            {isSubmitting ? <Loader className="animate-spin" /> : <ArrowRight size={18} />}
-            Manifest Ritual
-          </button>
         </form>
       </main>
+
+      <footer className="sticky bottom-0 p-6 bg-surface border-t border-outline-variant/10 z-50">
+        <button 
+          type="button"
+          onClick={() => {
+            console.log("🖱️ [MobileAddTask] Manifest Button Triggered");
+            handleSubmit(onSubmit, (err) => {
+              console.error("❌ [MobileAddTask] Validation Failed:", err);
+              const firstErr: any = Object.values(err)[0];
+              const msg = firstErr?.message || "Please fill all required fields";
+              setToast({ type: "error", message: msg });
+              window.alert("⚠️ Validation Error: " + msg);
+            })();
+          }}
+          className="w-full py-4 bg-on-surface text-surface rounded-3xl font-black uppercase tracking-widest text-sm shadow-xl active:scale-95 transition-all flex items-center justify-center gap-2"
+        >
+          {isSubmitting ? <Loader className="animate-spin" size={18} /> : (editingHabitId ? "Refine Ritual" : "Manifest Ritual")}
+        </button>
+      </footer>
     </div>
   );
 };

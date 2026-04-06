@@ -269,13 +269,13 @@ export default function UserPanelLayout() {
       {/* Main Content Area */}
       <main className="flex-1 flex flex-col relative overflow-hidden bg-surface transition-colors duration-500">
         {/* Editorial Dynamic Header - Now Multi-State */}
-        <header className="h-20 md:h-32 bg-surface/40 backdrop-blur-3xl flex items-center justify-between px-5 md:px-10 sticky top-0 z-20 border-b border-outline-variant/10">
+        <header className="h-15 md:h-32 bg-surface/40 backdrop-blur-3xl flex items-center justify-between px-5 md:px-10 sticky top-0 z-20 border-b border-outline-variant/10">
           {!isTestActive ? (
             // Standard View: Page Context
             <>
               <div className="animate-reveal" key={location.pathname + "-title"}>
                 <div className="flex flex-col">
-                  <span className="text-[10px] font-technical uppercase tracking-[0.4em] text-primary opacity-60 mb-2">{currentMetadata.label}</span>
+                  <span className="text-[9px] md:text-sm font-technical uppercase tracking-[0.4em] text-primary opacity-60 mb-1">{currentMetadata.label}</span>
                   <h2 className="text-xl md:text-3xl font-black text-on-surface tracking-tighter leading-none">{currentMetadata.title}</h2>
                 </div>
               </div>
@@ -291,10 +291,10 @@ export default function UserPanelLayout() {
                   </button> */}
 
                 <div className="flex flex-col items-end mr-2">
-                  <p className="text-[9px] font-technical font-black text-on-surface-variant opacity-40 uppercase tracking-widest">{user?.email?.split('@')[0]}</p>
+                  <p className="hidden md:block text-[9px] font-technical font-black text-on-surface-variant opacity-40 uppercase tracking-widest">{user?.email?.split('@')[0]}</p>
                   <div className="flex items-center gap-2">
-                    <div className="size-2 bg-primary rounded-full animate-pulse" />
-                    <span className="text-[8px] font-technical font-black text-primary uppercase tracking-widest">Active Core</span>
+                    <div className="size-2 absolute right-4 top-2 bg-primary rounded-full animate-pulse" />
+                    <span className="hidden md:block text-[9px] font-technical font-black text-primary uppercase tracking-widest">Active User</span>
                   </div>
                 </div>
                 <div
@@ -302,16 +302,20 @@ export default function UserPanelLayout() {
                   onClick={() => navigate("/user/profile")}
                 >
                   {user?.user_metadata?.avatar_url || user?.identities?.[0]?.identity_data?.avatar_url ? (
-                    <img
-                      src={user?.user_metadata?.avatar_url || user?.identities?.[0]?.identity_data?.avatar_url}
-                      alt="ID"
-                      className="size-full object-cover"
-                    />
+                    <>
+                      <img
+                        src={user?.user_metadata?.avatar_url || user?.identities?.[0]?.identity_data?.avatar_url}
+                        alt="ID"
+                        className="size-full object-cover"
+                      />
+                    </>
+
                   ) : (
-                    <span className="relative z-10">{(profile?.full_name || user?.user_metadata?.full_name || user?.email)?.[0]?.toUpperCase() || "A"}</span>
+                    <span className="relative z-10">{(profile?.full_name || user?.user_metadata?.full_name || user?.email)?.[0]?.toUpperCase() || ""}</span>
                   )}
                   <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
+
               </div>
             </>
           ) : (
