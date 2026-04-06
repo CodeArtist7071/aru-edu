@@ -50,49 +50,51 @@ const ResultSelection = () => {
             <main className="max-w-5xl px-6">
 
                 {/* Header - Massive Editorial */}
-                <div className="mb-24">
-                    {/* <p className="text-[10px] font-mono font-black uppercase tracking-[0.4em] text-primary opacity-60 mb-4">Diagnostic Synthesis</p> */}
-                    <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-[0.85]"> 
+                <div className="mb-5 md:mb-24">
+                    <h2 className="text-2xl mt-4 md:text-6xl font-black tracking-tighter leading-[0.85]">
                         Growth <span className="text-primary">Matrix</span>
                     </h2>
-                    <p className="max-w-2xl text-xl mt-8 text-on-surface-variant/70 font-medium leading-relaxed">
+                    <p className="max-w-2xl text-sm mt-3 md:mt-8 text-on-surface-variant/70 font-medium leading-relaxed">
                         Assess your cognitive evolution across focused chapter drills and comprehensive exam simulations.
                     </p>
                 </div>
 
                 {/* Cards - Tonal Sectioning */}
-                <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-10">
+                <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
                     {cardData.map((el, index) => (
-                        <div key={index} className="bg-surface-container-low p-12 rounded-[2.5rem] flex flex-col justify-between hover:bg-surface-container-high transition-all duration-500 group shadow-ambient-sm hover:shadow-ambient-lg">
-                            <div>
-                                <div className="w-20 h-20 bg-surface-container-high rounded-3xl flex items-center justify-center mb-10 group-hover:scale-110 transition-transform duration-500 shadow-sm">
-                                    <div className="text-primary">
-                                        {React.cloneElement(el.icon as React.ReactElement, { size: 32 } as any)}
+                        <div key={index} className="bg-surface-container-low p-4 md:p-12 rounded-[2.5rem] flex flex-col justify-between hover:bg-surface-container-high transition-all duration-500 group shadow-ambient-sm hover:shadow-ambient-lg">
+                            <div className="">
+                                <div className="w-full flex flex-row md:flex-col gap-4">
+                                    <div className="w-5 h-5 md:w-20 md:h-20 bg-surface-container-high rounded-3xl flex items-center justify-center mb-10 group-hover:scale-110 transition-transform duration-500 shadow-sm">
+                                        <div className="w-5 h-5 md:text-primary">
+                                            {React.cloneElement(el.icon as React.ReactElement)}
+                                        </div>
                                     </div>
+                                    <div>
+                                        <h3 className="text-md md:text-3xl font-bold mb-3 tracking-tight">
+                                            {el.title}
+                                        </h3>
+                                        <p className="text-on-surface-variant/70 mb-5 md:mb-10 text-sm md:text-lg leading-relaxed">
+                                            {el.description}
+                                        </p>
+                                    </div>
+
                                 </div>
-
-                                <h3 className="text-3xl font-bold mb-3 tracking-tight">
-                                    {el.title}
-                                </h3>
-                                <p className="text-on-surface-variant/70 mb-10 text-lg leading-relaxed">
-                                    {el.description}
-                                </p>
-
-                                <div className="flex gap-10 mb-10">
-                                    <div>
-                                        <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-on-surface-variant/40 mb-1">Synthesized</p>
-                                        <p className="text-3xl font-mono font-black text-primary">{el.completed}</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-on-surface-variant/40 mb-1">Index Score</p>
-                                        <p className="text-3xl font-mono font-black text-secondary">{el.avgScore}</p>
-                                    </div>
+                            </div>
+                            <div className="flex gap-4 md:gap-10 mb-4 md:mb-10">
+                                <div>
+                                    <p className="text-xs md:text-[10px] font-mono font-bold uppercase tracking-widest text-on-surface-variant/40 mb-1">Synthesized</p>
+                                    <p className="text-xl md:text-3xl font-mono font-black text-primary">{el.completed}</p>
+                                </div>
+                                <div>
+                                    <p className="text-xs md:text-[10px] font-mono font-bold uppercase tracking-widest text-on-surface-variant/40 mb-1">Index Score</p>
+                                    <p className="text-xl md:text-3xl font-mono font-black text-secondary">{el.avgScore}</p>
                                 </div>
                             </div>
 
-                            <button 
-                                onClick={() => navigate("history")} 
-                                className="w-full cursor-pointer py-5 bg-primary text-white rounded-full font-mono font-black text-[10px] uppercase tracking-widest shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
+                            <button
+                                onClick={() => navigate("history")}
+                                className="w-full cursor-pointer py-3 md:py-5 bg-primary text-white rounded-full font-mono font-black text-[10px] uppercase tracking-widest shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
                             >
                                 {el.buttonText}
                             </button>
@@ -101,31 +103,31 @@ const ResultSelection = () => {
                 </div>
 
                 {/* Latest Report - Technical Slip */}
-                <div className="mt-24">
+                <div className="mt-5 md:mt-24">
                     <h4 className="text-[10px] font-mono font-black uppercase tracking-[0.4em] text-on-surface-variant/40 mb-8 flex items-center gap-6">
                         Latest Sync Report
                         <div className="h-px flex-1 bg-on-surface-variant/10"></div>
                     </h4>
                     {latestReportData.map((el, index) => (
-                        <div key={index} className="bg-surface-container-high/20 rounded-4xl px-8 py-6 flex items-center justify-between hover:bg-surface-container-high transition-all duration-300 group/item cursor-pointer hover-bloom">
+                        <div key={index} className="bg-surface-container-high/20 rounded-4xl p-6 md:px-8 md:py-6 flex flex-col md:flex-row items-center justify-between hover:bg-surface-container-high transition-all duration-300 group/item cursor-pointer hover-bloom gap-6">
                             <div className="flex items-center gap-6 w-full md:w-auto">
-                                <div className="w-14 h-14 rounded-2xl bg-secondary/10 text-secondary flex items-center justify-center p-3 animate-pulse">
+                                <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-secondary/10 text-secondary flex items-center justify-center p-3 animate-pulse shrink-0">
                                     <WorkflowIcon size={24} />
                                 </div>
-                                <div className="flex flex-col gap-1">
-                                    <p className="text-lg font-bold tracking-tight">{el.title}</p>
-                                    <p className="text-[10px] font-mono font-bold text-on-surface-variant/40 uppercase tracking-widest">
+                                <div className="flex flex-col gap-1 min-w-0">
+                                    <p className="text-md md:text-lg font-bold tracking-tight truncate">{el.title}</p>
+                                    <p className="text-[9px] md:text-[10px] font-mono font-bold text-on-surface-variant/40 uppercase tracking-widest">
                                         Acknowledged <span className="text-on-surface-variant">{el.date}</span>
                                     </p>
                                 </div>
                             </div>
 
-                            <div className="flex items-center justify-between md:justify-end gap-12 w-full md:w-auto">
-                                <div className="flex flex-col items-end">
-                                    <p className="text-2xl font-mono font-black text-on-surface">{el.score}</p>
+                            <div className="flex items-center justify-between md:justify-end gap-8 md:gap-12 w-full md:w-auto">
+                                <div className="flex flex-col items-end md:items-end">
+                                    <p className="text-xl md:text-2xl font-mono font-black text-on-surface">{el.score}</p>
                                     <p className="text-[9px] font-mono font-bold uppercase tracking-widest text-on-surface-variant/40">Terminal Score</p>
                                 </div>
-                                <button className="px-8 py-3 bg-surface-container-highest text-on-surface rounded-full text-[10px] font-mono font-bold uppercase tracking-widest hover:bg-on-surface hover:text-white transition-all">
+                                <button className="flex-1 md:flex-none px-6 md:px-8 py-3 bg-surface-container-highest text-on-surface rounded-full text-[10px] font-mono font-bold uppercase tracking-widest hover:bg-on-surface hover:text-white transition-all whitespace-nowrap">
                                     {el.status}
                                 </button>
                             </div>

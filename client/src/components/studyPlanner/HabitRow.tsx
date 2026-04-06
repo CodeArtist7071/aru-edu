@@ -120,11 +120,55 @@ export const HabitRow = ({
         const actualDayIdx = day - 1;
         const isToday = viewMonth === currentMonth && viewYear === currentYear && (actualDayIdx + 1) === today;
         const isSelected = selectedDate && selectedDate.getDate() === actualDayIdx + 1 && selectedDate.getMonth() + 1 === viewMonth && selectedDate.getFullYear() === viewYear;
-        const isEditable = isToday || unlockPastDays;
+        
+        let isWithinDuration = true;
+        if (habit.scheduled_date) {
+          const startDate = new Date(habit.scheduled_date);
+          startDate.setHours(0, 0, 0, 0);
+          
+          const cellDate = new Date(viewYear, viewMonth - 1, actualDayIdx + 1);
+          cellDate.setHours(0, 0, 0, 0);
+
+          // 1. One-off rituals or Mastery milestones: Exact date only
+          if (habit.is_mastery || isOneOff) {
+            isWithinDuration = cellDate.getTime() === startDate.getTime();
+          } 
+          
+          // 2. Recurring Daily: Persists every day from start manifestation
+          else if (habit.duration_type === "DAILY") {
+            isWithinDuration = cellDate >= startDate;
+          } 
+          
+          // 3. Recurring Weekly: Manifests for a 7-day resonance window
+          else if (habit.duration_type === "WEEKLY") {
+            const endDate = new Date(startDate);
+            endDate.setDate(startDate.getDate() + 6);
+            isWithinDuration = cellDate >= startDate && cellDate <= endDate;
+          } 
+          
+          // 4. Custom manifestation window
+          else if (habit.duration_type === "CUSTOM" && habit.scheduled_end_date) {
+            const endDate = new Date(habit.scheduled_end_date);
+            endDate.setHours(23, 59, 59, 999);
+            isWithinDuration = cellDate >= startDate && cellDate <= endDate;
+          }
+
+          // 5. Default Monthly persistence: 30-day vibration cycle
+          else {
+            const endDate = new Date(startDate);
+            endDate.setDate(startDate.getDate() + 29);
+            isWithinDuration = cellDate >= startDate && cellDate <= endDate;
+          }
+        }
+
+        const isEditable = (isToday || unlockPastDays) && isWithinDuration;
         const isDone = progress[actualDayIdx];
         const weekIdx = Math.floor(actualDayIdx / 7);
         const bgClass = isSelected ? "bg-green-100/50" : isToday ? "bg-surface" : WEEK_COLORS[Math.min(weekIdx, 4)].replace("200", "50").replace("bg-slate-200", "bg-transparent");
-        const cellOpacity = isEditable ? "opacity-100" : "opacity-60 dark:opacity-80 grayscale-[0.5]";
+        
+        // Hide/dim cells that are outside the requested bounds
+        const cellOpacity = !isWithinDuration ? "opacity-10 pointer-events-none grayscale" : (isEditable ? "opacity-100" : "opacity-60 dark:opacity-80 grayscale-[0.5]");
+        
         const checkedBorderClass = WEEK_COLORS[Math.min(weekIdx, 4)].replace("bg-", "border-").replace("200", "500");
         const checkedTextClass = WEEK_COLORS[Math.min(weekIdx, 4)].replace("bg-", "text-").replace("200", "600");
 

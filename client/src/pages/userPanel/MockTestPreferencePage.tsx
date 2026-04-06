@@ -114,7 +114,7 @@ const MockTestPreferencePage: React.FC = () => {
   return (
     <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[500px] md:w-[600px] bg-surface dark:bg-surface-dim shadow-ambient-lg flex flex-col animate-buttery-slide border-l border-on-surface/5">
       {/* Header */}
-      <div className="p-8 sm:p-10 border-b border-on-surface/5 flex justify-between items-center bg-surface-container-low/50">
+      <div className="p-3 sm:p-10 border-b border-on-surface/5 flex justify-between items-center bg-surface-container-low/50">
         <div>
           <h2 className="text-2xl sm:text-3xl font-black tracking-tighter text-on-surface">
             Mock Test Ritual
@@ -132,16 +132,16 @@ const MockTestPreferencePage: React.FC = () => {
       </div>
 
       {/* Content */}
-      <div className="p-8 sm:p-10 space-y-10 overflow-y-auto flex-1 custom-scrollbar">
+      <div className="p-4 sm:p-10 space-y-10 overflow-y-auto flex-1 custom-scrollbar">
         {/* Section 1: Instructions */}
         <div className="space-y-6 animate-reveal-stagger" style={{ animationDelay: '0.1s' }}>
           <div className="flex items-center gap-4 opacity-40">
              <BookOpen size={16} className="text-primary" />
-             <h3 className="text-[10px] font-technical font-black uppercase tracking-[0.4em] text-on-surface-variant">Exam Instructions</h3>
+             <h3 className="text-xs font-technical font-black uppercase tracking-[0.4em] text-on-surface-variant">Exam Instructions</h3>
              <div className="h-px flex-1 bg-on-surface-variant/20" />
           </div>
 
-          <div className="bg-surface-container-low p-6 rounded-4xl border border-primary/5 space-y-4">
+          <div className="md:bg-surface-container-low p-3 md:p-6 rounded-4xl border border-primary/5 space-y-4">
             <ul className="space-y-3 text-sm text-on-surface-variant font-medium">
               <li className="flex gap-4">
                 <div className="size-1.5 bg-primary rounded-full mt-2" />
@@ -157,14 +157,14 @@ const MockTestPreferencePage: React.FC = () => {
               </li>
             </ul>
             
-            <label className="flex items-center gap-4 p-5 bg-white/50 rounded-3xl cursor-pointer group hover:bg-white transition-all duration-300 shadow-inner">
+            <label className="flex items-center gap-2 md:gap-4 px-3 py-2 md:p-5 bg-white/50 rounded-3xl cursor-pointer group hover:bg-white transition-all duration-300 shadow-inner">
               <input
                 type="checkbox"
                 checked={acceptedInstructions}
                 onChange={(e) => setAcceptedInstructions(e.target.checked)}
                 className="size-6 rounded-xl border-primary/20 text-primary focus:ring-primary/50 cursor-pointer"
               />
-              <span className="text-sm font-bold text-on-surface group-hover:text-primary transition-colors">
+              <span className="text-xs font-bold text-on-surface group-hover:text-primary transition-colors">
                 I have read and realized the instructions.
               </span>
             </label>
@@ -180,7 +180,7 @@ const MockTestPreferencePage: React.FC = () => {
 
         {/* Section 2: Camera Status */}
         <div className="space-y-6 animate-reveal-stagger" style={{ animationDelay: '0.2s' }}>
-          <div className={`p-6 rounded-4xl border flex flex-col sm:flex-row items-center justify-between gap-6 transition-all duration-700 ease-botanical ${
+          <div className={`p-3 md:p-6 rounded-4xl border flex flex-col sm:flex-row items-center justify-between gap-6 transition-all duration-700 ease-botanical ${
             cameraStatus === "granted" 
               ? "bg-primary/5 border-primary/20" 
               : cameraStatus === "denied"
@@ -209,7 +209,7 @@ const MockTestPreferencePage: React.FC = () => {
                 type="button"
                 onClick={checkCamera}
                 disabled={cameraStatus === "checking"}
-                className="w-full sm:w-auto px-8 py-3 bg-on-surface text-surface text-[10px] font-technical font-black uppercase tracking-widest rounded-full hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
+                className="w-full sm:w-auto p-3 md:px-8 md:py-3 bg-on-surface text-surface text-[10px] font-technical font-black uppercase tracking-widest rounded-full hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
               >
                 {cameraStatus === "checking" ? "Checking..." : "Verify Environment"}
               </button>
@@ -220,7 +220,7 @@ const MockTestPreferencePage: React.FC = () => {
         {/* Section 3: Configuration */}
         <div className="grid grid-cols-1 gap-10 animate-reveal-stagger" style={{ animationDelay: '0.3s' }}>
           {/* Difficulty */}
-          <div className="space-y-6">
+          <div className="space-y-3 md:space-y-6">
             <h3 className="text-[10px] font-technical font-black uppercase tracking-[0.3em] text-on-surface-variant/40 flex items-center gap-3">
               <Zap size={14} className="text-primary" />
               Adaptive Focus
@@ -230,7 +230,7 @@ const MockTestPreferencePage: React.FC = () => {
                 <button
                   key={mode}
                   onClick={() => setDifficulty(mode)}
-                  className={`flex flex-col items-center justify-center p-4 rounded-3xl transition-all duration-300 font-bold text-xs ${
+                  className={`flex flex-col items-center justify-center p-2 md:p-4 rounded-3xl transition-all duration-300 font-bold text-xs ${
                     difficulty === mode
                       ? "bg-primary/5 ring-2 ring-primary text-primary"
                       : "bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high"
@@ -259,7 +259,7 @@ const MockTestPreferencePage: React.FC = () => {
                   <button
                     key={num}
                     onClick={() => setQuestionCount(num)}
-                    className={`flex-1 py-4 rounded-3xl transition-all duration-300 font-black text-xs ${
+                    className={`flex-1 p-2 md:py-4 rounded-3xl transition-all duration-300 font-black text-xs ${
                       questionCount === num
                         ? "bg-on-surface text-surface shadow-xl"
                         : "bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high"
@@ -298,11 +298,11 @@ const MockTestPreferencePage: React.FC = () => {
       </div>
 
       {/* Footer ritual */}
-      <div className="p-8 sm:p-10 bg-surface-container-low/50 border-t border-on-surface/5 flex flex-col gap-4">
+      <div className="p-4 md:p-10 bg-surface-container-low/50 border-t border-on-surface/5 flex flex-col md:gap-3 gap-4">
         <button
           onClick={handleStart}
           disabled={!acceptedInstructions || loading}
-          className={`w-full py-5 rounded-full font-black text-xs lg:text-sm uppercase tracking-[0.3em] transition-all shadow-xl flex items-center justify-center gap-4 group ${
+          className={`w-full py-3 px-5 md:py-5 rounded-full font-black text-xs lg:text-sm uppercase tracking-[0.3em] transition-all shadow-xl flex items-center justify-center gap-4 group ${
             acceptedInstructions && !loading
               ? "bg-linear-to-r from-primary to-primary-container text-white hover:scale-105 active:scale-95 shadow-primary/20"
               : "bg-surface-container-high text-on-surface-variant opacity-40 cursor-not-allowed"
@@ -312,7 +312,7 @@ const MockTestPreferencePage: React.FC = () => {
             <div className="size-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
           ) : (
             <>
-              {cameraStatus === "granted" ? "Begin Simulation" : "Sync Environment & Begin"}
+              {cameraStatus === "granted" ? "Be Ready" : "Begin Environment"}
               <Zap size={20} className="group-hover:rotate-12 transition-transform" />
             </>
           )}

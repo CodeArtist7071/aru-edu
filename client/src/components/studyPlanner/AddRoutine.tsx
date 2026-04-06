@@ -38,7 +38,8 @@ type FormValues = {
   end_time: string;
   chapter_id?: string;
   date?: string; 
-  is_recurring: boolean;
+  end_date?: string;
+  duration_type: "DAILY" | "WEEKLY" | "MONTHLY" | "CUSTOM";
   syncToCalendar: boolean;
 };
 
@@ -100,23 +101,50 @@ export const AddRoutine = () => {
   const [aiInput, setAiInput] = useState("");
   const [aiParsing, setAiParsing] = useState(false);
   const [aiFilled, setAiFilled] = useState(false);
+  const [computedEndDate, setComputedEndDate] = useState<string>("");
+  const [chapters, setChapters] = useState<any[]>([]);
+  const [useChapter, setUseChapter] = useState(false);
+  const unlockPastDays = false;
 
   const { reset, register, handleSubmit, setValue, watch, control, formState: { isSubmitting, errors } } = useForm<FormValues>({
-    defaultValues: { priority: "MEDIUM", start_time: "09:00", end_time: "10:00", is_recurring: true, syncToCalendar: connected },
+    defaultValues: { priority: "MEDIUM", start_time: "09:00", end_time: "10:00", duration_type: "MONTHLY", syncToCalendar: connected },
   });
 
   const priority = watch("priority");
-  const isRecurring = watch("is_recurring");
+  const durationType = watch("duration_type");
   const dateValue = watch("date");
+
+  useEffect(() => {
+    if (!dateValue) return;
+    const start = new Date(dateValue);
+    
+    if (durationType === "DAILY" || useChapter) {
+       setComputedEndDate("");
+    } else if (durationType === "WEEKLY") {
+       const end = new Date(start);
+       end.setDate(end.getDate() + 6);
+       setComputedEndDate(getLocalDateString(end));
+    } else if (durationType === "MONTHLY") {
+       const end = new Date(start);
+       end.setMonth(end.getMonth() + 1);
+       end.setDate(end.getDate() - 1);
+       setComputedEndDate(getLocalDateString(end));
+    } else if (durationType === "CUSTOM") {
+       setComputedEndDate("");
+    }
+  }, [dateValue, durationType, useChapter]);
+
+  useEffect(() => {
+      // Force present date when switching to DAILY (if not editing an existing habit)
+      if (durationType === "DAILY" && !editingHabitId) {
+          setValue("date", getLocalDateString(new Date()));
+      }
+  }, [durationType, editingHabitId, setValue]);
 
   const showToast = (type: ToastType, message: string, duration = 3000) => {
     setToast({ type, message });
     if (type !== "loading") setTimeout(() => setToast(null), duration);
   };
-
-  const [chapters, setChapters] = useState<any[]>([]);
-  const [useChapter, setUseChapter] = useState(false);
-  const unlockPastDays = false;
 
   useEffect(() => {
     if (examId) {
@@ -132,7 +160,7 @@ export const AddRoutine = () => {
         setValue("priority", h.priority as any);
         setValue("start_time", h.start_time || "09:00");
         setValue("end_time", h.end_time || "10:00");
-        setValue("is_recurring", (h as any).is_recurring !== false);
+        setValue("duration_type", (h as any).duration_type || ((h as any).is_recurring === false ? "DAILY" : "MONTHLY"));
         if (h.chapter_id) {
           setValue("chapter_id", h.chapter_id);
           setUseChapter(true);
@@ -153,7 +181,7 @@ export const AddRoutine = () => {
 
       reset({ 
         priority: "MEDIUM", 
-        is_recurring: true, 
+        duration_type: "MONTHLY", 
         syncToCalendar: connected,
         date: getLocalDateString(new Date(viewYear, viewMonth - 1, initialDay))
       });
@@ -192,25 +220,35 @@ export const AddRoutine = () => {
         const habit = initialHabits.find((h) => h.id === editingHabitId);
         if (!habit) return;
         const table = habit.is_mastery ? "user_mastery" : "study_habits";
-        const updateData: any = { priority: data.priority, start_time: data.start_time, end_time: data.end_time, chapter_id: useChapter ? data.chapter_id : null, is_recurring: data.is_recurring };
+        const updateData: any = { priority: data.priority, start_time: data.start_time, end_time: data.end_time, chapter_id: useChapter ? data.chapter_id : null, is_recurring: data.duration_type !== "DAILY", duration_type: useChapter ? "DAILY" : data.duration_type };
         if (!habit.is_mastery) updateData.name = name;
         await supabase.from(table).update(updateData).eq("id", editingHabitId);
 
-        if (data.date) {
-           const newDate = new Date(data.date);
-           const newDayIdx = newDate.getDate() - 1;
-           const newMonth = newDate.getMonth() + 1;
-           const newYear = newDate.getFullYear();
-           const newProgress = Array(31).fill(false);
-           if (!data.is_recurring || habit.is_mastery) newProgress[newDayIdx] = true;
-           await supabase.from(table).update({ progress: newProgress, month: newMonth, year: newYear }).eq("id", editingHabitId);
-        }
+         if (data.date) {
+            const newDate = new Date(data.date);
+            const newDayIdx = newDate.getDate() - 1;
+            const newMonth = newDate.getMonth() + 1;
+            const newYear = newDate.getFullYear();
+            const newProgress = Array(31).fill(false);
+            if (data.duration_type === "DAILY" || habit.is_mastery) newProgress[newDayIdx] = true;
+            
+            updateData.scheduled_date = newDate.toISOString().split('T')[0];
+            if (data.duration_type === "CUSTOM" && data.end_date) {
+               updateData.scheduled_end_date = new Date(data.end_date).toISOString().split('T')[0];
+            } else {
+               updateData.scheduled_end_date = null;
+            }
+            updateData.month = newMonth;
+            updateData.year = newYear;
+            updateData.progress = newProgress;
+         }
+         await supabase.from(table).update(updateData).eq("id", editingHabitId);
 
         if (connected && data.syncToCalendar) {
           const { data: prof } = await supabase.from("profiles").select("google_calendar_event_ids").eq("id", user.id).single();
           const gcId = prof?.google_calendar_event_ids?.[editingHabitId];
           if (gcId) {
-            const execDate = (habit.is_mastery || !data.is_recurring) && data.date ? data.date : new Date().toISOString().split('T')[0];
+            const execDate = (habit.is_mastery || data.duration_type === "DAILY") && data.date ? data.date : new Date().toISOString().split('T')[0];
             const [sh, sm] = data.start_time.split(':').map(Number);
             const [eh, em] = data.end_time.split(':').map(Number);
             const startDT = new Date(execDate); startDT.setHours(sh, sm, 0, 0);
@@ -230,9 +268,14 @@ export const AddRoutine = () => {
           await supabase.from("profiles").update({ planner_start_date: new Date().toISOString() }).eq("id", user.id);
           dispatch(updateUserLocally({ planner_start_date: new Date().toISOString() }));
         }
-        const habitData: any = { user_id: user.id, priority: data.priority, start_time: data.start_time, end_time: data.end_time, progress: Array(31).fill(false), month: viewMonth, year: viewYear, exam_id: examId, chapter_id: useChapter ? data.chapter_id : null, is_recurring: data.is_recurring };
-        if (!useChapter) habitData.name = name;
         const scheduledDate = data.date ? new Date(data.date) : new Date();
+        const habitData: any = { user_id: user.id, priority: data.priority, start_time: data.start_time, end_time: data.end_time, progress: Array(31).fill(false), month: viewMonth, year: viewYear, exam_id: examId, chapter_id: useChapter ? data.chapter_id : null, is_recurring: data.duration_type !== "DAILY", duration_type: useChapter ? "DAILY" : data.duration_type, scheduled_date: scheduledDate.toISOString().split('T')[0] };
+        
+        if (data.duration_type === "CUSTOM" && data.end_date) {
+           habitData.scheduled_end_date = new Date(data.end_date).toISOString().split('T')[0];
+        }
+
+        if (!useChapter) habitData.name = name;
         const isTargetMonth = scheduledDate.getMonth() + 1 === viewMonth && scheduledDate.getFullYear() === viewYear;
         if (isTargetMonth) habitData.progress[scheduledDate.getDate() - 1] = true;
 
@@ -264,7 +307,7 @@ export const AddRoutine = () => {
   }
 
   return (
-    <div className="h-full bg-surface shadow-ambient-lg border-l border-on-surface/5 flex flex-col animate-reveal-right overflow-hidden rounded-[2.5rem]">
+    <div className="h-full bg-surface shadow-ambient-lg border-l border-on-surface/5 flex flex-col animate-reveal-right overflow-hidden md:rounded-[2.5rem]">
       <div className="h-1 w-full bg-linear-to-r from-green-500 via-emerald-400 to-green-600" />
       
       <div className="flex items-center justify-between px-8 pt-6 pb-6">
@@ -317,11 +360,13 @@ export const AddRoutine = () => {
           </div>
         )}
 
-        {/* RECURRENCE TOGGLE */}
+        {/* DURATION TOGGLE */}
         {!editingHabitId && (
-          <div className="flex bg-surface-container-high p-1 rounded-2xl">
-            <button type="button" onClick={() => setValue("is_recurring", true)} className={`flex-1 py-3 text-[10px] font-black uppercase tracking-[0.2em] rounded-xl transition-all ${isRecurring ? "bg-white text-primary shadow-sm" : "text-on-surface-variant opacity-40"}`}>Recurring Habit</button>
-            <button type="button" onClick={() => setValue("is_recurring", false)} className={`flex-1 py-3 text-[10px] font-black uppercase tracking-[0.2em] rounded-xl transition-all ${!isRecurring ? "bg-white text-primary shadow-sm" : "text-on-surface-variant opacity-40"}`}>One-off Event</button>
+          <div className="flex bg-surface-container-high p-1 rounded-2xl flex-wrap">
+            <button type="button" onClick={() => setValue("duration_type", "DAILY")} className={`flex-1 py-3 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "DAILY" ? "bg-white text-primary shadow-sm" : "text-on-surface-variant opacity-40"}`}>Daily</button>
+            <button type="button" onClick={() => setValue("duration_type", "WEEKLY")} className={`flex-1 py-3 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "WEEKLY" ? "bg-white text-primary shadow-sm" : "text-on-surface-variant opacity-40"}`}>Weekly</button>
+            <button type="button" onClick={() => setValue("duration_type", "MONTHLY")} className={`flex-1 py-3 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "MONTHLY" ? "bg-white text-primary shadow-sm" : "text-on-surface-variant opacity-40"}`}>Monthly</button>
+            <button type="button" onClick={() => setValue("duration_type", "CUSTOM")} className={`flex-1 py-3 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "CUSTOM" ? "bg-white text-primary shadow-sm" : "text-on-surface-variant opacity-40"}`}>Custom</button>
           </div>
         )}
 
@@ -363,19 +408,45 @@ export const AddRoutine = () => {
         </div>
 
         {/* DATE SELECTION */}
-        {(useChapter || !isRecurring || (editingHabitId && initialHabits.find(h => h.id === editingHabitId)?.is_mastery)) && (
-          <div className="space-y-3 animate-reveal">
-            <label className="text-[10px] font-black uppercase tracking-widest text-primary opacity-60 ml-2 flex items-center gap-2">
-              <Calendar size={12} /> Temporal Alignment
-            </label>
+        <div className={`space-y-3 animate-reveal ${durationType === "CUSTOM" ? "col-span-2" : ""}`}>
+          <label className="text-[10px] font-black uppercase tracking-widest text-primary opacity-60 ml-2 flex items-center gap-2">
+            <Calendar size={12} /> {useChapter || durationType === "DAILY" ? "Scheduled Date" : "Start Date"}
+            {computedEndDate && <span className="ml-auto opacity-40">Auto-calculated End Date</span>}
+            {durationType === "CUSTOM" && <span className="ml-auto opacity-40">Set End Date</span>}
+          </label>
+          <div className="flex items-center gap-3">
             <input 
               type="date" 
-              {...register("date")} 
-              disabled={!isRecurring && !unlockPastDays && dateValue !== new Date().toISOString().split('T')[0]} 
-              className="w-full bg-surface-container-low px-6 py-5 rounded-4xl text-sm font-technical font-black text-on-surface border-none outline-none focus:ring-2 focus:ring-primary/10 disabled:opacity-40 shadow-sm" 
+              {...register("date", { required: true })} 
+              className="w-full bg-surface-container-low px-6 py-5 rounded-4xl text-sm font-technical font-black text-on-surface border-none outline-none focus:ring-2 focus:ring-primary/10 shadow-sm transition-all" 
             />
+            {computedEndDate && (
+              <>
+                <div className="text-primary/40 font-black animate-in fade-in zoom-in-50 duration-500">→</div>
+                <div 
+                  className="w-full bg-surface-container-lowest px-6 py-5 rounded-4xl text-sm font-technical font-black text-on-surface-variant/60 border border-outline-variant/10 cursor-not-allowed shadow-inner transition-all flex items-center animate-in fade-in slide-in-from-right-4 duration-500"
+                  title="Calculated automatically based on Routine Duration"
+                >
+                  {computedEndDate}
+                </div>
+              </>
+            )}
+            {durationType === "CUSTOM" && (
+              <>
+                <div className="text-primary/40 font-black animate-in fade-in zoom-in-50 duration-500">→</div>
+                <input 
+                  type="date" 
+                  {...register("end_date", { 
+                     required: durationType === "CUSTOM",
+                     validate: value => !value || !dateValue || new Date(value) >= new Date(dateValue) || "End Date cannot be before Start Date"
+                  })} 
+                  className={`w-full bg-surface-container-low px-6 py-5 rounded-4xl text-sm font-technical font-black text-on-surface border-none outline-none focus:ring-2 focus:ring-primary/10 shadow-sm transition-all animate-in fade-in slide-in-from-right-4 duration-500 ${errors.end_date ? "ring-2 ring-red-400 focus:ring-red-500" : ""}`} 
+                />
+              </>
+            )}
           </div>
-        )}
+          {errors.end_date && <p className="text-red-500 text-[10px] ml-4 animate-in fade-in">{errors.end_date.message}</p>}
+        </div>
 
         {/* PRIORITY SELECTION */}
         <div className="space-y-4">

@@ -3,6 +3,28 @@ import { supabase } from "../utils/supabase";
 
 // services/questionService.ts
 
+export const normalizeExplanations = (questions: any[]) => {
+  return questions?.map(q => {
+    // Process concept explanations
+    const expObj = Array.isArray(q.question_explanations) ? q.question_explanations[0] : q.question_explanations;
+    const expArray = expObj 
+      ? [expObj.explanation_1, expObj.explanation_2, expObj.explanation_3, expObj.explanation_4].filter(Boolean) 
+      : undefined;
+
+    // Process correct answer explanations
+    const correctExpObj = Array.isArray(q.question_correct_explanations) ? q.question_correct_explanations[0] : q.question_correct_explanations;
+    const correctExpArray = correctExpObj 
+      ? [correctExpObj.explanation_1, correctExpObj.explanation_2, correctExpObj.explanation_3, correctExpObj.explanation_4].filter(Boolean) 
+      : undefined;
+
+    return {
+      ...q,
+      question_explanations: (expArray && expArray.length > 0) ? expArray : undefined,
+      question_correct_explanations: (correctExpArray && correctExpArray.length > 0) ? correctExpArray : undefined
+    };
+  }) || [];
+};
+
 export const getQuestions = async (
   chapter_id: string,
   language: "en" | "od" = "en"
@@ -23,6 +45,12 @@ export const getQuestions = async (
       question_number,
       diagram_url,
       diagram_present,
+      question_explanations (
+        explanation_1,
+        explanation_2,
+        explanation_3,
+        explanation_4
+      ),
       odia_questions (
         question,
         options
@@ -34,10 +62,12 @@ export const getQuestions = async (
 
   if (error) throw error;
 
+  let normalizedData = normalizeExplanations(data || []);
+
   // If Odia requested, swap in translated text where available
   if (language === "od") {
-    return data?.map((q) => {
-      const translation = q.odia_questions?.[0];
+    return normalizedData.map((q) => {
+      const translation = q.odia_questions?.[0] || q.odia_questions;
       return {
         ...q,
         question: translation?.question ?? q.question,  // fallback to English
@@ -46,7 +76,7 @@ export const getQuestions = async (
     });
   }
 
-  return data;
+  return normalizedData;
 };
 
 export const getFilteredQuestions = async (userId: string, limit = 30)=> {
@@ -302,6 +332,12 @@ export const getQuestionsByIds = async (ids: string[]) => {
       question_number,
       diagram_url,
       diagram_present,
+      question_correct_explanations (
+        explanation_1,
+        explanation_2,
+        explanation_3,
+        explanation_4
+      ),
       odia_questions (
         question,
         options
@@ -310,5 +346,5 @@ export const getQuestionsByIds = async (ids: string[]) => {
     .in("id", ids);
 
   if (error) throw error;
-  return data;
+  return normalizeExplanations(data || []);
 };

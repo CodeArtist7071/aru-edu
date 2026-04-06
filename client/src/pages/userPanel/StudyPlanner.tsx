@@ -39,6 +39,9 @@ export interface Habit {
   chapter_id?: string;
   exam_id?: string;
   is_recurring?: boolean;
+  duration_type?: "DAILY" | "WEEKLY" | "MONTHLY" | "CUSTOM";
+  scheduled_date?: string;
+  scheduled_end_date?: string;
 }
 
 export default function StudyPlannerPage() {
@@ -65,6 +68,16 @@ export default function StudyPlannerPage() {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [isSettingUp, setIsSettingUp] = useState(false);
   const [autoOpenAddModal, setAutoOpenAddModal] = useState(false);
+
+  // Redirection: If no exam is selected, default to the first target exam
+  useEffect(() => {
+    console.log("🎯 [StudyPlanner] Route Check:", { examId, targetExams: profile?.target_exams });
+    if (!examId && profile?.target_exams?.length > 0) {
+      const defaultExam = profile.target_exams[0];
+      console.log(`🔀 [StudyPlanner] Redirecting to default exam: ${defaultExam}`);
+      navigate(`/user/plan-study/${defaultExam}`, { replace: true });
+    }
+  }, [examId, profile, navigate]);
   const [hasPrevMonthTasks, setHasPrevMonthTasks] = useState(false);
   const [isGooglePopupOpen, setIsGooglePopupOpen] = useState(false);
   const [isMilestoneDrawerOpen, setIsMilestoneDrawerOpen] = useState(false);
@@ -85,7 +98,11 @@ export default function StudyPlannerPage() {
 
   // Fetch from Supabase
   const fetchData = async () => {
-    if (!user?.id) return;
+    console.log("🔍 [StudyPlanner] Fetching data for:", { user: user?.id, examId, viewMonth, viewYear });
+    if (!user?.id) {
+      console.warn("⚠️ [StudyPlanner] No User ID found, skipping fetch.");
+      return;
+    }
     try {
       setLoading(true);
       const [habitsRes, masteryRes] = await Promise.all([
@@ -94,22 +111,39 @@ export default function StudyPlannerPage() {
           .select("*")
           .eq("user_id", user.id)
           .eq("exam_id", examId)
-          .eq("month", viewMonth)
-          .eq("year", viewYear),
+          .eq("month", String(viewMonth))
+          .eq("year", String(viewYear)),
         supabase
           .from("user_mastery")
           .select("*, chapters(name)")
           .eq("user_id", user.id)
           .eq("exam_id", examId)
-          .eq("month", viewMonth)
-          .eq("year", viewYear),
+          .eq("month", String(viewMonth))
+          .eq("year", String(viewYear)),
       ]);
 
       const allHabits: Habit[] = [];
       const allProgress: Record<string, boolean[]> = {};
 
+      const safeParseProgress = (p: any) => {
+        if (Array.isArray(p)) return p;
+        if (typeof p === "string") {
+          try {
+            return JSON.parse(p);
+          } catch {
+            return Array(31).fill(false);
+          }
+        }
+        return Array(31).fill(false);
+      };
+
+      if (habitsRes.error) console.error("❌ Habits Query Error:", habitsRes.error);
+      if (masteryRes.error) console.error("❌ Mastery Query Error:", masteryRes.error);
+
       const habitsData = habitsRes.data || [];
       const masteryData = masteryRes.data || [];
+      
+      console.log("📊 [StudyPlanner] Data Received:", { habitsCount: habitsData.length, masteryCount: masteryData.length });
 
       habitsData.forEach((h) => {
         allHabits.push({
@@ -120,8 +154,11 @@ export default function StudyPlannerPage() {
           start_time: h.start_time,
           end_time: h.end_time,
           is_recurring: h.is_recurring !== false,
+          duration_type: h.duration_type || "MONTHLY",
+          scheduled_date: h.scheduled_date,
+          scheduled_end_date: h.scheduled_end_date,
         });
-        allProgress[h.id] = h.progress || Array(31).fill(false);
+        allProgress[h.id] = safeParseProgress(h.progress);
       });
 
       masteryData.forEach((m) => {
@@ -136,13 +173,17 @@ export default function StudyPlannerPage() {
           chapter_id: m.chapter_id,
           exam_id: examId,
           is_recurring: m.is_recurring !== false,
+          duration_type: "DAILY",
+          scheduled_date: m.scheduled_date,
+          scheduled_end_date: m.scheduled_end_date,
         });
-        allProgress[m.id] = m.progress || Array(31).fill(false);
+        allProgress[m.id] = safeParseProgress(m.progress);
       });
 
       setHabits(allHabits);
       setProgress(allProgress);
 
+      console.log("✅ [StudyPlanner] State Updated:", { allHabitsCount: allHabits.length, isSettingUp: allHabits.length === 0 });
       setIsSettingUp(allHabits.length === 0);
 
       const prevMonth = viewMonth === 1 ? 12 : viewMonth - 1;
@@ -155,15 +196,15 @@ export default function StudyPlannerPage() {
             .select("*", { count: "exact", head: true })
             .eq("user_id", user.id)
             .eq("exam_id", examId)
-            .eq("month", prevMonth)
-            .eq("year", prevYear),
+            .eq("month", String(prevMonth))
+            .eq("year", String(prevYear)),
           supabase
             .from("user_mastery")
             .select("*", { count: "exact", head: true })
             .eq("exam_id", examId)
             .eq("user_id", user.id)
-            .eq("month", prevMonth)
-            .eq("year", prevYear),
+            .eq("month", String(prevMonth))
+            .eq("year", String(prevYear)),
         ]);
 
       setHasPrevMonthTasks((habitCount || 0) + (masteryCount || 0) > 0);
@@ -204,8 +245,8 @@ export default function StudyPlannerPage() {
           news.push(
             supabase.from("study_habits").insert({
               ...rest,
-              month: viewMonth,
-              year: viewYear,
+              month: String(viewMonth),
+              year: String(viewYear),
               exam_id: examId,
               progress: Array(31).fill(false),
             }),
@@ -219,8 +260,8 @@ export default function StudyPlannerPage() {
           news.push(
             supabase.from("user_mastery").insert({
               ...rest,
-              month: viewMonth,
-              year: viewYear,
+              month: String(viewMonth),
+              year: String(viewYear),
               exam_id: examId,
               progress: Array(31).fill(false),
             }),
@@ -326,13 +367,15 @@ export default function StudyPlannerPage() {
   const stats = useMemo(() => {
     let totalCompleted = 0;
     Object.values(progress).forEach((p) => {
-      totalCompleted += p.filter((v) => v).length;
+      if (Array.isArray(p)) {
+        totalCompleted += p.filter((v) => v).length;
+      }
     });
 
     let currentStreak = 0;
     const maxDays = 31;
     for (let day = maxDays - 1; day >= 0; day--) {
-      const anyDone = Object.values(progress).some((p) => p[day]);
+      const anyDone = Object.values(progress).some((p) => Array.isArray(p) && p[day]);
       if (anyDone) {
         currentStreak++;
       } else if (currentStreak > 0) {
@@ -472,7 +515,7 @@ export default function StudyPlannerPage() {
   const [isAddExpanded, setIsAddExpanded] = useState(false);
 
   const trackerHabits = useMemo(() => {
-    return habits.filter((h) => !h.is_mastery && h.is_recurring !== false);
+    return habits.filter((h) => !h.is_mastery);
   }, [habits]);
 
   const masteryOnly = useMemo(() => {
@@ -602,55 +645,33 @@ export default function StudyPlannerPage() {
               />
             </div>
           </section>
+        </div>
 
-          {/* OVERLAY PANEL: The Side-Sheet Ritual */}
-          <div
-            className={`fixed inset-y-0 right-0 z-100 transition-all duration-700 ease-in-out transform will-change-[transform,opacity] ${outlet ? "translate-x-0 opacity-100 w-full max-w-[540px] pointer-events-auto" : "translate-x-full opacity-0 w-0 pointer-events-none"}`}
-            style={{ transitionTimingFunction: 'var(--ease-premium)' }}
-          >
-            <Suspense fallback={<div className="h-full bg-surface/80 backdrop-blur-3xl border-l border-on-surface/5 animate-pulse" />}>
-              {outlet && (
-                <div className="h-full shadow-ambient-2xl border-l border-on-surface/5 backdrop-blur-3xl bg-surface/85">
-                  <Outlet context={{
-                    viewMonth,
-                    viewYear,
-                    initialHabits: habits,
-                    examId: examId || "",
-                    onRefresh: fetchData,
-                    onRequestConnection: () => setIsGooglePopupOpen(true),
-                    initialProgress: progress
-                  }} />
-                </div>
-              )}
-            </Suspense>
-          </div>
-
-          {/* LOWER ANALYSIS ZONE: Split Routine & Growth */}
-          <div className="hidden lg:grid grid-cols-12 gap-10 mt-20">
-            {/* <section className="lg:col-span-4 space-y-10 animate-in fade-in slide-in-from-left-4 duration-1000">
-              <div className="bg-surface-container-low p-2 rounded-[3.5rem] shadow-ambient">
-                <GrowthMetrics
-                  level={stats.level}
-                  xp={stats.xpInLevel}
-                  totalXp={stats.xp}
-                  streak={stats.currentStreak}
-                />
+        {/* OVERLAY PANEL: The Side-Sheet Ritual / Mobile Full-Screen manifest */}
+        <div
+          className={`fixed inset-y-0 right-0 z-100 transition-all duration-700 ease-in-out transform will-change-[transform,opacity] ${outlet ? "translate-x-0 opacity-100 pointer-events-auto" : "translate-x-full opacity-0 pointer-events-none"} w-full md:max-w-[540px]`}
+          style={{ transitionTimingFunction: 'var(--ease-premium)' }}
+        >
+          <Suspense fallback={<div className="h-full bg-surface/80 backdrop-blur-3xl border-l border-on-surface/5 animate-pulse" />}>
+            {outlet && (
+              <div className="h-full shadow-ambient-2xl border-l border-on-surface/5 backdrop-blur-3xl bg-surface/85">
+                <Outlet context={{
+                  viewMonth,
+                  viewYear,
+                  initialHabits: habits,
+                  examId: examId || "",
+                  onRefresh: fetchData,
+                  onRequestConnection: () => setIsGooglePopupOpen(true),
+                  initialProgress: progress
+                }} />
               </div>
-            </section> */}
+            )}
+          </Suspense>
+        </div>
 
-            {/* <section className="lg:col-span-8 animate-in fade-in slide-in-from-right-4 duration-1000">
-              <div className="bg-surface-container-low p-2 rounded-[3.5rem] shadow-ambient">
-                <DailyRoutine
-                  habits={habits}
-                  progress={progress}
-                  selectedDate={selectedDate}
-                  onRefresh={fetchData}
-                  onSync={handleSyncTaskToCalendar}
-                  onSyncAll={handleSyncAllTasks}
-                />
-              </div>
-            </section> */}
-          </div>
+        {/* LOWER ANALYSIS ZONE: Split Routine & Growth */}
+        <div className="hidden lg:grid grid-cols-12 gap-10 mt-20">
+          {/* Analysis content... */}
         </div>
       </main>
 
