@@ -46,7 +46,7 @@ export const GridDayHeaderRow: React.FC<GridDayHeaderRowProps> = ({
           const weekIdx = Math.floor(idx / 7);
           const color = WEEK_COLORS[weekIdx] || WEEK_COLORS[WEEK_COLORS.length - 1];
           return (
-            <th key={idx} className="border-b border-slate-100 p-0 w-[36px] bg-slate-50/30">
+            <th key={idx} className="border-b border-slate-100 p-0 w-[36px]" style={{ backgroundColor: `${color}4d` }}>
               <GridDailyFlow percent={dailyPercents[idx] || 0} color={color} />
             </th>
           );
@@ -102,7 +102,7 @@ export const GridDayHeaderRow: React.FC<GridDayHeaderRowProps> = ({
               className={`p-1 text-center font-normal cursor-pointer transition-all duration-300 ease-in-out border-b border-slate-200 hover:bg-slate-200/50 ${
                 isSelected ? "ring-2 ring-inset ring-slate-800 bg-slate-100 shadow-inner scale-105 z-10" : isToday ? "bg-slate-200" : ""
               }`}
-              style={{ backgroundColor: !isSelected && !isToday ? `${color}15` : undefined }}
+              style={{ backgroundColor: !isSelected && !isToday ? `${color}90` : undefined }}
             >
               <div className="text-[9px] font-bold text-slate-400 uppercase tracking-tighter" style={{ color: color }}>
                 {WEEKDAY_NAMES[weekdayIdx]}

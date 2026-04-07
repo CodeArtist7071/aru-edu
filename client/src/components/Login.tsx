@@ -18,7 +18,9 @@ const Login = () => {
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isResetMode, setIsResetMode] = useState(false);
+  const [isMagicLinkMode, setIsMagicLinkMode] = useState(false);
   const [resetSuccess, setResetSuccess] = useState(false);
+  const [linkSent, setLinkSent] = useState(false);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -54,6 +56,7 @@ const Login = () => {
     setError(null);
     setErrorMessage(null);
     setResetSuccess(false);
+    setLinkSent(false);
 
     try {
       if (isResetMode) {
@@ -67,6 +70,21 @@ const Login = () => {
         }
         
         setResetSuccess(true);
+        reset();
+      } else if (isMagicLinkMode) {
+        const { error } = await supabase.auth.signInWithOtp({
+          email: info.email,
+          options: {
+            emailRedirectTo: `${window.location.origin}/user/dashboard`,
+          },
+        });
+        
+        if (error) {
+          setError(error);
+          return;
+        }
+        
+        setLinkSent(true);
         reset();
       } else {
         const { data, error } = await supabase.auth.signInWithPassword({
@@ -107,10 +125,10 @@ const Login = () => {
           </div>
           <div>
             <h1 className="text-4xl font-black tracking-tighter text-on-surface transition-all duration-700">
-              {isResetMode ? "Relink Soul Key" : "Welcome Back"}
+              {isResetMode ? "Relink Soul Key" : isMagicLinkMode ? "Ethereal Link" : "Welcome Back"}
             </h1>
             <p className="text-[10px] font-technical font-black uppercase tracking-[0.3em] text-on-surface-variant opacity-40">
-              {isResetMode ? "Nature's Recovery Ritual" : "The Living Journal awaits"}
+              {isResetMode ? "Recovery Ritual" : isMagicLinkMode ? "Ethereal manifestation link" : "The Living Journal awaits"}
             </p>
           </div>
         </div>
@@ -119,24 +137,25 @@ const Login = () => {
         <div className="bg-surface p-10 rounded-[3rem] shadow-ambient border border-on-surface/5 space-y-8 animate-reveal overflow-hidden">
           {error && <StatusBanner status={error} />}
           {errorMessage && <div className="p-4 bg-primary/5 text-primary text-[10px] font-technical font-black uppercase tracking-widest rounded-xl text-center">{errorMessage}</div>}
-          {resetSuccess && (
+          
+          {(resetSuccess || linkSent) && (
             <div className="p-6 bg-primary/10 rounded-[2rem] border border-primary/20 space-y-4 text-center animate-reveal">
                <p className="text-xs font-technical font-black text-primary uppercase tracking-widest leading-relaxed">
-                  The Recovery Sprout has been sent to your journal email.
+                  {resetSuccess ? "The Recovery Sprout has been sent to your journal email." : "The Ethereal Connection link has been sent."}
                </p>
                <button 
                 type="button" 
-                onClick={() => { setIsResetMode(false); setResetSuccess(false); }}
+                onClick={() => { setIsResetMode(false); setIsMagicLinkMode(false); setResetSuccess(false); setLinkSent(false); }}
                 className="text-[9px] font-technical font-black text-on-surface uppercase tracking-[0.3em] hover:opacity-100 opacity-60 underline"
                >
-                 Back to Journal
+                  Back to Journal
                </button>
             </div>
           )}
           
-          {!resetSuccess && (
+          {!resetSuccess && !linkSent && (
             <>
-              {!isResetMode && (
+              {!isResetMode && !isMagicLinkMode && (
                 <div className="space-y-8 animate-reveal">
                   <button
                     onClick={handleGoogleSignIn}
@@ -175,7 +194,7 @@ const Login = () => {
                     pattern: { value: /^\S+@\S+\.\S+$/, message: "Invalid email" }
                   })}
                 />
-                {!isResetMode && (
+                {!isResetMode && !isMagicLinkMode && (
                   <InputWithLabel
                     label="Secret Key"
                     id="password"
@@ -183,31 +202,34 @@ const Login = () => {
                     placeholder="••••••••"
                     error={errors.password}
                     labelIcon={<EyeClosed className="size-4" />}
-                    {...register("password", { required: !isResetMode ? "Password is required" : false })}
+                    {...register("password", { required: !isResetMode && !isMagicLinkMode ? "Password is required" : false })}
                   />
                 )}
 
                 <div className="flex justify-between items-center px-2">
-                  {!isResetMode ? (
-                    <label className="flex items-center gap-2 cursor-pointer group">
-                      <input type="checkbox" className="size-4 rounded-full border-on-surface/10 text-primary focus:ring-primary/20 transition-all cursor-pointer" />
-                      <span className="text-[10px] font-technical font-black uppercase tracking-widest text-on-surface-variant opacity-60 group-hover:opacity-100 transition-opacity">Stay Logged In</span>
-                    </label>
+                  {!isResetMode && !isMagicLinkMode ? (
+                    <button 
+                      type="button" 
+                      onClick={() => setIsMagicLinkMode(true)}
+                      className="text-[10px] font-technical font-black uppercase tracking-widest text-primary hover:underline transition-all"
+                    >
+                      Manifest via Link
+                    </button>
                   ) : (
                     <button 
                       type="button" 
-                      onClick={() => setIsResetMode(false)}
+                      onClick={() => { setIsResetMode(false); setIsMagicLinkMode(false); }}
                       className="text-[10px] font-technical font-black uppercase tracking-widest text-on-surface-variant underline hover:text-on-surface transition-all"
                     >
-                      Wait, I remember it!
+                      Use Secret Key
                     </button>
                   )}
                   
-                  {!isResetMode && (
+                  {!isResetMode && !isMagicLinkMode && (
                     <button 
                       type="button" 
                       onClick={() => setIsResetMode(true)}
-                      className="text-[10px] font-technical font-black uppercase tracking-widest text-primary hover:underline transition-all"
+                      className="text-[10px] font-technical font-black uppercase tracking-widest text-on-surface-variant opacity-60 hover:opacity-100 hover:underline transition-all"
                     >
                       Lost Key?
                     </button>
@@ -216,13 +238,12 @@ const Login = () => {
 
                 <Button
                   disabled={isSubmitting}
-                  title={isSubmitting ? (isResetMode ? "Sending Sprout..." : "Authenticating...") : (isResetMode ? "Recover Soul Key" : "Open Journal")}
+                  title={isSubmitting ? (isResetMode ? "Sending Sprout..." : isMagicLinkMode ? "Summoning Link..." : "Authenticating...") : (isResetMode ? "Recover Soul Key" : isMagicLinkMode ? "Summon Ethereal Link" : "Open Journal")}
                 />
               </form>
             </>
           )}
         </div>
-
       </div>
     </div>
   );

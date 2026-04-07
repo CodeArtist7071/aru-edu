@@ -42,6 +42,7 @@ export const useTrackerGridLogic = (
   const [unlockPastDays, setUnlockPastDays] = useState(false);
   const [reminderTest, setReminderTest] = useState<any>(null);
   const [lastTriggeredId, setLastTriggeredId] = useState<string | null>(null);
+  const [isDuplicating, setIsDuplicating] = useState(false);
   const [dismissedRenewals, setDismissedRenewals] = useState<Set<string>>(new Set());
 
   // Sync active week to current date
@@ -66,50 +67,77 @@ export const useTrackerGridLogic = (
 
     // Selected Date Filter
     if (selectedDate) {
+      const cellDateNormalized = new Date(selectedDate);
+      cellDateNormalized.setHours(0, 0, 0, 0);
+
+      const activeHabitNames = new Set(
+        initialHabits
+          .filter(h => {
+             if (!h.scheduled_date) return false;
+             const start = new Date(h.scheduled_date);
+             start.setHours(0, 0, 0, 0);
+             if (cellDateNormalized < start) return false;
+
+             if (h.duration_type === "DAILY") return cellDateNormalized.getTime() === start.getTime();
+             if (h.duration_type === "WEEKLY") {
+               const end = new Date(start);
+               end.setDate(start.getDate() + 6);
+               return cellDateNormalized <= end;
+             }
+             if (h.duration_type === "MONTHLY") return true; 
+             return false;
+          })
+          .map(h => h.name.trim().toLowerCase())
+      );
+
       list = list.filter((habit) => {
         if (!habit.scheduled_date) return true; // fallback
         
-        const cellDate = new Date(selectedDate);
         const startDate = new Date(habit.scheduled_date);
         startDate.setHours(0, 0, 0, 0);
-        cellDate.setHours(0, 0, 0, 0);
 
         // Include habits that are active today
-        let isActive = true;
-        if (cellDate < startDate) {
-          isActive = false;
-        } else {
-          if (habit.duration_type === "DAILY") {
-            if (cellDate.getTime() !== startDate.getTime()) isActive = false;
-          } else if (habit.duration_type === "WEEKLY") {
-            const endDate = new Date(startDate);
-            endDate.setDate(startDate.getDate() + 6);
-            if (cellDate > endDate) isActive = false;
-          } else if (habit.duration_type === "CUSTOM" && habit.scheduled_end_date) {
-            const endDate = new Date(habit.scheduled_end_date);
-            endDate.setHours(23, 59, 59, 999);
-            if (cellDate > endDate) isActive = false;
-          }
+        let isActiveNow = false;
+        if (cellDateNormalized >= startDate) {
+           if (habit.duration_type === "DAILY") {
+             isActiveNow = cellDateNormalized.getTime() === startDate.getTime();
+           } else if (habit.duration_type === "WEEKLY") {
+             const endDate = new Date(startDate);
+             endDate.setDate(startDate.getDate() + 6);
+             isActiveNow = cellDateNormalized <= endDate;
+           } else if (habit.duration_type === "MONTHLY") {
+             isActiveNow = true;
+           } else if (habit.duration_type === "CUSTOM" && habit.scheduled_end_date) {
+             const endDate = new Date(habit.scheduled_end_date);
+             endDate.setHours(23, 59, 59, 999);
+             isActiveNow = cellDateNormalized <= endDate;
+           }
         }
 
-        if (isActive) return true;
+        if (isActiveNow) return true;
 
-        // ALSO include habits that ended exactly yesterday for "Renew Suggestion"
-        const prevDate = new Date(selectedDate);
+        // ALSO check if it's an "Expired" ritual suitable for renewal
+        const prevDate = new Date(cellDateNormalized);
         prevDate.setDate(prevDate.getDate() - 1);
         prevDate.setHours(0, 0, 0, 0);
 
+        let isExpiredYesterday = false;
         if (habit.duration_type === "DAILY") {
-          return prevDate.getTime() === startDate.getTime();
+          isExpiredYesterday = prevDate.getTime() === startDate.getTime();
         } else if (habit.duration_type === "WEEKLY") {
           const endDate = new Date(startDate);
           endDate.setDate(startDate.getDate() + 6);
           endDate.setHours(0, 0, 0, 0);
-          return prevDate.getTime() === endDate.getTime();
+          isExpiredYesterday = prevDate.getTime() === endDate.getTime();
         } else if (habit.duration_type === "CUSTOM" && habit.scheduled_end_date) {
           const endDate = new Date(habit.scheduled_end_date);
           endDate.setHours(0, 0, 0, 0);
-          return prevDate.getTime() === endDate.getTime();
+          isExpiredYesterday = prevDate.getTime() === endDate.getTime();
+        }
+
+        // UNIFIED SUPPRESSION: Only show expired tasks if NO active version exists today
+        if (isExpiredYesterday) {
+           return !activeHabitNames.has(habit.name.trim().toLowerCase());
         }
 
         return false;
@@ -119,13 +147,44 @@ export const useTrackerGridLogic = (
     return list;
   }, [initialHabits, searchTerm, selectedDate]);
 
-  // Duplicate Habit for renewal
   const duplicateHabit = useCallback(async (habit: Habit) => {
-    if (!user?.id || !selectedDate) return;
+    if (!user?.id || !selectedDate || isDuplicating) return;
+    setIsDuplicating(true);
     try {
       const table = habit.is_mastery ? "user_mastery" : "study_habits";
       const newProgress = Array(31).fill(false);
       newProgress[selectedDate.getDate() - 1] = true;
+
+      // Smart Temporal Interval Manifestation
+      let scheduled_end_date = null;
+      if (habit.duration_type === "WEEKLY") {
+        const end = new Date(selectedDate);
+        end.setDate(end.getDate() + 6);
+        scheduled_end_date = end.toISOString().split('T')[0];
+      } else if (habit.duration_type === "MONTHLY") {
+        const end = new Date(selectedDate);
+        end.setMonth(end.getMonth() + 1);
+        end.setDate(end.getDate() - 1);
+        scheduled_end_date = end.toISOString().split('T')[0];
+      }
+
+      const newStartStr = selectedDate.toISOString().split('T')[0];
+
+      // Existence Manifestation Check
+      const { data: existing } = await supabase
+        .from(table)
+        .select("id")
+        .eq("user_id", user.id)
+        .eq("name", habit.name)
+        .eq("scheduled_date", newStartStr)
+        .maybeSingle();
+
+      if (existing) {
+        notify({ message: `"${habit.name}" already persists for this manifestation period.`, title: "Already Manifested", status: "info" });
+        onRefresh();
+        setIsDuplicating(false);
+        return;
+      }
 
       const newHabitData: any = {
         user_id: user.id,
@@ -137,7 +196,8 @@ export const useTrackerGridLogic = (
         chapter_id: habit.chapter_id,
         is_recurring: habit.is_recurring,
         duration_type: habit.duration_type,
-        scheduled_date: selectedDate.toISOString().split('T')[0],
+        scheduled_date: newStartStr,
+        scheduled_end_date,
         month: selectedDate.getMonth() + 1,
         year: selectedDate.getFullYear(),
         progress: newProgress,
@@ -151,8 +211,10 @@ export const useTrackerGridLogic = (
       onRefresh();
     } catch (err: any) {
       notify({ message: err.message || "Renewal failed", title: "Persistence Error", status: "error" });
+    } finally {
+      setIsDuplicating(false);
     }
-  }, [user?.id, selectedDate, examId, onRefresh, notify]);
+  }, [user?.id, selectedDate, isDuplicating, examId, onRefresh, notify]);
 
   const dismissRenewal = useCallback((habitId: string) => {
     setDismissedRenewals(prev => new Set(prev).add(habitId));

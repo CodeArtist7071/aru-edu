@@ -20,6 +20,7 @@ import { useGoogleCalendar } from "../../utils/useGoogleCalender";
 import { type Habit } from "../../components/studyPlanner/types";
 import { useStudyPlanner } from "../../components/studyPlanner/hooks/useStudyPlanner";
 import { usePlannerStats } from "../../components/studyPlanner/hooks/usePlannerStats";
+import { StudyGraph } from "../../components/studyPlanner/StudyGraph";
 
 const now = new Date();
 const currentMonthIdx = now.getMonth();
@@ -283,6 +284,15 @@ export default function StudyPlannerPage() {
           {/* <div className="col-span-12 xl:col-span-4">
             <FocusTimer />
           </div> */}
+          <div className="col-span-12">
+            <StudyGraph 
+              habits={habits}
+              progress={progress}
+              viewMonth={viewMonth}
+              viewYear={viewYear}
+            />
+          </div>
+       
         </div>
       </main>
 

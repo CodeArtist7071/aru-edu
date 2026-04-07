@@ -89,7 +89,7 @@ export default function TrackerGrid(props: TrackerGridProps) {
   );
 
   return (
-    <div className="flex flex-col text-on-surface w-full h-full bg-white min-w-0 relative animate-in fade-in duration-700">
+    <div className="flex flex-col text-on-surface w-full h-full bg-white/90 min-w-0 relative animate-in fade-in duration-700">
       {/* Top Header Section (Emily Excels Title & Active Days) */}
       <div className="bg-emerald-800 text-white p-6 shadow-lg border-b-4 border-emerald-900">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -126,7 +126,7 @@ export default function TrackerGrid(props: TrackerGridProps) {
         setUnlockPastDays={setUnlockPastDays}
       />
 
-      <div className="flex-1 overflow-auto bg-white relative shadow-inner">
+      <div className="flex-1 overflow-auto bg-white/80 relative shadow-inner">
         <table className="w-max min-w-full border-separate border-spacing-0 text-xs select-none">
           <thead>
             <GridDayHeaderRow 
@@ -223,26 +223,53 @@ export default function TrackerGrid(props: TrackerGridProps) {
                   // Calculate Expiration for "Renew Manifestation" suggestment
                   let isRecentlyExpired = false;
                   if (selectedDate && !habitIsActiveToday && !dismissedRenewals.has(habit.id)) {
-                    // Check if it ended exactly yesterday relative to selectedDate
-                    const prevDate = new Date(selectedDate);
-                    prevDate.setDate(prevDate.getDate() - 1);
-                    prevDate.setHours(0, 0, 0, 0);
+                    // Check if another manifestation with the same name is already active today
+                    const isAlreadyActiveToday = habitsWithStreaks.some(h => {
+                       if (h.id === habit.id || h.name !== habit.name) return false;
+                       
+                       // Replication of temporal logic for the comparison habit
+                       if (!h.scheduled_date) return false;
+                       const compStart = new Date(h.scheduled_date);
+                       compStart.setHours(0, 0, 0, 0);
+                       const compSelected = new Date(selectedDate);
+                       compSelected.setHours(0, 0, 0, 0);
 
-                    if (habit.scheduled_date) {
-                      const startDate = new Date(habit.scheduled_date);
-                      startDate.setHours(0, 0, 0, 0);
+                       if (compSelected < compStart) return false;
+                       
+                       if (h.duration_type === "DAILY") {
+                         return compSelected.getTime() === compStart.getTime();
+                       } else if (h.duration_type === "WEEKLY") {
+                         const compEnd = new Date(compStart);
+                         compEnd.setDate(compStart.getDate() + 6);
+                         return compSelected <= compEnd;
+                       } else if (h.duration_type === "MONTHLY") {
+                         return true; // Active for month
+                       }
+                       return false;
+                    });
 
-                      if (habit.duration_type === "DAILY") {
-                        if (prevDate.getTime() === startDate.getTime()) isRecentlyExpired = true;
-                      } else if (habit.duration_type === "WEEKLY") {
-                        const endDate = new Date(startDate);
-                        endDate.setDate(startDate.getDate() + 6);
-                        endDate.setHours(0, 0, 0, 0);
-                        if (prevDate.getTime() === endDate.getTime()) isRecentlyExpired = true;
-                      } else if (habit.duration_type === "CUSTOM" && habit.scheduled_end_date) {
-                        const endDate = new Date(habit.scheduled_end_date);
-                        endDate.setHours(0, 0, 0, 0);
-                        if (prevDate.getTime() === endDate.getTime()) isRecentlyExpired = true;
+                    if (!isAlreadyActiveToday) {
+                      // Check if it ended exactly yesterday relative to selectedDate
+                      const prevDate = new Date(selectedDate);
+                      prevDate.setDate(prevDate.getDate() - 1);
+                      prevDate.setHours(0, 0, 0, 0);
+
+                      if (habit.scheduled_date) {
+                        const startDate = new Date(habit.scheduled_date);
+                        startDate.setHours(0, 0, 0, 0);
+
+                        if (habit.duration_type === "DAILY") {
+                          if (prevDate.getTime() === startDate.getTime()) isRecentlyExpired = true;
+                        } else if (habit.duration_type === "WEEKLY") {
+                          const endDate = new Date(startDate);
+                          endDate.setDate(startDate.getDate() + 6);
+                          endDate.setHours(0, 0, 0, 0);
+                          if (prevDate.getTime() === endDate.getTime()) isRecentlyExpired = true;
+                        } else if (habit.duration_type === "CUSTOM" && habit.scheduled_end_date) {
+                          const endDate = new Date(habit.scheduled_end_date);
+                          endDate.setHours(0, 0, 0, 0);
+                          if (prevDate.getTime() === endDate.getTime()) isRecentlyExpired = true;
+                        }
                       }
                     }
                   }

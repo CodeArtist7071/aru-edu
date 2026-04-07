@@ -2,7 +2,7 @@ import { type Habit } from "./types";
 
 export const getTodayStr = () => new Date().toISOString().split('T')[0];
 
-export const WEEK_COLORS = ["#10B981", "#A855F7", "#F43F5E", "#F59E0B", "#94A3B8"];
+export const WEEK_COLORS = ["#71af48", "#7b8bc4", "#ee7c7c", "#f8ae54", "#a5a5a5"];
 
 export const DEMO_HABITS: Habit[] = [
   { 
