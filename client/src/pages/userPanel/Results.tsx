@@ -213,21 +213,25 @@ const Results = () => {
     { name: "Skipped", value: metrics.skipped, color: "#94a3b8" },
   ].filter((d) => d.value > 0);
 
-  if (loading) {
+  if (loading || !attempt) {
     return (
-      <div className="min-h-screen bg-surface-container-low dark:bg-slate-950 px-4 md:px-10 pb-20 animate-reveal">
-        <div className="max-w-5xl mx-auto pt-12 space-y-12">
-          <div className="absolute inset-0 border-4 border-[#16a34a]/20 rounded-full" />
-          <div className="absolute inset-0 border-4 border-[#16a34a] border-t-transparent rounded-full animate-spin" />
-          <Trophy className="absolute inset-0 m-auto size-8 text-[#16a34a] animate-bounce" />
+      <div className="min-h-screen bg-surface-container-low dark:bg-slate-950 flex flex-col items-center justify-center p-6 animate-reveal">
+        <div className="relative size-32 flex items-center justify-center mb-8">
+          <div className="absolute inset-0 border-8 border-[#16a34a]/10 rounded-full" />
+          <div className="absolute inset-0 border-8 border-[#16a34a] border-t-transparent rounded-full animate-spin" />
+          <Trophy className="size-12 text-[#16a34a] animate-bounce" />
         </div>
-        <div className="text-center space-y-2">
-          <h2 className="text-xl font-black text-on-surface dark:text-white uppercase tracking-tighter">
+        <div className="text-center space-y-3">
+          <h2 className="text-2xl font-black text-on-surface dark:text-white uppercase tracking-tighter">
             Analyzing Mastery
           </h2>
-          <p className="text-sm font-bold text-slate-400 animate-pulse uppercase tracking-[0.2em]">
-            Calculating results & AI insights...
-          </p>
+          <div className="flex items-center justify-center gap-2">
+            <span className="size-1.5 bg-primary rounded-full animate-pulse" />
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">
+              Calculating results & AI insights
+            </p>
+            <span className="size-1.5 bg-primary rounded-full animate-pulse delay-75" />
+          </div>
         </div>
       </div>
     );

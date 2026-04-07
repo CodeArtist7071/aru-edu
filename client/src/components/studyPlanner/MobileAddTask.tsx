@@ -132,7 +132,7 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
     if (!dateValue) return;
     const start = new Date(dateValue);
     
-    if (durationType === "DAILY" || useChapter) {
+    if (durationType === "DAILY") {
        setComputedEndDate("");
     } else if (durationType === "WEEKLY") {
        const end = new Date(start);
@@ -175,7 +175,15 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
         setValue("priority", h.priority as any);
         setValue("start_time", h.start_time || "09:00");
         setValue("end_time", h.end_time || "10:00");
-        setValue("duration_type", (h as any).duration_type || ((h as any).is_recurring === false ? "DAILY" : "MONTHLY"));
+        setValue("duration_type", h.duration_type || (h.is_recurring === false ? "DAILY" : "MONTHLY"));
+        
+        if (h.scheduled_date) {
+           setValue("date", h.scheduled_date);
+        }
+        if (h.scheduled_end_date) {
+           setValue("end_date", h.scheduled_end_date);
+        }
+        
         if (h.chapter_id) { setUseChapter(true); setValue("chapter_id", h.chapter_id); }
       }
     } else if (isOpen) {
@@ -231,75 +239,49 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
       }
 
       if (editingHabitId && !editingHabitId.startsWith("demo-")) {
-        console.log("📝 [MobileAddTask] Updating existing habit:", editingHabitId);
-        const habit = initialHabits.find(h => h.id === editingHabitId);
-        if (!habit) {
-          console.error("❌ [MobileAddTask] Habit not found in initialHabits");
-          return;
-        }
-        const table = habit.is_mastery ? "user_mastery" : "study_habits";
         const updateData: any = { 
-          name: habit.is_mastery ? undefined : name, 
           priority: data.priority, 
           start_time: data.start_time, 
-          end_time: data.end_time,
-          chapter_id: useChapter ? data.chapter_id : null,
-          is_recurring: data.duration_type !== "DAILY",
-          duration_type: useChapter ? "DAILY" : data.duration_type,
+          end_time: data.end_time, 
+          chapter_id: useChapter ? data.chapter_id : null, 
+          is_recurring: data.duration_type !== "DAILY", 
+          duration_type: data.duration_type 
         };
+        if (!useChapter) updateData.name = name;
+        await supabase.from("study_habits").update(updateData).eq("id", editingHabitId);
         
         if (data.date) {
-           const newDate = new Date(data.date);
-           const newDayIdx = newDate.getDate() - 1;
-           const newProgress = Array(31).fill(false);
-           if (data.duration_type === "DAILY" || habit.is_mastery) newProgress[newDayIdx] = true;
-           updateData.scheduled_date = newDate.toISOString().split('T')[0];
-           if (data.duration_type === "CUSTOM" && data.end_date) {
-              updateData.scheduled_end_date = new Date(data.end_date).toISOString().split('T')[0];
-           } else {
-              updateData.scheduled_end_date = null;
-           }
-           updateData.month = String(newDate.getMonth() + 1);
-           updateData.year = String(newDate.getFullYear());
-           updateData.progress = newProgress;
+          const newDate = new Date(data.date);
+          await supabase.from("study_habits").update({
+            scheduled_date: newDate.toISOString().split('T')[0],
+            month: String(newDate.getMonth() + 1),
+            year: String(newDate.getFullYear()),
+            progress: Array(31).fill(false).map((_, i) => i === newDate.getDate() - 1 && data.duration_type === "DAILY")
+          }).eq("id", editingHabitId);
         }
-
-        console.log(`📡 [MobileAddTask] Supabase Update to ${table}:`, updateData);
-        if (habit.is_mastery) updateData.is_mastery = true;
-        const { error } = await supabase.from(table).update(updateData).eq("id", editingHabitId);
-        if (error) throw error;
       } else {
-        console.log("🆕 [MobileAddTask] Inserting new ritual");
-        const table = useChapter ? "user_mastery" : "study_habits";
         const scheduledDate = data.date ? new Date(data.date) : new Date();
         const habitData: any = { 
           user_id: user.id, 
           priority: data.priority, 
           start_time: data.start_time, 
           end_time: data.end_time, 
-          category: "theory", 
           progress: Array(31).fill(false), 
           month: String(viewMonth), 
           year: String(viewYear), 
-          exam_id: examId,
+          exam_id: examId, 
           chapter_id: useChapter ? data.chapter_id : null, 
-          is_recurring: data.duration_type !== "DAILY",
-          duration_type: useChapter ? "DAILY" : data.duration_type,
-          scheduled_date: scheduledDate.toISOString().split('T')[0],
-          is_mastery: useChapter
+          is_recurring: data.duration_type !== "DAILY", 
+          duration_type: data.duration_type, 
+          scheduled_date: scheduledDate.toISOString().split('T')[0] 
         };
-
-        if (data.duration_type === "CUSTOM" && data.end_date) {
-           habitData.scheduled_end_date = new Date(data.end_date).toISOString().split('T')[0];
-        }
-
+        
         if (!useChapter) habitData.name = name;
         if (scheduledDate.getMonth() + 1 === viewMonth && scheduledDate.getFullYear() === viewYear) {
-           habitData.progress[scheduledDate.getDate() - 1] = true;
+          habitData.progress[scheduledDate.getDate() - 1] = data.duration_type === "DAILY";
         }
-        
-        console.log(`📡 [MobileAddTask] Supabase Insert to ${table}:`, habitData);
-        const { error } = await supabase.from(table).insert(habitData);
+
+        const { error } = await supabase.from("study_habits").insert(habitData);
         if (error) throw error;
       }
       console.log("✅ [MobileAddTask] Manifestation Successful");
@@ -414,7 +396,7 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
 
           <div className="space-y-2">
              <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1 flex items-center justify-between">
-               <span>{useChapter || durationType === "DAILY" ? "Scheduled Date" : "Start Date"}</span>
+               <span>{durationType === "DAILY" ? "Scheduled Date" : "Start Date"}</span>
                {computedEndDate && <span className="opacity-60">Auto End Date</span>}
                {durationType === "CUSTOM" && <span className="opacity-60">Set End Date</span>}
              </label>

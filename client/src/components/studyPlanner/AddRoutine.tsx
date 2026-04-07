@@ -118,7 +118,7 @@ export const AddRoutine = () => {
     if (!dateValue) return;
     const start = new Date(dateValue);
     
-    if (durationType === "DAILY" || useChapter) {
+    if (durationType === "DAILY") {
        setComputedEndDate("");
     } else if (durationType === "WEEKLY") {
        const end = new Date(start);
@@ -160,18 +160,18 @@ export const AddRoutine = () => {
         setValue("priority", h.priority as any);
         setValue("start_time", h.start_time || "09:00");
         setValue("end_time", h.end_time || "10:00");
-        setValue("duration_type", (h as any).duration_type || ((h as any).is_recurring === false ? "DAILY" : "MONTHLY"));
+        setValue("duration_type", h.duration_type || (h.is_recurring === false ? "DAILY" : "MONTHLY"));
+        
+        if (h.scheduled_date) {
+           setValue("date", h.scheduled_date);
+        }
+        if (h.scheduled_end_date) {
+           setValue("end_date", h.scheduled_end_date);
+        }
+
         if (h.chapter_id) {
           setValue("chapter_id", h.chapter_id);
           setUseChapter(true);
-          const prog = incomingProgress?.[h.id];
-          if (prog) {
-            const dayIdx = prog.findIndex((x: boolean) => x === true);
-            if (dayIdx >= 0) {
-              const d = new Date(viewYear, viewMonth - 1, dayIdx + 1);
-              setValue("date", getLocalDateString(d));
-            }
-          }
         }
       }
     } else {
@@ -217,12 +217,16 @@ export const AddRoutine = () => {
 
     try {
       if (editingHabitId && !editingHabitId.startsWith("demo-")) {
-        const habit = initialHabits.find((h) => h.id === editingHabitId);
-        if (!habit) return;
-        const table = habit.is_mastery ? "user_mastery" : "study_habits";
-        const updateData: any = { priority: data.priority, start_time: data.start_time, end_time: data.end_time, chapter_id: useChapter ? data.chapter_id : null, is_recurring: data.duration_type !== "DAILY", duration_type: useChapter ? "DAILY" : data.duration_type };
-        if (!habit.is_mastery) updateData.name = name;
-        await supabase.from(table).update(updateData).eq("id", editingHabitId);
+        const updateData: any = { 
+          priority: data.priority, 
+          start_time: data.start_time, 
+          end_time: data.end_time, 
+          chapter_id: useChapter ? data.chapter_id : null, 
+          is_recurring: data.duration_type !== "DAILY", 
+          duration_type: data.duration_type 
+        };
+        if (!useChapter) updateData.name = name;
+        await supabase.from("study_habits").update(updateData).eq("id", editingHabitId);
 
          if (data.date) {
             const newDate = new Date(data.date);
@@ -230,7 +234,7 @@ export const AddRoutine = () => {
             const newMonth = newDate.getMonth() + 1;
             const newYear = newDate.getFullYear();
             const newProgress = Array(31).fill(false);
-            if (data.duration_type === "DAILY" || habit.is_mastery) newProgress[newDayIdx] = true;
+            if (data.duration_type === "DAILY") newProgress[newDayIdx] = true;
             
             updateData.scheduled_date = newDate.toISOString().split('T')[0];
             if (data.duration_type === "CUSTOM" && data.end_date) {
@@ -242,20 +246,20 @@ export const AddRoutine = () => {
             updateData.year = newYear;
             updateData.progress = newProgress;
          }
-         await supabase.from(table).update(updateData).eq("id", editingHabitId);
+         await supabase.from("study_habits").update(updateData).eq("id", editingHabitId);
 
         if (connected && data.syncToCalendar) {
           const { data: prof } = await supabase.from("profiles").select("google_calendar_event_ids").eq("id", user.id).single();
           const gcId = prof?.google_calendar_event_ids?.[editingHabitId];
           if (gcId) {
-            const execDate = (habit.is_mastery || data.duration_type === "DAILY") && data.date ? data.date : new Date().toISOString().split('T')[0];
+            const execDate = data.duration_type === "DAILY" && data.date ? data.date : new Date().toISOString().split('T')[0];
             const [sh, sm] = data.start_time.split(':').map(Number);
             const [eh, em] = data.end_time.split(':').map(Number);
             const startDT = new Date(execDate); startDT.setHours(sh, sm, 0, 0);
             const endDT = new Date(execDate); endDT.setHours(eh, em, 0, 0);
             await editEvent(gcId, {
-              summary: habit.is_mastery ? `Test: ${name}` : name,
-              description: habit.is_mastery ? `Scheduled Test for ${name}. Odisha Exam Prep.` : `OPSC Study - ${data.priority} priority`,
+              summary: useChapter ? `Test: ${name}` : name,
+              description: useChapter ? `Scheduled Test for ${name}. Odisha Exam Prep.` : `OPSC Study - ${data.priority} priority`,
               start: { dateTime: startDT.toISOString(), timeZone: "Asia/Kolkata" },
               end: { dateTime: endDT.toISOString(), timeZone: "Asia/Kolkata" },
             });
@@ -269,7 +273,20 @@ export const AddRoutine = () => {
           dispatch(updateUserLocally({ planner_start_date: new Date().toISOString() }));
         }
         const scheduledDate = data.date ? new Date(data.date) : new Date();
-        const habitData: any = { user_id: user.id, priority: data.priority, start_time: data.start_time, end_time: data.end_time, progress: Array(31).fill(false), month: viewMonth, year: viewYear, exam_id: examId, chapter_id: useChapter ? data.chapter_id : null, is_recurring: data.duration_type !== "DAILY", duration_type: useChapter ? "DAILY" : data.duration_type, scheduled_date: scheduledDate.toISOString().split('T')[0] };
+        const habitData: any = { 
+          user_id: user.id, 
+          priority: data.priority, 
+          start_time: data.start_time, 
+          end_time: data.end_time, 
+          progress: Array(31).fill(false), 
+          month: viewMonth, 
+          year: viewYear, 
+          exam_id: examId, 
+          chapter_id: useChapter ? data.chapter_id : null, 
+          is_recurring: data.duration_type !== "DAILY", 
+          duration_type: data.duration_type, 
+          scheduled_date: scheduledDate.toISOString().split('T')[0] 
+        };
         
         if (data.duration_type === "CUSTOM" && data.end_date) {
            habitData.scheduled_end_date = new Date(data.end_date).toISOString().split('T')[0];
@@ -277,10 +294,9 @@ export const AddRoutine = () => {
 
         if (!useChapter) habitData.name = name;
         const isTargetMonth = scheduledDate.getMonth() + 1 === viewMonth && scheduledDate.getFullYear() === viewYear;
-        if (isTargetMonth) habitData.progress[scheduledDate.getDate() - 1] = true;
+        if (isTargetMonth && data.duration_type === "DAILY") habitData.progress[scheduledDate.getDate() - 1] = true;
 
-        const table = useChapter ? "user_mastery" : "study_habits";
-        const { data: newHabit, error } = await supabase.from(table).insert(habitData).select().single();
+        const { data: newHabit, error } = await supabase.from("study_habits").insert(habitData).select().single();
         if (error) throw error;
 
         if (connected && data.syncToCalendar && newHabit) {
@@ -410,7 +426,7 @@ export const AddRoutine = () => {
         {/* DATE SELECTION */}
         <div className={`space-y-3 animate-reveal ${durationType === "CUSTOM" ? "col-span-2" : ""}`}>
           <label className="text-[10px] font-black uppercase tracking-widest text-primary opacity-60 ml-2 flex items-center gap-2">
-            <Calendar size={12} /> {useChapter || durationType === "DAILY" ? "Scheduled Date" : "Start Date"}
+            <Calendar size={12} /> {durationType === "DAILY" ? "Scheduled Date" : "Start Date"}
             {computedEndDate && <span className="ml-auto opacity-40">Auto-calculated End Date</span>}
             {durationType === "CUSTOM" && <span className="ml-auto opacity-40">Set End Date</span>}
           </label>
