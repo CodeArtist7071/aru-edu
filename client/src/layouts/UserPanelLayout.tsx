@@ -355,18 +355,18 @@ export default function UserPanelLayout() {
               <div className="animate-reveal" key="test-active-title">
                 <div className="flex flex-col">
                   <span className="md:text-[10px] text-[8px] font-technical uppercase tracking-[0.4em] text-primary opacity-60 md:mb-2 mb-1">Live Examination</span>
-                  <h2 className="md:text-3xl text-xl font-black text-on-surface tracking-tighter leading-none">{testTitle || "Subject Manifestation"}</h2>
+                  <h2 className="md:text-3xl text-md font-black text-on-surface tracking-tighter leading-none">{testTitle || "Subject Manifestation"}</h2>
                 </div>
               </div>
 
-              <div className="flex items-center gap-8">
+              <div className="flex items-center md:gap-8 gap-2">
                 {/* Timer Pod */}
                 {testTimeLeft !== null && (
-                  <div className="flex items-center gap-5 bg-surface-container-high/60 backdrop-blur-md px-8 py-3 rounded-full shadow-inner ring-1 ring-white/10 group">
+                  <div className="flex items-center md:gap-5 gap-2 bg-surface-container-high/60 backdrop-blur-md md:px-8 md:py-3 px-4 py-2 rounded-full shadow-inner ring-1 ring-white/10 group">
                       <Timer className="text-tertiary size-5 animate-pulse" />
-                    <div className="flex flex-col">
+                    <div className="flex flex-row md:flex-col">
                       <span className="text-[8px] font-technical font-black text-tertiary uppercase tracking-widest opacity-40">Tempo Reset</span>
-                      <span className="font-technical font-black text-on-surface text-2xl tracking-tighter tabular-nums">
+                      <span className="font-technical font-black text-on-surface text-xs md:text-2xl tracking-tighter tabular-nums">
                         {formatTime(testTimeLeft)}
                       </span>
                     </div>
@@ -416,7 +416,7 @@ export default function UserPanelLayout() {
 
         {/* Mobile Nav - "The Bottom Bar" with Safe Area Padding for Android 15 & iOS */}
         <nav className={`lg:hidden h-auto pb-[calc(1rem+env(safe-area-inset-bottom))]  backdrop-blur-3xl flex justify-between items-center px-6 sticky bottom-0 z-40 border-t border-outline-variant/5 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] transition-all duration-500 ease-botanical ${
-          showNav ? "-translate-y-10 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
+          showNav ? "-translate-y-10 opacity-100" : "translate-y-10 opacity-0 pointer-events-none"
         }`}>
           {mobileNavItems.map((item) => (
             <NavLink

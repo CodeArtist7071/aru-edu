@@ -367,14 +367,14 @@
 }
 
 :root {
-  --ap-w: 192px;
+  --ap-w: 200px;
   --ap-min-w: 48px;
 }
 
 @media (max-width: 768px) {
   :root {
-    --ap-w: 100px;
-    --ap-min-w: 36px;
+    --ap-w: 150px;
+    --ap-min-w: 20px;
   }
 }
 
