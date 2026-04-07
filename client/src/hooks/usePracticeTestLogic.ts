@@ -52,7 +52,15 @@ export const usePracticeTestLogic = () => {
   const [confirmedAnswers, setConfirmedAnswers] = useState<Record<number, boolean>>({});
   const [showSubmitConfirm, setShowSubmitConfirm] = useState(false);
   const [minimized, setMinimized] = useState(false);
+  const isMinimizedRef = useRef(false);
+  const toggleTimestampRef = useRef(0);
   const [counts, setCounts] = useState({ attempted: 0, total: 0 });
+
+  // Sync minimized state to ref for zero-latency AI access
+  useEffect(() => {
+    isMinimizedRef.current = minimized;
+    toggleTimestampRef.current = Date.now();
+  }, [minimized]);
 
   const isCreatingRef = useRef(false);
   const isNavigatingAwayRef = useRef(false);
@@ -265,7 +273,8 @@ export const usePracticeTestLogic = () => {
   };
 
   const registerViolation = useCallback(async (type: string) => {
-    if (minimized) return; // Suspend rules if minimized to avoid false triggers during UI collapse
+    // High-reliability guard using both immediate ref and a 500ms grace window 
+    if (isMinimizedRef.current || (Date.now() - toggleTimestampRef.current < 500)) return;
 
     const now = Date.now();
     const last = violationTimestamps.current[type] ?? 0;

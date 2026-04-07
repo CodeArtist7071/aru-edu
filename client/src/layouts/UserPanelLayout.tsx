@@ -409,14 +409,14 @@ export default function UserPanelLayout() {
         <div
           ref={scrollRef}
           key={location.pathname}
-          className="flex-1 bg-surface-container-low overflow-y-auto custom-scrollbar p-0 lg:p-10"
+          className="flex-1 bg-surface-container-low h-auto overflow-y-auto custom-scrollbar p-0 lg:p-10"
         >
           <Outlet />
         </div>
 
         {/* Mobile Nav - "The Bottom Bar" with Safe Area Padding for Android 15 & iOS */}
-        <nav className={`lg:hidden h-auto pb-[calc(1rem+env(safe-area-inset-bottom))]  backdrop-blur-3xl flex justify-between items-center px-6 sticky bottom-0 z-40 border-t border-outline-variant/5 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] transition-all duration-500 ease-botanical ${
-          showNav ? "-translate-y-10 opacity-100" : "translate-y-10 opacity-0 pointer-events-none"
+        <nav className={`lg:hidden h-auto pb-[env(safe-area-inset-bottom)] bg-surface-container-low/50  backdrop-blur-3xl flex justify-between items-center px-6 sticky bottom-0 z-40 border-t border-outline-variant/5 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] transition-all duration-500 ease-botanical ${
+          showNav ? "-translate-y-15 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
         }`}>
           {mobileNavItems.map((item) => (
             <NavLink
@@ -424,7 +424,7 @@ export default function UserPanelLayout() {
               to={item.path}
               end={item.path === "/user/dashboard"}
               className={({ isActive }) =>
-                `flex flex-col items-center justify-center relative transition-all duration-500 ease-botanical py-3 ${isActive ? "text-primary" : "text-on-surface-variant"
+                `flex flex-col items-center justify-center relative transition-all duration-500 ease-botanical py-1.5 ${isActive ? "text-primary" : "text-on-surface-variant"
                 }`
               }
             >

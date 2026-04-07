@@ -43,8 +43,16 @@ export const useMockTestLogic = () => {
   const [proctoringStatus, setProctoringStatus] = useState<string>("Initializing...");
   const [showWarning, setShowWarning] = useState(false);
   const [minimized, setMinimized] = useState(false);
+  const isMinimizedRef = useRef(false);
+  const toggleTimestampRef = useRef(0);
   const [flash, setFlash] = useState(false);
   const [cameraReady, setCameraReady] = useState(false);
+ 
+  // Sync minimized state to ref for zero-latency AI access
+  useEffect(() => {
+    isMinimizedRef.current = minimized;
+    toggleTimestampRef.current = Date.now();
+  }, [minimized]);
   const [faceDetected, setFaceDetected] = useState(false);
   const [showCameraModal, setShowCameraModal] = useState(false);
   const [openAlert, setOpenAlert] = useState<boolean>(false);
@@ -275,11 +283,14 @@ export const useMockTestLogic = () => {
     setShowSubmitConfirm(true);
   };
 
-  const registerViolation = useCallback(async (type: string) => {
-    // Suspend rules if minimized to avoid false triggers during UI collapse
-    if (minimized) return;
-
-    const now = Date.now();
+   const registerViolation = useCallback(async (type: string) => {
+     // High-reliability guard using both immediate ref and a 500ms grace window 
+     // to cover UI transition latency
+     if (isMinimizedRef.current || (Date.now() - toggleTimestampRef.current < 500)) {
+       return;
+     }
+ 
+     const now = Date.now();
     const last = violationTimestamps.current[type] ?? 0;
     if (now - last < 3000) return;
     violationTimestamps.current[type] = now;
@@ -298,7 +309,7 @@ export const useMockTestLogic = () => {
         attempt_id: attemptId, user_id: user.id, exam_id: examId, type, occurred_at: newViolation.occurred_at,
       });
     }
-  }, [attemptId, user, examId]);
+  }, [attemptId, user, examId, minimized]);
 
   useEffect(() => { registerViolationRef.current = registerViolation; }, [registerViolation]);
 

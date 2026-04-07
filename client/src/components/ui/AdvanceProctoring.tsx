@@ -67,6 +67,7 @@ export default function AdvancedProctoring({
 
   const onTouchStart = (e: React.TouchEvent) => {
     if ((e.target as HTMLElement).closest("button")) return;
+    e.stopPropagation(); // Prevent parent layouts from catching the touch
     const touch = e.touches[0];
     startDragging(touch.clientX, touch.clientY);
   };
@@ -141,8 +142,8 @@ export default function AdvancedProctoring({
         cursor: dragging ? "grabbing" : "grab",
         userSelect: "none",
         pointerEvents: "auto",
-        touchAction: dragging ? "none" : "auto",
-        width: minimized ? "var(--ap-min-w, 48px)" : "var(--ap-w, 192px)",
+        touchAction: "none", // Explicitly disable browser gestures
+        width: minimized ? "var(--ap-min-w, 48px)" : "var(--ap-w, 240px)",
         transition: "width 0.25s ease, box-shadow 0.2s ease",
       }}
     >
