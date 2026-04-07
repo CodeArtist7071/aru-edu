@@ -1,4 +1,4 @@
-import React, { cloneElement, useState } from "react";
+import React, { cloneElement, useState, useEffect, useRef } from "react";
 import { ActionCenter } from "../components/ui/ActionCenter";
 import {
   BarChart,
@@ -61,6 +61,37 @@ export default function UserPanelLayout() {
   const navigate = useNavigate();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const { theme, toggleTheme } = useTheme();
+
+  // Mobile Nav Manifestation: Scroll-to-Hide
+  const [showNav, setShowNav] = useState(true);
+  const [lastScrollTop, setLastScrollTop] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const currentScrollTop = container.scrollTop;
+      const diff = currentScrollTop - lastScrollTop;
+      
+      if (Math.abs(diff) < 5) return; // Jitter threshold
+
+      if (currentScrollTop <= 0) {
+        setShowNav(true); // Always manifest at start
+      } else if (diff > 0) {
+        // SCROLL DOWN -> HIDE (Standard Manifestation)
+        setShowNav(false);
+      } else {
+        // SCROLL UP -> SHOW (Standard Manifestation)
+        setShowNav(true);
+      }
+      setLastScrollTop(currentScrollTop);
+    };
+
+    container.addEventListener("scroll", handleScroll, { passive: true });
+    return () => container.removeEventListener("scroll", handleScroll);
+  }, [lastScrollTop]);
 
   const firstExamId = profile?.target_exams?.[0] || "";
 
@@ -376,6 +407,7 @@ export default function UserPanelLayout() {
         </header>
 
         <div
+          ref={scrollRef}
           key={location.pathname}
           className="flex-1 bg-surface-container-low overflow-y-auto custom-scrollbar p-0 lg:p-10"
         >
@@ -383,7 +415,9 @@ export default function UserPanelLayout() {
         </div>
 
         {/* Mobile Nav - "The Bottom Bar" with Safe Area Padding for Android 15 & iOS */}
-        <nav className="lg:hidden h-auto pb-[calc(1rem+env(safe-area-inset-bottom))] bg-surface/90 backdrop-blur-3xl flex justify-between items-center px-6 sticky bottom-0 z-40 border-t border-outline-variant/5 shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
+        <nav className={`lg:hidden h-auto pb-[calc(1rem+env(safe-area-inset-bottom))]  backdrop-blur-3xl flex justify-between items-center px-6 sticky bottom-0 z-40 border-t border-outline-variant/5 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] transition-all duration-500 ease-botanical ${
+          showNav ? "-translate-y-10 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
+        }`}>
           {mobileNavItems.map((item) => (
             <NavLink
               key={item.label}
@@ -396,8 +430,8 @@ export default function UserPanelLayout() {
             >
               {({ isActive }) => (
                 <>
-                  <div className={`size-12 rounded-2xl flex items-center justify-center transition-all duration-500 ${isActive
-                      ? "bg-primary text-white shadow-lg shadow-primary/20 -translate-y-6 rotate-12 scale-110"
+                  <div className={`size-12 rounded-full flex items-center justify-center transition-all duration-500 ${isActive
+                      ? "bg-primary text-white shadow-lg shadow-primary/20 -translate-y-6 scale-110"
                       : "bg-surface-container-high/40 opacity-40"
                     }`}>
                     {cloneElement(item.icon as React.ReactElement<any>, { size: 22 })}
