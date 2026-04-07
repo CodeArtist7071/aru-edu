@@ -1,204 +1,212 @@
-import { Bell, CheckSquare, Loader, Pen, Trash } from "lucide-react";
-import { format12h } from "../../utils/format12h";
-import { supabase } from "../../utils/supabase";
-import { WEEK_COLORS, type Habit } from "./TrackerGrid";
-import { updateUserLocally } from "../../slice/userSlice";
+import React, { useMemo, useState, useRef, useEffect } from "react";
+import { Edit2, CheckSquare, Trash2, Sparkles, RefreshCw, X } from "lucide-react";
+import { type Habit } from "./types";
+import { WEEK_COLORS } from "./constants";
+import { RitualTooltip } from "./grid/RitualTooltip";
 
-export const HabitRow = ({
+interface HabitRowProps {
+  habit: Habit;
+  cells: {
+    actualDayIdx: number;
+    isDone: boolean;
+    isToday: boolean;
+    isActive?: boolean;
+  }[];
+  onToggle: (id: string, index: number) => void;
+  onEdit: () => void;
+  onDelete: () => void;
+  onDuplicate?: () => void;
+  onDismiss?: () => void;
+  unlockPastDays?: boolean;
+  isExpired?: boolean;
+}
+
+const format12h = (time: string) => {
+  if (!time) return "N/A";
+  const [h, m] = time.split(":").map(Number);
+  const ampm = h >= 12 ? "PM" : "AM";
+  const hours = h % 12 || 12;
+  return `${hours}:${String(m).padStart(2, "0")} ${ampm}`;
+};
+
+export const HabitRow: React.FC<HabitRowProps> = ({
   habit,
-  progress,
-  renderedDays,
-  startDay,
-  daysInMonth,
-  viewMonth,
-  viewYear,
-  currentMonth,
-  currentYear,
-  today,
-  unlockPastDays,
-  deletingId,
-  connected,
-  user,
-  selectedDate,
+  cells,
   onToggle,
-  editHabit,
-  removeEvent,
-  onRefresh,
-  dispatch,
-}: {
-  habit: Habit & { currentStreak: number; maxStreak: number };
-  progress: boolean[];
-  renderedDays: number[];
-  startDay: number;
-  daysInMonth: number;
-  viewMonth: number;
-  viewYear: number;
-  currentMonth: number;
-  currentYear: number;
-  today: number;
-  unlockPastDays: boolean;
-  deletingId: string | null;
-  connected: boolean;
-  user: any;
-  selectedDate?: Date;
-  onToggle: (id: string, idx: number) => void;
-  editHabit: (h: Habit) => void;
-  removeEvent: (id: string) => Promise<void>;
-  onRefresh: () => void;
-  dispatch: any;
+  onEdit,
+  onDelete,
+  onDuplicate,
+  onDismiss,
+  unlockPastDays = false,
+  isExpired = false,
 }) => {
-  const isOneOff = (habit as any).is_recurring === false;
-  const isHabitToday = viewMonth === currentMonth && viewYear === currentYear;
-  // A one-off task is only editable if it matches 'today' or grid is unlocked
-  const canEdit = !isOneOff || isHabitToday || unlockPastDays;
+  const [tooltipVisible, setTooltipVisible] = useState(false);
+  const longPressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const currentStreak = useMemo(() => {
+    let streak = 0;
+    for (let i = cells.length - 1; i >= 0; i--) {
+      if (cells[i].isDone) streak++;
+      else if (streak > 0) break;
+    }
+    return streak;
+  }, [cells]);
+
+  const maxStreak = useMemo(() => {
+    let max = 0;
+    let current = 0;
+    cells.forEach((c) => {
+      if (c.isDone) current++;
+      else {
+        max = Math.max(max, current);
+        current = 0;
+      }
+    });
+    return Math.max(max, current);
+  }, [cells]);
+
+  // Long press logic for mobile
+  const handlePointerDown = () => {
+    longPressTimer.current = setTimeout(() => {
+      setTooltipVisible(true);
+    }, 500);
+  };
+
+  const handlePointerUp = () => {
+    if (longPressTimer.current) {
+      clearTimeout(longPressTimer.current);
+    }
+  };
+
+  const handlePointerLeave = () => {
+    if (longPressTimer.current) {
+      clearTimeout(longPressTimer.current);
+    }
+    setTooltipVisible(false);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (longPressTimer.current) {
+        clearTimeout(longPressTimer.current);
+      }
+    };
+  }, []);
 
   return (
-    <tr className="group hover:bg-[#f0fff4]/30 relative transition-colors">
-      <td className="sticky left-0 z-20 bg-surface-container-high group-hover:bg-[#f0fff4]/50 border-green-500 p-0 align-middle transition-colors">
-        <div className="flex items-center justify-between bg-surface-container-high border-b border-on-surface/20 px-2 py-1.5 min-h-[44px]">
-          <div className="grid grid-cols-[160px_70px_70px] items-center gap-2 min-w-0 pr-2">
-            
-            {/* Column 1: Routine Name & Priority Stack */}
-            <div className="flex flex-col min-w-0">
-              <div className="text-[11px] font-bold text-on-surface leading-tight truncate" title={habit.name}>
-                  {habit.name}
+    <tr key={habit.id} className="group/row hover:bg-slate-50/50 transition-all duration-500 h-12 border-b border-slate-100 last:border-0 relative animate-in fade-in slide-in-from-bottom-1 ease-out">
+      <td className={`sticky left-0 bg-white/95 backdrop-blur-md border-r border-slate-300 p-0 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] transition-all group-hover/row:bg-slate-50 w-[400px] ${tooltipVisible ? "z-40" : "z-20"}`}>
+        <div className="flex h-full w-full">
+          {isExpired ? (
+            <div className="flex-1 flex items-center gap-3 px-6 animate-in fade-in slide-in-from-left-4 duration-500">
+               <button 
+                 onClick={onDuplicate}
+                 className="flex-1 h-8 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-technical font-black text-[9px] uppercase tracking-widest shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2 group"
+               >
+                 <RefreshCw size={12} className="group-hover:rotate-180 transition-transform duration-500" />
+                 Renew Ritual Manifestation
+               </button>
+               <button 
+                 onClick={onDismiss}
+                 className="size-8 bg-slate-100 hover:bg-slate-200 text-slate-400 hover:text-slate-600 rounded-lg flex items-center justify-center transition-all"
+                 title="Dismiss Suggestion"
+               >
+                 <X size={14} />
+               </button>
+            </div>
+          ) : (
+            <>
+              {/* Main Habit Column */}
+              <div 
+                className="w-[220px] h-full flex items-center pl-6 pr-4 gap-4 border-r border-slate-100 relative"
+                onMouseEnter={() => setTooltipVisible(true)}
+                onMouseLeave={handlePointerLeave}
+                onPointerDown={handlePointerDown}
+                onPointerUp={handlePointerUp}
+              >
+                <RitualTooltip habit={habit} visible={tooltipVisible} />
+                <div className={`w-1 h-8 rounded-full shrink-0 ${habit.priority === "HIGH" ? "bg-red-500" : habit.priority === "MEDIUM" ? "bg-amber-500" : "bg-emerald-500"}`} />
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[11px] font-black tracking-tight text-slate-800 truncate uppercase cursor-help">{habit.name}</span>
+                    {habit.isDemo && (
+                      <span className="text-[8px] font-technical font-black px-1.5 py-0.5 bg-primary/10 text-primary rounded-md uppercase tracking-wider">Template</span>
+                    )}
+                  </div>
+                </div>
+                <div className="flex items-center gap-1 opacity-0 group-hover/row:opacity-100 transition-all shrink-0">
+                  <button 
+                    onClick={onEdit}
+                    className="p-2 hover:bg-primary/10 rounded-full text-slate-400 hover:text-primary transition-all active:scale-90"
+                    title="Refine Ritual"
+                  >
+                    <Edit2 className="size-3.5" />
+                  </button>
+                  <button 
+                    onClick={onDelete}
+                    className="p-2 hover:bg-red-50 rounded-full text-slate-400 hover:text-red-500 transition-all active:scale-95"
+                    title="Remove Manifestation"
+                  >
+                    <Trash2 className="size-3.5" />
+                  </button>
+                </div>
               </div>
-              <div className="mt-1">
-                <span className={`px-1.5 py-0.5 rounded-full text-[8px] font-black uppercase tracking-tighter ${
-                  habit.priority === "HIGH" ? "bg-red-100/80 text-red-700" : 
-                  habit.priority === "MEDIUM" ? "bg-yellow-100/80 text-yellow-700" : 
-                  "bg-on-surface/5 text-on-surface-variant/60"}`}>
-                  {habit.priority}
-                </span>
+              {/* Start Time Column */}
+              <div className="w-[90px] border-r border-slate-100 flex items-center justify-center p-2 text-[10px] font-technical font-black text-slate-500/80">
+                {format12h(habit.start_time || "")}
               </div>
-            </div>
-
-            {/* Column 2: Start Time */}
-            <div className="text-[9px] font-bold text-on-surface/60">
-               {habit.start_time ? format12h(habit.start_time) : "--"}
-            </div>
-
-            {/* Column 3: End Time */}
-            <div className="text-[9px] font-bold text-on-surface/60">
-               {habit.end_time ? format12h(habit.end_time) : "--"}
-            </div>
-          </div>
-
-          <div className="flex gap-0.5 transition-opacity bg-surface/40 rounded p-0.5 mr-1">
-            <button 
-              disabled={!canEdit}
-              onClick={() => canEdit && editHabit(habit)} 
-              className={`p-1 rounded transition-colors ${canEdit ? "text-slate-400 hover:text-primary hover:bg-green-50" : "text-slate-200 cursor-not-allowed"}`} 
-              title={canEdit ? "Edit Routine" : "One-off tasks can only be edited on their scheduled day"}
-            >
-              <Pen size={12} />
-            </button>
-            <button 
-              disabled={!canEdit}
-              onClick={async () => {
-                if (!canEdit) return;
-                if (connected) {
-                  const { data: prof } = await supabase.from("profiles").select("google_calendar_event_ids").eq("id", user?.id).single();
-                  const gcId = (prof?.google_calendar_event_ids as any)?.[habit.id];
-                  if (gcId) { 
-                    await removeEvent(gcId); 
-                    const newIds = { ...(prof?.google_calendar_event_ids as any) };
-                    delete newIds[habit.id];
-                    await supabase.from("profiles").update({ google_calendar_event_ids: newIds }).eq("id", user?.id); 
-                    dispatch(updateUserLocally({ google_calendar_event_ids: newIds }));
-                  }
-                }
-                await supabase.from(habit.is_mastery ? "user_mastery" : "study_habits").delete().eq("id", habit.id);
-                onRefresh();
-              }} className="p-1 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded transition-colors" title="Delete Routine">
-              {deletingId === habit.id ? <Loader className="animate-spin size-3" /> : <Trash size={12} />}
-            </button>
-          </div>
+              {/* End Time Column */}
+              <div className="w-[90px] flex items-center justify-center p-2 text-[10px] font-technical font-black text-slate-500/80 uppercase">
+                {format12h(habit.end_time || "")}
+              </div>
+            </>
+          )}
         </div>
       </td>
-      {renderedDays.map((day) => {
-        const actualDayIdx = day - 1;
-        const isToday = viewMonth === currentMonth && viewYear === currentYear && (actualDayIdx + 1) === today;
-        const isSelected = selectedDate && selectedDate.getDate() === actualDayIdx + 1 && selectedDate.getMonth() + 1 === viewMonth && selectedDate.getFullYear() === viewYear;
-        
-        let isWithinDuration = true;
-        if (habit.scheduled_date) {
-          const startDate = new Date(habit.scheduled_date);
-          startDate.setHours(0, 0, 0, 0);
-          
-          const cellDate = new Date(viewYear, viewMonth - 1, actualDayIdx + 1);
-          cellDate.setHours(0, 0, 0, 0);
-
-          // 1. One-off rituals or Mastery milestones: Exact date only
-          if (habit.is_mastery || isOneOff) {
-            isWithinDuration = cellDate.getTime() === startDate.getTime();
-          } 
-          
-          // 2. Recurring Daily: Persists every day from start manifestation
-          else if (habit.duration_type === "DAILY") {
-            isWithinDuration = cellDate >= startDate;
-          } 
-          
-          // 3. Recurring Weekly: Manifests for a 7-day resonance window
-          else if (habit.duration_type === "WEEKLY") {
-            const endDate = new Date(startDate);
-            endDate.setDate(startDate.getDate() + 6);
-            isWithinDuration = cellDate >= startDate && cellDate <= endDate;
-          } 
-          
-          // 4. Custom manifestation window
-          else if (habit.duration_type === "CUSTOM" && habit.scheduled_end_date) {
-            const endDate = new Date(habit.scheduled_end_date);
-            endDate.setHours(23, 59, 59, 999);
-            isWithinDuration = cellDate >= startDate && cellDate <= endDate;
-          }
-
-          // 5. Default Monthly persistence: 30-day vibration cycle
-          else {
-            const endDate = new Date(startDate);
-            endDate.setDate(startDate.getDate() + 29);
-            isWithinDuration = cellDate >= startDate && cellDate <= endDate;
-          }
-        }
-
-        const isEditable = (isToday || unlockPastDays) && isWithinDuration;
-        const isDone = progress[actualDayIdx];
-        const weekIdx = Math.floor(actualDayIdx / 7);
-        const bgClass = isSelected ? "bg-green-100/50" : isToday ? "bg-surface" : WEEK_COLORS[Math.min(weekIdx, 4)].replace("200", "50").replace("bg-slate-200", "bg-transparent");
-        
-        // Hide/dim cells that are outside the requested bounds
-        const cellOpacity = !isWithinDuration ? "opacity-10 pointer-events-none grayscale" : (isEditable ? "opacity-100" : "opacity-60 dark:opacity-80 grayscale-[0.5]");
-        
-        const checkedBorderClass = WEEK_COLORS[Math.min(weekIdx, 4)].replace("bg-", "border-").replace("200", "500");
-        const checkedTextClass = WEEK_COLORS[Math.min(weekIdx, 4)].replace("bg-", "text-").replace("200", "600");
+      
+      {cells.map((cell, i) => {
+        const weekIdx = Math.floor(i / 7);
+        const weekColor = WEEK_COLORS[weekIdx] || WEEK_COLORS[WEEK_COLORS.length - 1];
+        const isActive = cell.isActive !== false;
 
         return (
-          <td key={actualDayIdx} className={`  border-b border-on-surface/10 ${bgClass} ${isToday ? "ring-2 ring-inset ring-green-600/40 bg-green-50/30" : ""} ${isSelected ? "ring-2 ring-inset ring-green-600/30 shadow-inner" : ""} ${cellOpacity} transition-all`}>
-            <label className={`w-full h-full flex items-center justify-center p-1 ${isEditable ? 'cursor-pointer' : 'cursor-not-allowed'}`}>
-              <input 
-                type="checkbox" 
-                className="hidden" 
-                disabled={!isEditable} 
-                checked={isDone || false} 
-                onChange={() => isEditable && onToggle(habit.id, actualDayIdx)} 
-              />
-              <div className={`size-[16px] bg-surface-container-high  ${isDone ? checkedBorderClass : "border-slate-300"} rounded-sm flex items-center justify-center shadow-sm relative transition-all ${isEditable ? 'hover:border-green-400 hover:shadow-md' : ''} ${!isEditable && !isDone ? "bg-surface-container-low border-slate-200 opacity-50" : ""}`}>
-                {isDone && (
-                  habit.is_mastery ? (
-                    <div className="absolute -inset-1 flex items-center justify-center  bg-green-50 rounded-sm border border-green-200 shadow-sm animate-pulse z-10" title={`Test at ${habit.start_time}`}>
-                      <Bell className="text-primary size-[12px]" strokeWidth={3} />
-                    </div>
-                  ) : (
-                    <CheckSquare className={`${checkedTextClass} size-[18px] absolute -top-px -left-px bg-surface rounded-sm`} strokeWidth={3} />
-                  )
-                )}
-              </div>
-            </label>
+          <td
+            key={i}
+            onClick={() => isActive && onToggle(habit.id, cell.actualDayIdx)}
+            className={`w-[36px] min-w-[36px] p-0.5 relative transition-all group/cell ${
+              !isActive ? "cursor-not-allowed opacity-30 grayscale" : "cursor-pointer"
+            }`}
+            style={{ backgroundColor: isActive ? `${weekColor}${cell.isDone ? "60" : "25"}` : "transparent" }}
+          >
+             <div 
+               className={`size-6 mx-auto rounded-md shadow-sm flex items-center justify-center transition-all duration-300 ${
+                 cell.isDone ? "opacity-100 rotate-0 scale-100" : "opacity-0 rotate-45 scale-50"
+               }`}
+               style={{ backgroundColor: isActive ? weekColor : "transparent" }}
+             >
+                <CheckSquare className="text-white size-3.5" strokeWidth={3} />
+             </div>
+             
+             {cell.isToday && isActive && !cell.isDone && (
+               <div 
+                 className={`absolute inset-1 rounded-md border-2 border-dashed opacity-40 animate-pulse`}
+                 style={{ borderColor: weekColor }}
+               />
+             )}
+             
+             {!isActive && (
+               <div className="absolute inset-0 bg-slate-50/10" title="Out of temporal manifestation range" />
+             )}
           </td>
         );
       })}
-      <td className="sticky right-8 z-20 border-l border-b border-[#2d7334]/20 bg-emerald-50 text-center font-mono text-[11px] font-bold text-slate-700 outline outline-transparent -outline-offset-1 shadow-[-1px_0_0_0_#cbd5e1]">{habit.currentStreak}</td>
-      <td className="sticky right-0 z-20 border-l border-b border-[#2d7334]/20 bg-emerald-50 text-center font-mono text-[11px] font-bold text-slate-700 outline outline-transparent -outline-offset-1 shadow-[-1px_0_0_0_#cbd5e1]">{habit.maxStreak}</td>
+      
+      <td className="sticky right-[40px] z-30 bg-surface border-l border-slate-200 px-2 text-[11px] font-technical font-black text-slate-800 text-center w-[40px]">
+        {currentStreak}
+      </td>
+      <td className="sticky right-0 z-30 bg-surface border-l border-slate-200 px-2 text-[11px] font-technical font-black text-slate-800 text-center w-[40px]">
+        {maxStreak}
+      </td>
     </tr>
   );
-}
+};

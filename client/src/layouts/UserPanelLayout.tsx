@@ -323,8 +323,8 @@ export default function UserPanelLayout() {
             <>
               <div className="animate-reveal" key="test-active-title">
                 <div className="flex flex-col">
-                  <span className="text-[10px] font-technical uppercase tracking-[0.4em] text-primary opacity-60 mb-2">Live Examination</span>
-                  <h2 className="text-3xl font-black text-on-surface tracking-tighter leading-none">{testTitle || "Subject Manifestation"}</h2>
+                  <span className="md:text-[10px] text-[8px] font-technical uppercase tracking-[0.4em] text-primary opacity-60 md:mb-2 mb-1">Live Examination</span>
+                  <h2 className="md:text-3xl text-xl font-black text-on-surface tracking-tighter leading-none">{testTitle || "Subject Manifestation"}</h2>
                 </div>
               </div>
 
@@ -332,9 +332,7 @@ export default function UserPanelLayout() {
                 {/* Timer Pod */}
                 {testTimeLeft !== null && (
                   <div className="flex items-center gap-5 bg-surface-container-high/60 backdrop-blur-md px-8 py-3 rounded-full shadow-inner ring-1 ring-white/10 group">
-                    <div className="size-10 bg-tertiary/10 rounded-full flex items-center justify-center">
                       <Timer className="text-tertiary size-5 animate-pulse" />
-                    </div>
                     <div className="flex flex-col">
                       <span className="text-[8px] font-technical font-black text-tertiary uppercase tracking-widest opacity-40">Tempo Reset</span>
                       <span className="font-technical font-black text-on-surface text-2xl tracking-tighter tabular-nums">
@@ -345,7 +343,7 @@ export default function UserPanelLayout() {
                 )}
 
                 {/* Language Toggle */}
-                <div className="flex bg-surface-container-low p-1 rounded-full shadow-inner border border-outline-variant/5">
+                <div className="hidden bg-surface-container-low p-1 rounded-full shadow-inner border border-outline-variant/5">
                   <button
                     type="button"
                     onClick={() => dispatch(setTestLanguage("en"))}
@@ -367,9 +365,9 @@ export default function UserPanelLayout() {
                 {/* Final Submit Button */}
                 <button
                   onClick={() => dispatch(triggerTestSubmit())}
-                  className="px-10 py-4 bg-linear-to-r from-primary to-primary-container text-white rounded-full font-technical font-black text-xs uppercase tracking-[0.3em] shadow-ambient-lg hover:scale-105 active:scale-95 transition-all cursor-pointer flex items-center gap-3 group"
+                  className="px-3 md:px-10 py-2 md:py-4 bg-linear-to-r from-primary to-primary-container text-white rounded-full font-technical font-black md:text-xs text-[10px] uppercase tracking-[0.3em] shadow-ambient-lg hover:scale-105 active:scale-95 transition-all cursor-pointer flex items-center gap-3 group"
                 >
-                  Syllabus Submit
+                  Submit
                   <Target size={18} className="group-hover:rotate-12 transition-transform" />
                 </button>
               </div>
@@ -384,8 +382,8 @@ export default function UserPanelLayout() {
           <Outlet />
         </div>
 
-        {/* Mobile Nav - "The Bottom Bar" */}
-        <nav className="lg:hidden h-15 bg-surface-container-highest backdrop-blur-xl flex justify-between items-center px-3 sticky bottom-0 z-30 border-t border-outline-variant/10 shadow-ambient">
+        {/* Mobile Nav - "The Bottom Bar" with Safe Area Padding for Android 15 */}
+        <nav className="lg:hidden h-auto pb-[env(safe-area-inset-bottom)] bg-surface-container-highest backdrop-blur-xl flex justify-between items-center px-3 sticky bottom-0 z-30 border-t border-outline-variant/10 shadow-ambient">
           {mobileNavItems.filter(i => i.label !== "Admin Portal").slice(0, 7).map((item) => (
             <div>
               <NavLink

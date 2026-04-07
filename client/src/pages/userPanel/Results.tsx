@@ -215,8 +215,8 @@ const Results = () => {
 
   if (loading) {
     return (
-    <div className="min-h-screen bg-surface-container-low dark:bg-slate-950 px-4 md:px-10 pb-20 animate-reveal">
-      <div className="max-w-5xl mx-auto pt-12 space-y-12">
+      <div className="min-h-screen bg-surface-container-low dark:bg-slate-950 px-4 md:px-10 pb-20 animate-reveal">
+        <div className="max-w-5xl mx-auto pt-12 space-y-12">
           <div className="absolute inset-0 border-4 border-[#16a34a]/20 rounded-full" />
           <div className="absolute inset-0 border-4 border-[#16a34a] border-t-transparent rounded-full animate-spin" />
           <Trophy className="absolute inset-0 m-auto size-8 text-[#16a34a] animate-bounce" />
@@ -235,265 +235,364 @@ const Results = () => {
 
   return (
     <div className="min-h-screen font-narrative text-on-surface antialiased transition-colors duration-700 pb-20">
-      {/* HEADER - Glassmorphic & Borderless */}
-      {/* <header className="sticky top-0 z-50 glass px-6 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-5">
+      <main className="max-w-7xl mx-auto p-4 md:p-10">
+
+        {/* MOBILE MANIFESTATION - High Density & Elegant */}
+        <section className="lg:hidden space-y-8">
+          <div className="flex items-center gap-4 mb-4">
             <button
               onClick={() => navigate("/user/results")}
-              className="p-3 bg-surface-container-high rounded-2xl hover:scale-110 active:scale-90 transition-all text-on-surface-variant shadow-sm"
+              className="p-2.5 bg-surface-container-high rounded-xl text-on-surface-variant shadow-sm"
             >
-              <ArrowLeft size={20} />
+              <ArrowLeft size={18} />
             </button>
-            <div>
-              <h1 className="text-xl font-black tracking-tighter text-on-surface flex items-center gap-2">
-                <Target className="text-primary" size={20} />
-                Mastery Report
-              </h1>
-              <p className="text-[10px] text-on-surface-variant/40 font-mono font-bold uppercase tracking-[0.2em] mt-0.5">
-                Session ID <span className="text-on-surface-variant">#{attempt?.id.slice(0, 8)}</span>
-              </p>
+            <div className="flex flex-col">
+              <span className="text-[8px] font-technical font-black text-primary uppercase tracking-[0.4em]">Mastery Report</span>
+              <h1 className="text-xl font-black text-on-surface tracking-tighter">Evaluation Results</h1>
             </div>
           </div>
 
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => navigate("/user/dashboard")}
-              className="hidden md:flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-full text-[10px] font-mono font-bold uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-lg shadow-primary/20"
-            >
-              <LayoutDashboard size={14} />
-              Return Home
-            </button>
-            <div className="size-12 bg-surface-container-highest rounded-2xl flex items-center justify-center text-on-surface font-mono font-bold text-sm shadow-inner">
-              {metrics.totalScore}
-            </div>
-          </div>
-        </div>
-      </header> */}
+          {/* Mobile Hero: Compact Score & Insights */}
+          <div className="bg-surface-container-low p-6 rounded-3xl shadow-ambient-sm relative overflow-hidden group">
+            <div className="absolute top-0 right-0 size-48 bg-primary/5 rounded-full blur-3xl" />
 
-      <main className="max-w-7xl mx-auto p-6 md:p-10 space-y-12">
-        {/* HERO PERFORMANCE CARD */}
-        <PerformanceCard
-          metrics={metrics}
-          attempt={attempt}
-          questions={questions}
-        />
-
-        <div className="grid sm:grid-cols-1 lg:grid-cols-12 gap-10">
-          {/* PERFORMANCE INSIGHTS */}
-          <div className="lg:col-span-5 space-y-8">
-            <div className="bg-surface-container-low p-8 rounded-[2.5rem] space-y-8 shadow-ambient-sm">
-              <h3 className="text-[10px] font-mono font-black uppercase tracking-[0.2em] text-on-surface-variant/40 flex items-center gap-3">
-                <BarChart3 size={16} className="text-primary" />
-                Distribution Metrics
-              </h3>
-
-              <div className="h-[240px] w-full relative">
-                <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                  <span className="text-3xl font-mono font-black">{metrics.accuracy}%</span>
-                  <span className="text-[8px] font-mono font-bold uppercase tracking-widest opacity-40">Accuracy</span>
+            <div className="flex flex-col items-center text-center gap-6 relative z-10">
+              <div className="relative size-40">
+                <svg className="w-full h-full transform -rotate-90">
+                  <circle cx="50%" cy="50%" r="45%" strokeWidth="8" fill="transparent" className="text-surface-container-highest" stroke="currentColor" />
+                  <circle cx="50%" cy="50%" r="45%" strokeWidth="8" fill="transparent" strokeDasharray="283%" strokeDashoffset={283 - metrics.scorePercent * 2.83} className="text-primary transition-all duration-1000 ease-botanical" stroke="currentColor" strokeLinecap="round" />
+                </svg>
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <span className="text-4xl font-technical font-black text-on-surface">{metrics.totalScore}</span>
+                  <span className="text-[7px] font-technical font-black uppercase text-on-surface-variant/40 tracking-widest mt-1">Limit {metrics.maxScore}</span>
                 </div>
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={distributionData}
-                      innerRadius={70}
-                      outerRadius={95}
-                      paddingAngle={8}
-                      dataKey="value"
-                      stroke="none"
-                    >
-                      {distributionData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.color} />
-                      ))}
-                    </Pie>
-                    <Tooltip
-                      contentStyle={{
-                        borderRadius: "20px",
-                        border: "none",
-                        fontSize: "12px",
-                        fontFamily: "Space Grotesk, monospace",
-                        boxShadow: "0 10px 25px -5px rgba(0,0,0,0.1)"
-                      }}
-                    />
-                  </PieChart>
-                </ResponsiveContainer>
               </div>
 
               <div className="space-y-2">
-                {distributionData.map((d, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center justify-between p-4 bg-surface-container-high/40 rounded-2xl group transition-all duration-300 hover:bg-surface-container-high"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div
-                        className="size-2.5 rounded-full"
-                        style={{ backgroundColor: d.color }}
-                      />
-                      <span className="text-[11px] font-mono font-bold uppercase tracking-tight text-on-surface-variant/70">
-                        {d.name}
-                      </span>
-                    </div>
-                    <span className="text-sm font-mono font-black text-on-surface">
-                      {d.value}
-                    </span>
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary rounded-full text-[8px] font-technical font-black uppercase tracking-widest">
+                  <Zap size={10} fill="currentColor" />
+                  {metrics.accuracy}% System Accuracy
+                </div>
+                <h2 className="text-3xl font-black text-on-surface tracking-tighter">
+                  {metrics.accuracy >= 80 ? "Absolute Mastery" : metrics.accuracy >= 50 ? "Steady Growth" : "Needs Pruning"}
+                </h2>
+                <p className="text-[11px] text-on-surface-variant leading-relaxed opacity-70">
+                  Synthesis complete for <span className="text-primary font-bold">{attempt?.chapters?.name}</span>.
+                </p>
+              </div>
+
+              {/* Mobile Metrics: 2x2 Dense Grid */}
+              <div className="grid grid-cols-2 gap-3 w-full mt-2">
+                {[
+                  { label: "Duration", value: metrics.duration, icon: <Clock size={14} /> },
+                  { label: "Inventory", value: questions.length, icon: <BookOpen size={14} /> },
+                  { label: "Accuracy", value: `${metrics.accuracy}%`, icon: <Target size={14} /> },
+                  { label: "Status", value: attempt?.status, icon: <Shield size={14} /> },
+                ].map((item, i) => (
+                  <div key={i} className="bg-surface-container-high/40 p-3 rounded-2xl border border-outline-variant/10 text-left">
+                    <div className="text-primary mb-1">{item.icon}</div>
+                    <p className="text-sm font-technical font-black text-on-surface">{item.value}</p>
+                    <p className="text-[7px] font-technical font-black text-on-surface-variant/40 uppercase tracking-widest leading-none mt-0.5">{item.label}</p>
                   </div>
                 ))}
               </div>
             </div>
-
-            <div className="bg-primary text-white p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden group">
-              <div className="absolute -top-10 -right-10 p-8 opacity-10 group-hover:scale-125 group-hover:-rotate-12 transition-all duration-700">
-                <BrainCircuit size={160} />
-              </div>
-              <h3 className="text-[10px] font-mono font-black uppercase tracking-[0.3em] text-white/50 mb-6 flex items-center gap-3">
-                <Zap size={16} fill="currentColor" />
-                Living Insights
-              </h3>
-              <div className="space-y-8 relative z-10">
-                <p className="text-xl font-narrative font-bold leading-relaxed tracking-tight">
-                  {metrics.accuracy < 50
-                    ? `Our systems suggest focusing on the foundational structure of ${attempt?.chapters?.name}. Your current mastery profile requires reinforcement.`
-                    : `Remarkable synthesis of ${attempt?.chapters?.name}. You are demonstrating the cognitive patterns required for advanced complex reasoning.`}
-                </p>
-                <button
-                  onClick={() => navigate(`/user/dashboard`)}
-                  className="w-full py-4 cursor-pointer bg-white text-primary rounded-full font-mono font-black text-[10px] uppercase tracking-widest shadow-xl hover:scale-105 active:scale-95 transition-all"
-                >
-                  Accelerate Growth
-                </button>
-              </div>
-            </div>
           </div>
 
-          {/* QUESTION REVIEW */}
-          <div className="lg:col-span-7 h-185 overflow-y-auto space-y-8 pr-2 custom-scrollbar">
-            <div className="flex items-center justify-between px-4">
-              <h3 className="text-[10px] font-mono font-black uppercase tracking-[0.3em] text-on-surface-variant/40 flex items-center gap-3">
-                <History size={16} className="text-primary" />
-                Analytical Review
-              </h3>
-              <div className="flex items-center gap-6">
-                <div className="flex items-center gap-2">
-                  <div className="size-2 rounded-full bg-primary" />
-                  <span className="text-[9px] font-mono font-bold uppercase tracking-widest text-on-surface-variant/60">
-                    Correct
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="size-2 rounded-full bg-error" />
-                  <span className="text-[9px] font-mono font-bold uppercase tracking-widest text-on-surface-variant/60">
-                    Erroneous
-                  </span>
-                </div>
+          {/* Mobile Insights: Living Highlights */}
+          <div className="bg-primary text-white p-6 rounded-3xl shadow-xl space-y-4">
+            <div className="flex items-center gap-2 opacity-50">
+              <Zap size={12} fill="currentColor" />
+              <span className="text-[8px] font-technical font-black uppercase tracking-[0.3em]">Analytical Insight</span>
+            </div>
+            <p className="text-sm font-bold leading-relaxed tracking-tight">
+              {metrics.accuracy < 50
+                ? `Focusing on the foundational structure of ${attempt?.chapters?.name} is recommended. Reinforcement needed.`
+                : `Demonstrating cognitive patterns required for advanced complex reasoning.`}
+            </p>
+          </div>
+
+          {/* Mobile Question Review: Ultra-Clean Timeline */}
+          <div className="space-y-4 pb-20">
+            <div className="flex items-center justify-between px-2">
+              <span className="text-[8px] font-technical font-black uppercase tracking-[0.3em] text-on-surface-variant/40">Analytical Feed</span>
+              <div className="flex gap-4">
+                <div className="flex items-center gap-1.5"><div className="size-1.5 rounded-full bg-primary" /><span className="text-[7px] font-technical font-black uppercase text-on-surface-variant/60">Correct</span></div>
+                <div className="flex items-center gap-1.5"><div className="size-1.5 rounded-full bg-error" /><span className="text-[7px] font-technical font-black uppercase text-on-surface-variant/60">Erroneous</span></div>
               </div>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-6">
               {questions.map((q, i) => {
                 const ans = answers[q.id];
                 const isCorrect = ans?.selected_option === q.correct_answer;
-                const isOpened = openQuestion === q.id;
 
                 return (
-                  <div
-                    key={q.id}
-                    className="bg-surface-container-low rounded-4xl overflow-hidden group/q transition-all duration-500 hover-bloom"
-                  >
+                  <div key={q.id} className="bg-surface-container-low rounded-3xl overflow-hidden border border-outline-variant/10 shadow-ambient-sm p-5 space-y-5">
+                    <div className="flex items-start gap-4">
+                      <div className={`size-8 rounded-lg flex items-center justify-center font-technical font-black text-[10px] border-2 shrink-0 ${!ans?.selected_option ? "border-outline-variant/20 bg-surface-container-high text-on-surface-variant/40" :
+                        isCorrect ? "border-primary/20 bg-primary/5 text-primary" : "border-error/20 bg-error/5 text-error"
+                        }`}>
+                        {String(i + 1).padStart(2, '0')}
+                      </div>
+                      <h4 className="text-[13px] font-black text-on-surface leading-snug">{q.question}</h4>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2">
+                      {q.options?.map((opt) => (
+                        <div key={opt.l} className={`p-3 rounded-xl border flex flex-row justify-between items-center gap-3 min-h-[20px] ${opt.l === q.correct_answer ? "bg-primary/5 border-primary/20 text-primary" :
+                          ans?.selected_option === opt.l ? "bg-error/5 border-error/20 text-error" :
+                            "bg-surface-container-high/40 border-outline-variant/5 text-on-surface-variant/70"
+                          }`}>
+                          <div className="flex items-center justify-between">
+                            <span className="text-[9px] font-technical font-black opacity-40">{opt.l}</span>
+                            <span className="text-[11px] ml-4 font-bold tracking-tight leading-tight">{opt.v}</span>
+
+                          </div>
+                          {opt.l === q.correct_answer && <CheckCircle2 className="ml-2" size={10} />}
+                          {ans?.selected_option === opt.l && opt.l !== q.correct_answer && <XCircle size={10} />}
+
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="bg-surface-container-high/40 p-4 rounded-2xl border border-dashed border-outline-variant/20">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Info size={12} className="text-primary" />
+                        <p className="text-[9px] font-technical font-black text-primary uppercase tracking-widest">Botanical Insight</p>
+                      </div>
+                      <p className="text-[10px] font-medium text-on-surface-variant/80 leading-relaxed italic">{q.explanation || `Core synthesis confirms Option ${q.correct_answer} is optimal.`}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* DESKTOP MANIFESTATION (HIDDEN ON MOBILE) */}
+        <div className="hidden lg:block space-y-12">
+          {/* HERO PERFORMANCE CARD */}
+          <PerformanceCard
+            metrics={metrics}
+            attempt={attempt}
+            questions={questions}
+          />
+
+          <div className="grid sm:grid-cols-1 lg:grid-cols-12 gap-10">
+            {/* PERFORMANCE INSIGHTS */}
+            <div className="lg:col-span-5 space-y-8">
+              <div className="bg-surface-container-low p-8 rounded-[2.5rem] space-y-8 shadow-ambient-sm">
+                <h3 className="text-[10px] font-mono font-black uppercase tracking-[0.2em] text-on-surface-variant/40 flex items-center gap-3">
+                  <BarChart3 size={16} className="text-primary" />
+                  Distribution Metrics
+                </h3>
+
+                <div className="h-[240px] w-full relative">
+                  <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                    <span className="text-3xl font-mono font-black">{metrics.accuracy}%</span>
+                    <span className="text-[8px] font-mono font-bold uppercase tracking-widest opacity-40">Accuracy</span>
+                  </div>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={distributionData}
+                        innerRadius={70}
+                        outerRadius={95}
+                        paddingAngle={8}
+                        dataKey="value"
+                        stroke="none"
+                      >
+                        {distributionData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={entry.color} />
+                        ))}
+                      </Pie>
+                      <Tooltip
+                        contentStyle={{
+                          borderRadius: "20px",
+                          border: "none",
+                          fontSize: "12px",
+                          fontFamily: "Space Grotesk, monospace",
+                          boxShadow: "0 10px 25px -5px rgba(0,0,0,0.1)"
+                        }}
+                      />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
+
+                <div className="space-y-2">
+                  {distributionData.map((d, i) => (
                     <div
-                      onClick={() => setOpenQuestion(isOpened ? null : q.id)}
-                      className="p-8 flex items-start justify-between gap-6 cursor-pointer hover:bg-surface-container-high/60 transition-colors"
+                      key={i}
+                      className="flex items-center justify-between p-4 bg-surface-container-high/40 rounded-2xl group transition-all duration-300 hover:bg-surface-container-high"
                     >
-                      <div className="flex items-start gap-6">
+                      <div className="flex items-center gap-3">
                         <div
-                          className={`size-12 shrink-0 rounded-2xl flex items-center justify-center font-mono font-black text-sm border-2 transition-all duration-500 ${
-                            !ans?.selected_option
+                          className="size-2.5 rounded-full"
+                          style={{ backgroundColor: d.color }}
+                        />
+                        <span className="text-[11px] font-mono font-bold uppercase tracking-tight text-on-surface-variant/70">
+                          {d.name}
+                        </span>
+                      </div>
+                      <span className="text-sm font-mono font-black text-on-surface">
+                        {d.value}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="bg-primary text-white p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden group">
+                <div className="absolute -top-10 -right-10 p-8 opacity-10 group-hover:scale-125 group-hover:-rotate-12 transition-all duration-700">
+                  <BrainCircuit size={160} />
+                </div>
+                <h3 className="text-[10px] font-mono font-black uppercase tracking-[0.3em] text-white/50 mb-6 flex items-center gap-3">
+                  <Zap size={16} fill="currentColor" />
+                  Living Insights
+                </h3>
+                <div className="space-y-8 relative z-10">
+                  <p className="text-xl font-narrative font-bold leading-relaxed tracking-tight">
+                    {metrics.accuracy < 50
+                      ? `Our systems suggest focusing on the foundational structure of ${attempt?.chapters?.name}. Your current mastery profile requires reinforcement.`
+                      : `Remarkable synthesis of ${attempt?.chapters?.name}. You are demonstrating the cognitive patterns required for advanced complex reasoning.`}
+                  </p>
+                  <button
+                    onClick={() => navigate(`/user/dashboard`)}
+                    className="w-full py-4 cursor-pointer bg-white text-primary rounded-full font-mono font-black text-[10px] uppercase tracking-widest shadow-xl hover:scale-105 active:scale-95 transition-all"
+                  >
+                    Accelerate Growth
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* QUESTION REVIEW */}
+            <div className="lg:col-span-7 h-185 overflow-y-auto space-y-8 pr-2 custom-scrollbar">
+              <div className="flex items-center justify-between px-4">
+                <h3 className="text-[10px] font-mono font-black uppercase tracking-[0.3em] text-on-surface-variant/40 flex items-center gap-3">
+                  <History size={16} className="text-primary" />
+                  Analytical Review
+                </h3>
+                <div className="flex items-center gap-6">
+                  <div className="flex items-center gap-2">
+                    <div className="size-2 rounded-full bg-primary" />
+                    <span className="text-[9px] font-mono font-bold uppercase tracking-widest text-on-surface-variant/60">
+                      Correct
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="size-2 rounded-full bg-error" />
+                    <span className="text-[9px] font-mono font-bold uppercase tracking-widest text-on-surface-variant/60">
+                      Erroneous
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                {questions.map((q, i) => {
+                  const ans = answers[q.id];
+                  const isCorrect = ans?.selected_option === q.correct_answer;
+                  const isOpened = openQuestion === q.id;
+
+                  return (
+                    <div
+                      key={q.id}
+                      className="bg-surface-container-low rounded-4xl overflow-hidden group/q transition-all duration-500 hover-bloom"
+                    >
+                      <div
+                        onClick={() => setOpenQuestion(isOpened ? null : q.id)}
+                        className="p-8 flex items-start justify-between gap-6 cursor-pointer hover:bg-surface-container-high/60 transition-colors"
+                      >
+                        <div className="flex items-start gap-6">
+                          <div
+                            className={`size-12 shrink-0 rounded-2xl flex items-center justify-center font-mono font-black text-sm border-2 transition-all duration-500 ${!ans?.selected_option
                               ? "border-surface-container-highest bg-surface-container-high text-on-surface-variant/40"
                               : isCorrect
                                 ? "border-primary/20 bg-primary/5 text-primary"
                                 : "border-error/20 bg-error/5 text-error"
-                          }`}
-                        >
-                          {String(i + 1).padStart(2, '0')}
-                        </div>
-                        <div className="space-y-2">
-                          <h4 className="text-lg font-bold text-on-surface leading-snug group-hover/q:text-primary transition-colors">
-                            {q.question}
-                          </h4>
-                          <div className="flex items-center gap-4">
-                            <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-primary">
-                              {q.difficulty_level || "Medium"}
-                            </span>
-                            <div className="h-1 w-1 rounded-full bg-on-surface-variant/20" />
-                            <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-on-surface-variant/40">
-                              Valuation <span className="text-on-surface-variant">{q.marks}u</span>
-                            </span>
+                              }`}
+                          >
+                            {String(i + 1).padStart(2, '0')}
+                          </div>
+                          <div className="space-y-2">
+                            <h4 className="text-lg font-bold text-on-surface leading-snug group-hover/q:text-primary transition-colors">
+                              {q.question}
+                            </h4>
+                            <div className="flex items-center gap-4">
+                              <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-primary">
+                                {q.difficulty_level || "Medium"}
+                              </span>
+                              <div className="h-1 w-1 rounded-full bg-on-surface-variant/20" />
+                              <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-on-surface-variant/40">
+                                Valuation <span className="text-on-surface-variant">{q.marks}u</span>
+                              </span>
+                            </div>
                           </div>
                         </div>
+                        <div
+                          className={`p-2.5 rounded-full transition-all duration-500 ${isOpened ? "bg-primary text-white rotate-180" : "bg-surface-container-highest text-on-surface-variant/40"}`}
+                        >
+                          <ChevronDown size={14} />
+                        </div>
                       </div>
-                      <div
-                        className={`p-2.5 rounded-full transition-all duration-500 ${isOpened ? "bg-primary text-white rotate-180" : "bg-surface-container-highest text-on-surface-variant/40"}`}
-                      >
-                        <ChevronDown size={14} />
-                      </div>
-                    </div>
 
-                    {isOpened && (
-                      <div className="px-8 pb-10 pt-2 space-y-8 animate-in slide-in-from-top-4 duration-500 ease-botanical">
-                        <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
-                          {q.options?.map((opt) => {
-                            let style = "bg-surface-container-high text-on-surface-variant/70 border-transparent";
-                            if (opt.l === q.correct_answer)
-                              style = "bg-primary/10 text-primary border-primary/20 shadow-emerald-500/10";
-                            if (ans?.selected_option === opt.l && opt.l !== q.correct_answer)
-                              style = "bg-error/10 text-error border-error/20 shadow-rose-500/10";
+                      {isOpened && (
+                        <div className="px-8 pb-10 pt-2 space-y-8 animate-in slide-in-from-top-4 duration-500 ease-botanical">
+                          <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
+                            {q.options?.map((opt) => {
+                              let style = "bg-surface-container-high text-on-surface-variant/70 border-transparent";
+                              if (opt.l === q.correct_answer)
+                                style = "bg-primary/10 text-primary border-primary/20 shadow-emerald-500/10";
+                              if (ans?.selected_option === opt.l && opt.l !== q.correct_answer)
+                                style = "bg-error/10 text-error border-error/20 shadow-rose-500/10";
 
-                            return (
-                              <div
-                                key={opt.l}
-                                className={`p-5 rounded-3xl border-2 flex items-center gap-4 transition-all duration-300 ${style}`}
-                              >
+                              return (
                                 <div
-                                  className={`size-8 rounded-xl flex items-center justify-center font-mono font-bold text-sm border transition-colors ${
-                                    opt.l === q.correct_answer
+                                  key={opt.l}
+                                  className={`p-5 rounded-3xl border-2 flex items-center gap-4 transition-all duration-300 ${style}`}
+                                >
+                                  <div
+                                    className={`size-8 rounded-xl flex items-center justify-center font-mono font-bold text-sm border transition-colors ${opt.l === q.correct_answer
                                       ? "bg-white border-primary/30 text-primary"
                                       : "bg-surface-container-highest/50 border-on-surface-variant/10 text-on-surface-variant/40"
-                                  }`}
-                                >
-                                  {opt.l}
+                                      }`}
+                                  >
+                                    {opt.l}
+                                  </div>
+                                  <span className="text-sm font-bold tracking-tight">
+                                    {opt.v}
+                                  </span>
+                                  {opt.l === q.correct_answer && (
+                                    <CheckCircle2 size={18} className="ml-auto opacity-100" />
+                                  )}
+                                  {ans?.selected_option === opt.l && opt.l !== q.correct_answer && (
+                                    <XCircle size={18} className="ml-auto opacity-100" />
+                                  )}
                                 </div>
-                                <span className="text-sm font-bold tracking-tight">
-                                  {opt.v}
-                                </span>
-                                {opt.l === q.correct_answer && (
-                                  <CheckCircle2 size={18} className="ml-auto opacity-100" />
-                                )}
-                                {ans?.selected_option === opt.l && opt.l !== q.correct_answer && (
-                                  <XCircle size={18} className="ml-auto opacity-100" />
-                                )}
-                              </div>
-                            );
-                          })}
-                        </div>
-
-                        <div className="bg-surface-container-high/40 p-8 rounded-4xl border-2 border-dashed border-on-surface-variant/10">
-                          <div className="flex items-center gap-3 mb-4 text-primary">
-                            <Info size={18} />
-                            <span className="text-[10px] font-mono font-black uppercase tracking-[0.3em]">
-                              Botanical Insights
-                            </span>
+                              );
+                            })}
                           </div>
-                          <p className="text-sm font-medium text-on-surface-variant/80 leading-relaxed italic pr-6">
-                            {q.explanation ||
-                              `This data sequence confirms that Option ${q.correct_answer} is the optimal synthesis. Reviewing the core architectural patterns of ${attempt?.subjects?.name} will clarify this logical branch.`}
-                          </p>
+
+                          <div className="bg-surface-container-high/40 p-8 rounded-4xl border-2 border-dashed border-on-surface-variant/10">
+                            <div className="flex items-center gap-3 mb-4 text-primary">
+                              <Info size={18} />
+                              <span className="text-[10px] font-mono font-black uppercase tracking-[0.3em]">
+                                Botanical Insights
+                              </span>
+                            </div>
+                            <p className="text-sm font-medium text-on-surface-variant/80 leading-relaxed italic pr-6">
+                              {q.explanation ||
+                                `This data sequence confirms that Option ${q.correct_answer} is the optimal synthesis. Reviewing the core architectural patterns of ${attempt?.subjects?.name} will clarify this logical branch.`}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>

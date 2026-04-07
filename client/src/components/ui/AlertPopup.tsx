@@ -13,7 +13,7 @@ export const AlertPopup = ({ isOpen, onClose, message, title, children }: AlertP
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-60">
+    <div className="fixed inset-0 px-2 flex items-center justify-center bg-black/50 z-60">
       <div className="bg-surface w-100 rounded-xl shadow-lg p-6 relative">
         <span
           onClick={onClose}
@@ -21,11 +21,11 @@ export const AlertPopup = ({ isOpen, onClose, message, title, children }: AlertP
         >
           <X />
         </span>
-        {title && <p className="text-center text-primary text-2xl font-bold mt-10">{title || "Title"}</p>}
-        {message && <p className="text-lg text-center font-medium text-gray-800">
+        {title && <p className="text-center text-primary text-xl md:text-2xl font-bold mt-10">{title || "Title"}</p>}
+        {message && <p className="text-md md:text-lg text-center font-medium text-gray-800">
           {message}
         </p>}
-        <div className="mt-6 flex gap-4 text-right">
+        <div className="mt-6 gap-4 text-right">
           {children}
         </div>
       </div>

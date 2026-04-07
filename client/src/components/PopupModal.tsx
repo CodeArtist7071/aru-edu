@@ -33,7 +33,7 @@ export const PopupModal = ({
         <p className="text-sm px-4 text-center mt-5 font-medium text-gray-800">
           {message || "Cheating Alert is Detected please dont move your head left or right it will considered as cheating.. and voilate the exam rules.."}
         </p>
-        <div className="mt-6 flex gap-4 text-right">{children}</div>
+        <div className="mt-6 gap-4 text-right">{children}</div>
       </div>
     </div>
   );
