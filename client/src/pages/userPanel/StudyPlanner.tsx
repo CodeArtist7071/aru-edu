@@ -10,14 +10,14 @@ import { MobileAddTask } from "../../components/studyPlanner/MobileAddTask";
 import { ExamTicker } from "../../components/ui/ExamTicker";
 import { PlannerMilestones } from "../../components/studyPlanner/PlannerMilestones";
 import { AlertPopup } from "../../components/ui/AlertPopup";
-
 import { useNavigate, useParams, useOutlet, Outlet } from "react-router";
+
+import { type Habit, type Chapter } from "../../components/studyPlanner/types";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../store";
 import { useGoogleCalendar } from "../../utils/useGoogleCalender";
 
 // Modular Imports
-import { type Habit } from "../../components/studyPlanner/types";
 import { useStudyPlanner } from "../../components/studyPlanner/hooks/useStudyPlanner";
 import { usePlannerStats } from "../../components/studyPlanner/hooks/usePlannerStats";
 import { StudyGraph } from "../../components/studyPlanner/StudyGraph";
@@ -126,6 +126,10 @@ export default function StudyPlannerPage() {
     alert("All tasks for today have been synced to your Google Calendar!");
   };
 
+  const onShowMastery = () => {
+    navigate(`/user/plan-study/${examId || "default"}/mastery`);
+  };
+
   const onAddHabit = (mode: "routine" | "test") => {
     setAddMode(mode);
     navigate(`/user/plan-study/${examId || "default"}/add`);
@@ -148,6 +152,7 @@ export default function StudyPlannerPage() {
   return (
     <div className="text-on-surface transition-colors duration-500">
       <GoogleCalendarModal isOpen={isGooglePopupOpen} onClose={() => setIsGooglePopupOpen(false)} />
+      
       <AlertPopup 
         isOpen={!!reminderTest} 
         onClose={() => setReminderTest(null)}
@@ -246,7 +251,7 @@ export default function StudyPlannerPage() {
                 editingHabitId={editingHabitId}
                 setEditingHabitId={setEditingHabitId}
                 onShowAddTask={() => { setAddMode("routine"); navigate("add"); }}
-                onShowMastery={() => { setAddMode("test"); navigate("add"); }}
+                onShowMastery={onShowMastery}
                 manifestDemo={manifestDemo}
                 setShowSelector={setIsAddMasteryOpen}
               />

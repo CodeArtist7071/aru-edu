@@ -180,8 +180,6 @@ export const useTrackerGridLogic = (
         .maybeSingle();
 
       if (existing) {
-        notify({ message: `"${habit.name}" already persists for this manifestation period.`, title: "Already Manifested", status: "info" });
-        onRefresh();
         setIsDuplicating(false);
         return;
       }
@@ -207,14 +205,86 @@ export const useTrackerGridLogic = (
       const { error } = await supabase.from(table).insert(newHabitData);
       if (error) throw error;
       
-      notify({ message: `"${habit.name}" renewed for ${selectedDate.toDateString()}`, title: "Manifested", status: "success" });
+      notify({ message: `"${habit.name}" automatically renewed.`, title: "Logic Sync", status: "success" });
       onRefresh();
     } catch (err: any) {
-      notify({ message: err.message || "Renewal failed", title: "Persistence Error", status: "error" });
+      console.error("Auto-renewal failed:", err);
     } finally {
       setIsDuplicating(false);
     }
   }, [user?.id, selectedDate, isDuplicating, examId, onRefresh, notify]);
+
+  // Automated Manifestation: Auto-Renew recurring rituals detected as expired
+  useEffect(() => {
+    if (!user?.id || !selectedDate || isDuplicating || initialHabits.length === 0) return;
+
+    const autoRenew = async () => {
+      // Find habits that are expired yesterday and should be recurring
+      const habitsToRenew = initialHabits.filter(habit => {
+         if (habit.isDemo || dismissedRenewals.has(habit.id)) return false;
+         if (!habit.is_recurring && habit.duration_type === "DAILY") return false;
+
+         const prevDate = new Date(selectedDate);
+         prevDate.setDate(prevDate.getDate() - 1);
+         prevDate.setHours(0, 0, 0, 0);
+
+         let isRecentlyExpired = false;
+         if (habit.scheduled_date) {
+            const startDate = new Date(habit.scheduled_date);
+            startDate.setHours(0, 0, 0, 0);
+
+            if (habit.duration_type === "DAILY") {
+              if (prevDate.getTime() === startDate.getTime()) isRecentlyExpired = true;
+            } else if (habit.duration_type === "WEEKLY") {
+              const endDate = new Date(startDate);
+              endDate.setDate(startDate.getDate() + 6);
+              endDate.setHours(0, 0, 0, 0);
+              if (prevDate.getTime() === endDate.getTime()) isRecentlyExpired = true;
+            } else if (habit.duration_type === "CUSTOM" && habit.scheduled_end_date) {
+              const endDate = new Date(habit.scheduled_end_date);
+              endDate.setHours(0, 0, 0, 0);
+              if (prevDate.getTime() === endDate.getTime()) isRecentlyExpired = true;
+            }
+         }
+
+         if (!isRecentlyExpired) return false;
+
+         // Verify NO active manifestation exists TODAY for this ritual name
+         const activeHabitNames = new Set(
+            initialHabits
+              .filter(h => {
+                 if (!h.scheduled_date) return false;
+                 const start = new Date(h.scheduled_date);
+                 start.setHours(0, 0, 0, 0);
+                 const todayNorm = new Date(selectedDate);
+                 todayNorm.setHours(0, 0, 0, 0);
+                 if (todayNorm < start) return false;
+
+                 if (h.duration_type === "DAILY") return todayNorm.getTime() === start.getTime();
+                 if (h.duration_type === "WEEKLY") {
+                   const end = new Date(start);
+                   end.setDate(start.getDate() + 6);
+                   return todayNorm <= end;
+                 }
+                 if (h.duration_type === "MONTHLY") return true; 
+                 return false;
+              })
+              .map(h => h.name.trim().toLowerCase())
+         );
+
+         return !activeHabitNames.has(habit.name.trim().toLowerCase());
+      });
+
+      if (habitsToRenew.length > 0) {
+        // Renewal manifestation ritual
+        for (const habit of habitsToRenew) {
+          await duplicateHabit(habit);
+        }
+      }
+    };
+
+    autoRenew();
+  }, [initialHabits, selectedDate, user?.id, isDuplicating, duplicateHabit, dismissedRenewals]);
 
   const dismissRenewal = useCallback((habitId: string) => {
     setDismissedRenewals(prev => new Set(prev).add(habitId));
@@ -371,16 +441,10 @@ export const useTrackerGridLogic = (
     onModalOpenHandled?.();
     if (setEditingHabitId) {
       setEditingHabitId(habit.id);
-      onShowAddTask?.();
-    }
-    if (setValue) {
-      setValue("habit", habit.name);
-      setValue("priority", habit.priority);
-      setValue("start_time", habit.start_time || "");
-      setValue("end_time", habit.end_time || "");
+      navigate(`/user/plan-study/${examId || "default"}/edit/${habit.id}`);
     }
     window.scrollTo({ top: 300, behavior: "smooth" });
-  }, [onModalOpenHandled, setEditingHabitId, onShowAddTask, setValue]);
+  }, [onModalOpenHandled, setEditingHabitId, navigate, examId]);
 
   const handleDelete = useCallback(async (habit: Habit) => {
     if (!window.confirm(`Are you sure you want to delete "${habit.name}"? This action is permanent.`)) return;

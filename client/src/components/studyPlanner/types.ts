@@ -24,3 +24,12 @@ export type PlannerStats = {
   dailyPercents?: number[];
   weeklyDone?: number[];
 };
+
+export interface Chapter {
+  id: string;
+  name: string;
+  subjects?: {
+    id: string;
+    name: string;
+  };
+}

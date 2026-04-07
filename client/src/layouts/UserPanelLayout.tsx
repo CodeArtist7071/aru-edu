@@ -382,29 +382,38 @@ export default function UserPanelLayout() {
           <Outlet />
         </div>
 
-        {/* Mobile Nav - "The Bottom Bar" with Safe Area Padding for Android 15 */}
-        <nav className="lg:hidden h-auto pb-[env(safe-area-inset-bottom)] bg-surface-container-highest backdrop-blur-xl flex justify-between items-center px-3 sticky bottom-0 z-30 border-t border-outline-variant/10 shadow-ambient">
-          {mobileNavItems.filter(i => i.label !== "Admin Portal").slice(0, 7).map((item) => (
-            <div>
-              <NavLink
-                key={item.label}
-                to={item.path}
-                className={({ isActive }) =>
-                  `flex flex-col items-center justify-center size-14 rounded-full transition-all ${isActive ? "text-primary scale-105 translate-y-[-25px] duration-500 bg-surface  shadow-lg" : "text-on-surface-variant translate-y-[-5px]"
-                  }`
-                }
-              >
-                {cloneElement(item.icon as React.ReactElement<any>, { size: 20 })}
-                {/* <span className="text-[8px] bg-amber-300 mt-1">{item.label}</span> */}
-              </NavLink>
-
-            </div>
-
+        {/* Mobile Nav - "The Bottom Bar" with Safe Area Padding for Android 15 & iOS */}
+        <nav className="lg:hidden h-auto pb-[calc(1rem+env(safe-area-inset-bottom))] bg-surface/90 backdrop-blur-3xl flex justify-between items-center px-6 sticky bottom-0 z-40 border-t border-outline-variant/5 shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
+          {mobileNavItems.map((item) => (
+            <NavLink
+              key={item.label}
+              to={item.path}
+              end={item.path === "/user/dashboard"}
+              className={({ isActive }) =>
+                `flex flex-col items-center justify-center relative transition-all duration-500 ease-botanical py-3 ${isActive ? "text-primary" : "text-on-surface-variant"
+                }`
+              }
+            >
+              {({ isActive }) => (
+                <>
+                  <div className={`size-12 rounded-2xl flex items-center justify-center transition-all duration-500 ${isActive
+                      ? "bg-primary text-white shadow-lg shadow-primary/20 -translate-y-6 rotate-12 scale-110"
+                      : "bg-surface-container-high/40 opacity-40"
+                    }`}>
+                    {cloneElement(item.icon as React.ReactElement<any>, { size: 22 })}
+                  </div>
+                  <span className={`absolute bottom-0 text-[7px] font-technical font-black uppercase tracking-[0.2em] transition-all duration-300 ${isActive ? "opacity-100 translate-y-[-8px]" : "opacity-0 translate-y-2"
+                    }`}>
+                    {item.label}
+                  </span>
+                </>
+              )}
+            </NavLink>
           ))}
           {profile?.role === "admin" && (
             <button
               onClick={() => navigate("/admin/dashboard")}
-              className="hidden md:flex flex-col items-center justify-center size-14 rounded-2xl text-primary bg-primary/10 transition-all active:scale-90"
+              className="flex flex-col items-center justify-center size-12 rounded-2xl text-primary bg-primary/10 transition-all active:scale-90"
               title="Admin Portal"
             >
               <ShieldCheck size={20} />

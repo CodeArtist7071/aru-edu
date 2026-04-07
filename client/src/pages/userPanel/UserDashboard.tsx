@@ -171,6 +171,10 @@ const UserDashboard = () => {
     dispatch(fetchExams());
     fetchDailyData();
 
+    // Targeted manifestation: Enable scroll sync only for desktop environments
+    const isDesktop = window.innerWidth >= 1024;
+    if (!isDesktop) return;
+
     const timer = setTimeout(() => {
       const element = targetRef.current;
       if (!element) return;

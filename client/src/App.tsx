@@ -49,6 +49,7 @@ const ResultSelection = lazy(() => import("./pages/resultpage/ResultSelection"))
 const AdminGuard = lazy(() => import("./components/AdminGuard").then(m => ({ default: m.AdminGuard })));
 const MockTestPreferencePage = lazy(() => import("./pages/userPanel/MockTestPreferencePage"));
 const AddRoutine = lazy(() => import("./components/studyPlanner/AddRoutine").then(m => ({ default: m.AddRoutine })));
+const MasterySelector = lazy(() => import("./components/studyPlanner/MasterySelector"));
 const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -123,6 +124,7 @@ const router = createBrowserRouter(
             <Route path="plan-study/:eid?" element={<StudyPlanner />}>
               <Route path="add" element={<AddRoutine />} />
               <Route path="edit/:habitId" element={<AddRoutine />} />
+              <Route path="mastery" element={<MasterySelector />} />
             </Route>
           </Route>
           <Route path="profile" element={<Profile />} />
