@@ -119,13 +119,42 @@ export const useTrackerGridLogic = (
     return list;
   }, [initialHabits, searchTerm, selectedDate]);
 
-  // Duplicate Habit for renewal
   const duplicateHabit = useCallback(async (habit: Habit) => {
     if (!user?.id || !selectedDate) return;
     try {
       const table = habit.is_mastery ? "user_mastery" : "study_habits";
       const newProgress = Array(31).fill(false);
       newProgress[selectedDate.getDate() - 1] = true;
+
+      // Smart Temporal Interval Manifestation
+      let scheduled_end_date = null;
+      if (habit.duration_type === "WEEKLY") {
+        const end = new Date(selectedDate);
+        end.setDate(end.getDate() + 6);
+        scheduled_end_date = end.toISOString().split('T')[0];
+      } else if (habit.duration_type === "MONTHLY") {
+        const end = new Date(selectedDate);
+        end.setMonth(end.getMonth() + 1);
+        end.setDate(end.getDate() - 1);
+        scheduled_end_date = end.toISOString().split('T')[0];
+      }
+
+      const newStartStr = selectedDate.toISOString().split('T')[0];
+
+      // Existence Manifestation Check
+      const { data: existing } = await supabase
+        .from(table)
+        .select("id")
+        .eq("user_id", user.id)
+        .eq("name", habit.name)
+        .eq("scheduled_date", newStartStr)
+        .maybeSingle();
+
+      if (existing) {
+        notify({ message: `"${habit.name}" already persists for this manifestation period.`, title: "Already Manifested", status: "info" });
+        onRefresh();
+        return;
+      }
 
       const newHabitData: any = {
         user_id: user.id,
@@ -137,7 +166,8 @@ export const useTrackerGridLogic = (
         chapter_id: habit.chapter_id,
         is_recurring: habit.is_recurring,
         duration_type: habit.duration_type,
-        scheduled_date: selectedDate.toISOString().split('T')[0],
+        scheduled_date: newStartStr,
+        scheduled_end_date,
         month: selectedDate.getMonth() + 1,
         year: selectedDate.getFullYear(),
         progress: newProgress,

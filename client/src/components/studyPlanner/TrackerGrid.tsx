@@ -89,7 +89,7 @@ export default function TrackerGrid(props: TrackerGridProps) {
   );
 
   return (
-    <div className="flex flex-col text-on-surface w-full h-full bg-white min-w-0 relative animate-in fade-in duration-700">
+    <div className="flex flex-col text-on-surface w-full h-full bg-white/90 min-w-0 relative animate-in fade-in duration-700">
       {/* Top Header Section (Emily Excels Title & Active Days) */}
       <div className="bg-emerald-800 text-white p-6 shadow-lg border-b-4 border-emerald-900">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -126,7 +126,7 @@ export default function TrackerGrid(props: TrackerGridProps) {
         setUnlockPastDays={setUnlockPastDays}
       />
 
-      <div className="flex-1 overflow-auto bg-white relative shadow-inner">
+      <div className="flex-1 overflow-auto bg-white/80 relative shadow-inner">
         <table className="w-max min-w-full border-separate border-spacing-0 text-xs select-none">
           <thead>
             <GridDayHeaderRow 

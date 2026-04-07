@@ -421,3 +421,15 @@
     transform: translateX(2px);
   }
 }
+
+  /* Universal Botanical Checkbox Manifestation */
+  input[type="checkbox"] {
+    @apply transition-all duration-300 cursor-pointer;
+    opacity: 0.2;
+    transform: scale(0.9);
+    accent-color: var(--primary);
+  }
+  input[type="checkbox"]:checked {
+    opacity: 1;
+    transform: scale(1);
+  }
