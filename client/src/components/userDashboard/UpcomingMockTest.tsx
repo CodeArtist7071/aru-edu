@@ -2,7 +2,7 @@ import { Clock, Sparkles, ChevronRight, Edit3, Trash } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { format12h } from "../../utils/format12h";
-import type { Habit } from "../studyPlanner/TrackerGrid";
+import type { Habit } from "../studyPlanner/types";
 
 export const UpcomingMockTest = ({ 
   habits, 
