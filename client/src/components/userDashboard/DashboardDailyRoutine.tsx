@@ -2,7 +2,7 @@ import { ChevronRight, Sparkles, CheckSquare } from "lucide-react";
 import { useMemo, useState } from "react";
 import { format12h } from "../../utils/format12h";
 import { useNavigate } from "react-router";
-import type { Habit } from "../studyPlanner/TrackerGrid";
+import { type Habit } from "../studyPlanner/types";
 // import { Exam, Habit } from "../../types/types";
 
 export const DashboardDailyRoutine = ({ targetedExams, dailyRituals, progress, today, handleToggle, isOpen, onClose }: { targetedExams: any, dailyRituals: Habit[], progress: Record<string, boolean[]>, today: number, handleToggle: (id: string) => void, isOpen: boolean, onClose: () => void }) => {

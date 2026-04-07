@@ -41,7 +41,7 @@ export const IOSInstallPrompt = () => {
   if (!showPrompt) return null;
 
   return (
-    <div className="fixed bottom-6 left-4 right-4 z-9999 animate-buttery-slide">
+    <div className="fixed bottom-[calc(6.5rem+env(safe-area-inset-bottom))] left-4 right-4 z-999 animate-buttery-slide">
       <div className="glass rounded-2xl border border-primary/20 shadow-ambient-lg p-5 relative overflow-hidden group">
         <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
         

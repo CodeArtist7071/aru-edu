@@ -81,7 +81,7 @@
 
 @layer utilities {
   .glass {
-    @apply bg-surface-container-high/70 backdrop-blur-xl;
+    @apply bg-surface-container-high/20 backdrop-blur-xl;
   }
 
   @keyframes reveal-greeting {
@@ -311,6 +311,31 @@
   .eye-protection-active {
     filter: sepia(0.25) contrast(0.95) brightness(0.95);
     transition: filter 0.8s var(--ease-botanical);
+  }
+
+  /* Flagship Botanical Scrollbar */
+  .botanical-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) transparent;
+  }
+  .botanical-scrollbar::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+    display: block !important;
+  }
+  .botanical-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 100px;
+  }
+  .botanical-scrollbar::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
+    opacity: 0.4;
+    border-radius: 100px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  .botanical-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: var(--primary-container);
   }
 }
 

@@ -2,9 +2,9 @@ const QuestionDistribution = ({ metrics }: { metrics: any }) => {
     const total = (metrics?.totalCorrect || 0) + (metrics?.totalIncorrect || 0) + (metrics?.totalSkipped || 0);
     
     return (
-        <div className="bg-surface-container-low p-10 rounded-[3rem] shadow-ambient group">
+        <div className="bg-surface-container-low p-4 rounded-3xl shadow-ambient group">
             <div className="flex items-center justify-between mb-10">
-                <h3 className="text-xl font-black text-on-surface tracking-tight flex items-center gap-4">
+                <h3 className="text-md font-black text-on-surface tracking-tight flex items-center gap-4">
                   <div className="size-10 bg-on-surface/5 rounded-xl flex items-center justify-center text-on-surface-variant group-hover:bg-primary/10 group-hover:text-primary transition-colors">
                      <div className="size-2 rounded-full bg-current" />
                   </div>

@@ -2,7 +2,7 @@ import { Book } from "lucide-react";
 
 const AiInsights = ({ aiInsights }: { aiInsights: any[] }) => {
     return (
-        <div className="bg-primary/5 p-10 rounded-[3rem] border border-primary/10 shadow-ambient overflow-hidden relative group">
+        <div className="bg-primary/5 p-4 rounded-3xl border border-primary/10 shadow-ambient overflow-hidden relative group">
           <div className="absolute -top-10 -right-10 opacity-5 rotate-12 group-hover:rotate-0 transition-transform duration-1000">
              <Book size={200} />
           </div>

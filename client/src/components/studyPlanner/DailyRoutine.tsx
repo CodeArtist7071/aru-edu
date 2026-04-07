@@ -18,9 +18,10 @@ interface DailyRoutineProps {
   onSyncAll?: () => void;
   selectedDate?: Date;
   progress?: Record<string, boolean[]>;
+  onToggle?: (id: string, index: number) => void;
 }
 
-export default function DailyRoutine({ habits = [], progress = {}, selectedDate = new Date(), onRefresh, onSync, onSyncAll }: DailyRoutineProps) {
+export default function DailyRoutine({ habits = [], progress = {}, selectedDate = new Date(), onRefresh, onSync, onSyncAll, onToggle }: DailyRoutineProps) {
   // 1. Determine which day we are looking at
   const dayIdx = selectedDate.getDate() - 1;
   const isToday = selectedDate.toDateString() === new Date().toDateString();

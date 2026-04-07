@@ -11,7 +11,7 @@ import { TimePicker } from "./TimePicker";
 import { getLocalDateString } from "../../utils/getLocaleDateString";
 import { parseRoutineWithAI } from "../../utils/parseRoutineWithAI";
 import { useNavigate, useParams, useOutletContext } from "react-router";
-import type { Habit } from "../../pages/userPanel/StudyPlanner";
+import { type Habit } from "./types";
 
 // Define the context shape received from StudyPlanner
 interface PlannerContext {
@@ -216,7 +216,7 @@ export const AddRoutine = () => {
     showToast("loading", editingHabitId ? "Updating routine..." : "Adding routine...");
 
     try {
-      if (editingHabitId) {
+      if (editingHabitId && !editingHabitId.startsWith("demo-")) {
         const habit = initialHabits.find((h) => h.id === editingHabitId);
         if (!habit) return;
         const table = habit.is_mastery ? "user_mastery" : "study_habits";
@@ -363,7 +363,7 @@ export const AddRoutine = () => {
         {/* DURATION TOGGLE */}
         {!editingHabitId && (
           <div className="flex bg-surface-container-high p-1 rounded-2xl flex-wrap">
-            <button type="button" onClick={() => setValue("duration_type", "DAILY")} className={`flex-1 py-3 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "DAILY" ? "bg-white text-primary shadow-sm" : "text-on-surface-variant opacity-40"}`}>Daily</button>
+            <button type="button" onClick={() => setValue("duration_type", "DAILY")} className={`flex-1 py-3 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "DAILY" ? "bg-white text-primary shadow-sm" : "text-on-surface-variant opacity-40"}`}>Today</button>
             <button type="button" onClick={() => setValue("duration_type", "WEEKLY")} className={`flex-1 py-3 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "WEEKLY" ? "bg-white text-primary shadow-sm" : "text-on-surface-variant opacity-40"}`}>Weekly</button>
             <button type="button" onClick={() => setValue("duration_type", "MONTHLY")} className={`flex-1 py-3 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "MONTHLY" ? "bg-white text-primary shadow-sm" : "text-on-surface-variant opacity-40"}`}>Monthly</button>
             <button type="button" onClick={() => setValue("duration_type", "CUSTOM")} className={`flex-1 py-3 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "CUSTOM" ? "bg-white text-primary shadow-sm" : "text-on-surface-variant opacity-40"}`}>Custom</button>

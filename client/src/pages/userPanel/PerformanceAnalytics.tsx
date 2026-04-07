@@ -30,6 +30,9 @@ import { SoilEnrichment } from "../../components/performanceAnalytics/SoilEnrich
 import { FocusBalance } from "../../components/performanceAnalytics/FocusBalance";
 import { ExamTicker } from "../../components/ui/ExamTicker";
 
+import { DesktopPerformanceAnalytics } from "../../components/performanceAnalytics/DesktopPerformanceAnalytics";
+import { MobilePerformanceAnalytics } from "../../components/performanceAnalytics/MobilePerformanceAnalytics";
+
 const PerformanceAnalytics = () => {
   const { profile } = useSelector(
     (state: RootState) => state.user ?? { profile: null },
@@ -52,6 +55,9 @@ const PerformanceAnalytics = () => {
     return examData.filter((el) => profile.target_exams.includes(el.id));
   }, [examData, profile?.target_exams]);
 
+  const { user } = useSelector((state: RootState) => state.user ?? { user: null });
+  const activeUserId = profile?.id || user?.id;
+
   useEffect(() => {
     dispatch(fetchExams());
   }, [dispatch]);
@@ -63,16 +69,43 @@ const PerformanceAnalytics = () => {
   }, [profile, selectedExam]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (!profile?.id || !selectedExam) return;
+    const discoverAndFetch = async () => {
+      if (!activeUserId) return;
       try {
         setLoading(true);
+
+        let finalExamId = selectedExam;
+
+        // 1. If no selectedExam, try to find the most recent attempt overall
+        if (!finalExamId) {
+          const { data: recentAtt } = await supabase
+            .from("test_attempts")
+            .select("exam_id")
+            .eq("user_id", activeUserId)
+            .order("submitted_at", { ascending: false })
+            .limit(1)
+            .maybeSingle();
+          
+          if (recentAtt?.exam_id) {
+            finalExamId = recentAtt.exam_id;
+            setSelectedExam(finalExamId);
+          }
+        }
+
+        if (!finalExamId) {
+          setLoading(false);
+          return;
+        }
+
+        // 2. Fetch attempts for the determined exam context
         const { data: atts } = await supabase
           .from("test_attempts")
           .select("*")
-          .eq("exam_id", selectedExam)
-          .eq("user_id", profile?.id)
+          .eq("exam_id", finalExamId)
+          .eq("user_id", activeUserId)
           .order("submitted_at", { ascending: false });
+
+        // 3. (REMOVED) Fallback logic no longer force-switching away from empty choices
 
         const attemptIds = (atts || []).map((a) => a.id);
         const { data: answersData } =
@@ -98,12 +131,15 @@ const PerformanceAnalytics = () => {
         setLoading(false);
       }
     };
-    fetchData();
-  }, [profile?.id, selectedExam]);
+    discoverAndFetch();
+  }, [activeUserId, selectedExam]);
 
   const filteredAttempts = useMemo(() => {
-    return attempts;
-  }, [attempts]);
+    return attempts.filter((att) => {
+      if (chartMode === "Mock") return att.is_mock_test === true;
+      return !att.is_mock_test; // Practice mode: is_mock_test is null/false
+    });
+  }, [attempts, chartMode]);
 
   const filteredAnswers = useMemo(() => {
     const attemptIds = new Set(filteredAttempts.map((a) => a.id));
@@ -228,169 +264,31 @@ const PerformanceAnalytics = () => {
     };
   }, [filteredAttempts, filteredAnswers, chapters, subjects]);
 
-  const aiInsights = useMemo(() => {
-    if (!metrics)
-      return [
-        {
-          type: "Getting Started",
-          title: "Begin your journey",
-          desc: "Complete your first practice test to unlock personalized AI insights.",
-        },
-      ];
-    const insights: any[] = [];
-    if (metrics.weakChapters.length > 0) {
-      insights.push({
-        type: "Focus Area",
-        title: `${metrics.weakChapters[0].name} Concepts`,
-        desc: `Your accuracy is ${metrics.weakChapters[0].accuracy}% in this chapter. Review the core concepts.`,
-      });
-    }
-    if (metrics.totalSkipped > 5) {
-      insights.push({
-        type: "Action Required",
-        title: "Improve Time Management",
-        desc: `You've skipped ${metrics.totalSkipped} questions. Allocate at least 60s per question.`,
-      });
-    }
-    insights.push({
-      type: "Next Recommended",
-      title:
-        metrics.strongChapters.length > 0
-          ? `${metrics.strongChapters[0].subject} Mastery`
-          : "General Practice",
-      desc: "Maintain your momentum with a personalized session.",
-    });
-    return insights.slice(0, 3);
-  }, [metrics]);
-
   if (loading) return <PerformanceSkeleton />;
 
-  if (!metrics) {
-    return (
-      <main className="flex-1 pt-10 px-4 lg:px-12 max-w-7xl mx-auto space-y-10 animate-reveal">
-        <section className="pt-8 text-center py-20 bg-surface-container-high rounded-[3rem]">
-          <FlaskConical className="size-16 text-primary/20 mx-auto mb-6" />
-          <h2 className="text-2xl font-black text-on-surface">
-            Data Seedlings Needed
-          </h2>
-          <p className="text-on-surface-variant max-w-md text-sm mx-auto mt-4">
-            Complete your first exam to begin generating growth trends and AI
-            insights.
-          </p>
-          <button
-            onClick={() => navigate("/user/dashboard")}
-            className="mt-10 px-8 py-3 bg-primary text-white rounded-full font-technical font-black uppercase tracking-widest text-[11px] shadow-lg shadow-primary/20 hover:scale-105 transition-all"
-          >
-            Start Preparation
-          </button>
-        </section>
-      </main>
-    );
-  }
-
-  const performanceTrajectory = metrics.performanceTrajectory;
-  const maxScore = 100;
-
   return (
-    <main className="pb-20 px-6 lg:px-12 max-w-7xl mx-auto space-y-16 animate-reveal">
-      <section className="pt-8">
-        <h1 className="text-6xl font-black leading-[0.9] tracking-tighter text-on-surface">
-          Growth <span className="text-primary italic">&</span> <br />
-          Precision.
-        </h1>
-        <p className="mt-8 text-on-surface-variant max-w-lg text-lg font-medium leading-relaxed opacity-80">
-          Your journey through the{" "}
-          <span className="text-primary font-black px-2 py-0.5 bg-primary/5 rounded-lg">
-            {targetedExams?.find((e: any) => e.id === selectedExam)?.name ||
-              "curriculum"}
-          </span>{" "}
-          ecosystem shows developing technical mastery and consistent momentum.
-        </p>
-      </section>
-
-      <ExamTicker
-        targetedExams={targetedExams}
+    <>
+      <MobilePerformanceAnalytics
+        className="lg:hidden"
+        metrics={metrics}
         selectedExam={selectedExam}
         setSelectedExam={setSelectedExam}
+        targetedExams={targetedExams}
+        chartMode={chartMode}
+        setChartMode={setChartMode}
+        attempts={attempts}
       />
-
-      <div className="grid sm:grid-cols-1 lg:grid-cols-12 overflow-hidden gap-8">
-        <div className="w-full md:col-span-6 lg:col-span-4 mx-auto bg-primary p-10 rounded-[3rem] shadow-ambient hover-bloom group">
-          <div className="size-16 bg-surface-container-high rounded-2xl flex items-center justify-center text-primary mb-8 shadow-sm group-hover:bg-primary group-hover:text-white transition-all duration-500">
-            <TrendingUp size={28} />
-          </div>
-          <h3 className="text-[11px] font-technical font-black uppercase tracking-widest text-white opacity-60 mb-2">
-            Momentum Trend
-          </h3>
-          <p className="text-8xl font-technical font-black text-white tracking-tighter leading-none">
-            {metrics.testsCount || 0}
-          </p>
-          <p className="text-sm font-bold text-white mt-4">
-            Completed Sessions
-          </p>
-        </div>
-
-        <GrowthChart
-          performanceTrajectory={performanceTrajectory}
-          maxScore={maxScore}
-          chartMode={chartMode}
-          setChartMode={setChartMode}
-        />
-
-        <div className="sm:col-span-full lg:col-span-8">
-          <SubjectMastery examid={selectedExam} metrics={metrics} />
-        </div>
-
-        <FocusBalance metrics={metrics} />
-        <div className="sm:col-span-full lg:col-span-6">
-          <QuestionDistribution metrics={metrics} />
-        </div>
-        <div className="lg:col-span-6">
-          <AiInsights aiInsights={aiInsights} />
-        </div>
-        <MastHeadChapters metrics={metrics} />
-        <SoilEnrichment metrics={metrics} />
-      </div>
-
-      <footer className="flex flex-col md:flex-row items-center justify-between gap-8 p-12 bg-primary/5 rounded-[4rem] border border-primary/10 overflow-hidden relative">
-        <div className="absolute top-0 right-0 p-8 opacity-5">
-          <TrendingUp size={200} />
-        </div>
-        <div className="flex items-center gap-8 relative z-10">
-          <div className="size-20 rounded-3xl bg-primary flex items-center justify-center shadow-xl shadow-primary/30 text-white group hover:scale-105 transition-transform duration-500">
-            <TrendingUp
-              size={36}
-              className="group-hover:translate-y-[-4px] transition-transform"
-            />
-          </div>
-          <div>
-            <h3 className="text-2xl font-black text-on-surface mb-2 tracking-tight">
-              Cultivate your potential.
-            </h3>
-            <p className="text-on-surface-variant text-sm font-medium leading-relaxed max-w-sm">
-              We've synthesized your performance data into a specialized growth
-              path.
-            </p>
-          </div>
-        </div>
-        <div className="flex gap-4 relative z-10">
-          <button
-            onClick={() =>
-              attempts.length > 0 && navigate(`/user/results/${attempts[0].id}`)
-            }
-            className="px-8 py-4 bg-surface rounded-full font-technical font-black text-[11px] uppercase tracking-[0.2em] text-on-surface-variant shadow-sm hover:shadow-xl hover:text-on-surface transition-all active:scale-95"
-          >
-            Review Errors
-          </button>
-          <button
-            onClick={() => navigate("/user/dashboard")}
-            className="px-8 py-4 bg-linear-to-r from-primary to-primary-container text-on-primary rounded-full font-technical font-black text-[11px] uppercase tracking-[0.2em] shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
-          >
-            Return to Study
-          </button>
-        </div>
-      </footer>
-    </main>
+      <DesktopPerformanceAnalytics
+        className="hidden lg:block pb-24"
+        metrics={metrics}
+        selectedExam={selectedExam}
+        setSelectedExam={setSelectedExam}
+        targetedExams={targetedExams}
+        chartMode={chartMode}
+        setChartMode={setChartMode}
+        attempts={attempts}
+      />
+    </>
   );
 };
 
