@@ -3,8 +3,7 @@ import { useNavigate, useParams, useSearchParams, useBlocker } from "react-route
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../store";
 import {
-  fetchFilteredQuestion,
-  fetchQuestion,
+  fetchQuestionsByIds
 } from "../slice/questionSlice";
 import { 
   startTestSession, 
@@ -21,8 +20,8 @@ import { seedAbilityFromMockTest } from "../services/questionService";
 
 const SESSION_TTL = 30 * 60 * 1000; // 30 minutes in milliseconds
 
-export const usePracticeTestLogic = () => {
-  const { eid, sid, cid } = useParams();
+export const useMockTestLogic = () => {
+  const { eid, attemptId: urlAttemptId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { notify } = useNotifications();
@@ -43,41 +42,43 @@ export const usePracticeTestLogic = () => {
   const [lastViolation, setLastViolation] = useState<Violation | null>(null);
   const [proctoringStatus, setProctoringStatus] = useState<string>("Initializing...");
   const [showWarning, setShowWarning] = useState(false);
-  const [cameraReady, setCameraReady] = useState(false);
-  const [faceDetected, setFaceDetected] = useState(false);
-  const [openAlert, setOpenAlert] = useState<boolean>(false);
-  const [attemptId, setAttemptId] = useState<string | null>(null);
-  const [lastSaved, setLastSaved] = useState<number>(Date.now());
-  const [timeLeft, setTimeLeft] = useState<number | null>(null);
-  const [confirmedAnswers, setConfirmedAnswers] = useState<Record<number, boolean>>({});
-  const [showSubmitConfirm, setShowSubmitConfirm] = useState(false);
   const [minimized, setMinimized] = useState(false);
   const isMinimizedRef = useRef(false);
   const toggleTimestampRef = useRef(0);
-  const [counts, setCounts] = useState({ attempted: 0, total: 0 });
-
+  const [flash, setFlash] = useState(false);
+  const [cameraReady, setCameraReady] = useState(false);
+ 
   // Sync minimized state to ref for zero-latency AI access
   useEffect(() => {
     isMinimizedRef.current = minimized;
     toggleTimestampRef.current = Date.now();
   }, [minimized]);
+  const [faceDetected, setFaceDetected] = useState(false);
+  const [showCameraModal, setShowCameraModal] = useState(false);
+  const [openAlert, setOpenAlert] = useState<boolean>(false);
+  const [attemptId, setAttemptId] = useState<string | null>(null);
+  const [examId, setExamId] = useState<string | null>(null);
+  const [timeLeft, setTimeLeft] = useState<number | null>(null);
+  const [confirmedAnswers, setConfirmedAnswers] = useState<Record<number, boolean>>({});
+  const [language, setLanguage] = useState<"en" | "od">("en");
+  const [showSubmitConfirm, setShowSubmitConfirm] = useState(false);
+  const [counts, setCounts] = useState({ attempted: 0, total: 0 });
 
   const isCreatingRef = useRef(false);
   const isNavigatingAwayRef = useRef(false);
 
   const [searchParams] = useSearchParams();
   const mode = searchParams.get("mode") || "proctored";
-  const timeLimit = parseInt(searchParams.get("time") || "30");
 
   const { data: questions } = useSelector((state: RootState) => state.questions);
   const { user } = useSelector((state: RootState) => state.user);
-  const { testLanguage, triggerSubmit } = useSelector((state: RootState) => state.ui);
+  const { triggerSubmit } = useSelector((state: RootState) => state.ui);
 
   const methods = useForm<any>({
     defaultValues: { answers: {} },
   });
 
-  const { handleSubmit, reset, watch } = methods;
+  const { handleSubmit, reset, watch, setValue } = methods;
   const watchedAnswers = watch("answers");
 
   const blocker = useBlocker(
@@ -95,7 +96,7 @@ export const usePracticeTestLogic = () => {
 
   // Sync test session with global header on mount
   useEffect(() => {
-    dispatch(startTestSession({ title: "Subject Manifestation", language: "en" }));
+    dispatch(startTestSession({ title: "Mock Manifestation", language: "en" }));
     return () => {
       dispatch(clearTestSession());
     };
@@ -107,54 +108,48 @@ export const usePracticeTestLogic = () => {
     dispatch(updateTestTime(timeLeft));
   }, [timeLeft, dispatch]);
 
-  // Watch for Parent-Triggered Submit
+  // Watch for Parent-Triggered Submit from Global Header
   useEffect(() => {
     if (triggerSubmit) {
       handlePreSubmit();
     }
   }, [triggerSubmit]);
 
-  // Restore/Init Logic
+  // Initialization for Mock Test
   useEffect(() => {
     setAttemptId(null);
+    setExamId(null);
     setConfirmedAnswers({});
     reset({ answers: {} });
 
-    const storageKey = `practice_test_${cid}`;
-    const savedState = localStorage.getItem(storageKey);
+    if (urlAttemptId) {
+      const loadMockAttempt = async () => {
+        try {
+          const { data: attempt, error } = await supabase
+            .from("test_attempts")
+            .select("question_ids, time_limit, exam_id")
+            .eq("id", urlAttemptId)
+            .single();
 
-    if (savedState) {
-      try {
-        const { answers, timestamp, confirmed, attemptId: savedAttemptId } = JSON.parse(savedState);
-        if (Date.now() - timestamp < SESSION_TTL) {
-          reset({ answers });
-          setConfirmedAnswers(confirmed || {});
-          if (savedAttemptId) setAttemptId(savedAttemptId);
-          setLastSaved(timestamp);
-        } else {
-          localStorage.removeItem(storageKey);
+          if (error) throw error;
+          if (attempt?.question_ids) {
+            dispatch(fetchQuestionsByIds(attempt.question_ids));
+            if (attempt.time_limit) {
+              setTimeLeft(attempt.time_limit * 60);
+            }
+            if (attempt.exam_id) {
+              setExamId(attempt.exam_id);
+            }
+            setAttemptId(urlAttemptId);
+          }
+        } catch (err) {
+          console.error("Failed to load mock attempt:", err);
+          notify({ title: "Error", message: "Failed to load mock test session", status: "error" });
         }
-      } catch (e) {
-        console.error("Failed to parse storage state:", e);
-      }
+      };
+      loadMockAttempt();
     }
-    dispatch(fetchQuestion(cid as string));
-    dispatch(fetchFilteredQuestion(user?.id));
-  }, [cid, dispatch, reset, user]);
-
-  // Save to localStorage
-  useEffect(() => {
-    if (Object.keys(watchedAnswers || {}).length > 0) {
-      const storageKey = `practice_test_${cid}`;
-      localStorage.setItem(storageKey, JSON.stringify({
-        answers: watchedAnswers,
-        confirmed: confirmedAnswers,
-        attemptId: attemptId,
-        timestamp: Date.now(),
-      }));
-      setLastSaved(Date.now());
-    }
-  }, [watchedAnswers, cid, confirmedAnswers, attemptId]);
+  }, [urlAttemptId, dispatch, reset]);
 
   const stopProctoring = useCallback(() => {
     if (animationRef.current) cancelAnimationFrame(animationRef.current);
@@ -164,6 +159,7 @@ export const usePracticeTestLogic = () => {
     }
     if (videoRef.current) videoRef.current.srcObject = null;
     setCameraReady(false);
+    setProctoringStatus("Proctoring Stopped");
   }, []);
 
   // Proctoring Init
@@ -199,16 +195,27 @@ export const usePracticeTestLogic = () => {
         );
         if (cancelled) return;
         detectorRef.current = detector;
-        setProctoringStatus("Monitoring");
+        setProctoringStatus("Model Ready");
 
         detect({
           videoRef, detector, animationRef, isProcessingRef, frameCountRef, noFaceStreakRef,
           registerViolation: (type) => registerViolationRef.current(type),
-          onFaceStatusChange: (detected) => setFaceDetected(detected)
+          onFaceStatusChange: (detected) => {
+            setFaceDetected(detected);
+            if (detected) setProctoringStatus("Monitoring");
+          },
+          onDiagnostic: (data) => {
+            if (!faceDetected) {
+              setProctoringStatus(`Searching... (${Math.round(data.inferenceTime)}ms)`);
+            }
+          }
         });
       } catch (err: any) {
         console.error("Proctoring init failed:", err);
-        setProctoringStatus("Model Initialization Failed");
+        setProctoringStatus(`Error: ${err.message || 'Initialization failed'}`);
+        if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError' || err.message?.includes('Permission denied')) {
+          setShowCameraModal(true);
+        }
       }
     };
 
@@ -217,7 +224,7 @@ export const usePracticeTestLogic = () => {
       cancelled = true;
       stopProctoring();
     };
-  }, [mode, stopProctoring]);
+  }, [mode, stopProctoring, faceDetected]);
 
   const onSubmit = async (data: any) => {
     if (!attemptId) return;
@@ -228,8 +235,11 @@ export const usePracticeTestLogic = () => {
       let score = 0;
 
       questions?.forEach((q: any) => {
-        total_marks += q.marks || 0;
-        if (data.answers[q.id] === q.correct_answer) score += q.marks || 0;
+        const marks = q.marks || 0;
+        total_marks += marks;
+        if (data.answers[q.id] === q.correct_answer) {
+          score += marks;
+        }
       });
 
       const payload = (questions || []).map((q: any) => ({
@@ -239,29 +249,30 @@ export const usePracticeTestLogic = () => {
         ...(data.answers[q.id] ? { selected_option: data.answers[q.id] } : {})
       }));
 
-      await supabase.from("test_attempt_answers").upsert(payload, { onConflict: "attempt_id,question_id" });
-      const { data: updateData, error: attemptError } = await supabase
+      const { error: answerError } = await supabase
+        .from("test_attempt_answers")
+        .upsert(payload, { onConflict: "attempt_id,question_id" });
+
+      if (answerError) throw answerError;
+
+      await supabase
         .from("test_attempts")
         .update({ 
           status: "COMPLETED", 
           submitted_at: new Date().toISOString(),
           total_questions, total_marks, score
         })
-        .eq("id", attemptId)
-        .select();
+        .eq("id", attemptId);
 
-      if (attemptError) throw attemptError;
-
-      localStorage.removeItem(`practice_test_${cid}`);
       stopProctoring();
-      await seedAbilityFromMockTest(user?.id, eid, attemptId);
+      await seedAbilityFromMockTest(user?.id, examId, attemptId);
       
-      notify({ title: "Success", message: "Examination Manifested.", status: "success" });
+      notify({ title: "Success", message: "Mock Test submitted successfully!", status: "success" });
       isNavigatingAwayRef.current = true;
       navigate(`/user/results/${attemptId}`);
     } catch (error: any) {
       console.error("Submission failed:", error);
-      notify({ title: "Error", message: "Submission unsuccessful.", status: "error" });
+      notify({ title: "Error", message: error.message, status: "error" });
     }
   };
 
@@ -272,11 +283,14 @@ export const usePracticeTestLogic = () => {
     setShowSubmitConfirm(true);
   };
 
-  const registerViolation = useCallback(async (type: string) => {
-    // High-reliability guard using both immediate ref and a 500ms grace window 
-    if (isMinimizedRef.current || (Date.now() - toggleTimestampRef.current < 500)) return;
-
-    const now = Date.now();
+   const registerViolation = useCallback(async (type: string) => {
+     // High-reliability guard using both immediate ref and a 500ms grace window 
+     // to cover UI transition latency
+     if (isMinimizedRef.current || (Date.now() - toggleTimestampRef.current < 500)) {
+       return;
+     }
+ 
+     const now = Date.now();
     const last = violationTimestamps.current[type] ?? 0;
     if (now - last < 3000) return;
     violationTimestamps.current[type] = now;
@@ -291,11 +305,11 @@ export const usePracticeTestLogic = () => {
     setLastViolation(newViolation);
 
     if (attemptId && user?.id) {
-      await supabase.from("exam_violations").insert({
-        attempt_id: attemptId, user_id: user.id, exam_id: eid, subject_id: sid, chapter_id: cid, type, occurred_at: newViolation.occurred_at
+      supabase.from("exam_violations").insert({
+        attempt_id: attemptId, user_id: user.id, exam_id: examId, type, occurred_at: newViolation.occurred_at,
       });
     }
-  }, [attemptId, user, eid, sid, cid, minimized]);
+  }, [attemptId, user, examId, minimized]);
 
   useEffect(() => { registerViolationRef.current = registerViolation; }, [registerViolation]);
 
@@ -305,8 +319,7 @@ export const usePracticeTestLogic = () => {
 
   // Timer Logic
   useEffect(() => {
-    if (mode === "normal") return;
-    if (timeLeft === null) setTimeLeft(timeLimit * 60);
+    if (mode === "normal" || timeLeft === null) return;
 
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
@@ -318,72 +331,55 @@ export const usePracticeTestLogic = () => {
         return prev - 1;
       });
     }, 1000);
+
     return () => clearInterval(timer);
-  }, [mode, timeLimit, handleAutoSubmit]);
+  }, [mode, timeLeft, handleAutoSubmit]);
 
-  // Event Listeners
-  useEffect(() => {
-    if (mode !== "proctored") return;
-    const onBlur = () => registerViolation("window_blur");
-    const onVisibility = () => document.visibilityState === "hidden" && registerViolation("tab_switch");
-    const onCopy = (e: ClipboardEvent) => { e.preventDefault(); registerViolation("copy_attempt"); };
-    const onBeforeUnload = (e: BeforeUnloadEvent) => { e.preventDefault(); e.returnValue = ""; };
-
-    window.addEventListener("blur", onBlur);
-    document.addEventListener("visibilitychange", onVisibility);
-    document.addEventListener("copy", onCopy);
-    window.addEventListener("beforeunload", onBeforeUnload);
-
-    return () => {
-      window.removeEventListener("blur", onBlur);
-      document.removeEventListener("visibilitychange", onVisibility);
-      document.removeEventListener("copy", onCopy);
-      window.removeEventListener("beforeunload", onBeforeUnload);
-    };
-  }, [registerViolation, mode]);
-
-  // Attempt Tracking
-  useEffect(() => {
-    const createAttempt = async () => {
-      if (!user?.id || !cid || attemptId || isCreatingRef.current) return;
-      isCreatingRef.current = true;
-      try {
-        const { data: existing } = await supabase.from("test_attempts").select("id").eq("user_id", user.id).eq("chapter_id", cid).eq("status", "STARTED").order("started_at", { ascending: false }).limit(1).maybeSingle();
-        if (existing) {
-          setAttemptId(existing.id);
-          return;
-        }
-        const { data } = await supabase.from("test_attempts").insert({ user_id: user.id, exam_id: eid, subject_id: sid, chapter_id: cid, status: "STARTED", started_at: new Date().toISOString() }).select().single();
-        if (data) setAttemptId(data.id);
-      } catch (err) { console.error("Attempt creation failed:", err); }
-      finally { isCreatingRef.current = false; }
-    };
-    createAttempt();
-  }, [user, eid, sid, cid, attemptId]);
+  const confirmExit = async () => {
+    setOpenAlert(false);
+    if (attemptId) {
+      await supabase
+        .from("test_attempts")
+        .update({ status: "LEFT THE EXAM", submitted_at: new Date().toISOString() })
+        .eq("id", attemptId);
+    }
+    isNavigatingAwayRef.current = true;
+    if (blocker.state === "blocked") blocker.reset();
+    navigate(attemptId ? `/user/results/${attemptId}` : "/user/mock-tests");
+  };
 
   const handleConfirm = async (questionId: number, answer: string) => {
     if (!attemptId) return;
     try {
-      await supabase.from("test_attempt_answers").upsert({ attempt_id: attemptId, question_id: questionId, selected_option: answer, is_submitted: false }, { onConflict: "attempt_id,question_id" });
-      if (user?.id) {
-        await supabase.from("question_attempt_tracking").insert({ user_id: user.id, question_id: questionId, attempt_id: attemptId, selected_option: answer, attempted_at: new Date().toISOString() });
-      }
-    } catch (err) { console.error("Answer sync failed:", err); }
-  };
+      await supabase.from("test_attempt_answers").upsert(
+        { attempt_id: attemptId, question_id: questionId, selected_option: answer, is_submitted: false },
+        { onConflict: "attempt_id,question_id" }
+      );
 
-  const cancelExit = () => { setOpenAlert(false); blocker.reset(); };
-  const confirmExit = async () => {
-    if (attemptId) await supabase.from("test_attempts").update({ status: "LEFT THE EXAM", submitted_at: new Date().toISOString() }).eq("id", attemptId);
-    isNavigatingAwayRef.current = true;
-    blocker.proceed?.();
-    navigate(`/user/results/${attemptId}`);
+      const { data: attempt } = await supabase
+        .from("test_attempts")
+        .select("attempted_questions")
+        .eq("id", attemptId)
+        .single();
+      
+      if (attempt?.attempted_questions) {
+        const updated = attempt.attempted_questions.map((q: any) => 
+          q.question_id === questionId.toString() ? { ...q, user_answered: answer } : q
+        );
+        await supabase.from("test_attempts")
+          .update({ attempted_questions: updated })
+          .eq("id", attemptId);
+      }
+    } catch (error) {
+      console.error("Failed to sync answer:", error);
+    }
   };
 
   return {
-    questions, language: testLanguage, timeLeft, violations, lastViolation, proctoringStatus, showWarning, cameraReady, faceDetected,
-    openAlert, showSubmitConfirm, counts, attemptId, confirmedAnswers, setConfirmedAnswers,
+    questions, language, timeLeft, violations, lastViolation, proctoringStatus, showWarning, cameraReady, faceDetected,
+    showCameraModal, setShowCameraModal, openAlert, showSubmitConfirm, counts, attemptId, confirmedAnswers, setConfirmedAnswers,
     methods, onSubmit, handlePreSubmit, registerViolation, handleAutoSubmit, handleConfirm,
-    cancelExit, confirmExit, videoRef, mode, setShowWarning, setShowSubmitConfirm,
+    confirmExit, videoRef, mode, setShowWarning, setShowSubmitConfirm, setOpenAlert,
     minimized, setMinimized
   };
 };

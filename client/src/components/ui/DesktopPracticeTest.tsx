@@ -13,7 +13,8 @@ export const DesktopPracticeTest = ({ logic }: { logic: any }) => {
     questions, language, timeLeft, violations, lastViolation, proctoringStatus, 
     showWarning, cameraReady, faceDetected, openAlert, showSubmitConfirm, counts, 
     confirmedAnswers, setConfirmedAnswers, methods, onSubmit, 
-    handleConfirm, cancelExit, confirmExit, videoRef, mode, setShowWarning, setShowSubmitConfirm
+    handleConfirm, cancelExit, confirmExit, videoRef, mode, setShowWarning, setShowSubmitConfirm,
+    minimized, setMinimized
   } = logic;
 
   const questionRef = useRef<(HTMLDivElement | null)[]>([]);
@@ -39,7 +40,7 @@ export const DesktopPracticeTest = ({ logic }: { logic: any }) => {
           </main>
 
           {mode === "proctored" && (
-            <div className="fixed bottom-8 right-8 z-50 pointer-events-none">
+            <div className="z-50">
                <AdvancedProctoring 
                  videoRef={videoRef} 
                  isCameraReady={cameraReady} 
@@ -47,8 +48,10 @@ export const DesktopPracticeTest = ({ logic }: { logic: any }) => {
                  statusText={proctoringStatus} 
                  violationCount={violations.length} 
                  autoSubmitAt={7} 
+                 minimized={minimized}
+                 setMinimized={setMinimized}
                />
-               <div className="mt-4 pointer-events-auto">
+               <div className="fixed bottom-8 right-8 z-40 pointer-events-auto">
                  <ViolationFeed violations={violations} totalCount={violations.length} autoSubmitAt={7} />
                </div>
             </div>

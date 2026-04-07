@@ -47,10 +47,10 @@ const MockTests = () => {
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="space-y-2">
-            <h1 className="text-2xl font-black tracking-tight text-on-surface dark:text-white">
+            <h1 className="text-xl font-black tracking-tight text-on-surface dark:text-white">
               Adaptive Mock <span className="text-primary">Portal</span>
             </h1>
-            <p className="text-on-surface-variant text-sm md:text-md dark:text-slate-400 font-medium max-w-lg">
+            <p className="hidden md:block text-on-surface-variant text-sm md:text-md dark:text-slate-400 font-medium max-w-lg">
               Generate personalized mock tests based on your past performance.
               Improve your score with AI-driven question selection.
             </p>
