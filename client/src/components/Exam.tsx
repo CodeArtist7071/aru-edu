@@ -351,7 +351,7 @@ const Exam = () => {
                 </div>
 
                 {/* 3. Proctored Mode */}
-                <div
+                {/* <div
                   onClick={() => setPrefs(p => ({ ...p, mode: "proctored" }))}
                   className={`p-5 sm:p-6 rounded-3xl transition-all duration-300 cursor-pointer flex items-center gap-4 sm:gap-5 ${prefs.mode === "proctored"
                       ? "bg-on-surface ring-2 ring-on-surface"
@@ -369,7 +369,7 @@ const Exam = () => {
                     </h4>
                     <p className="text-xs sm:text-sm text-on-surface-variant opacity-70">Camera + Timer. The ultimate exam environment.</p>
                   </div>
-                </div>
+                </div> */}
               </div>
 
               {/* Modal Footer */}
