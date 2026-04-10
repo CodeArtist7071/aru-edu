@@ -5,18 +5,27 @@ import { WEEK_COLORS } from "../constants";
 interface GridWeekFooterRowProps {
   days: number[];
   weeklyDone: number[];
+  onAddTask?: () => void;
 }
 
 export const GridWeekFooterRow: React.FC<GridWeekFooterRowProps> = ({
   days,
   weeklyDone,
+  onAddTask,
 }) => {
   return (
     <tr className="bg-slate-50 border-t-2 border-slate-200 shadow-inner">
-      <td className="sticky left-0 z-30 bg-white border-r border-slate-300 p-6 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] w-[400px]">
+      <td className="sticky left-0 z-30 bg-white border-r border-slate-300 p-6 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] w-[440px]">
         <div className="flex flex-col items-center justify-center">
-           <h4 className="text-xl font-black text-slate-800 tracking-tighter leading-none whitespace-nowrap">Weekly Done %</h4>
-           <p className="text-[10px] font-technical font-black text-slate-400 uppercase tracking-widest mt-2">Manifestation Distribution</p>
+          <button
+            onClick={onAddTask}
+            className="mb-6 flex w-full items-center justify-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-emerald-700 hover:shadow-lg transition-all active:scale-95"
+          >
+            <span className="text-lg leading-none">+</span>
+            Add Task
+          </button>
+          <h4 className="text-xl font-black text-slate-800 tracking-tighter leading-none whitespace-nowrap">Weekly Done %</h4>
+          <p className="text-[10px] font-technical font-black text-slate-400 uppercase tracking-widest mt-2">Manifestation Distribution</p>
         </div>
       </td>
       {/* Week 1 Donut (7 Days) */}
@@ -42,7 +51,7 @@ export const GridWeekFooterRow: React.FC<GridWeekFooterRowProps> = ({
         )}
       </td>
       <td colSpan={2} className="sticky right-0 z-30 bg-slate-50 border-l border-slate-200 px-2 shadow-left">
-         {/* Spacer for streaks */}
+        {/* Spacer for streaks */}
       </td>
     </tr>
   );

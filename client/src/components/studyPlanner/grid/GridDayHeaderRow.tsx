@@ -29,7 +29,7 @@ export const GridDayHeaderRow: React.FC<GridDayHeaderRowProps> = ({
     <>
       {/* Daily Flow Percentages */}
       <tr className="bg-white h-20 text-on-surface">
-        <th className="sticky left-0 z-30 bg-white border-b border-slate-200 p-0 border-r shadow-sm w-[400px]">
+        <th className="sticky left-0 z-30 bg-white border-b border-slate-200 p-0 border-r shadow-sm w-[440px]">
           <div className="flex h-full w-full">
             <div className="w-[220px] flex flex-col items-center justify-center border-r border-slate-100 px-2 text-center">
                <span className="text-[10px] font-technical font-black uppercase text-slate-400 tracking-widest leading-none">Daily Done %</span>
@@ -37,8 +37,11 @@ export const GridDayHeaderRow: React.FC<GridDayHeaderRowProps> = ({
             <div className="w-[90px] border-r border-slate-100 flex items-center justify-center p-2 text-center">
                <span className="text-[9px] font-technical font-black uppercase text-slate-400">Start Time</span>
             </div>
-            <div className="w-[90px] flex items-center justify-center p-2 text-center">
+            <div className="w-[90px] border-r border-slate-100 flex items-center justify-center p-2 text-center">
                <span className="text-[9px] font-technical font-black uppercase text-slate-400">End Time</span>
+            </div>
+            <div className="w-[40px] flex items-center justify-center border-slate-100 px-2 text-center">
+               {/* Spacer for Delete Action */}
             </div>
           </div>
         </th>
@@ -60,30 +63,19 @@ export const GridDayHeaderRow: React.FC<GridDayHeaderRowProps> = ({
 
       {/* Weekday Names & Date Numbers */}
       <tr className="bg-slate-50 min-h-[80px]">
-        <th className="sticky left-0 z-30 bg-slate-100 border-b border-slate-300 p-0 border-r shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] text-left w-[400px]">
+        <th className="sticky left-0 z-30 bg-slate-100 border-b border-slate-300 p-0 border-r shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] text-left w-[440px]">
           <div className="flex h-full w-full">
             <div className="w-[220px] p-3 pl-6 border-r border-slate-200">
-               <div className="flex flex-col gap-2 mb-3">
-                  <button 
-                    onClick={onShowAddTask} 
-                    className="w-full py-1.5 bg-slate-800 text-white rounded-lg font-technical font-black text-[8px] uppercase tracking-widest flex items-center justify-center gap-1.5 hover:bg-slate-700 active:scale-95 transition-all shadow-sm"
-                  >
-                     Manifest Ritual
-                  </button>
-                  <button 
-                    onClick={onShowMastery} 
-                    className="w-full py-1.5 bg-emerald-100 text-emerald-800 border border-emerald-200 rounded-lg font-technical font-black text-[8px] uppercase tracking-widest flex items-center justify-center gap-1.5 hover:bg-emerald-200 active:scale-95 transition-all shadow-sm"
-                  >
-                     Schedule Mastery
-                  </button>
-               </div>
                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-800">Habits</span>
             </div>
             <div className="w-[90px] border-r border-slate-200 p-3 flex items-end justify-center">
                <span className="text-[9px] font-technical font-black uppercase text-slate-500 mb-0.5 whitespace-nowrap">Start</span>
             </div>
-            <div className="w-[90px] p-3 flex items-end justify-center">
+            <div className="w-[90px] p-3 flex items-end justify-center border-r border-slate-200">
                <span className="text-[9px] font-technical font-black uppercase text-slate-500 mb-0.5 whitespace-nowrap">End</span>
+            </div>
+            <div className="w-[40px] p-3 flex items-end justify-center">
+               {/* Action Spacer */}
             </div>
           </div>
         </th>

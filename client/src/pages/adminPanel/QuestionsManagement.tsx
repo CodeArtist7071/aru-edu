@@ -91,7 +91,7 @@ const QuestionsManagement: React.FC = () => {
       )
     },
     {
-      header: "Options Lattice",
+      header: "Question Options",
       key: "options",
       autoHeight: true,
       wrapText: true,
@@ -136,7 +136,7 @@ const QuestionsManagement: React.FC = () => {
     { name: "option_D", label: "Option D", type: "text", required: true },
     {
       name: "correct_answer",
-      label: "Primary Correct Key",
+      label: "Correct Answer",
       type: "select",
       options: [
         { label: "Option A", value: "A" },
@@ -177,14 +177,14 @@ const QuestionsManagement: React.FC = () => {
     },
     {
       name: "chapter_id",
-      label: "Specific Chapter Node",
+      label: "Chapter",
       type: "select",
       options: chapters.map(c => ({ label: c.name, value: c.id })),
       defaultValue: selectedChapter !== "all" ? selectedChapter : undefined,
       disabled: selectedChapter !== "all",
       required: true
     },
-    { name: "is_active", label: "Verification Status", type: "checkbox" }
+    { name: "is_active", label: "Active Status", type: "checkbox" }
   ];
 
   const handleApply = async (formData: any) => {
@@ -244,17 +244,17 @@ const QuestionsManagement: React.FC = () => {
       <header className="space-y-8">
         <div>
           <h2 className="text-4xl font-bold tracking-tight text-slate-800 dark:text-slate-100 italic">
-            Question Lattice
+            Question Database
           </h2>
           <p className="text-[10px] text-[#16a34a] uppercase font-black tracking-[0.4em] mt-3">
-            Managing Assessment Entities via Hierarchy Orchestration
+            Managing assessment questions and curriculum hierarchy
           </p>
         </div>
 
         {/* Unified Control Sanctuary */}
         <div className="flex flex-wrap items-center gap-4 w-full">
           {/* Hierarchical Orchestration Bar */}
-          <div className="flex-1 flex items-center gap-2 p-1.5 bg-slate-100/50 dark:bg-slate-900/50 backdrop-blur-xl rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+          <div className="flex-1 flex items-center gap-2 p-1.5 bg-slate-100/50 dark:bg-slate-900/50 backdrop-blur-xl rounded-4xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
             {/* 1. Exam Board */}
             <select
               value={selectedBoard}
@@ -305,7 +305,7 @@ const QuestionsManagement: React.FC = () => {
               setEditingItem(null);
               setIsModalOpen(true);
             }}
-            className="group shrink-0 flex items-center gap-4 px-10 py-5 bg-[#16a34a] hover:bg-[#15803d] text-white rounded-[2rem] font-black text-[11px] uppercase tracking-[0.2em] shadow-xl shadow-[#16a34a]/10 hover:-translate-y-1 transition-all duration-300"
+            className="group shrink-0 flex items-center gap-4 px-10 py-5 bg-[#16a34a] hover:bg-[#15803d] text-white rounded-4xl font-black text-[11px] uppercase tracking-[0.2em] shadow-xl shadow-[#16a34a]/10 hover:-translate-y-1 transition-all duration-300"
           >
             <Plus size={20} className="group-hover:rotate-90 transition-transform duration-500" />
             <span>Add Question</span>
@@ -317,7 +317,7 @@ const QuestionsManagement: React.FC = () => {
           <div className="size-16 bg-slate-200 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-slate-400 mb-6 group-hover:scale-110 transition-transform">
             <Plus size={32} />
           </div>
-          <p className="text-lg font-black text-slate-400 tracking-tight text-center uppercase">Manifest an Exam Board<br /><span className="text-[10px] opacity-60">to unlock the assessment lattice</span></p>
+          <p className="text-lg font-black text-slate-400 tracking-tight text-center uppercase">Select an Exam Board<br /><span className="text-[10px] opacity-60">to unlock the question database</span></p>
         </div>
       ) : (
         <AdminTable
@@ -332,7 +332,7 @@ const QuestionsManagement: React.FC = () => {
             setIsModalOpen(true);
           }}
           onDelete={(id) => {
-            if (window.confirm("Verify: Remove this question manifestation?"))
+            if (window.confirm("Verify: Remove this question?"))
               deleteItem(id);
           }}
           loading={loading}
@@ -341,7 +341,7 @@ const QuestionsManagement: React.FC = () => {
 
       <AdminFormModal
         isOpen={isModalOpen}
-        title={editingItem ? "Edit Question Node" : "Add Question Node"}
+        title={editingItem ? "Edit Question" : "Add Question"}
         fields={fields}
         initialData={manifestEditingItem(editingItem)}
         onClose={() => setIsModalOpen(false)}

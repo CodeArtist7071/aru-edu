@@ -58,16 +58,16 @@ export const DesktopPerformanceAnalytics: React.FC<DesktopPerformanceAnalyticsPr
     <div className={className}>
       <section className="pt-8">
         <h1 className="text-6xl font-black leading-[0.9] tracking-tighter text-on-surface">
-          Growth <span className="text-primary italic">&</span> <br />
-          Precision.
+          Preparation<span className="text-primary italic">&</span> <br />
+          Progress.
         </h1>
         <p className="mt-8 text-on-surface-variant max-w-lg text-lg font-medium leading-relaxed opacity-80">
           Your journey through the{" "}
           <span className="text-primary font-black px-2 py-0.5 bg-primary/5 rounded-lg">
             {targetedExams?.find((e: any) => e.id === selectedExam)?.name ||
-              "curriculum"}
+              "syllabus"}
           </span>{" "}
-          ecosystem shows developing technical mastery and consistent momentum.
+          preparation shows improving proficiency and steady progress.
         </p>
       </section>
 
@@ -83,17 +83,17 @@ export const DesktopPerformanceAnalytics: React.FC<DesktopPerformanceAnalyticsPr
         <section className="mt-16 text-center py-32 bg-surface-container-low/40 rounded-[4rem] border border-dashed border-outline-variant/10">
           <FlaskConical className="size-20 text-primary/10 mx-auto mb-8 animate-pulse" />
           <h2 className="text-3xl font-black text-on-surface tracking-tighter">
-            Data Seedlings Needed
+            Please attempt a test to begin seeing your progress.
           </h2>
           <p className="text-on-surface-variant max-w-md text-sm mx-auto mt-6 leading-relaxed">
-            No technical manifestations found for <span className="text-primary font-bold">{targetedExams?.find((e: any) => e.id === selectedExam)?.name}</span>. 
-            Complete a session to begin generating growth trends.
+            No Test Progress found for <span className="text-primary font-bold">{targetedExams?.find((e: any) => e.id === selectedExam)?.name}</span>. 
+            Please give a test to begin seeing your progress.
           </p>
           <button
             onClick={() => navigate("/user/dashboard")}
             className="mt-12 px-10 py-4 bg-primary text-white rounded-full font-technical font-black uppercase tracking-widest text-[11px] shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all"
           >
-            Initiate Preparation
+            Take Test
           </button>
         </section>
       ) : (
@@ -103,13 +103,13 @@ export const DesktopPerformanceAnalytics: React.FC<DesktopPerformanceAnalyticsPr
               <TrendingUp size={28} />
             </div>
             <h3 className="text-[11px] font-technical font-black uppercase tracking-widest text-white opacity-60 mb-2">
-              Momentum Trend
+              You have taken
             </h3>
             <p className="text-8xl font-technical font-black text-white tracking-tighter leading-none">
               {metrics.testsCount || 0}
             </p>
             <p className="text-sm font-bold text-white mt-4">
-              Completed Sessions
+              Tests in this  {chartMode} test cycle
             </p>
           </div>
 
@@ -131,12 +131,12 @@ export const DesktopPerformanceAnalytics: React.FC<DesktopPerformanceAnalyticsPr
           <div className="lg:col-span-6">
             <AiInsights aiInsights={aiInsights} />
           </div>
-          <MastHeadChapters metrics={metrics} />
-          <SoilEnrichment metrics={metrics} />
+          {/* <MastHeadChapters metrics={metrics} />
+          <SoilEnrichment metrics={metrics} /> */}
         </div>
       )}
 
-      <footer className="mt-16 flex items-center justify-between gap-8 p-12 bg-primary/5 rounded-[4rem] border border-primary/10 overflow-hidden relative">
+      {/* <footer className="mt-16 flex items-center justify-between gap-8 p-12 bg-primary/5 rounded-[4rem] border border-primary/10 overflow-hidden relative">
         <div className="absolute top-0 right-0 p-8 opacity-5">
           <TrendingUp size={200} />
         </div>
@@ -173,7 +173,7 @@ export const DesktopPerformanceAnalytics: React.FC<DesktopPerformanceAnalyticsPr
             Return to Study
           </button>
         </div>
-      </footer>
+      </footer> */}
     </div>
   );
 };

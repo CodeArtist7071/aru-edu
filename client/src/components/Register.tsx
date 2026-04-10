@@ -70,7 +70,7 @@ const Register = () => {
             </div>
             <div>
               <h2 className="text-3xl font-black leading-none tracking-tighter text-on-surface">Arumind</h2>
-              <span className="text-[9px] font-technical font-black uppercase tracking-[0.3em] text-on-surface-variant opacity-40">The Living Journal</span>
+              <span className="text-[9px] font-technical font-black uppercase tracking-[0.3em] text-on-surface-variant opacity-40">Government Exam Portal</span>
             </div>
           </div>
           
@@ -137,7 +137,7 @@ const Register = () => {
                 <div className="w-full border-t border-on-surface/5"></div>
               </div>
               <div className="relative flex justify-center text-[9px] font-technical font-black uppercase tracking-[0.4em]">
-                <span className="px-4 bg-surface text-on-surface-variant opacity-30">Manifest via Email</span>
+                <span className="px-4 bg-surface text-on-surface-variant opacity-30">Email Registration</span>
               </div>
             </div>
           </div>
@@ -145,7 +145,7 @@ const Register = () => {
           <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <div className="grid grid-cols-1 gap-6">
               <InputWithLabel
-                label="Identity"
+                label="Full Name"
                 id="name"
                 placeholder="Full Name"
                 error={errors.name}
@@ -153,7 +153,7 @@ const Register = () => {
                 {...register("name", { required: "Name is required" })}
               />
               <InputWithLabel
-                label="Communication"
+                label="Email Address"
                 type="email"
                 id="email"
                 placeholder="Email Address"
@@ -162,7 +162,7 @@ const Register = () => {
                 {...register("email", { required: "Email is required" })}
               />
               <InputWithLabel
-                label="Contact"
+                label="Mobile Number"
                 type="tel"
                 id="phone"
                 placeholder="Phone Number"
@@ -172,7 +172,7 @@ const Register = () => {
               />
               <div className="grid md:grid-cols-2 gap-6">
                 <InputWithLabel
-                  label="Secret Key"
+                  label="Create Password"
                   id="create_password"
                   type="password"
                   placeholder="Password"
@@ -181,7 +181,7 @@ const Register = () => {
                   {...register("create_password", { required: "Required" })}
                 />
                 <InputWithLabel
-                  label="Confirm Key"
+                  label="Confirm Password"
                   id="confirm_password"
                   type="password"
                   placeholder="Confirm"
@@ -198,14 +198,14 @@ const Register = () => {
             <div className="p-5 rounded-3xl bg-primary/5 border border-primary/10 flex gap-4 items-center">
               <Info className="text-primary size-5 shrink-0" />
               <p className="text-[10px] font-technical font-black uppercase tracking-widest leading-relaxed text-on-surface-variant">
-                We'll sync one-time verification to secure your <span className="text-primary">Journal Access</span>.
+                We'll sync one-time verification to secure your <span className="text-primary">Account Access</span>.
               </p>
             </div>
 
             <label className="flex items-start gap-4 cursor-pointer group px-2">
               <input type="checkbox" className="size-5 rounded-full border-on-surface/10 text-primary focus:ring-primary/20 transition-all cursor-pointer mt-1" {...register("terms", { required: "Terms acceptance required" })} />
               <span className="text-[10px] font-technical font-black uppercase tracking-widest text-on-surface-variant opacity-60 group-hover:opacity-100 transition-opacity leading-relaxed">
-                I agree to the Living Journal Terms of Service and Privacy Policy
+                I agree to the Terms of Service and Privacy Policy
               </span>
             </label>
 
@@ -216,7 +216,7 @@ const Register = () => {
           </form>
 
           <p className="text-center text-sm font-medium text-on-surface-variant">
-            Already have a journal?{" "}
+            Already have an account?{" "}
             <button 
               onClick={() => navigate("/login")}
               className="font-black text-primary hover:underline"

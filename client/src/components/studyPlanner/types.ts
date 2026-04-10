@@ -13,11 +13,13 @@ export type Habit = {
   scheduled_date?: string;
   scheduled_end_date?: string;
   isDemo?: boolean;
+  current_streak?: number;
+  max_streak?: number;
 };
 
 export type PlannerStats = {
   totalCompleted: number;
-  currentStreak: number;
+  current_streak: number;
   xp: number;
   level: number;
   xpInLevel: number;

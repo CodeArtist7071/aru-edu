@@ -64,14 +64,14 @@ export const ExamsList = () => {
            </button>
            
            <div className="flex flex-col">
-              <span className="text-[10px] font-technical font-black text-on-surface-variant/40 uppercase tracking-[0.4em] mb-2">Registry Access</span>
+              <span className="text-[10px] font-technical font-black text-on-surface-variant/40 uppercase tracking-[0.4em] mb-2">Study Access</span>
               <h1 className="text-5xl lg:text-7xl font-black tracking-tighter text-on-surface leading-none">Exam Library.</h1>
            </div>
         </div>
 
         <div className="flex flex-col md:items-end">
            <p className="text-sm font-medium text-on-surface-variant max-w-xs md:text-right leading-relaxed opacity-70">
-              Select your targeted syllabus from our curated botanical records.
+              Select your targeted syllabus from our curated exam records.
            </p>
         </div>
       </div>
@@ -100,14 +100,14 @@ export const ExamsList = () => {
         </div>
       </div>
 
-      {/* Exams Grid: Botanical Registry */}
+      {/* Exams Grid: Library Registry */}
       {loading ? (
         <div className="flex flex-col items-center justify-center py-40 animate-pulse">
-           <p className="text-sm font-technical font-black text-primary uppercase tracking-[0.4em]">Restoring Records...</p>
+           <p className="text-sm font-technical font-black text-primary uppercase tracking-[0.4em]">Loading Syllabus...</p>
         </div>
       ) : filteredExams.length === 0 ? (
         <div className="bg-surface-container-low rounded-4xl p-20 text-center shadow-inner">
-           <p className="text-xs font-technical font-black text-on-surface-variant/40 uppercase tracking-[0.2em]">Zero Records Found for this Pod.</p>
+           <p className="text-xs font-technical font-black text-on-surface-variant/40 uppercase tracking-[0.2em]">No Records Found for this Category.</p>
         </div>
       ) : (
         <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">

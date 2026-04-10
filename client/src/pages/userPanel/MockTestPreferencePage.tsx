@@ -117,10 +117,10 @@ const MockTestPreferencePage: React.FC = () => {
       <div className="p-3 sm:p-10 border-b border-on-surface/5 flex justify-between items-center bg-surface-container-low/50">
         <div>
           <h2 className="text-2xl sm:text-3xl font-black tracking-tighter text-on-surface">
-            Mock Test Ritual
+            Mock Test Setup
           </h2>
           <p className="text-[10px] sm:text-xs font-technical font-black text-primary uppercase tracking-[0.3em] mt-2">
-            {examName} Manifesto
+            {examName} Configuration
           </p>
         </div>
         <button
@@ -165,7 +165,7 @@ const MockTestPreferencePage: React.FC = () => {
                 className="size-6 rounded-xl border-primary/20 text-primary focus:ring-primary/50 cursor-pointer"
               />
               <span className="text-xs font-bold text-on-surface group-hover:text-primary transition-colors">
-                I have read and realized the instructions.
+                I have read and understood the instructions.
               </span>
             </label>
           </div>
@@ -199,7 +199,7 @@ const MockTestPreferencePage: React.FC = () => {
                 <p className="text-[10px] font-technical uppercase tracking-widest text-on-surface-variant opacity-60">
                   {cameraStatus === "granted" ? "Camera Shield Active" : 
                   cameraStatus === "denied" ? "Verification Failure" : 
-                  cameraStatus === "checking" ? "Environment Syncing..." : "Hardware Check Required"}
+                  cameraStatus === "checking" ? "Camera Checking..." : "Camera Check Required"}
                 </p>
               </div>
             </div>
@@ -211,7 +211,7 @@ const MockTestPreferencePage: React.FC = () => {
                 disabled={cameraStatus === "checking"}
                 className="w-full sm:w-auto p-3 md:px-8 md:py-3 bg-on-surface text-surface text-[10px] font-technical font-black uppercase tracking-widest rounded-full hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
               >
-                {cameraStatus === "checking" ? "Checking..." : "Verify Environment"}
+                {cameraStatus === "checking" ? "Checking..." : "Verify Camera"}
               </button>
             )}
           </div>
@@ -223,7 +223,7 @@ const MockTestPreferencePage: React.FC = () => {
           <div className="space-y-3 md:space-y-6">
             <h3 className="text-[10px] font-technical font-black uppercase tracking-[0.3em] text-on-surface-variant/40 flex items-center gap-3">
               <Zap size={14} className="text-primary" />
-              Adaptive Focus
+              Selection Focus
             </h3>
             <div className="grid grid-cols-3 gap-3">
               {(["EASY", "MODERATE", "HARD"] as DifficultyMode[]).map((mode) => (
@@ -241,7 +241,7 @@ const MockTestPreferencePage: React.FC = () => {
               ))}
             </div>
             <p className="text-[10px] text-on-surface-variant opacity-40 italic font-medium px-2 text-center">
-              {difficulty === "EASY" && "Manifest seen questions 60/40 mix"}
+              {difficulty === "EASY" && "Include seen questions 60/40 mix"}
               {difficulty === "MODERATE" && "Syllabus exploration 40/60 mix"}
               {difficulty === "HARD" && "Stress simulation 20/80 mix"}
             </p>
@@ -252,7 +252,7 @@ const MockTestPreferencePage: React.FC = () => {
             <div className="space-y-6">
               <h3 className="text-[10px] font-technical font-black uppercase tracking-[0.3em] text-on-surface-variant/40 flex items-center gap-3">
                 <Target size={14} className="text-primary" />
-                Manifest Count
+                Question Count
               </h3>
               <div className="flex gap-3">
                 {[30, 60, 100].map((num) => (
@@ -274,7 +274,7 @@ const MockTestPreferencePage: React.FC = () => {
             <div className="space-y-6">
               <h3 className="text-[10px] font-technical font-black uppercase tracking-[0.3em] text-on-surface-variant/40 flex items-center gap-3">
                 <Clock size={14} className="text-primary" />
-                Tempo Offset
+                Time Limit
               </h3>
               <div className="px-2">
                 <input
@@ -312,7 +312,7 @@ const MockTestPreferencePage: React.FC = () => {
             <div className="size-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
           ) : (
             <>
-              {cameraStatus === "granted" ? "Be Ready" : "Begin Environment"}
+              {cameraStatus === "granted" ? "Be Ready" : "Begin Verification"}
               <Zap size={20} className="group-hover:rotate-12 transition-transform" />
             </>
           )}
@@ -321,7 +321,7 @@ const MockTestPreferencePage: React.FC = () => {
         {!acceptedInstructions && (
           <div className="flex items-center justify-center gap-3 text-tertiary text-[9px] font-technical font-black uppercase tracking-widest animate-pulse">
             <AlertCircle size={14} />
-            Acknowledge Manifesto to Proceed
+            Accept Instructions to Proceed
           </div>
         )}
       </div>

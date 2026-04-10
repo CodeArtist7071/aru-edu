@@ -187,12 +187,12 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
         if (h.chapter_id) { setUseChapter(true); setValue("chapter_id", h.chapter_id); }
       }
     } else if (isOpen) {
-      console.log("🔍 [MobileAddTask] Opening New Ritual Manifestation, Mode:", initialUseChapter ? "Mastery" : "Routine", "ExamID:", examId);
+      console.log("🔍 [MobileAddTask] Adding New Study Session, Mode:", initialUseChapter ? "Mastery" : "Routine", "ExamID:", examId);
       const now = new Date();
       const isCurrentView = now.getMonth() + 1 === viewMonth && now.getFullYear() === viewYear;
       const initialDay = isCurrentView ? now.getDate() : 1;
 
-      setToast({ type: "loading", message: "Updating Mother Nature..." });
+      setToast({ type: "loading", message: "Syncing Schedule..." });
       reset({ 
         priority: "MEDIUM", 
         duration_type: "MONTHLY", 
@@ -205,7 +205,7 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
 
   const onSubmit = async (data: FormValues) => {
     console.log("🚀 [MobileAddTask] Form Submitted Successfully:", data);
-    setToast({ type: "loading", message: "Updating Mother Nature..." });
+    setToast({ type: "loading", message: "Syncing Schedule..." });
     
     // Safety check for examId
     const finalExamId = examId === "add" ? undefined : examId;
@@ -218,13 +218,13 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
     
     if (!user?.id) {
       console.error("❌ [MobileAddTask] Missing User ID");
-      setToast({ type: "error", message: "Authenticating ritual..." });
+      setToast({ type: "error", message: "Validating session..." });
       return;
     }
 
     if (!name && !useChapter) {
       console.error("❌ [MobileAddTask] Missing Routine Name");
-      setToast({ type: "error", message: "Ritual name is required" });
+      setToast({ type: "error", message: "Session name is required" });
       return;
     }
 
@@ -285,12 +285,12 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
         if (error) throw error;
       }
       console.log("✅ [MobileAddTask] Manifestation Successful");
-      setToast({ type: "success", message: "Momentum manifested!" });
-      window.alert("✅ Ritual Manifested Successfully!");
+      setToast({ type: "success", message: "Schedule updated!" });
+      window.alert("✅ Session Added Successfully!");
       setTimeout(() => { onClose(); onRefresh?.(); }, 1200);
     } catch (e: any) {
       console.error("❌ [MobileAddTask] Manifestation Failed:", e);
-      setToast({ type: "error", message: e.message || "Botanical glitch. Try again." });
+      setToast({ type: "error", message: e.message || "System error. Try again." });
       window.alert("❌ Manifestation Failed: " + (e.message || "Unknown error"));
     }
   };
@@ -304,7 +304,7 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
         <button onClick={onClose} className="size-10 rounded-full bg-on-surface/5 flex items-center justify-center active:scale-95 transition-transform">
           <ChevronLeft className="size-5" />
         </button>
-        <span className="text-sm font-black uppercase tracking-[0.3em] text-primary">Add Ritual</span>
+        <span className="text-sm font-black uppercase tracking-[0.3em] text-primary">Add Session</span>
       </header>
 
       {toast && (
@@ -324,10 +324,10 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
       <main className="px-3 pb-10 space-y-5 animate-reveal">
         <div className="space-y-1">
           <h2 className="text-xl font-black tracking-tighter text-on-surface leading-none">
-            {editingHabitId ? "Refine Momentum" : "Manifest Ritual"}
+            {editingHabitId ? "Edit Session" : "Add Session"}
           </h2>
           <p className="text-xs font-medium text-on-surface-variant opacity-60">
-            {useChapter ? "Scheduling from syllabus mastery." : "Your daily botanical routines."}
+            {useChapter ? "Scheduling from syllabus mastery." : "Your daily study routines."}
           </p>
         </div>
 
@@ -362,7 +362,7 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
               className="w-full py-3 bg-primary text-white rounded-2xl font-black uppercase text-xs tracking-widest flex items-center justify-center gap-2"
             >
               {aiParsing ? <Loader className="animate-spin" size={14} /> : <Sparkles size={14} />}
-              Manifest AI Parse
+              Add from AI Parse
             </button>
           </div>
         </section>
@@ -389,7 +389,7 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
           <div className="space-y-2">
              <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1">Manifest Type</label>
              <div className="flex bg-surface-container-low p-1.5 rounded-2xl">
-               <button type="button" onClick={() => setUseChapter(false)} className={`flex-1 py-2 text-[10px] font-black uppercase rounded-xl transition-all ${!useChapter ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Manual Ritual</button>
+               <button type="button" onClick={() => setUseChapter(false)} className={`flex-1 py-2 text-[10px] font-black uppercase rounded-xl transition-all ${!useChapter ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Manual Session</button>
                <button type="button" onClick={() => setUseChapter(true)} className={`flex-1 py-2 text-[10px] font-black uppercase rounded-xl transition-all ${useChapter ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Syllabus Mastery</button>
              </div>
           </div>
@@ -435,7 +435,7 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
           </div>
 
           <div className="space-y-3">
-            <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1">{useChapter ? "Chapter Selection" : "Ritual Name"}</label>
+            <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1">{useChapter ? "Chapter Selection" : "Session Name"}</label>
             {useChapter ? (
               <>
                 <select 
@@ -451,7 +451,7 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
               <>
                 <input 
                   {...register("habit", { required: "Routine name is required" })} 
-                  placeholder="e.g. Botanical Review" 
+                  placeholder="e.g. History Review" 
                   className={`w-full py-3 px-6 bg-surface-container-low rounded-3xl text-sm font-bold border-none outline-none focus:ring-2 ring-primary/20 ${errors.habit ? "ring-2 ring-red-400" : ""}`} 
                 />
                 {errors.habit && <p className="text-red-500 text-[10px] ml-4 animate-in fade-in">{errors.habit.message}</p>}
@@ -461,17 +461,17 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
 
           <div className="grid grid-cols-2 gap-4">
              <div className="space-y-2">
-               <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1">Start Ritual</label>
+               <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1">Start Session</label>
                <input type="time" {...register("start_time")} className="w-full py-3 px-6 bg-surface-container-low rounded-3xl text-sm font-bold border-none outline-none focus:ring-2 ring-primary/20" />
              </div>
              <div className="space-y-2">
-               <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1">End Ritual</label>
+               <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1">End Session</label>
                <input type="time" {...register("end_time")} className="w-full py-3 px-6 bg-surface-container-low rounded-3xl text-sm font-bold border-none outline-none focus:ring-2 ring-primary/20" />
              </div>
           </div>
 
           <div className="space-y-4">
-             <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1">Priority Hierarchy</label>
+             <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1">Priority Level</label>
              <div className="flex gap-3">
                {(["HIGH", "MEDIUM", "LOW"] as const).map(p => (
                  <PriorityBadge key={p} priority={p} selected={priority === p} onSelect={() => setValue("priority", p)} />
@@ -498,7 +498,7 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
         <button 
           type="button"
           onClick={() => {
-            console.log("🖱️ [MobileAddTask] Manifest Button Triggered");
+            console.log("🖱️ [MobileAddTask] Add Button Triggered");
             handleSubmit(onSubmit, (err) => {
               console.error("❌ [MobileAddTask] Validation Failed:", err);
               const firstErr: any = Object.values(err)[0];
@@ -509,7 +509,7 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
           }}
           className="w-full py-4 bg-on-surface text-surface rounded-3xl font-black uppercase tracking-widest text-sm shadow-xl active:scale-95 transition-all flex items-center justify-center gap-2"
         >
-          {isSubmitting ? <Loader className="animate-spin" size={18} /> : (editingHabitId ? "Refine Ritual" : "Manifest Ritual")}
+          {isSubmitting ? <Loader className="animate-spin" size={18} /> : (editingHabitId ? "Edit Session" : "Add Session")}
         </button>
       </footer>
     </div>

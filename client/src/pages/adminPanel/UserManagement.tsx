@@ -36,12 +36,12 @@ const UserManagement: React.FC = () => {
         width: 140
     },
     { 
-      header: "Aspirant Identity", 
+      header: "Full Name", 
       key: "full_name",
       render: (val: string, item: any) => (
         <div className="flex flex-col">
           <span className="font-bold text-slate-800 dark:text-slate-100">{val || "Anonymous Student"}</span>
-          <span className="text-[10px] opacity-60 font-mono italic">{item.phone || "No Comm Link"}</span>
+          <span className="text-[10px] opacity-60 font-mono italic">{item.phone || "No Phone Number"}</span>
         </div>
       )
     },
@@ -80,7 +80,7 @@ const UserManagement: React.FC = () => {
         header: "Status", 
         key: "role_status", // Changed from 'role' to avoid collision manifestation
         render: () => (
-            <span className="text-[10px] font-black uppercase tracking-widest text-[#16a34a]">Active Portal</span>
+            <span className="text-[10px] font-black uppercase tracking-widest text-[#16a34a]">Account Active</span>
         )
     },
     { 
@@ -93,8 +93,8 @@ const UserManagement: React.FC = () => {
   const fields: any[] = [
     { name: "full_name", label: "Full Name", type: "text", required: true },
     { name: "phone", label: "Comm Link (Phone)", type: "text" },
-    { name: "state", label: "State Manifestation", type: "text" },
-    { name: "district", label: "District Node", type: "text" },
+    { name: "state", label: "State", type: "text" },
+    { name: "district", label: "District", type: "text" },
     { 
       name: "role", 
       label: "Platform Role", 
@@ -106,11 +106,11 @@ const UserManagement: React.FC = () => {
     },
     { 
       name: "subscription_plan", 
-      label: "Manifest Plan", 
+      label: "Subscription Plan", 
       type: "select", 
       options: [
-        { label: "Free Manifestation", value: "free" },
-        { label: "Pro Manifestation", value: "pro" }
+        { label: "Free Plan", value: "free" },
+        { label: "Pro Plan", value: "pro" }
       ]
     }
   ];
@@ -134,7 +134,7 @@ const UserManagement: React.FC = () => {
       <header className="flex items-center justify-between">
         <div>
           <h2 className="text-4xl font-bold tracking-tight text-slate-800 dark:text-slate-100 italic">
-            User Manifestations
+            User Management
           </h2>
           <p className="text-[10px] text-[#16a34a] uppercase font-black tracking-[0.3em] mt-2">
             Managing Student Registrations and Permissions
@@ -164,7 +164,7 @@ const UserManagement: React.FC = () => {
           setIsModalOpen(true);
         }}
         onDelete={(id) => {
-          if (window.confirm("Verify: Terminate this user profile?"))
+          if (window.confirm("Verify: Delete this user profile?"))
             deleteItem(id);
         }}
         loading={loading}
@@ -172,7 +172,7 @@ const UserManagement: React.FC = () => {
 
       <AdminFormModal
         isOpen={isModalOpen}
-        title={editingItem ? "Alter Profile" : "Manifest New User"}
+        title={editingItem ? "Edit Profile" : "Create New User"}
         fields={fields}
         initialData={editingItem}
         onClose={() => setIsModalOpen(false)}

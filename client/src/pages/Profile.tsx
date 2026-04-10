@@ -169,13 +169,13 @@ import { clearUser } from "../slice/userSlice";
                                 <div className="size-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
                                     <User size={20} />
                                 </div>
-                                <h3 className="text-[11px] font-technical font-black uppercase tracking-[0.4em] text-on-surface-variant opacity-60">Personal Manifesto</h3>
+                                <h3 className="text-[11px] font-technical font-black uppercase tracking-[0.4em] text-on-surface-variant opacity-60">Personal Profile</h3>
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <InfoField icon={<User size={14} />} label="Full Identity" value={profile?.full_name || user?.identities?.[0]?.identity_data?.name || "N/A"} />
-                                <InfoField icon={<Mail size={14} />} label="Signal Address" value={user?.email || "N/A"} />
-                                <InfoField icon={<Phone size={14} />} label="Comm Link" value={profile?.phone || user?.phone || "N/A"} />
-                                <InfoField icon={<MapPin size={14} />} label="Geographic Node" value={profile?.location || "Bhubaneswar, Odisha"} />
+                                <InfoField icon={<User size={14} />} label="Full Name" value={profile?.full_name || user?.identities?.[0]?.identity_data?.name || "N/A"} />
+                                <InfoField icon={<Mail size={14} />} label="Email Address" value={user?.email || "N/A"} />
+                                <InfoField icon={<Phone size={14} />} label="Phone Number" value={profile?.phone || user?.phone || "N/A"} />
+                                <InfoField icon={<MapPin size={14} />} label="Location" value={profile?.location || "Bhubaneswar, Odisha"} />
                             </div>
                         </section>
 
@@ -184,7 +184,7 @@ import { clearUser } from "../slice/userSlice";
                                 <div className="size-10 bg-tertiary/10 rounded-xl flex items-center justify-center text-tertiary">
                                     <GraduationCap size={20} />
                                 </div>
-                                <h3 className="text-[11px] font-technical font-black uppercase tracking-[0.4em] text-on-surface-variant opacity-60">Academic Pedigree</h3>
+                                <h3 className="text-[11px] font-technical font-black uppercase tracking-[0.4em] text-on-surface-variant opacity-60">Educational Background</h3>
                             </div>
                             <div className="space-y-6">
                                 <AcademicEntry
@@ -208,7 +208,7 @@ import { clearUser } from "../slice/userSlice";
                                  <div className="size-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
                                      <Eye size={20} />
                                  </div>
-                                 <h3 className="text-[11px] font-technical font-black uppercase tracking-[0.4em] text-on-surface-variant opacity-60">Environmental Vitals</h3>
+                                 <h3 className="text-[11px] font-technical font-black uppercase tracking-[0.4em] text-on-surface-variant opacity-60">Display Settings</h3>
                             </div>
                             <div className="space-y-6">
                                 <div className="flex items-center justify-between p-6 bg-white/50 rounded-4xl group hover:bg-white transition-all duration-500">
@@ -251,9 +251,9 @@ import { clearUser } from "../slice/userSlice";
                                  {/* This Device Ritual */}
                                  <div className="p-8 bg-surface-container-high/40 rounded-[2.5rem] border border-outline-variant/10 space-y-6">
                                      <div className="space-y-2 text-center md:text-left">
-                                         <p className="text-sm font-black text-on-surface tracking-tight">Current Node Disconnect</p>
+                                         <p className="text-sm font-black text-on-surface tracking-tight">Logout Current Device</p>
                                          <p className="text-[10px] font-technical text-on-surface-variant opacity-60 leading-relaxed uppercase tracking-widest">
-                                            Close the active journal session on this specific device only.
+                                            Close the active session on this specific device only.
                                          </p>
                                      </div>
                                      <button 
@@ -268,9 +268,9 @@ import { clearUser } from "../slice/userSlice";
                                  {/* All Devices Ritual */}
                                  <div className="p-8 bg-red-500/5 rounded-[2.5rem] border border-red-500/10 space-y-6">
                                      <div className="space-y-2 text-center md:text-left">
-                                         <p className="text-sm font-black text-on-surface tracking-tight">Global Session Termination</p>
+                                         <p className="text-sm font-black text-on-surface tracking-tight">Logout All Devices</p>
                                          <p className="text-[10px] font-technical text-on-surface-variant opacity-60 leading-relaxed uppercase tracking-widest">
-                                            Immediately invalidate all active journal sessions across all nodes and browsers.
+                                            Immediately invalidate all active sessions across all devices and browsers.
                                          </p>
                                      </div>
                                      <button 
@@ -299,7 +299,7 @@ import { clearUser } from "../slice/userSlice";
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="bg-white/50 p-6 rounded-4xl shadow-sm group hover:bg-white transition-all">
                                         <p className="text-2xl font-technical font-black text-on-surface mb-1">42</p>
-                                        <p className="text-[8px] font-technical font-black uppercase tracking-[0.2em] text-on-surface-variant opacity-40">Manifests</p>
+                                        <p className="text-[8px] font-technical font-black uppercase tracking-[0.2em] text-on-surface-variant opacity-40">Attempts</p>
                                     </div>
                                     <div className="bg-white/50 p-6 rounded-4xl shadow-sm group hover:bg-white transition-all">
                                         <p className="text-2xl font-technical font-black text-tertiary mb-1">840</p>

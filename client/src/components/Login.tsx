@@ -125,10 +125,10 @@ const Login = () => {
           </div>
           <div>
             <h1 className="text-4xl font-black tracking-tighter text-on-surface transition-all duration-700">
-              {isResetMode ? "Relink Soul Key" : isMagicLinkMode ? "Ethereal Link" : "Welcome Back"}
+              {isResetMode ? "Reset Password" : isMagicLinkMode ? "Magic Link" : "Welcome Back"}
             </h1>
             <p className="text-[10px] font-technical font-black uppercase tracking-[0.3em] text-on-surface-variant opacity-40">
-              {isResetMode ? "Recovery Ritual" : isMagicLinkMode ? "Ethereal manifestation link" : "The Living Journal awaits"}
+              {isResetMode ? "Account Recovery" : isMagicLinkMode ? "Single-use access link" : "Government Exam Portal"}
             </p>
           </div>
         </div>
@@ -139,16 +139,16 @@ const Login = () => {
           {errorMessage && <div className="p-4 bg-primary/5 text-primary text-[10px] font-technical font-black uppercase tracking-widest rounded-xl text-center">{errorMessage}</div>}
           
           {(resetSuccess || linkSent) && (
-            <div className="p-6 bg-primary/10 rounded-[2rem] border border-primary/20 space-y-4 text-center animate-reveal">
+            <div className="p-6 bg-primary/10 rounded-4xl border border-primary/20 space-y-4 text-center animate-reveal">
                <p className="text-xs font-technical font-black text-primary uppercase tracking-widest leading-relaxed">
-                  {resetSuccess ? "The Recovery Sprout has been sent to your journal email." : "The Ethereal Connection link has been sent."}
+                  {resetSuccess ? "Password reset instructions sent to your email." : "The magic link has been sent."}
                </p>
                <button 
                 type="button" 
                 onClick={() => { setIsResetMode(false); setIsMagicLinkMode(false); setResetSuccess(false); setLinkSent(false); }}
                 className="text-[9px] font-technical font-black text-on-surface uppercase tracking-[0.3em] hover:opacity-100 opacity-60 underline"
                >
-                  Back to Journal
+                  Back to Login
                </button>
             </div>
           )}
@@ -175,7 +175,7 @@ const Login = () => {
                       <div className="w-full border-t border-on-surface/5"></div>
                     </div>
                     <div className="relative flex justify-center text-[9px] font-technical font-black uppercase tracking-[0.4em]">
-                      <span className="px-4 bg-surface text-on-surface-variant opacity-30">Manifest via Journal</span>
+                      <span className="px-4 bg-surface text-on-surface-variant opacity-30">Email Login</span>
                     </div>
                   </div>
                 </div>
@@ -183,7 +183,7 @@ const Login = () => {
 
               <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
                 <InputWithLabel
-                  label="Journal Email"
+                  label="Email Address"
                   type="email"
                   id="email"
                   placeholder="name@student.com"
@@ -196,7 +196,7 @@ const Login = () => {
                 />
                 {!isResetMode && !isMagicLinkMode && (
                   <InputWithLabel
-                    label="Secret Key"
+                    label="Password"
                     id="password"
                     type="password"
                     placeholder="••••••••"
@@ -213,7 +213,7 @@ const Login = () => {
                       onClick={() => setIsMagicLinkMode(true)}
                       className="text-[10px] font-technical font-black uppercase tracking-widest text-primary hover:underline transition-all"
                     >
-                      Manifest via Link
+                      Login via Link
                     </button>
                   ) : (
                     <button 
@@ -221,7 +221,7 @@ const Login = () => {
                       onClick={() => { setIsResetMode(false); setIsMagicLinkMode(false); }}
                       className="text-[10px] font-technical font-black uppercase tracking-widest text-on-surface-variant underline hover:text-on-surface transition-all"
                     >
-                      Use Secret Key
+                      Use Password
                     </button>
                   )}
                   
@@ -231,14 +231,14 @@ const Login = () => {
                       onClick={() => setIsResetMode(true)}
                       className="text-[10px] font-technical font-black uppercase tracking-widest text-on-surface-variant opacity-60 hover:opacity-100 hover:underline transition-all"
                     >
-                      Lost Key?
+                      Forgot Password?
                     </button>
                   )}
                 </div>
 
                 <Button
                   disabled={isSubmitting}
-                  title={isSubmitting ? (isResetMode ? "Sending Sprout..." : isMagicLinkMode ? "Summoning Link..." : "Authenticating...") : (isResetMode ? "Recover Soul Key" : isMagicLinkMode ? "Summon Ethereal Link" : "Open Journal")}
+                  title={isSubmitting ? (isResetMode ? "Sending Email..." : isMagicLinkMode ? "Requesting Link..." : "Authenticating...") : (isResetMode ? "Reset Password" : isMagicLinkMode ? "Send Magic Link" : "Sign In")}
                 />
               </form>
             </>

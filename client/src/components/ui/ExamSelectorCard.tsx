@@ -33,7 +33,7 @@ export const ExamSelectorCard = ({
       <div className="flex justify-between items-center mb-8 px-2">
         <div className="space-y-1">
           <h3 className="text-xs font-technical font-black uppercase tracking-[0.4em] text-on-surface-variant opacity-60">
-            Target Landscapes
+            Your Selected Exams.
           </h3>
           <p className="text-[10px] text-on-surface-variant opacity-40 font-medium">
             Your selected career paths

@@ -60,10 +60,10 @@ export const MobilePerformanceAnalytics: React.FC<MobilePerformanceAnalyticsProp
       {/* Editorial Header */}
       <section className="pt-6">
         <h1 className="text-2xl font-black leading-tight tracking-tighter text-on-surface">
-          Growth <span className="text-primary italic">&</span> Precision.
+          Performance <span className="text-primary italic">&</span> Precision.
         </h1>
         <p className="mt-4 text-xs font-medium text-on-surface-variant opacity-70 leading-relaxed">
-           Analytics for <span className="text-primary font-bold">{targetedExams?.find((e: any) => e.id === selectedExam)?.name || "Your Curriculum"}</span>.
+           Analytics for <span className="text-primary font-bold">{targetedExams?.find((e: any) => e.id === selectedExam)?.name || "Your Syllabus"}</span>.
         </p>
       </section>
 
@@ -78,10 +78,10 @@ export const MobilePerformanceAnalytics: React.FC<MobilePerformanceAnalyticsProp
         <section className="text-center py-20 bg-surface-container-low/40 rounded-3xl border border-dashed border-outline-variant/10">
           <FlaskConical className="size-12 text-primary/10 mx-auto mb-6 animate-pulse" />
           <h2 className="text-xl font-black text-on-surface tracking-tighter">
-            Data Seedlings Needed
+            Performance Data Needed
           </h2>
           <p className="text-on-surface-variant max-w-xs text-[11px] mx-auto mt-4 px-4 leading-relaxed">
-            No technical manifestations found. Complete a session to begin generating trends.
+            No attempt records found. Complete a session to begin generating trends.
           </p>
           <button
             onClick={() => navigate("/user/dashboard")}
@@ -133,8 +133,8 @@ export const MobilePerformanceAnalytics: React.FC<MobilePerformanceAnalyticsProp
       {/* Mobile Footer Actions */}
       <section className="pt-6 space-y-4">
         <div className="bg-surface-container-high p-6 rounded-3xl border border-primary/5">
-             <h3 className="text-sm font-black text-on-surface mb-1">Cultivate your potential.</h3>
-             <p className="text-[11px] text-on-surface-variant opacity-60">Your metrics are synced for precision growth.</p>
+             <h3 className="text-sm font-black text-on-surface mb-1">Master your syllabus.</h3>
+             <p className="text-[11px] text-on-surface-variant opacity-60">Your metrics are synced for precision preparation.</p>
         </div>
         <div className="grid grid-cols-2 gap-3">
           <button

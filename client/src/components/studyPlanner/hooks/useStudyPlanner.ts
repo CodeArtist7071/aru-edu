@@ -220,6 +220,8 @@ export const useStudyPlanner = (user: any, examId: string | undefined, profile: 
     handleToggle,
     handleCopyPreviousMonth,
     handleMonthChange,
+    setHabits,
+    setProgress,
     manifestDemo: async () => {
       if (!user?.id || habits.length === 0) return;
       setLoading(true);

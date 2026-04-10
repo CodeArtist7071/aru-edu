@@ -37,7 +37,7 @@ export const GridHeader: React.FC<GridHeaderProps> = ({
           <Calendar color="" size={120} />
         </div>
         <div className="w-1/3 flex flex-col relative z-10">
-          <span className="text-[10px] font-technical font-black tracking-[0.4em] uppercase opacity-60 mb-1">Current Momentum</span>
+          <span className="text-[10px] font-technical font-black tracking-[0.4em] uppercase opacity-60 mb-1">Current Progress</span>
           <div className="text-6xl font-technical font-black tracking-tighter leading-none">{overallProgress}%</div>
         </div>
 

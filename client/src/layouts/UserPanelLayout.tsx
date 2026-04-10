@@ -59,7 +59,8 @@ export default function UserPanelLayout() {
   } = useSelector((state: RootState) => state.ui);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
+  const sidebarRef = useRef<HTMLElement>(null);
   const { theme, toggleTheme } = useTheme();
 
   // Mobile Nav Manifestation: Scroll-to-Hide
@@ -74,7 +75,7 @@ export default function UserPanelLayout() {
     const handleScroll = () => {
       const currentScrollTop = container.scrollTop;
       const diff = currentScrollTop - lastScrollTop;
-      
+
       if (Math.abs(diff) < 5) return; // Jitter threshold
 
       if (currentScrollTop <= 0) {
@@ -92,6 +93,17 @@ export default function UserPanelLayout() {
     container.addEventListener("scroll", handleScroll, { passive: true });
     return () => container.removeEventListener("scroll", handleScroll);
   }, [lastScrollTop]);
+  
+  // Sidebar Auto-Collapse Manifestation
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (!isCollapsed && sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
+        setIsCollapsed(true);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isCollapsed]);
 
   const firstExamId = profile?.target_exams?.[0] || "";
 
@@ -104,17 +116,17 @@ export default function UserPanelLayout() {
       path: "/user/dashboard",
     },
     {
-      label: "Analytics",
+      label: "Study Progress",
       icon: <TrendingUp size={20} />,
       path: "/user/performance",
     },
     {
-      label: "Planner",
+      label: "Study Planner",
       icon: <History size={20} />,
       path: `/user/plan-study/${firstExamId}`,
     },
     {
-      label: "Inventory",
+      label: "Mock Test",
       icon: <Package size={20} />,
       path: "/user/mock-tests",
     },
@@ -137,25 +149,25 @@ export default function UserPanelLayout() {
       path: "/user/dashboard",
     },
     {
-      label: "Analytics",
+      label: "Study Progress",
       icon: <TrendingUp size={20} />,
       path: "/user/performance",
     },
     {
-      label: "Planner",
+      label: "Study Planner",
       icon: <History size={20} />,
       path: `/user/plan-study/${firstExamId}`,
-    },
-    {
-      label: "Inventory",
-      icon: <Package size={20} />,
-      path: "/user/mock-tests",
-    },
-    {
-      label: "Practice",
+    }, {
+      label: "Practice Test",
       icon: <Book size={20} />,
       path: `/user/dashboard/exam/${firstExamId}`,
     },
+    {
+      label: "Mock Test",
+      icon: <Package size={20} />,
+      path: "/user/mock-tests",
+    },
+
     {
       label: "Results",
       icon: <Target size={20} />,
@@ -180,7 +192,7 @@ export default function UserPanelLayout() {
     return `${m}:${s.toString().padStart(2, "0")}`;
   };
 
-  const currentMetadata = routeMetadata[location.pathname] || { label: "Account Access", title: "Arumind Journal" };
+  const currentMetadata = routeMetadata[location.pathname] || { label: "Plan Your Progress", title: "Study Planner" };
 
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
@@ -207,6 +219,7 @@ export default function UserPanelLayout() {
 
       {/* Sidebar - Desktop */}
       <aside
+        ref={sidebarRef}
         className={`hidden lg:flex border-r border-on-surface/5 flex-col h-full bg-surface-container-low transition-all duration-700 ease-botanical relative z-30 shadow-ambient ${isCollapsed ? "w-20" : "w-72"
           }`}
       >
@@ -363,7 +376,7 @@ export default function UserPanelLayout() {
                 {/* Timer Pod */}
                 {testTimeLeft !== null && (
                   <div className="flex items-center md:gap-5 gap-2 bg-surface-container-high/60 backdrop-blur-md md:px-8 md:py-3 px-4 py-2 rounded-full shadow-inner ring-1 ring-white/10 group">
-                      <Timer className="text-tertiary size-5 animate-pulse" />
+                    <Timer className="text-tertiary size-5 animate-pulse" />
                     <div className="flex flex-row md:flex-col">
                       <span className="text-[8px] font-technical font-black text-tertiary uppercase tracking-widest opacity-40">Tempo Reset</span>
                       <span className="font-technical font-black text-on-surface text-xs md:text-2xl tracking-tighter tabular-nums">
@@ -415,9 +428,8 @@ export default function UserPanelLayout() {
         </div>
 
         {/* Mobile Nav - "The Bottom Bar" with Safe Area Padding for Android 15 & iOS */}
-        <nav className={`lg:hidden h-auto pb-[env(safe-area-inset-bottom)] bg-surface-container-low/50  backdrop-blur-3xl flex justify-between items-center px-6 sticky bottom-0 z-40 border-t border-outline-variant/5 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] transition-all duration-500 ease-botanical ${
-          showNav ? "-translate-y-15 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
-        }`}>
+        <nav className={`lg:hidden h-auto pb-[env(safe-area-inset-bottom)] bg-surface-container-low/50  backdrop-blur-3xl flex justify-between items-center px-6 sticky bottom-0 z-40 border-t border-outline-variant/5 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] transition-all duration-500 ease-botanical ${showNav ? "-translate-y-15 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
+          }`}>
           {mobileNavItems.map((item) => (
             <NavLink
               key={item.label}
@@ -431,8 +443,8 @@ export default function UserPanelLayout() {
               {({ isActive }) => (
                 <>
                   <div className={`size-12 rounded-full flex items-center justify-center transition-all duration-500 ${isActive
-                      ? "bg-primary text-white shadow-lg shadow-primary/20 -translate-y-6 scale-110"
-                      : "bg-surface-container-high/40 opacity-40"
+                    ? "bg-primary text-white shadow-lg shadow-primary/20 -translate-y-6 scale-110"
+                    : "bg-surface-container-high/40 opacity-40"
                     }`}>
                     {cloneElement(item.icon as React.ReactElement<any>, { size: 22 })}
                   </div>

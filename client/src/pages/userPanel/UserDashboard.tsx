@@ -151,7 +151,7 @@ const UserDashboard = () => {
       await fetchDailyData();
     } catch (err) {
       console.error("Timeline Sync Failed:", err);
-      alert("Temporal Manifestation Alert: " + (err as Error).message);
+      alert("Schedule Update Alert: " + (err as Error).message);
     }
   };
 
@@ -270,8 +270,8 @@ const UserDashboard = () => {
                 </span>
               </h1>
               <p className="text-on-surface-variant max-w-xl text-sm lg:text-2xl leading-relaxed opacity-0 animate-greeting-delay font-medium font-narrative">
-                Your OPSC preparation is <span className="font-technical font-black text-primary border-b-2 border-primary/20">65%</span> complete.
-                You are currently in the top <span className="font-technical font-black text-primary border-b-2 border-primary/20">5%</span> of botanical aspirants.
+                Your OPSC preparation is <span className="font-technical font-black text-primary border-b-2 border-primary/20">0%</span> complete.
+                You are currently in the top <span className="font-technical font-black text-primary border-b-2 border-primary/20">0%</span> of active candidates.
               </p>
             </div>
 
@@ -312,7 +312,7 @@ const UserDashboard = () => {
             />
 
             <section>
-              <h3 className="text-[11px] font-technical pt-4 font-black uppercase tracking-[0.4em] text-on-surface-variant opacity-60 mb-4 px-2">Growth Analytics</h3>
+              <h3 className="text-[11px] font-technical pt-4 font-black uppercase tracking-[0.4em] text-on-surface-variant opacity-60 mb-4 px-2">Preparation Analytics</h3>
               <div className="bg-surface-container-high rounded-3xl p-5 md:p-10 shadow-ambient">
                 <div className="space-y-5 md:space-y-10">
                   {subjectProgress.map((subject, index) => (
@@ -351,20 +351,20 @@ const UserDashboard = () => {
             {/* <section className="bg-surface-container-high rounded-[3rem] p-10 shadow-ambient">
               <h3 className="text-[11px] font-technical font-black uppercase tracking-[0.4em] text-on-surface-variant opacity-50 mb-10 flex items-center gap-4">
                 <div className="size-2.5 bg-primary rounded-full animate-pulse shadow-[0_0_10px_rgba(0,110,47,0.5)]" />
-                Daily Rituals
+                Daily Tasks
               </h3>
               <div className="space-y-4">
                 {ritualsLoading ? (
                   <div className="flex flex-col items-center justify-center py-12 text-slate-400 gap-4 opacity-50">
                     <Loader className="size-6 animate-spin" />
-                    <span className="text-[10px] font-technical uppercase tracking-widest font-black">Aligning Rituals...</span>
+                    <span className="text-[10px] font-technical uppercase tracking-widest font-black">Syncing Tasks...</span>
                   </div>
                 ) : dailyRituals.length === 0 ? (
                   <div className="p-8 text-center bg-white/40 rounded-4xl border border-dashed border-primary/20">
                      <Sparkles className="size-8 text-primary/40 mx-auto mb-4" />
                      <p className="text-xs font-technical font-black uppercase tracking-widest text-on-surface-variant opacity-60">
-                       No rituals set for today.<br />
-                       Plant your seeds in the planner.
+                       No tasks set for today.<br />
+                       Schedule your sessions in the planner.
                      </p>
                   </div>
                 ) : dailyRituals.map((habit) => {
@@ -413,7 +413,7 @@ const UserDashboard = () => {
 
         <footer className="pt-20 pb-10 px-2 flex flex-col lg:flex-row items-center justify-between gap-8 border-t border-on-surface/5 opacity-30 group">
           <p className="text-[9px] font-technical font-black uppercase tracking-[0.4em] leading-relaxed max-w-sm text-center lg:text-left">
-            © 2026 ARUMIND DIGITAL JOURNAL. ARCHITECTED FOR CONSISTENT GROWTH AND INTENTIONAL LEARNING.
+            © 2026 OPREP EXAM PORTAL. ARCHITECTED FOR CONSISTENT GROWTH AND INTENTIONAL LEARNING.
           </p>
           <div className="flex gap-8">
             <span className="text-[9px] font-technical font-black uppercase tracking-widest cursor-help hover:text-primary transition-colors hover:underline">Privacy</span>
@@ -490,8 +490,8 @@ const QuickScheduleModal = ({
       <div className="absolute inset-0 bg-on-surface/20 backdrop-blur-xl" onClick={onClose} />
       <div className="relative bg-white dark:bg-surface-container-high rounded-[3rem] shadow-ambient-lg w-full max-w-lg overflow-hidden border border-white/20 p-10 animate-in zoom-in-95 slide-in-from-bottom-8 duration-700 scale-105">
         <header className="mb-8">
-          <h3 className="text-3xl font-black tracking-tighter leading-none mb-2">Sync Timeline</h3>
-          <p className="text-xs opacity-60 font-medium">Update the temporal manifest for <span className="font-bold text-primary italic">“{habit.name}”</span></p>
+          <h3 className="text-3xl font-black tracking-tighter leading-none mb-2">Update Schedule</h3>
+          <p className="text-xs opacity-60 font-medium">Update the scheduled time for <span className="font-bold text-primary italic">“{habit.name}”</span></p>
         </header>
 
         <div className="space-y-8">
@@ -514,7 +514,7 @@ const QuickScheduleModal = ({
           </div>
 
           <div>
-            <label className="text-[10px] font-technical font-black uppercase tracking-[0.4em] text-primary mb-4 block">Start Time manifest</label>
+            <label className="text-[10px] font-technical font-black uppercase tracking-[0.4em] text-primary mb-4 block">Scheduled Start Time</label>
             <input
               type="time"
               value={selectedTime}
@@ -541,7 +541,7 @@ const QuickScheduleModal = ({
               className="flex-1 py-5 bg-primary text-white rounded-full font-technical font-black text-[11px] uppercase tracking-widest shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3"
             >
               {updating ? <Loader className="size-4 animate-spin" /> : <Sparkles className="size-4" />}
-              Sync Timeline
+              Save Schedule
             </button>
           </div>
         </div>

@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Compass, ArrowRight, Wind } from "lucide-react";
 
 /**
- * 404: Lattice Connectivity Failure.
- * A high-fidelity manifestation of the "Digital Greenhouse" design system.
+ * 404: Page Not Found.
+ * A high-fidelity implementation of the Exam Portal design system.
  */
 const NotFound: React.FC = () => {
     const navigate = useNavigate();
@@ -30,14 +30,14 @@ const NotFound: React.FC = () => {
                             <Wind size={40} className="animate-pulse" />
                         </div>
                         <h2 className="text-4xl lg:text-7xl font-black text-slate-900 tracking-tighter leading-none mb-4">
-                            Lattice <span className="text-[#006e2f] italic">Connectivity</span> Failure
+                            Page <span className="text-[#006e2f] italic">Not</span> Found
                         </h2>
 
                         {/* Technical Label: Space Grotesk Stamping */}
                         <div className="flex items-center gap-3 bg-slate-900/5 px-4 py-1.5 rounded-full mb-8">
                              <div className="size-2 bg-[#006e2f] rounded-full animate-pulse" />
                              <span className="font-technical text-[10px] uppercase font-black tracking-[0.3em] text-[#006e2f]">
-                                CODE: PATH_NOT_MANIFESTED
+                                CODE: PATH_NOT_FOUND
                              </span>
                         </div>
                     </div>
@@ -45,7 +45,7 @@ const NotFound: React.FC = () => {
 
                 <div className="max-w-md mx-auto space-y-8 animate-reveal animation-delay-500">
                     <p className="text-xl text-slate-600/80 leading-relaxed">
-                        The specific curriculum horizontal you are seeking has not yet Manifested within this educational greenhouse. It may have been decommissioned or relocated to a a standard administrative orbit.
+                        The specific page you are seeking has not been found within this exam portal. It may have been decommissioned or relocated to a standard administrative area.
                     </p>
 
                     {/* High-Contrast Control Bar */}
@@ -55,7 +55,7 @@ const NotFound: React.FC = () => {
                             onClick={() => navigate("/user/dashboard")}
                             className="w-full sm:w-auto px-10 py-5 bg-linear-to-r from-[#006e2f] to-[#22c55e] text-white rounded-full font-black text-xs uppercase tracking-[0.3em] shadow-xl shadow-[#006e2f]/20 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-4 group"
                         >
-                            <span>Re-Synchronize Orbit</span>
+                            <span>Return to Dashboard</span>
                             <Compass size={18} className="group-hover:rotate-180 transition-transform duration-700" />
                         </button>
 
@@ -63,7 +63,7 @@ const NotFound: React.FC = () => {
                             onClick={() => navigate(-1)}
                             className="w-full sm:w-auto px-10 py-5 bg-[#f5f4e8] text-slate-800 rounded-full font-black text-xs uppercase tracking-[0.3em] hover:bg-[#dbdbcf] transition-all duration-300 flex items-center justify-center gap-4"
                         >
-                            <span>Reverse Manifestation</span>
+                            <span>Go Back</span>
                             <ArrowRight size={18} className="opacity-40" />
                         </button>
                     </div>
