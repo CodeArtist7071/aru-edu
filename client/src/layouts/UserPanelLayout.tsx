@@ -116,12 +116,12 @@ export default function UserPanelLayout() {
       path: "/user/dashboard",
     },
     {
-      label: "Study Progress",
+      label: "Progress Meter",
       icon: <TrendingUp size={20} />,
       path: "/user/performance",
     },
     {
-      label: "Study Planner",
+      label: "Time Table",
       icon: <History size={20} />,
       path: `/user/plan-study/${firstExamId}`,
     },
@@ -149,12 +149,12 @@ export default function UserPanelLayout() {
       path: "/user/dashboard",
     },
     {
-      label: "Study Progress",
+      label: "Progress Meter",
       icon: <TrendingUp size={20} />,
       path: "/user/performance",
     },
     {
-      label: "Study Planner",
+      label: "Time Table",
       icon: <History size={20} />,
       path: `/user/plan-study/${firstExamId}`,
     }, {
@@ -281,7 +281,7 @@ export default function UserPanelLayout() {
               {theme === 'dark' ? <Sun className="size-5" /> : <Moon className="size-5" />}
             </button>
 
-            <button
+            {/* <button
               onClick={handleEyeProtectionToggle}
               className={`flex-1 flex items-center justify-center p-2 rounded-full transition-all duration-300 group ${isEyeProtectionActive
                 ? "bg-primary text-white shadow-sm"
@@ -290,7 +290,7 @@ export default function UserPanelLayout() {
               title="Eye Protection Mode"
             >
               {isEyeProtectionActive ? <Eye size={20} /> : <EyeOff size={20} />}
-            </button>
+            </button> */}
 
             <button
               onClick={() => setIsCollapsed(!isCollapsed)}
@@ -422,33 +422,32 @@ export default function UserPanelLayout() {
         <div
           ref={scrollRef}
           key={location.pathname}
-          className="flex-1 bg-surface-container-low h-auto overflow-y-auto custom-scrollbar p-0 lg:p-10"
+          className="flex-1 bg-surface-container-low h-full overflow-y-auto custom-scrollbar p-0 lg:p-10"
         >
           <Outlet />
         </div>
 
-        {/* Mobile Nav - "The Bottom Bar" with Safe Area Padding for Android 15 & iOS */}
-        <nav className={`lg:hidden h-auto pb-[env(safe-area-inset-bottom)] bg-surface-container-low/50  backdrop-blur-3xl flex justify-between items-center px-6 sticky bottom-0 z-40 border-t border-outline-variant/5 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] transition-all duration-500 ease-botanical ${showNav ? "-translate-y-15 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
+        {/* Mobile Nav - Android 15 (Material 3) Navigation Bar Manifestation */}
+        <nav className={`lg:hidden h-20 pb-[env(safe-area-inset-bottom)] backdrop-blur-2xl flex justify-around items-center sticky bottom-0 z-40 border-t border-outline-variant/10 shadow-ambient transition-all duration-500 ease-botanical ${showNav ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
           }`}>
           {mobileNavItems.map((item) => (
             <NavLink
               key={item.label}
               to={item.path}
               end={item.path === "/user/dashboard"}
-              className={({ isActive }) =>
-                `flex flex-col items-center justify-center relative transition-all duration-500 ease-botanical py-1.5 ${isActive ? "text-primary" : "text-on-surface-variant"
-                }`
-              }
+              className="flex-1 flex flex-col items-center justify-center pt-2 pb-1"
             >
               {({ isActive }) => (
                 <>
-                  <div className={`size-12 rounded-full flex items-center justify-center transition-all duration-500 ${isActive
-                    ? "bg-primary text-white shadow-lg shadow-primary/20 -translate-y-6 scale-110"
-                    : "bg-surface-container-high/40 opacity-40"
-                    }`}>
-                    {cloneElement(item.icon as React.ReactElement<any>, { size: 22 })}
+                  <div className="relative p-4 flex items-center justify-center mb-1">
+                    {/* Material 3 Active Pill Indicator */}
+                    <div className={`absolute inset-0 bg-primary rounded-full transition-all duration-400 ease-botanical ${isActive ? "opacity-100  -translate-y-10 scale-100" : "opacity-0 scale-75"}`} />
+                    
+                    <div className={`relative z-10 transition-all duration-300 ${isActive ? "text-surface-container-high -translate-y-10 scale-110" : "text-on-surface-variant/70"}`}>
+                      {cloneElement(item.icon as React.ReactElement<any>, { size: 24 })}
+                    </div>
                   </div>
-                  <span className={`absolute bottom-0 text-[7px] font-technical font-black uppercase tracking-[0.2em] transition-all duration-300 ${isActive ? "opacity-100 translate-y-[-8px]" : "opacity-0 translate-y-2"
+                  <span className={`text-[10px] text-center font-technical font-black uppercase tracking-wider transition-colors duration-300 ${isActive ? "text-primary opacity-100 -translate-y-10" : "text-on-surface-variant/40 opacity-0"
                     }`}>
                     {item.label}
                   </span>
@@ -457,13 +456,25 @@ export default function UserPanelLayout() {
             </NavLink>
           ))}
           {profile?.role === "admin" && (
-            <button
-              onClick={() => navigate("/admin/dashboard")}
-              className="flex flex-col items-center justify-center size-12 rounded-2xl text-primary bg-primary/10 transition-all active:scale-90"
-              title="Admin Portal"
+            <NavLink
+              to="/admin/dashboard"
+              className="hidden md:flex-1 md:flex flex-col items-center justify-center pt-2 pb-1"
             >
-              <ShieldCheck size={20} />
-            </button>
+              {({ isActive }) => (
+                <>
+                  <div className="relative h-8 w-16 flex items-center justify-center mb-1">
+                    <div className={`absolute inset-0 bg-primary/15 rounded-full transition-all duration-400 ease-botanical ${isActive ? "opacity-100 scale-100" : "opacity-0 scale-75"}`} />
+                    <div className={`relative z-10 transition-all duration-300 ${isActive ? "text-primary scale-110" : "text-on-surface-variant/70"}`}>
+                      <ShieldCheck size={24} />
+                    </div>
+                  </div>
+                  <span className={`text-[10px] font-technical font-black uppercase tracking-wider transition-colors duration-300 ${isActive ? "text-primary opacity-100" : "text-on-surface-variant/40 opacity-80"
+                    }`}>
+                    Admin
+                  </span>
+                </>
+              )}
+            </NavLink>
           )}
         </nav>
       </main>
