@@ -111,6 +111,8 @@ import { clearUser } from "../slice/userSlice";
                                         className="h-full w-full object-cover"
                                         src={user?.user_metadata?.avatar_url || user?.identities?.[0]?.identity_data?.avatar_url}
                                         alt="profile"
+                                        loading="lazy"
+                                        decoding="async"
                                     />
                                 ) : (
                                     <span className="text-5xl font-black text-primary tracking-tighter">

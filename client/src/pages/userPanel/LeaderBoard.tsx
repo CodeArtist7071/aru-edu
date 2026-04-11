@@ -96,6 +96,8 @@ const Leaderboard = () => {
                   src="https://via.placeholder.com/150"
                   alt="rank2"
                   className="h-16 w-16 md:h-24 md:w-24 rounded-full border-4 border-slate-300"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <p className="font-bold text-sm md:text-base text-center">Priyanka Das</p>
                 <p className="text-xs text-primary font-semibold">1,840 pts</p>
@@ -107,6 +109,8 @@ const Leaderboard = () => {
                   src="https://via.placeholder.com/150"
                   alt="rank1"
                   className="h-20 w-20 md:h-32 md:w-32 rounded-full border-4 border-yellow-400"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <p className="font-bold text-base md:text-xl text-center">Aakash Mohanty</p>
                 <p className="text-sm text-primary font-bold">2,150 pts</p>
@@ -118,6 +122,8 @@ const Leaderboard = () => {
                   src="https://via.placeholder.com/150"
                   alt="rank3"
                   className="h-14 w-14 md:h-20 md:w-20 rounded-full border-4 border-orange-300"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <p className="font-bold text-sm md:text-base text-center">Sonal Nayak</p>
                 <p className="text-xs text-primary font-semibold">1,720 pts</p>
@@ -189,7 +195,7 @@ const Leaderboard = () => {
             </div>
 
             {/* Rewards Banner */}
-            <div className="bg-gradient-to-br from-indigo-600 to-primary rounded-2xl p-6 text-white">
+            <div className="bg-linear-to-br from-indigo-600 to-primary rounded-2xl p-6 text-white">
               <h4 className="font-black text-xl mb-2">Unlock Premium Rewards</h4>
               <p className="text-sm mb-4">
                 Top 10 finishers this month get a free toolkit!
