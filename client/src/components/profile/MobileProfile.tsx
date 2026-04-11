@@ -49,6 +49,8 @@ export const MobileProfile: React.FC<MobileProfileProps> = ({ onEdit }) => {
                src={user?.user_metadata?.avatar_url || user?.identities?.[0]?.identity_data?.avatar_url}
                alt="User Manifestation"
                className="size-full object-cover"
+               loading="lazy"
+               decoding="async"
              />
            ) : (
              <span className="text-3xl font-black text-primary tracking-tighter">
@@ -101,7 +103,7 @@ export const MobileProfile: React.FC<MobileProfileProps> = ({ onEdit }) => {
               onClick={toggleTheme}
               className="flex flex-col items-center justify-center gap-3 p-8 bg-surface-container-low rounded-4xl active:scale-95 transition-all group"
             >
-              <div className="size-10 bg-surface-container-highest rounded-2xl flex items-center justify-center text-primary group-active:rotate-12 transition-transform">
+              <div className="bg-linear-to-br from-indigo-600 to-primary rounded-2xl size-10 flex items-center justify-center text-white group-active:rotate-12 transition-transform">
                  {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
               </div>
               <span className="text-[9px] font-technical font-black uppercase tracking-widest text-on-surface-variant">

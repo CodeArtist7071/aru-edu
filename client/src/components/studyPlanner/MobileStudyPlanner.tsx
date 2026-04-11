@@ -262,43 +262,43 @@ export const MobileStudyPlanner: React.FC<MobileStudyPlannerProps> = ({
       }));
   }, [habits, progress, selectedDate]);
 
-  if (isSettingUp && realHabits.length === 0) {
-    return (
-      <div className="flex-1 flex flex-col relative px-4 pt-20 justify-center items-center overflow-y-auto">
-        <div className="absolute inset-x-2 bottom-0 z-40 p-1 animate-in fade-in zoom-in-95 duration-1000 ease-botanical">
-          <div className="bg-surface-container-high/95 backdrop-blur-xl rounded-[3rem] p-8 shadow-ambient-lg border border-primary/10 text-center space-y-6">
-            <div className="size-16 bg-primary/10 rounded-4xl flex items-center justify-center mx-auto text-primary">
-              <Calendar className="size-8" />
-            </div>
-            <div>
-              <h3 className="text-2xl font-black tracking-tighter text-on-surface">Setup Planner</h3>
-              <p className="text-[10px] font-technical font-black uppercase tracking-widest text-primary mt-2 flex items-center justify-center gap-2">
-                 <Sparkles className="size-3" /> Sample Tasks Active
-              </p>
-              <p className="text-[10px] font-technical font-black uppercase tracking-widest text-on-surface-variant opacity-60 mt-2">New plan for {monthName}</p>
-            </div>
+  // if (isSettingUp && realHabits.length === 0) {
+  //   return (
+  //     <div className="flex-1 flex flex-col relative px-4 pt-20 justify-center items-center overflow-y-auto">
+  //       <div className="absolute inset-x-2 bottom-0 z-40 p-1 animate-in fade-in zoom-in-95 duration-1000 ease-botanical">
+  //         <div className="bg-surface-container-high/95 backdrop-blur-xl rounded-[3rem] p-8 shadow-ambient-lg border border-primary/10 text-center space-y-6">
+  //           <div className="size-16 bg-primary/10 rounded-4xl flex items-center justify-center mx-auto text-primary">
+  //             <Calendar className="size-8" />
+  //           </div>
+  //           <div>
+  //             <h3 className="text-2xl font-black tracking-tighter text-on-surface">Setup Planner</h3>
+  //             <p className="text-[10px] font-technical font-black uppercase tracking-widest text-primary mt-2 flex items-center justify-center gap-2">
+  //                <Sparkles className="size-3" /> Sample Tasks Active
+  //             </p>
+  //             <p className="text-[10px] font-technical font-black uppercase tracking-widest text-on-surface-variant opacity-60 mt-2">New plan for {monthName}</p>
+  //           </div>
 
-            <div className="grid grid-cols-1 gap-4">
-              {hasPrevMonthTasks && (
-                <button
-                  onClick={onCopyPrevious}
-                  className="w-full py-4 bg-primary text-white rounded-full font-technical font-black text-[11px] uppercase tracking-[0.2em] shadow-lg shadow-primary/20 active:scale-95 transition-all"
-                >
-                  Synchronize Prev Month
-                </button>
-              )}
-              <button
-                onClick={onStartFresh}
-                className="w-full py-4 bg-surface-container-low text-on-surface rounded-full font-technical font-black text-[11px] uppercase tracking-[0.2em] active:scale-95 transition-all"
-              >
-                Start Fresh
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  //           <div className="grid grid-cols-1 gap-4">
+  //             {hasPrevMonthTasks && (
+  //               <button
+  //                 onClick={onCopyPrevious}
+  //                 className="w-full py-4 bg-primary text-white rounded-full font-technical font-black text-[11px] uppercase tracking-[0.2em] shadow-lg shadow-primary/20 active:scale-95 transition-all"
+  //               >
+  //                 Synchronize Prev Month
+  //               </button>
+  //             )}
+  //             <button
+  //               onClick={onStartFresh}
+  //               className="w-full py-4 bg-surface-container-low text-on-surface rounded-full font-technical font-black text-[11px] uppercase tracking-[0.2em] active:scale-95 transition-all"
+  //             >
+  //               Start Fresh
+  //             </button>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <>

@@ -227,7 +227,7 @@ export default function UserPanelLayout() {
 
         <div className="h-28 flex items-center px-8 mb-4">
           <div className="flex items-center gap-4 group cursor-pointer" onClick={() => navigate("/")}>
-            <div className="size-12 bg-linear-to-br from-primary to-primary-container rounded-2xl flex items-center justify-center text-white shadow-lg shadow-primary/20 group-hover:rotate-6 transition-all duration-300">
+            <div className="size-12 bg-linear-to-br from-indigo-600 to-primary rounded-2xl flex items-center justify-center text-white shadow-lg shadow-primary/20 group-hover:rotate-6 transition-all duration-300">
               <School className="size-6" />
             </div>
             {!isCollapsed && (
@@ -351,6 +351,8 @@ export default function UserPanelLayout() {
                         src={user?.user_metadata?.avatar_url || user?.identities?.[0]?.identity_data?.avatar_url}
                         alt="ID"
                         className="size-full object-cover"
+                        loading="lazy"
+                        decoding="async"
                       />
                     </>
 
@@ -428,7 +430,7 @@ export default function UserPanelLayout() {
         </div>
 
         {/* Mobile Nav - Android 15 (Material 3) Navigation Bar Manifestation */}
-        <nav className={`lg:hidden h-20 pb-[env(safe-area-inset-bottom)] backdrop-blur-2xl flex justify-around items-center sticky bottom-0 z-40 border-t border-outline-variant/10 shadow-ambient transition-all duration-500 ease-botanical ${showNav ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
+        <nav className={`lg:hidden h-auto pb-[env(safe-area-inset-bottom)] backdrop-blur-2xl flex justify-around items-center sticky bottom-0 z-40 border-t border-outline-variant/10 shadow-ambient transition-all duration-500 ease-botanical ${showNav ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
           }`}>
           {mobileNavItems.map((item) => (
             <NavLink

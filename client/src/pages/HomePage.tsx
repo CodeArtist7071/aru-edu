@@ -83,7 +83,13 @@ const Hompage = () => {
                 <div className="flex -space-x-3">
                   {[1,2,3,4].map(i => (
                     <div key={i} className="size-12 rounded-full border-4 border-surface overflow-hidden bg-surface-container-high shadow-sm">
-                      <img src={`https://i.pravatar.cc/100?img=${i+10}`} alt="user" className="size-full object-cover" />
+                      <img 
+                        src={`https://i.pravatar.cc/100?img=${i+10}`} 
+                        alt="user" 
+                        className="size-full object-cover" 
+                        loading="lazy"
+                        decoding="async"
+                      />
                     </div>
                   ))}
                 </div>
@@ -101,6 +107,9 @@ const Hompage = () => {
                   src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=1974&auto=format&fit=crop" 
                   alt="Journaling" 
                   className="size-full object-cover group-hover:scale-105 transition-transform duration-3000"
+                  fetchpriority="high"
+                  decoding="sync"
+                  loading="eager"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-on-surface/40 to-transparent opacity-60" />
                 <div className="absolute bottom-10 left-10 text-white">
@@ -183,7 +192,13 @@ const Hompage = () => {
             <div className="lg:col-span-7 grid grid-cols-2 gap-8 translate-y-12">
               <div className="space-y-8 pt-20">
                 <div className="aspect-square bg-surface-container-high rounded-[3rem] overflow-hidden shadow-ambient hover-bloom">
-                   <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=2070&auto=format&fit=crop" alt="study" className="size-full object-cover" />
+                   <img 
+                     src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=2070&auto=format&fit=crop" 
+                     alt="study" 
+                     className="size-full object-cover" 
+                     loading="lazy"
+                     decoding="async"
+                   />
                 </div>
                 <div className="bg-primary p-12 rounded-[3.5rem] text-on-primary shadow-xl shadow-primary/20">
                    <p className="text-5xl font-technical font-black tracking-tighter mb-2">98<span className="text-xl opacity-60">%</span></p>
@@ -197,7 +212,13 @@ const Hompage = () => {
                     <p className="text-sm font-bold text-on-surface leading-relaxed">Personalized focus timers and session-tracking journals.</p>
                  </div>
                  <div className="aspect-3/4 bg-surface-container-low rounded-[3.5rem] overflow-hidden shadow-ambient hover-bloom">
-                    <img src="https://images.unsplash.com/photo-1517842645767-c639042777db?q=80&w=2070&auto=format&fit=crop" alt="notes" className="size-full object-cover" />
+                    <img 
+                      src="https://images.unsplash.com/photo-1517842645767-c639042777db?q=80&w=2070&auto=format&fit=crop" 
+                      alt="notes" 
+                      className="size-full object-cover" 
+                      loading="lazy"
+                      decoding="async"
+                    />
                  </div>
               </div>
             </div>
