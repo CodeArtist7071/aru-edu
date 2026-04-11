@@ -392,14 +392,14 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
               </div>
 
               <div className="space-y-3">
-                <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1">{useChapter ? "Select Chapter" : "Task Name"}</label>
+                <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1">{useChapter ? "Chapter Selection" : "Session Name"}</label>
                 {useChapter ? (
                   <>
                     <select
                       {...register("chapter_id", { required: "Please select a chapter" })}
                       className={`w-full py-3 px-6 bg-surface-container-low rounded-3xl text-sm font-bold border-none outline-none focus:ring-2 ring-primary/20 appearance-none ${errors.chapter_id ? "ring-2 ring-red-400" : ""}`}
                     >
-                      <option value="">Please Select your Chapter</option>
+                      <option value="">Choose your quest...</option>
                       {chapters.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                     </select>
                     {errors.chapter_id && <p className="text-red-500 text-[10px] ml-4 animate-in fade-in">{errors.chapter_id.message}</p>}
