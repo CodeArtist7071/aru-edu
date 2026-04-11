@@ -7,6 +7,8 @@ interface Props {
   statusText?: string;
   violationCount: number;
   autoSubmitAt?: number;
+  minimized: boolean;
+  setMinimized: (v: boolean | ((prev: boolean) => boolean)) => void;
 }
  
 const VIOLATION_LIMIT_WARN = 3;
@@ -18,14 +20,29 @@ export default function AdvancedProctoring({
   statusText,
   violationCount,
   autoSubmitAt = 7,
+  minimized,
+  setMinimized,
 }: Props) {
   const divRef = useRef<HTMLDivElement>(null);
   const offset = useRef({ x: 0, y: 0 });
  
-  const [position, setPosition] = useState({ x: 16, y: 16 });
+  const [position, setPosition] = useState({ 
+    x:16, // Left Margin
+    y: 100 // Vertical Offset
+  });
   const [dragging, setDragging] = useState(false);
-  const [minimized, setMinimized] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [flash, setFlash] = useState(false);
+ 
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (!mobile) setMinimized(false);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
  
   // Flash red border on new violation
   useEffect(() => {
@@ -35,31 +52,63 @@ export default function AdvancedProctoring({
     return () => clearTimeout(t);
   }, [violationCount]);
  
-  const onMouseDown = (e: React.MouseEvent) => {
-    // Don't drag when clicking buttons
-    if ((e.target as HTMLElement).closest("button")) return;
+  const startDragging = (clientX: number, clientY: number) => {
     if (!divRef.current) return;
     setDragging(true);
     const rect = divRef.current.getBoundingClientRect();
-    offset.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    offset.current = { x: clientX - rect.left, y: clientY - rect.top };
+  };
+
+  const onMouseDown = (e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).closest("button")) return;
+    startDragging(e.clientX, e.clientY);
     e.preventDefault();
+  };
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    if ((e.target as HTMLElement).closest("button")) return;
+    e.stopPropagation(); // Prevent parent layouts from catching the touch
+    const touch = e.touches[0];
+    startDragging(touch.clientX, touch.clientY);
   };
  
   useEffect(() => {
-    const onMouseMove = (e: MouseEvent) => {
-      if (!dragging) return;
-      setPosition({
-        x: Math.max(0, e.clientX - offset.current.x),
-        y: Math.max(0, e.clientY - offset.current.y),
-      });
+    const onMove = (clientX: number, clientY: number) => {
+      if (!dragging || !divRef.current) return;
+      
+      const podW = divRef.current.offsetWidth;
+      const podH = divRef.current.offsetHeight;
+      
+      // Calculate and clamp coordinates
+      let newX = clientX - offset.current.x;
+      let newY = clientY - offset.current.y;
+      
+      newX = Math.max(8, Math.min(newX, window.innerWidth - podW - 8));
+      newY = Math.max(8, Math.min(newY, window.innerHeight - podH - 8));
+      
+      setPosition({ x: newX, y: newY });
     };
-    const onMouseUp = () => setDragging(false);
+
+    const onMouseMove = (e: MouseEvent) => onMove(e.clientX, e.clientY);
+    const onTouchMove = (e: TouchEvent) => {
+      if (dragging) {
+        onMove(e.touches[0].clientX, e.touches[0].clientY);
+        if (e.cancelable) e.preventDefault(); // Prevent scrolling while dragging
+      }
+    };
+
+    const stopDragging = () => setDragging(false);
  
     window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseup", onMouseUp);
+    window.addEventListener("mouseup", stopDragging);
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("touchend", stopDragging);
+    
     return () => {
       window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("mouseup", onMouseUp);
+      window.removeEventListener("mouseup", stopDragging);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", stopDragging);
     };
   }, [dragging]);
  
@@ -84,6 +133,7 @@ export default function AdvancedProctoring({
     <div
       ref={divRef}
       onMouseDown={onMouseDown}
+      onTouchStart={onTouchStart}
       style={{
         position: "fixed",
         left: position.x,
@@ -91,7 +141,9 @@ export default function AdvancedProctoring({
         zIndex: 9999,
         cursor: dragging ? "grabbing" : "grab",
         userSelect: "none",
-        width: minimized ? "48px" : "192px",
+        pointerEvents: "auto",
+        touchAction: "none", // Explicitly disable browser gestures
+        width: minimized ? "var(--ap-min-w, 48px)" : "var(--ap-w, 240px)",
         transition: "width 0.25s ease, box-shadow 0.2s ease",
       }}
     >
@@ -115,7 +167,7 @@ export default function AdvancedProctoring({
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            padding: minimized ? "6px" : "6px 8px",
+            padding: minimized ? "16px" : "4px 6px",
             background: "rgba(255,255,255,0.05)",
             borderBottom: minimized ? "none" : "1px solid rgba(255,255,255,0.08)",
           }}
@@ -169,38 +221,44 @@ export default function AdvancedProctoring({
                 {violationCount}
               </span>
             )}
-            <button
-              onClick={() => setMinimized((v) => !v)}
-              style={{
-                background: "transparent",
-                border: "none",
-                cursor: "pointer",
-                padding: "2px",
-                color: "rgba(255,255,255,0.4)",
-                display: "flex",
-                alignItems: "center",
-                lineHeight: 1,
-              }}
-              title={minimized ? "Expand" : "Minimize"}
-            >
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                {minimized ? (
-                  <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                ) : (
-                  <path d="M2 8l4-4 4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                )}
-              </svg>
-            </button>
+            {isMobile && (
+               <button
+                 onClick={() => setMinimized((v) => !v)}
+                 style={{
+                   background: "transparent",
+                   border: "none",
+                   cursor: "pointer",
+                   padding: "2px",
+                   color: "rgba(255,255,255,0.4)",
+                   display: "flex",
+                   alignItems: "center",
+                   lineHeight: 1,
+                 }}
+                 title={minimized ? "Expand" : "Minimize"}
+               >
+                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                   {minimized ? (
+                     <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                   ) : (
+                     <path d="M2 8l4-4 4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                   )}
+                 </svg>
+               </button>
+             )}
           </div>
         </div>
  
         {/* Camera and Footer — only show content when not minimized, BUT always keep video in DOM to maintain ref */}
-        <div 
-          style={{ 
-            display: minimized ? "none" : "block",
-            position: "relative" 
-          }}
-        >
+         <div 
+           style={{ 
+             maxHeight: minimized ? "0px" : "500px",
+             opacity: minimized ? 0 : 1,
+             pointerEvents: minimized ? "none" : "auto",
+             overflow: "hidden",
+             position: "relative",
+             transition: "max-height 0.3s ease, opacity 0.3s ease",
+           }}
+         >
           <div style={{ position: "relative", background: "#000", aspectRatio: "4/3" }}>
             <video
               ref={videoRef}
@@ -299,8 +357,18 @@ export default function AdvancedProctoring({
         </div>
       </div>
  
-      {/* Keyframe styles */}
+      {/* Keyframe styles & Responsive Variables */}
       <style>{`
+        :root {
+          --ap-w: 240px;
+          --ap-min-w: 48px;
+        }
+        @media (max-width: 768px) {
+          :root {
+            --ap-w: 120px;
+            --ap-min-w: 32px;
+          }
+        }
         @keyframes ap-pulse {
           0%, 100% { opacity: 1; }
           50% { opacity: 0.4; }
