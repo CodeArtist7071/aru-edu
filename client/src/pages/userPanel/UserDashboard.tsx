@@ -304,7 +304,7 @@ const UserDashboard = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pt-0 md:pt-8">
           <div className="lg:col-span-8 space-y-4 md:space-y-12">
             <ExamSelectorCard 
-              targetRef={targetRef} 
+              
               targetedExams={targetedExams} 
               onSelect={(exam) => navigate(`exam/${exam.id}`)}
               onViewAll={() => navigate("/select-exams")}

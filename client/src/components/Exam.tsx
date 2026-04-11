@@ -27,9 +27,7 @@ const Exam = () => {
   });
 
   const { examData } = useSelector((state: RootState) => state.exams ?? { examData: [] });
-  const { data, e_data, loading, error } = useSelector(
-    (state: RootState) => state.examSubject ?? null,
-  );
+  const { data, e_data, loading, error } = useSelector((state: RootState) => state.examSubject ?? null,);
   const { user, profile } = useSelector((state: RootState) => state.user ?? { user: null, profile: null });
   const [attemptedChapters, setAttemptedChapters] = useState<Set<string>>(new Set());
   const [expandedSubjects, setExpandedSubjects] = useState<Set<string>>(new Set());
@@ -56,7 +54,6 @@ const Exam = () => {
   useEffect(() => {
     const fetchAttempts = async () => {
       if (!user?.id) return;
-
       const { data, error } = await supabase
         .from("test_attempts")
         .select("chapter_id")
@@ -67,13 +64,11 @@ const Exam = () => {
         console.error("Error fetching attempts:", error);
         return;
       }
-
       if (data) {
         const ids = new Set(data.map(a => a.chapter_id));
         setAttemptedChapters(ids);
       }
     };
-
     fetchAttempts();
   }, [user]);
 
@@ -384,7 +379,7 @@ const Exam = () => {
                   onClick={handleStartTest}
                   className="flex-[1.5] py-4 sm:py-5 text-xs sm:text-sm font-black bg-primary text-white rounded-full hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2 shadow-xl shadow-primary/20"
                 >
-                  Start Manifestation
+                  Try Yourself.
                   <ChevronRight size={18} />
                 </button>
               </div>
@@ -397,7 +392,7 @@ const Exam = () => {
       <footer className="mt-20 py-12 px-4 md:px-10 border-t border-on-surface/5 opacity-40">
         <div className="max-w-300 mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-[10px] font-mono font-bold uppercase tracking-[0.2em]">
-            © 2024 ARUMIND <span className="mx-2 text-primary">•</span> AI STYDY SPACE v1.0
+            © 2024 ARUMIND <span className="mx-2 text-primary">•</span> AI STUDY SPACE v1.0
           </div>
           <div className="flex gap-8 text-[10px] font-mono font-bold uppercase tracking-widest">
             <a href="#" className="hover:text-primary transition-colors">Integrity Policy</a>
@@ -415,7 +410,7 @@ export default Exam;
 
 const ExamSkeleton = () => {
   return (
-    <div className="bg-surface font-narrative min-h-screen animate-pulse">
+    <div className=" font-narrative min-h-screen animate-pulse">
       <main className="max-w-300 mx-auto w-full px-4 py-12 md:px-10">
 
         {/* Header Skeleton */}
@@ -446,7 +441,6 @@ const ExamSkeleton = () => {
                 <div className="h-4 w-24 bg-surface-container-highest rounded mb-3"></div>
                 <div className="w-full h-3 bg-surface-container-highest rounded-full"></div>
               </div>
-
             </div>
 
             {/* Chapter Skeleton Rows */}

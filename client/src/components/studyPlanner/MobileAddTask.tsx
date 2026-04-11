@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { 
-  Loader, 
-  X, 
-  Sparkles, 
-  CheckCircle2, 
-  AlertCircle, 
-  Clock, 
-  Tag, 
-  Zap, 
+import {
+  Loader,
+  X,
+  Sparkles,
+  CheckCircle2,
+  AlertCircle,
+  Clock,
+  Tag,
+  Zap,
   Calendar,
   ChevronLeft,
   ArrowRight
@@ -46,7 +46,7 @@ type FormValues = {
   start_time: string;
   end_time: string;
   chapter_id?: string;
-  date?: string; 
+  date?: string;
   end_date?: string;
   duration_type: "DAILY" | "WEEKLY" | "MONTHLY" | "CUSTOM";
   syncToCalendar: boolean;
@@ -72,9 +72,9 @@ const parseRoutineWithAI = async (text: string): Promise<Partial<FormValues>> =>
 
 const PriorityBadge = ({ priority, selected, onSelect }: { priority: "HIGH" | "MEDIUM" | "LOW", selected: boolean, onSelect: () => void }) => {
   const styles = {
-    HIGH:   "bg-red-50 text-red-700 border-red-100",
+    HIGH: "bg-red-50 text-red-700 border-red-100",
     MEDIUM: "bg-amber-50 text-amber-700 border-amber-100",
-    LOW:    "bg-slate-50 text-slate-600 border-slate-100"
+    LOW: "bg-slate-50 text-slate-600 border-slate-100"
   };
   return (
     <button
@@ -119,6 +119,24 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
   const [useChapter, setUseChapter] = useState(false);
   const [computedEndDate, setComputedEndDate] = useState<string>("");
 
+  // Animation Lifecycle
+  const [shouldRender, setShouldRender] = useState(isOpen);
+  const [isAnimatingOut, setIsAnimatingOut] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      setShouldRender(true);
+      setIsAnimatingOut(false);
+    } else if (shouldRender) {
+      setIsAnimatingOut(true);
+      const timer = setTimeout(() => {
+        setShouldRender(false);
+        setIsAnimatingOut(false);
+      }, 850); // Matches the buttery exit duration
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen, shouldRender]);
+
   const { reset, register, handleSubmit, setValue, watch, control, formState: { isSubmitting, errors } } = useForm<FormValues>({
     defaultValues: { priority: "MEDIUM", start_time: "09:00", end_time: "10:00", duration_type: "MONTHLY", syncToCalendar: connected },
     shouldUnregister: true
@@ -131,20 +149,20 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
   useEffect(() => {
     if (!dateValue) return;
     const start = new Date(dateValue);
-    
+
     if (durationType === "DAILY") {
-       setComputedEndDate("");
+      setComputedEndDate("");
     } else if (durationType === "WEEKLY") {
-       const end = new Date(start);
-       end.setDate(end.getDate() + 6);
-       setComputedEndDate(getLocalDateString(end));
+      const end = new Date(start);
+      end.setDate(end.getDate() + 6);
+      setComputedEndDate(getLocalDateString(end));
     } else if (durationType === "MONTHLY") {
-       const end = new Date(start);
-       end.setMonth(end.getMonth() + 1);
-       end.setDate(end.getDate() - 1);
-       setComputedEndDate(getLocalDateString(end));
+      const end = new Date(start);
+      end.setMonth(end.getMonth() + 1);
+      end.setDate(end.getDate() - 1);
+      setComputedEndDate(getLocalDateString(end));
     } else if (durationType === "CUSTOM") {
-       setComputedEndDate("");
+      setComputedEndDate("");
     }
   }, [dateValue, durationType, useChapter]);
 
@@ -156,9 +174,9 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
   }, [errors]);
 
   useEffect(() => {
-      if (durationType === "DAILY" && !editingHabitId) {
-          setValue("date", getLocalDateString(new Date()));
-      }
+    if (durationType === "DAILY" && !editingHabitId) {
+      setValue("date", getLocalDateString(new Date()));
+    }
   }, [durationType, editingHabitId, setValue]);
 
   useEffect(() => {
@@ -176,14 +194,14 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
         setValue("start_time", h.start_time || "09:00");
         setValue("end_time", h.end_time || "10:00");
         setValue("duration_type", h.duration_type || (h.is_recurring === false ? "DAILY" : "MONTHLY"));
-        
+
         if (h.scheduled_date) {
-           setValue("date", h.scheduled_date);
+          setValue("date", h.scheduled_date);
         }
         if (h.scheduled_end_date) {
-           setValue("end_date", h.scheduled_end_date);
+          setValue("end_date", h.scheduled_end_date);
         }
-        
+
         if (h.chapter_id) { setUseChapter(true); setValue("chapter_id", h.chapter_id); }
       }
     } else if (isOpen) {
@@ -193,9 +211,9 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
       const initialDay = isCurrentView ? now.getDate() : 1;
 
       setToast({ type: "loading", message: "Syncing Schedule..." });
-      reset({ 
-        priority: "MEDIUM", 
-        duration_type: "MONTHLY", 
+      reset({
+        priority: "MEDIUM",
+        duration_type: "MONTHLY",
         syncToCalendar: connected,
         date: getLocalDateString(new Date(viewYear, viewMonth - 1, initialDay))
       });
@@ -206,16 +224,16 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
   const onSubmit = async (data: FormValues) => {
     console.log("🚀 [MobileAddTask] Form Submitted Successfully:", data);
     setToast({ type: "loading", message: "Syncing Schedule..." });
-    
+
     // Safety check for examId
     const finalExamId = examId === "add" ? undefined : examId;
     let name = data.habit?.trim() || "";
     if (useChapter && data.chapter_id) {
-       const ch = chapters.find(c => c.id === data.chapter_id);
-       if (ch) name = ch.name;
-       else name = "Syllabus Mastery Quest"; // Fallback if chapter not found in local state
+      const ch = chapters.find(c => c.id === data.chapter_id);
+      if (ch) name = ch.name;
+      else name = "Syllabus Mastery Quest"; // Fallback if chapter not found in local state
     }
-    
+
     if (!user?.id) {
       console.error("❌ [MobileAddTask] Missing User ID");
       setToast({ type: "error", message: "Validating session..." });
@@ -239,17 +257,17 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
       }
 
       if (editingHabitId && !editingHabitId.startsWith("demo-")) {
-        const updateData: any = { 
-          priority: data.priority, 
-          start_time: data.start_time, 
-          end_time: data.end_time, 
-          chapter_id: useChapter ? data.chapter_id : null, 
-          is_recurring: data.duration_type !== "DAILY", 
-          duration_type: data.duration_type 
+        const updateData: any = {
+          priority: data.priority,
+          start_time: data.start_time,
+          end_time: data.end_time,
+          chapter_id: useChapter ? data.chapter_id : null,
+          is_recurring: data.duration_type !== "DAILY",
+          duration_type: data.duration_type
         };
         if (!useChapter) updateData.name = name;
         await supabase.from("study_habits").update(updateData).eq("id", editingHabitId);
-        
+
         if (data.date) {
           const newDate = new Date(data.date);
           await supabase.from("study_habits").update({
@@ -261,21 +279,21 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
         }
       } else {
         const scheduledDate = data.date ? new Date(data.date) : new Date();
-        const habitData: any = { 
-          user_id: user.id, 
-          priority: data.priority, 
-          start_time: data.start_time, 
-          end_time: data.end_time, 
-          progress: Array(31).fill(false), 
-          month: String(viewMonth), 
-          year: String(viewYear), 
-          exam_id: examId, 
-          chapter_id: useChapter ? data.chapter_id : null, 
-          is_recurring: data.duration_type !== "DAILY", 
-          duration_type: data.duration_type, 
-          scheduled_date: scheduledDate.toISOString().split('T')[0] 
+        const habitData: any = {
+          user_id: user.id,
+          priority: data.priority,
+          start_time: data.start_time,
+          end_time: data.end_time,
+          progress: Array(31).fill(false),
+          month: String(viewMonth),
+          year: String(viewYear),
+          exam_id: examId,
+          chapter_id: useChapter ? data.chapter_id : null,
+          is_recurring: data.duration_type !== "DAILY",
+          duration_type: data.duration_type,
+          scheduled_date: scheduledDate.toISOString().split('T')[0]
         };
-        
+
         if (!useChapter) habitData.name = name;
         if (scheduledDate.getMonth() + 1 === viewMonth && scheduledDate.getFullYear() === viewYear) {
           habitData.progress[scheduledDate.getDate() - 1] = data.duration_type === "DAILY";
@@ -295,223 +313,191 @@ export const MobileAddTask: React.FC<MobileAddTaskProps> = ({
     }
   };
 
-  if (!isOpen) return null;
+  if (!shouldRender) return null;
 
   return (
-    <div className="fixed inset-0 z-100 bg-surface flex flex-col animate-in slide-in-from-bottom duration-500 ease-botanical overflow-y-auto">
-      {/* ── Mobile Header ────────────────────────────────────────────────── */}
-      <header className="px-6 pt-2 pb-4 flex items-center justify-between sticky top-0 bg-surface/80 backdrop-blur-3xl z-10 transition-all duration-500">
-        <button onClick={onClose} className="size-10 rounded-full bg-on-surface/5 flex items-center justify-center active:scale-95 transition-transform">
-          <ChevronLeft className="size-5" />
-        </button>
-        <span className="text-sm font-black uppercase tracking-[0.3em] text-primary">Add Session</span>
-      </header>
+    <div className="fixed inset-0 z-100 flex items-end justify-center">
+      {/* Backdrop with lush fade */}
+      <div 
+        className={`absolute inset-0 bg-on-surface/10 backdrop-blur-sm transition-all duration-700 ease-premium ${isAnimatingOut ? "animate-out fade-out" : "animate-in fade-in"}`} 
+        onClick={onClose} 
+      />
 
-      {toast && (
-        <div className="sticky top-16 mx-4 z-50 animate-in fade-in slide-in-from-top-2">
-          <div className={`p-4 rounded-3xl border flex items-center gap-3 shadow-lg ${
-            toast.type === 'success' ? 'bg-green-50 border-green-200 text-green-800' : 
-            toast.type === 'loading' ? 'bg-primary/5 border-primary/20 text-primary' :
-            'bg-red-50 border-red-200 text-red-800'
-          }`}>
-            {toast.type === 'loading' ? <Loader className="animate-spin" size={16} /> : <Zap size={16} />}
-            <span className="text-xs font-bold">{toast.message}</span>
-            <button onClick={() => setToast(null)} className="ml-auto opacity-40"><X size={14} /></button>
-          </div>
-        </div>
-      )}
-
-      <main className="px-3 pb-10 space-y-5 animate-reveal">
-        <div className="space-y-1">
-          <h2 className="text-xl font-black tracking-tighter text-on-surface leading-none">
-            {editingHabitId ? "Edit Session" : "Add Session"}
-          </h2>
-          <p className="text-xs font-medium text-on-surface-variant opacity-60">
-            {useChapter ? "Scheduling from syllabus mastery." : "Your daily study routines."}
-          </p>
+      {/* Action Sheet Container with buttery slide */}
+      <div className={`relative w-full max-h-[92vh] bg-surface rounded-t-[3rem] shadow-ambient-2xl flex flex-col overflow-hidden border-t border-on-surface/5 transition-all duration-850 ease-premium ${isAnimatingOut ? "animate-out slide-out-to-bottom-full" : "animate-in slide-in-from-bottom-full"}`}>
+        
+        {/* Drag Handle Ritual */}
+        <div className="pt-4 pb-2 shrink-0" onClick={onClose}>
+          <div className="w-12 h-1.5 bg-on-surface/10 rounded-full mx-auto" />
         </div>
 
-        {/* ── AI Action Center ─────────────────────────────────────────────── */}
-        <section className="bg-primary/5 rounded-2xl p-4 border border-primary/10 space-y-2">
-          <div className="flex items-center gap-2">
-            <Sparkles className="size-4 text-primary" />
-            <span className="text-[10px] font-black uppercase tracking-widest text-primary">AI Natural Language</span>
-          </div>
-          <div className="flex flex-col gap-3">
-            <textarea 
-              value={aiInput}
-              onChange={(e) => setAiInput(e.target.value)}
-              placeholder="e.g. Wake up at 6am, solve physics questions at 12pm..."
-              className="w-full h-24 bg-surface rounded-xl p-4 text-sm font-medium border-none outline-none focus:ring-2 ring-primary/20 transition-all placeholder:opacity-30"
-            />
-            <button 
-              onClick={async () => {
-                setAiParsing(true);
-                try {
-                  const res = await parseRoutineWithAI(aiInput);
-                  if (res.habit) setValue("habit", res.habit);
-                  if (res.priority) setValue("priority", res.priority as any);
-                  if (res.start_time) setValue("start_time", res.start_time);
-                  if (res.end_time) setValue("end_time", res.end_time);
-                  setToast({ type: "success", message: "AI filled the fields!" });
-                } catch (e) {
-                   setToast({ type: "error", message: "AI failed to parse." });
-                } finally { setAiParsing(false); }
-              }}
-              disabled={aiParsing || !aiInput.trim()}
-              className="w-full py-3 bg-primary text-white rounded-2xl font-black uppercase text-xs tracking-widest flex items-center justify-center gap-2"
-            >
-              {aiParsing ? <Loader className="animate-spin" size={14} /> : <Sparkles size={14} />}
-              Add from AI Parse
-            </button>
-          </div>
-        </section>
+        {/* ── Mobile Header ────────────────────────────────────────────────── */}
+        <header className="px-6 pt-2 pb-4 flex items-center justify-between sticky top-0 bg-surface/80 backdrop-blur-3xl z-10 transition-all duration-500">
+          <button onClick={onClose} className="size-10 rounded-full bg-on-surface/5 flex items-center justify-center active:scale-95 transition-transform">
+            <X className="size-5" />
+          </button>
+          <span className="text-sm font-black uppercase tracking-[0.3em] text-primary">Add Task</span>
+          <div className="w-10" /> {/* Spacer for symmetry */}
+        </header>
 
-        {/* ── Manual Manifest Form ─────────────────────────────────────────── */}
-        <form 
-          onSubmit={handleSubmit(
-            onSubmit,
-            (err) => {
-              console.error("❌ [MobileAddTask] Validation Errors:", err);
-              const firstErr = Object.values(err)[0];
-              if (firstErr) setToast({ type: "error", message: String(firstErr.message || "Please fill all required fields") });
-            }
-          )} 
-          className="space-y-4"
-        >
-          <div className="flex bg-surface-container-low p-1.5 rounded-2xl flex-wrap">
-            <button type="button" onClick={() => setValue("duration_type", "DAILY")} className={`flex-1 py-2 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "DAILY" ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Today</button>
-            <button type="button" onClick={() => setValue("duration_type", "WEEKLY")} className={`flex-1 py-2 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "WEEKLY" ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Weekly</button>
-            <button type="button" onClick={() => setValue("duration_type", "MONTHLY")} className={`flex-1 py-2 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "MONTHLY" ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Monthly</button>
-            <button type="button" onClick={() => setValue("duration_type", "CUSTOM")} className={`flex-1 py-2 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "CUSTOM" ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Custom</button>
-          </div>
-
-          <div className="space-y-2">
-             <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1">Manifest Type</label>
-             <div className="flex bg-surface-container-low p-1.5 rounded-2xl">
-               <button type="button" onClick={() => setUseChapter(false)} className={`flex-1 py-2 text-[10px] font-black uppercase rounded-xl transition-all ${!useChapter ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Manual Session</button>
-               <button type="button" onClick={() => setUseChapter(true)} className={`flex-1 py-2 text-[10px] font-black uppercase rounded-xl transition-all ${useChapter ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Syllabus Mastery</button>
-             </div>
-          </div>
-
-          <div className="space-y-2">
-             <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1 flex items-center justify-between">
-               <span>{durationType === "DAILY" ? "Scheduled Date" : "Start Date"}</span>
-               {computedEndDate && <span className="opacity-60">Auto End Date</span>}
-               {durationType === "CUSTOM" && <span className="opacity-60">Set End Date</span>}
-             </label>
-             <div className="flex flex-col gap-3">
-               <input 
-                 type="date" 
-                 {...register("date", { required: "Date is required" })} 
-                 className={`w-full py-3 px-6 bg-surface-container-low rounded-3xl text-sm font-bold border-none outline-none focus:ring-2 ring-primary/20 transition-all ${errors.date ? "ring-2 ring-red-400" : ""}`} 
-               />
-               {errors.date && <p className="text-red-500 text-[10px] ml-4 animate-in fade-in">{errors.date.message}</p>}
-               {computedEndDate && (
-                 <div className="flex items-center gap-3">
-                   <div className="text-primary/40 font-black animate-in fade-in zoom-in-50 duration-500 pl-4 shrink-0">→</div>
-                   <div 
-                     className="w-full bg-surface-container-lowest px-6 py-5 rounded-3xl text-sm font-technical font-black text-on-surface-variant/60 border border-outline-variant/10 shadow-inner flex items-center animate-in fade-in slide-in-from-right-4 duration-500"
-                   >
-                     {computedEndDate}
-                   </div>
-                 </div>
-               )}
-               {durationType === "CUSTOM" && (
-                 <div className="flex items-center gap-3">
-                   <div className="text-primary/40 font-black animate-in fade-in zoom-in-50 duration-500 pl-4 shrink-0">→</div>
-                   <input 
-                     type="date" 
-                     {...register("end_date", { 
-                        required: durationType === "CUSTOM",
-                        validate: value => !value || !dateValue || new Date(value) >= new Date(dateValue) || "End Date cannot be before Start Date"
-                     })} 
-                     className={`w-full py-3 px-6 bg-surface-container-low rounded-3xl text-sm font-bold border-none outline-none focus:ring-2 ring-primary/20 transition-all animate-in fade-in slide-in-from-right-4 duration-500 ${errors.end_date ? "ring-2 ring-red-400 focus:ring-red-500" : ""}`} 
-                   />
-                 </div>
-               )}
-               {errors.end_date && <p className="text-red-500 text-[10px] ml-4 animate-in fade-in">{errors.end_date.message}</p>}
-             </div>
-          </div>
-
-          <div className="space-y-3">
-            <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1">{useChapter ? "Chapter Selection" : "Session Name"}</label>
-            {useChapter ? (
-              <>
-                <select 
-                  {...register("chapter_id", { required: "Please select a chapter" })} 
-                  className={`w-full py-3 px-6 bg-surface-container-low rounded-3xl text-sm font-bold border-none outline-none focus:ring-2 ring-primary/20 appearance-none ${errors.chapter_id ? "ring-2 ring-red-400" : ""}`}
-                >
-                  <option value="">Choose your quest...</option>
-                  {chapters.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
-                </select>
-                {errors.chapter_id && <p className="text-red-500 text-[10px] ml-4 animate-in fade-in">{errors.chapter_id.message}</p>}
-              </>
-            ) : (
-              <>
-                <input 
-                  {...register("habit", { required: "Routine name is required" })} 
-                  placeholder="e.g. History Review" 
-                  className={`w-full py-3 px-6 bg-surface-container-low rounded-3xl text-sm font-bold border-none outline-none focus:ring-2 ring-primary/20 ${errors.habit ? "ring-2 ring-red-400" : ""}`} 
-                />
-                {errors.habit && <p className="text-red-500 text-[10px] ml-4 animate-in fade-in">{errors.habit.message}</p>}
-              </>
-            )}
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-             <div className="space-y-2">
-               <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1">Start Session</label>
-               <input type="time" {...register("start_time")} className="w-full py-3 px-6 bg-surface-container-low rounded-3xl text-sm font-bold border-none outline-none focus:ring-2 ring-primary/20" />
-             </div>
-             <div className="space-y-2">
-               <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1">End Session</label>
-               <input type="time" {...register("end_time")} className="w-full py-3 px-6 bg-surface-container-low rounded-3xl text-sm font-bold border-none outline-none focus:ring-2 ring-primary/20" />
-             </div>
-          </div>
-
-          <div className="space-y-4">
-             <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1">Priority Level</label>
-             <div className="flex gap-3">
-               {(["HIGH", "MEDIUM", "LOW"] as const).map(p => (
-                 <PriorityBadge key={p} priority={p} selected={priority === p} onSelect={() => setValue("priority", p)} />
-               ))}
-             </div>
-          </div>
-
-          {connected && (
-            <div className={`p-6 rounded-[2.5rem] flex items-center justify-between border transition-all ${watch("syncToCalendar") ? "bg-primary/5 border-primary/20" : "bg-surface-container-low border-transparent"}`}>
-              <div className="flex items-center gap-3">
-                <Calendar className={`size-5 ${watch("syncToCalendar") ? "text-primary" : "text-on-surface-variant opactiy-40"}`} />
-                <div>
-                   <p className="text-xs font-black">Google Sync</p>
-                   <p className="text-[10px] font-medium opacity-40">Persistence mapping</p>
-                </div>
+        <div className="flex-1 overflow-y-auto custom-scrollbar-hide pb-32">
+          {toast && (
+            <div className="sticky top-2 mx-4 z-50 animate-in fade-in slide-in-from-top-2">
+              <div className={`p-4 rounded-3xl border flex items-center gap-3 shadow-lg ${toast.type === 'success' ? 'bg-green-50 border-green-200 text-green-800' :
+                  toast.type === 'loading' ? 'bg-primary/5 border-primary/20 text-primary' :
+                    'bg-red-50 border-red-200 text-red-800'
+                }`}>
+                {toast.type === 'loading' ? <Loader className="animate-spin" size={16} /> : <Zap size={16} />}
+                <span className="text-xs font-bold">{toast.message}</span>
+                <button onClick={() => setToast(null)} className="ml-auto opacity-40"><X size={14} /></button>
               </div>
-              <input type="checkbox" {...register("syncToCalendar")} className="size-5 accent-primary" />
             </div>
           )}
-        </form>
-      </main>
 
-      <footer className="sticky bottom-0 p-6 bg-surface border-t border-outline-variant/10 z-50">
-        <button 
-          type="button"
-          onClick={() => {
-            console.log("🖱️ [MobileAddTask] Add Button Triggered");
-            handleSubmit(onSubmit, (err) => {
-              console.error("❌ [MobileAddTask] Validation Failed:", err);
-              const firstErr: any = Object.values(err)[0];
-              const msg = firstErr?.message || "Please fill all required fields";
-              setToast({ type: "error", message: msg });
-              window.alert("⚠️ Validation Error: " + msg);
-            })();
-          }}
-          className="w-full py-4 bg-on-surface text-surface rounded-3xl font-black uppercase tracking-widest text-sm shadow-xl active:scale-95 transition-all flex items-center justify-center gap-2"
-        >
-          {isSubmitting ? <Loader className="animate-spin" size={18} /> : (editingHabitId ? "Edit Session" : "Add Session")}
-        </button>
-      </footer>
+          <main className="px-3 space-y-5 animate-reveal">
+            <div className="space-y-2 mt-6">
+              <h2 className="text-xl font-black tracking-tighter text-on-surface leading-none">
+                {editingHabitId ? "Edit Task" : "Add Task"}
+              </h2>
+              <p className="text-xs font-medium text-on-surface-variant opacity-60">
+                {useChapter ? "Scheduling your Test" : "Your daily study routines."}
+              </p>
+            </div>
+
+            {/* ── Manual Manifest Form ─────────────────────────────────────────── */}
+            <form
+              onSubmit={handleSubmit(
+                onSubmit,
+                (err) => {
+                  console.error("❌ [MobileAddTask] Validation Errors:", err);
+                  const firstErr = Object.values(err)[0];
+                  if (firstErr) setToast({ type: "error", message: String(firstErr.message || "Please fill all required fields") });
+                }
+              )}
+              className="space-y-4"
+            >
+              <div className="flex bg-surface-container-low p-1.5 rounded-2xl flex-wrap">
+                <button type="button" onClick={() => setValue("duration_type", "DAILY")} className={`flex-1 py-2 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "DAILY" ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Today</button>
+                <button type="button" onClick={() => setValue("duration_type", "WEEKLY")} className={`flex-1 py-2 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "WEEKLY" ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Weekly</button>
+                <button type="button" onClick={() => setValue("duration_type", "MONTHLY")} className={`flex-1 py-2 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "MONTHLY" ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Monthly</button>
+                <button type="button" onClick={() => setValue("duration_type", "CUSTOM")} className={`flex-1 py-2 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "CUSTOM" ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Custom</button>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1">Task Type</label>
+                <div className="flex bg-surface-container-low p-1.5 rounded-2xl">
+                  <button type="button" onClick={() => setUseChapter(false)} className={`flex-1 py-2 text-[10px] font-black uppercase rounded-xl transition-all ${!useChapter ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Manual Session</button>
+                  <button type="button" onClick={() => setUseChapter(true)} className={`flex-1 py-2 text-[10px] font-black uppercase rounded-xl transition-all ${useChapter ? "bg-surface text-primary shadow-ambient" : "text-on-surface-variant opacity-40"}`}>Syllabus Mastery</button>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1">{useChapter ? "Select Chapter" : "Task Name"}</label>
+                {useChapter ? (
+                  <>
+                    <select
+                      {...register("chapter_id", { required: "Please select a chapter" })}
+                      className={`w-full py-3 px-6 bg-surface-container-low rounded-3xl text-sm font-bold border-none outline-none focus:ring-2 ring-primary/20 appearance-none ${errors.chapter_id ? "ring-2 ring-red-400" : ""}`}
+                    >
+                      <option value="">Please Select your Chapter</option>
+                      {chapters.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                    </select>
+                    {errors.chapter_id && <p className="text-red-500 text-[10px] ml-4 animate-in fade-in">{errors.chapter_id.message}</p>}
+                  </>
+                ) : (
+                  <>
+                    <input
+                      {...register("habit", { required: "Routine name is required" })}
+                      placeholder="e.g. History Review"
+                      className={`w-full py-3 px-6 bg-surface-container-low rounded-3xl text-sm font-bold border-none outline-none focus:ring-2 ring-primary/20 ${errors.habit ? "ring-2 ring-red-400" : ""}`}
+                    />
+                    {errors.habit && <p className="text-red-500 text-[10px] ml-4 animate-in fade-in">{errors.habit.message}</p>}
+                  </>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1 flex items-center justify-between">
+                  <span>{durationType === "DAILY" ? "Scheduled Date" : "Start Date"}</span>
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  <input
+                    type="date"
+                    {...register("date", { required: "Date is required" })}
+                    className={`w-full py-3 px-4 bg-surface-container-low rounded-3xl text-sm font-bold border-none outline-none focus:ring-2 ring-primary/20 transition-all ${errors.date ? "ring-2 ring-red-400" : ""}`}
+                  />
+                  {computedEndDate && (
+                    <div className="w-full bg-surface-container-lowest px-4 py-3 rounded-3xl text-sm font-technical font-black text-on-surface-variant/60 border border-outline-variant/10 shadow-inner flex items-center animate-in fade-in slide-in-from-right-4 duration-500">
+                      {computedEndDate}
+                    </div>
+                  )}
+                  {durationType === "CUSTOM" && (
+                     <input
+                        type="date"
+                        {...register("end_date", {
+                          required: durationType === "CUSTOM",
+                          validate: value => !value || !dateValue || new Date(value) >= new Date(dateValue) || "End Date cannot be before Start Date"
+                        })}
+                        className={`w-full py-3 px-4 bg-surface-container-low rounded-3xl text-sm font-bold border-none outline-none focus:ring-2 ring-primary/20 transition-all animate-in fade-in slide-in-from-right-4 duration-500 ${errors.end_date ? "ring-2 ring-red-400 focus:ring-red-500" : ""}`}
+                      />
+                  )}
+                </div>
+                {errors.date && <p className="text-red-500 text-[10px] ml-4 animate-in fade-in">{errors.date.message}</p>}
+                {errors.end_date && <p className="text-red-500 text-[10px] ml-4 animate-in fade-in">{errors.end_date.message}</p>}
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1">Start Time</label>
+                  <input type="time" {...register("start_time")} className="w-full py-3 px-6 bg-surface-container-low rounded-3xl text-sm font-bold border-none outline-none focus:ring-2 ring-primary/20" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1">End Time</label>
+                  <input type="time" {...register("end_time")} className="w-full py-3 px-6 bg-surface-container-low rounded-3xl text-sm font-bold border-none outline-none focus:ring-2 ring-primary/20" />
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <label className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40 ml-1">Priority Level</label>
+                <div className="flex gap-3">
+                  {(["HIGH", "MEDIUM", "LOW"] as const).map(p => (
+                    <PriorityBadge key={p} priority={p} selected={priority === p} onSelect={() => setValue("priority", p)} />
+                  ))}
+                </div>
+              </div>
+
+              {connected && (
+                <div className={`p-6 rounded-[2.5rem] flex items-center justify-between border transition-all ${watch("syncToCalendar") ? "bg-primary/5 border-primary/20" : "bg-surface-container-low border-transparent"}`}>
+                  <div className="flex items-center gap-3">
+                    <Calendar className={`size-5 ${watch("syncToCalendar") ? "text-primary" : "text-on-surface-variant opacity-40"}`} />
+                    <div>
+                      <p className="text-xs font-black">Google Sync</p>
+                      <p className="text-[10px] font-medium opacity-40">Persistence mapping</p>
+                    </div>
+                  </div>
+                  <input type="checkbox" {...register("syncToCalendar")} className="size-5 accent-primary" />
+                </div>
+              )}
+            </form>
+          </main>
+        </div>
+
+        <footer className="shrink-0 p-6 bg-surface border-t border-outline-variant/10 z-50">
+          <button
+            type="button"
+            onClick={() => {
+              handleSubmit(onSubmit, (err) => {
+                const firstErr: any = Object.values(err)[0];
+                const msg = firstErr?.message || "Please fill all required fields";
+                setToast({ type: "error", message: msg });
+              })();
+            }}
+            className="w-full py-4 bg-on-surface text-surface rounded-3xl font-black uppercase tracking-widest text-sm shadow-xl active:scale-95 transition-all flex items-center justify-center gap-2"
+          >
+            {isSubmitting ? <Loader className="animate-spin" size={18} /> : (editingHabitId ? "Edit Task" : "Add Task")}
+          </button>
+        </footer>
+      </div>
     </div>
   );
 };

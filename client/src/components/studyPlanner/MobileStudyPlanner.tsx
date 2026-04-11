@@ -264,7 +264,7 @@ export const MobileStudyPlanner: React.FC<MobileStudyPlannerProps> = ({
 
   if (isSettingUp && realHabits.length === 0) {
     return (
-      <div className="flex-1 flex flex-col relative px-4 pb-20 overflow-y-auto">
+      <div className="flex-1 flex flex-col relative px-4 pt-20 justify-center items-center overflow-y-auto">
         <div className="absolute inset-x-2 bottom-0 z-40 p-1 animate-in fade-in zoom-in-95 duration-1000 ease-botanical">
           <div className="bg-surface-container-high/95 backdrop-blur-xl rounded-[3rem] p-8 shadow-ambient-lg border border-primary/10 text-center space-y-6">
             <div className="size-16 bg-primary/10 rounded-4xl flex items-center justify-center mx-auto text-primary">
@@ -383,19 +383,19 @@ export const MobileStudyPlanner: React.FC<MobileStudyPlannerProps> = ({
         <div className="space-y-6 animate-reveal">
           {/* Daily Tasks */}
           <section>
-            <div className="flex items-center justify-between mb-4 px-2">
+            <div className="flex items-center justify-between my-4 px-2">
               <div className="flex items-center gap-2">
                 <Zap size={16} className="text-primary" />
-                <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface-variant">Daily Tasks</h3>
+                <h3 className="text-sm font-black uppercase tracking-[0.2em] text-on-surface-variant">Daily Tasks</h3>
               </div>
               <div className="flex items-center gap-3">
                 <button 
                   onClick={onSyncAll}
-                  className="text-[8px] font-black uppercase tracking-widest text-primary hover:opacity-60 transition-opacity"
+                  className="text-xs font-black uppercase tracking-widest text-primary hover:opacity-60 transition-opacity"
                 >
                   Sync All
                 </button>
-                <span className="text-[8px] font-technical font-black text-on-surface-variant/40">
+                <span className="text-xs font-technical font-black text-on-surface-variant/40">
                   {dailyTasks.filter(t => !t.isDemo && t.isCompleted).length} / {dailyTasks.filter(t => !t.isDemo).length} Done
                 </span>
               </div>

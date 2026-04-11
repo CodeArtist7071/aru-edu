@@ -73,8 +73,8 @@ export const StudyGraph = ({ habits, progress, viewMonth, viewYear }: StudyGraph
                         <Clock size={28} />
                     </div>
                     <div>
-                        <h3 className="text-2xl font-black text-white tracking-tighter uppercase">Technical Tempo</h3>
-                        <p className="text-[10px] font-technical font-black text-secondary-container uppercase tracking-[0.4em] opacity-60">Syllabus Temporal Analysis</p>
+                        <h3 className="text-2xl font-black text-white tracking-tighter uppercase">Study Hour Graph</h3>
+                        <p className="text-[10px] font-technical font-black text-secondary-container uppercase tracking-[0.4em] opacity-60">Track your daily study hours and progress</p>
                     </div>
                 </div>
 

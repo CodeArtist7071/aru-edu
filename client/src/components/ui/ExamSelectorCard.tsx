@@ -22,14 +22,14 @@ const ExamSkeleton = () => (
 );
 
 export const ExamSelectorCard = ({
-  targetRef,
+  
   targetedExams,
   onSelect,
   onViewAll,
   loading,
 }: ExamSelectorCardProps) => {
   return (
-    <section ref={targetRef} className="scroll-mt-15">
+    <section className="scroll-mt-15">
       <div className="flex justify-between items-center mb-8 px-2">
         <div className="space-y-1">
           <h3 className="text-xs font-technical font-black uppercase tracking-[0.4em] text-on-surface-variant opacity-60">
