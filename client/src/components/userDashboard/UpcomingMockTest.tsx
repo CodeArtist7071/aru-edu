@@ -37,7 +37,7 @@ export const UpcomingMockTest = ({
         const day = scheduledDayIdx === -1 ? 0 : (scheduledDayIdx + 1);
         const monthName = new Date().toLocaleString('default', { month: 'short' });
         
-        // Final Time-Lock Manifestation
+        // Final Time-Lock Sync
         const scheduledDate = new Date(currentYear, currentMonthIdx, day);
         if (h.start_time) {
           const [hh, mm] = h.start_time.split(":").map(Number);
@@ -45,7 +45,7 @@ export const UpcomingMockTest = ({
         }
         const isDue = currentTime >= scheduledDate;
 
-        // Countdown Logic Manifestation
+        // Countdown Logic
         let timeLeftStr = "";
         if (!isDue && day > 0) {
             const diff = scheduledDate.getTime() - currentTime.getTime();
@@ -82,9 +82,9 @@ export const UpcomingMockTest = ({
   return (
     <section>
       <div className="flex justify-between items-center mb-8 px-2">
-        <h3 className="text-[11px] font-technical font-black uppercase tracking-[0.4em] text-on-surface-variant opacity-60">Scheduled Tests</h3>
+        <h3 className="text-[11px] font-technical font-black uppercase tracking-[0.4em] text-on-surface-variant opacity-60">Your Upcoming Tests</h3>
         <div className="flex items-center gap-2">
-           <span className="text-[8px] font-black uppercase tracking-widest text-[#16a34a] opacity-60">Live Manifestations</span>
+           <span className="text-[8px] font-black uppercase tracking-widest text-[#16a34a] opacity-60">Upcoming Tests</span>
            <Clock className="size-3.5 text-primary animate-pulse" />
         </div>
       </div>
@@ -92,8 +92,8 @@ export const UpcomingMockTest = ({
         <div className="space-y-2 max-h-[420px] overflow-y-auto custom-scrollbar pr-1">
           {masteryTests.length === 0 ? (
             <div className="px-6 py-12 text-center text-white/40">
-              <p className="text-[10px] font-technical font-black uppercase tracking-widest font-narrative mb-2">Botanical Garden Quiet</p>
-              <p className="text-xs italic opacity-60">No mastery chapter tests scheduled for this cycle.</p>
+              <p className="text-[10px] font-technical font-black uppercase tracking-widest font-narrative mb-2">Schedule is Clear</p>
+              <p className="text-xs italic opacity-60">No Tests scheduled for now.</p>
             </div>
           ) : masteryTests.map((mock) => (
             <div
@@ -137,7 +137,7 @@ export const UpcomingMockTest = ({
                     ? "text-[#16a34a] hover:bg-green-50 shadow-sm" 
                     : "text-slate-300 cursor-not-allowed grayscale"
                   }`}
-                  title={mock.isDue ? "Give test now" : `This manifestation will open in ${mock.timeLeftStr}.`}
+                  title={mock.isDue ? "Give test now" : `This test will open in ${mock.timeLeftStr}.`}
                 >
                   <ChevronRight size={14} className={mock.isDue ? "animate-bounce-x" : ""} />
                 </button>
@@ -151,16 +151,16 @@ export const UpcomingMockTest = ({
                 <button 
                   onClick={() => onDelete(mock.id, true)}
                   className="p-1.5 hover:bg-red-50 rounded-xl text-red-400 transition-colors"
-                  title="Vaporize from Schedule"
+                  title="Remove from Schedule"
                 >
                   <Trash size={14} />
                 </button>
               </div>
 
-              {/* Status Hint Manifestation */}
+              {/* Status Hint */}
               <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none translate-y-2 group-hover:translate-y-0 z-10 w-max">
                  <div className="bg-slate-900 text-white text-[8px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-lg">
-                    {mock.isDue ? "Window is synchronized" : `Manifestation pending: ${mock.timeLeftStr}`}
+                    {mock.isDue ? "Session is active" : `Attempt pending: ${mock.timeLeftStr}`}
                  </div>
               </div>
             </div>
@@ -170,7 +170,7 @@ export const UpcomingMockTest = ({
           onClick={() => navigate("../study-planner")}
           className="w-full py-8 text-[10px] font-technical font-black uppercase tracking-[0.4em] text-white hover:text-white/70 transition-all duration-500 opacity-60 hover:opacity-100"
         >
-          Manifest All Activity →
+          Go to Study Planner →
         </button>
       </div>
     </section>

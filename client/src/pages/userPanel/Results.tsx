@@ -251,8 +251,8 @@ const Results = () => {
               <ArrowLeft size={18} />
             </button>
             <div className="flex flex-col">
-              <span className="text-[8px] font-technical font-black text-primary uppercase tracking-[0.4em]">Mastery Report</span>
-              <h1 className="text-xl font-black text-on-surface tracking-tighter">Evaluation Results</h1>
+              <span className="text-[8px] font-technical font-black text-primary uppercase tracking-[0.4em]">Performance Report</span>
+              <h1 className="text-xl font-black text-on-surface tracking-tighter">Test Results</h1>
             </div>
           </div>
 
@@ -268,7 +268,7 @@ const Results = () => {
                 </svg>
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
                   <span className="text-4xl font-technical font-black text-on-surface">{metrics.totalScore}</span>
-                  <span className="text-[7px] font-technical font-black uppercase text-on-surface-variant/40 tracking-widest mt-1">Limit {metrics.maxScore}</span>
+                  <span className="text-[7px] font-technical font-black uppercase text-on-surface-variant/40 tracking-widest mt-1">Total {metrics.maxScore}</span>
                 </div>
               </div>
 
@@ -278,10 +278,10 @@ const Results = () => {
                   {metrics.accuracy}% System Accuracy
                 </div>
                 <h2 className="text-3xl font-black text-on-surface tracking-tighter">
-                  {metrics.accuracy >= 80 ? "Absolute Mastery" : metrics.accuracy >= 50 ? "Steady Growth" : "Needs Pruning"}
+                  {metrics.accuracy >= 80 ? "Exemplary Performance" : metrics.accuracy >= 50 ? "Consistent Progress" : "Needs Review"}
                 </h2>
                 <p className="text-[11px] text-on-surface-variant leading-relaxed opacity-70">
-                  Synthesis complete for <span className="text-primary font-bold">{attempt?.chapters?.name}</span>.
+                  Result analysis complete for <span className="text-primary font-bold">{attempt?.chapters?.name}</span>.
                 </p>
               </div>
 
@@ -307,7 +307,7 @@ const Results = () => {
           <div className="bg-primary text-white p-6 rounded-3xl shadow-xl space-y-4">
             <div className="flex items-center gap-2 opacity-50">
               <Zap size={12} fill="currentColor" />
-              <span className="text-[8px] font-technical font-black uppercase tracking-[0.3em]">Analytical Insight</span>
+              <span className="text-[8px] font-technical font-black uppercase tracking-[0.3em]">Performance Insight</span>
             </div>
             <p className="text-sm font-bold leading-relaxed tracking-tight">
               {metrics.accuracy < 50
@@ -363,9 +363,9 @@ const Results = () => {
                     <div className="bg-surface-container-high/40 p-4 rounded-2xl border border-dashed border-outline-variant/20">
                       <div className="flex items-center gap-2 mb-2">
                         <Info size={12} className="text-primary" />
-                        <p className="text-[9px] font-technical font-black text-primary uppercase tracking-widest">Botanical Insight</p>
+                        <p className="text-[9px] font-technical font-black text-primary uppercase tracking-widest">Preparation Insight</p>
                       </div>
-                      <p className="text-[10px] font-medium text-on-surface-variant/80 leading-relaxed italic">{q.explanation || `Core synthesis confirms Option ${q.correct_answer} is optimal.`}</p>
+                      <p className="text-[10px] font-medium text-on-surface-variant/80 leading-relaxed italic">{q.explanation || `Core evaluation confirms Option ${q.correct_answer} is correct.`}</p>
                     </div>
                   </div>
                 );
@@ -453,19 +453,19 @@ const Results = () => {
                 </div>
                 <h3 className="text-[10px] font-mono font-black uppercase tracking-[0.3em] text-white/50 mb-6 flex items-center gap-3">
                   <Zap size={16} fill="currentColor" />
-                  Living Insights
+                  Performance Insights
                 </h3>
                 <div className="space-y-8 relative z-10">
                   <p className="text-xl font-narrative font-bold leading-relaxed tracking-tight">
                     {metrics.accuracy < 50
-                      ? `Our systems suggest focusing on the foundational structure of ${attempt?.chapters?.name}. Your current mastery profile requires reinforcement.`
-                      : `Remarkable synthesis of ${attempt?.chapters?.name}. You are demonstrating the cognitive patterns required for advanced complex reasoning.`}
+                      ? `Our analysis suggests focusing on the foundational concepts of ${attempt?.chapters?.name}. Your current performance profile requires review.`
+                      : `Excellent performance in ${attempt?.chapters?.name}. You are demonstrating strong conceptual clarity in this topic.`}
                   </p>
                   <button
                     onClick={() => navigate(`/user/dashboard`)}
                     className="w-full py-4 cursor-pointer bg-white text-primary rounded-full font-mono font-black text-[10px] uppercase tracking-widest shadow-xl hover:scale-105 active:scale-95 transition-all"
                   >
-                    Accelerate Growth
+                    Back to Dashboard
                   </button>
                 </div>
               </div>
@@ -583,12 +583,12 @@ const Results = () => {
                             <div className="flex items-center gap-3 mb-4 text-primary">
                               <Info size={18} />
                               <span className="text-[10px] font-mono font-black uppercase tracking-[0.3em]">
-                                Botanical Insights
+                                Performance Insights
                               </span>
                             </div>
                             <p className="text-sm font-medium text-on-surface-variant/80 leading-relaxed italic pr-6">
                               {q.explanation ||
-                                `This data sequence confirms that Option ${q.correct_answer} is the optimal synthesis. Reviewing the core architectural patterns of ${attempt?.subjects?.name} will clarify this logical branch.`}
+                                `Option ${q.correct_answer} is the correct answer. Reviewing the core concepts of ${attempt?.subjects?.name} will clarify this topic.`}
                             </p>
                           </div>
                         </div>
@@ -643,7 +643,7 @@ const PerformanceCard = ({ metrics, attempt, questions }) => {
               {metrics.totalScore}
             </span>
             <span className="text-[10px] font-mono font-bold uppercase text-on-surface-variant/40 tracking-[0.2em] mt-1">
-              Limit <span className="text-on-surface-variant">{metrics.maxScore}</span>
+              Total <span className="text-on-surface-variant">{metrics.maxScore}</span>
             </span>
           </div>
         </div>
@@ -656,21 +656,21 @@ const PerformanceCard = ({ metrics, attempt, questions }) => {
             </div>
             <h2 className="text-5xl md:text-7xl font-narrative font-black text-on-surface tracking-tighter leading-[0.9]">
               {metrics.accuracy >= 80
-                ? "Absolute Mastery"
+                ? "Excellent Mastery"
                 : metrics.accuracy >= 50
-                  ? "Steady Growth"
-                  : "Needs Pruning"}
+                  ? "Consistent Progress"
+                  : "Needs Review"}
             </h2>
             <p className="text-on-surface-variant text-xl font-medium leading-relaxed max-w-2xl mx-auto lg:mx-0 opacity-70">
               You've completed the evaluation for{" "}
               <span className="text-primary font-bold">
                 {attempt?.chapters?.name}
               </span>
-              . Your cognitive profile indicators suggest a{" "}
+              . Your performance indicators suggest a{" "}
               <span className="font-bold underline decoration-primary/30 underline-offset-4">
                 {metrics.accuracy < 50
-                  ? "foundational discrepancy"
-                  : "robust internal synthesis"}
+                  ? "conceptual gap"
+                  : "robust understanding"}
               </span>
               .
             </p>

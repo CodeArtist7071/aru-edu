@@ -26,7 +26,7 @@ export default function ExamGoalSelection() {
 
   const handleSaveExams = async () => {
     if (selected.length === 0) {
-      notify({ title: "Goal Required", message: "Please select at least one mission to proceed.", status: "warning" });
+      notify({ title: "Selection Required", message: "Please select at least one exam to proceed.", status: "warning" });
       return;
     }
 
@@ -47,11 +47,11 @@ export default function ExamGoalSelection() {
       // CRITICAL: Synchronize Redux manifest so GoalGuard permits entry
       await dispatch(fetchUserProfile());
       
-      notify({ title: "Path Established", message: "Your ecological focus has been set.", status: "success" });
+      notify({ title: "Goals Set", message: "Your exam goals have been successfully set.", status: "success" });
       navigate("/user/dashboard");
     } catch (error: any) {
       console.error("Error saving exams", error);
-      notify({ title: "Connection Interrupted", message: error.message || "Failed to update mission focus.", status: "error" });
+      notify({ title: "Connection Interrupted", message: error.message || "Failed to update exam selection.", status: "error" });
     }
   };
 
@@ -88,14 +88,14 @@ export default function ExamGoalSelection() {
         <header className="mb-5 lg:mb-20 animate-reveal">
           <div className="flex items-center gap-3 mb-3 lg:mb-8">
             <div className="size-1.5 bg-primary rounded-full animate-pulse shadow-[0_0_8px_rgba(0,110,47,0.4)]" />
-            <span className="text-[9px] lg:text-[10px] font-technical font-black uppercase tracking-[0.4em] lg:tracking-[0.6em] text-primary/60">Establishing Mission Focus</span>
+            <span className="text-[9px] lg:text-[10px] font-technical font-black uppercase tracking-[0.4em] lg:tracking-[0.6em] text-primary/60">Set Your Exam Goals</span>
           </div>
           
           <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4 lg:gap-12 text-left">
             <div className="max-w-3xl relative">
               <h1 className="text-3xl lg:text-5xl font-black tracking-tighter leading-[0.9] lg:leading-[0.85] text-on-surface mb-2 lg:mb-10">
                 Choose Your<br />
-                <span className="text-primary italic animate-in fade-in duration-1000 delay-300">Target Realms</span>
+                <span className="text-primary italic animate-in fade-in duration-1000 delay-300">Target Exams</span>
               </h1>
               <p className="text-md lg:text-2xl font-medium text-on-surface-variant leading-relaxed opacity-80 max-w-xl">
                  Select the examination boards you intend to practice this season.
@@ -109,7 +109,7 @@ export default function ExamGoalSelection() {
                  <span className="text-2xl lg:text-5xl font-technical font-black tracking-tighter text-on-surface">
                     {selected.length.toString().padStart(2, '0')}
                  </span>
-                 <span className="text-[9px] lg:text-[10px] font-technical font-black uppercase tracking-[0.2em] text-on-surface-variant opacity-40">Active Realms</span>
+                 <span className="text-[9px] lg:text-[10px] font-technical font-black uppercase tracking-[0.2em] text-on-surface-variant opacity-40">Selected Exams</span>
               </div>
             </div>
           </div>
@@ -125,7 +125,7 @@ export default function ExamGoalSelection() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             disabled={examData.length === 0}
-            placeholder="Search Syllabus Archives..."
+            placeholder="Search Exams..."
             className="w-full bg-surface-container-low border-none rounded-3xl py-3 lg:py-6 pl-16 lg:pl-18 pr-8 text-base lg:text-lg font-narrative placeholder:text-on-surface-variant/30 focus:ring-2 focus:ring-primary/20 focus:bg-white transition-all outline-hidden shadow-inner"
           />
         </div>
@@ -135,7 +135,7 @@ export default function ExamGoalSelection() {
           {filteredExams.length === 0 && examData.length > 0 && (
             <div className="w-full py-16 lg:py-20 text-center bg-surface-container-low/50 rounded-4xl border-2 border-dashed border-primary/10 animate-reveal">
               <Sparkles className="size-10 lg:size-12 mx-auto text-primary/20 mb-4" />
-              <p className="text-on-surface-variant font-narrative italic text-lg lg:text-xl px-4 leading-relaxed opacity-60">No paths found matching this cipher.</p>
+              <p className="text-on-surface-variant font-narrative italic text-lg lg:text-xl px-4 leading-relaxed opacity-60">No exams found matching your search.</p>
             </div>
           )}
 

@@ -54,8 +54,8 @@ const ResetPassword = () => {
             <ShieldCheck className="size-8" />
           </div>
           <div>
-            <h1 className="text-4xl font-black tracking-tighter text-on-surface">Forge New Key</h1>
-            <p className="text-[10px] font-technical font-black uppercase tracking-[0.3em] text-on-surface-variant opacity-40">Securing your journal's manifestation</p>
+            <h1 className="text-4xl font-black tracking-tighter text-on-surface">Reset Password</h1>
+            <p className="text-[10px] font-technical font-black uppercase tracking-[0.3em] text-on-surface-variant opacity-40">Securing your candidate account</p>
           </div>
         </div>
 
@@ -69,9 +69,9 @@ const ResetPassword = () => {
                   <KeyRound size={40} />
                </div>
                <div className="space-y-4">
-                  <h3 className="text-2xl font-black text-on-surface">Key Manifested</h3>
+                  <h3 className="text-2xl font-black text-on-surface">Password Updated</h3>
                   <p className="text-xs font-technical font-black text-on-surface-variant/60 uppercase tracking-widest leading-relaxed">
-                    Your journal access is now secured with the new key. Returning to garden login...
+                    Your account is now secured with the new password. Returning to login...
                   </p>
                </div>
             </div>
@@ -79,29 +79,29 @@ const ResetPassword = () => {
             <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
               <div className="space-y-6">
                 <InputWithLabel
-                  label="New Secret Key"
+                  label="New Password"
                   id="password"
                   type="password"
                   placeholder="••••••••"
                   error={errors.password}
                   labelIcon={<EyeClosed className="size-4" />}
                   {...register("password", { 
-                    required: "Secret Key is required",
-                    minLength: { value: 6, message: "Key must be at least 6 characters" }
+                    required: "Password is required",
+                    minLength: { value: 6, message: "Password must be at least 6 characters" }
                   })}
                 />
                 <InputWithLabel
-                  label="Confirm Soul Key"
+                  label="Confirm Password"
                   id="confirmPassword"
                   type="password"
                   placeholder="••••••••"
                   error={errors.confirmPassword}
                   labelIcon={<ShieldCheck className="size-4" />}
                   {...register("confirmPassword", { 
-                    required: "Please confirm your key",
+                    required: "Please confirm your password",
                     validate: (val: string) => {
                       if (watch('password') !== val) {
-                        return "Keys do not harmonize";
+                        return "Passwords do not match";
                       }
                     }
                   })}
@@ -111,7 +111,7 @@ const ResetPassword = () => {
               <div className="pt-4">
                 <Button
                   disabled={isSubmitting}
-                  title={isSubmitting ? "Forging Key..." : "Manifest New Key"}
+                  title={isSubmitting ? "Updating Password..." : "Update Password"}
                 />
               </div>
 
@@ -121,7 +121,7 @@ const ResetPassword = () => {
                   onClick={() => navigate("/login")}
                   className="text-[10px] font-technical font-black uppercase tracking-[0.4em] text-on-surface-variant opacity-40 hover:opacity-100 transition-opacity"
                  >
-                   Recall Original Journey
+                   Back to Login
                  </button>
               </div>
             </form>
@@ -131,7 +131,7 @@ const ResetPassword = () => {
         {/* Footer Botanical Manifestation */}
         <div className="flex justify-center gap-8 text-[9px] font-technical font-black uppercase tracking-[0.2em] text-on-surface-variant opacity-20">
           <span>Shielded</span>
-          <span>Botanical Encryption</span>
+          <span>Secure Encryption</span>
           <span>Verified</span>
         </div>
       </div>

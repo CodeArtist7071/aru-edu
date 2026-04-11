@@ -14,30 +14,32 @@ export const GrowthChart = ({
   return (
     <div className="sm:col-span-full lg:col-span-8 bg-surface-container-high p-4 rounded-2xl shadow-ambient">
       <div className="block md:flex justify-between items-center mb-12">
-        <h3 className="text-sm font-black text-on-surface tracking-tight flex items-center gap-4">
-          <div className="size-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
-             <TrendingUp size={20} />
-          </div>
-          Session Trajectory
-        </h3>
+        <div>
+          <h3 className="text-sm font-black text-on-surface tracking-tight flex items-center gap-4">
+            <div className="size-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
+              <TrendingUp size={20} />
+            </div>
+            Check your Progress
+          </h3>
+          <p className="text-[10px] font-technical font-black uppercase tracking-[0.4em] ml-5 text-on-surface-variant opacity-60">Review your progress for each chapter</p>
+        </div>
+
         <div className="flex sm:mt-4 md:mt-0 gap-1 bg-surface-container-high p-1 rounded-full shadow-inner">
           <button
             onClick={() => setChartMode("Practice")}
-            className={`text-[10px] font-technical font-black uppercase tracking-[0.2em] px-6 py-2 rounded-full transition-all duration-500 cursor-pointer ${
-              chartMode === "Practice" 
-                ? "bg-primary text-on-primary shadow-md scale-105" 
+            className={`text-[10px] font-technical font-black uppercase tracking-[0.2em] px-6 py-2 rounded-full transition-all duration-500 cursor-pointer ${chartMode === "Practice"
+                ? "bg-primary text-on-primary shadow-md scale-105"
                 : "text-on-surface-variant hover:text-on-surface"
-            }`}
+              }`}
           >
             Practice
           </button>
           <button
             onClick={() => setChartMode("Mock")}
-            className={`text-[10px] font-technical font-black uppercase tracking-[0.2em] px-6 py-2 rounded-full transition-all duration-500 cursor-pointer ${
-              chartMode === "Mock" 
-                ? "bg-tertiary text-white shadow-md scale-105" 
+            className={`text-[10px] font-technical font-black uppercase tracking-[0.2em] px-6 py-2 rounded-full transition-all duration-500 cursor-pointer ${chartMode === "Mock"
+                ? "bg-tertiary text-white shadow-md scale-105"
                 : "text-on-surface-variant hover:text-on-surface"
-            }`}
+              }`}
           >
             Mock
           </button>
@@ -52,7 +54,7 @@ export const GrowthChart = ({
             ).map((item, i) => {
               const barColor = chartMode === "Practice" ? "bg-primary" : "bg-tertiary";
               const barOpacity = item.accuracy === 0 ? "opacity-10" : "opacity-100";
-              
+
               return (
                 <div
                   key={i}
@@ -62,7 +64,7 @@ export const GrowthChart = ({
                     className={`rounded-t-2xl transition-all duration-1000 ease-out shadow-sm ${barColor} ${barOpacity} group-hover:brightness-110`}
                     style={{ height: `${(item.accuracy / maxScore) * 100}%` }}
                   />
-                  
+
                   <div className="absolute -top-16 left-1/2 -translate-x-1/2 bg-on-surface text-surface text-[10px] font-technical font-black px-4 py-3 rounded-2xl shadow-ambient opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all pointer-events-none whitespace-nowrap z-20 flex flex-col items-center gap-1 border border-outline-variant/10">
                     <span className={chartMode === "Practice" ? "text-primary-container" : "text-tertiary"}>
                       {item.accuracy}%

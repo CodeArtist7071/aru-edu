@@ -120,8 +120,8 @@ export default function ResultsHistory() {
              <div className="size-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
           </div>
           <div className="flex flex-col items-center">
-             <span className="text-[10px] font-technical font-black text-primary uppercase tracking-[0.4em] mb-2 animate-pulse">Syncing Journal</span>
-             <p className="text-xl font-black text-on-surface tracking-tighter">Archive Manifest Manifesting.</p>
+             <span className="text-[10px] font-technical font-black text-primary uppercase tracking-[0.4em] mb-2 animate-pulse">Syncing History</span>
+             <p className="text-xl font-black text-on-surface tracking-tighter">History Log Loading.</p>
           </div>
         </div>
       </div>
@@ -132,13 +132,13 @@ export default function ResultsHistory() {
     <div className="min-h-screen bg-surface font-narrative text-on-surface antialiased transition-colors duration-700 pb-20 animate-reveal">
       <main className="max-w-7xl mx-auto md:px-12 py-0 md:py-10">
 
-        {/* Mobile Manifestation: Botanical Journal Redesign */}
+        {/* Mobile Feed: History Log */}
         <section className="md:hidden">
           {/* Sticky Glassmorphic Stats Header */}
           <div className="sticky top-0 z-40 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/10 px-6 py-4 mb-8">
             <div className="flex flex-col gap-1 mb-4">
-              <span className="text-[8px] font-technical font-black text-primary uppercase tracking-[0.4em]">Archival Journal</span>
-              <h1 className="text-2xl font-black text-on-surface tracking-tighter">Your Manifestations</h1>
+              <span className="text-[8px] font-technical font-black text-primary uppercase tracking-[0.4em]">History Log</span>
+              <h1 className="text-2xl font-black text-on-surface tracking-tighter">Your Attempts</h1>
             </div>
             
             <div className="flex gap-2 overflow-x-auto no-scrollbar py-1">
@@ -158,11 +158,11 @@ export default function ResultsHistory() {
 
           {/* Timeline Feed: Zero-BordersEditorial Look */}
           <div className="relative px-6 space-y-12 pb-20">
-            {/* Central Botanical Timeline Line */}
+            {/* Central Timeline Line */}
             <div className="absolute left-9 top-0 bottom-0 w-px bg-linear-to-b from-primary/20 via-primary/5 to-transparent" />
 
             {Object.keys(filteredGroups).length === 0 ? (
-                <div className="py-20 text-center opacity-40 font-technical text-[10px] uppercase tracking-widest">No Archival Entries Manifested.</div>
+                <div className="py-20 text-center opacity-40 font-technical text-[10px] uppercase tracking-widest">No History Entries Recorded.</div>
             ) : (
                 Object.entries(filteredGroups).map(([exam, subjects]) => (
                   <div key={exam} className="relative z-10 space-y-10">
@@ -247,7 +247,7 @@ export default function ResultsHistory() {
               <Search className="absolute left-6 top-1/2 -translate-y-1/2 size-5 text-on-surface-variant/30 group-focus-within:text-primary transition-colors" />
               <input
                 type="text"
-                placeholder="Query archive..."
+                placeholder="Search history..."
                 className="w-full pl-16 pr-8 py-5 bg-surface-container-low rounded-4xl text-sm font-medium focus:ring-4 ring-primary/5 outline-none transition-all placeholder:text-on-surface-variant/20 border border-outline-variant/10"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -278,9 +278,9 @@ export default function ResultsHistory() {
                 <div className="size-24 bg-surface-container-high rounded-full flex items-center justify-center mx-auto mb-8">
                   <Search className="size-12 text-on-surface-variant/10" />
                 </div>
-                <h3 className="text-2xl font-black text-on-surface tracking-tight">Archive Empty.</h3>
+                <h3 className="text-2xl font-black text-on-surface tracking-tight">Log Empty.</h3>
                 <p className="text-sm text-on-surface-variant/60 mt-4 max-w-xs mx-auto font-medium leading-relaxed">Adjust your search parameters.</p>
-                <button onClick={() => navigate('/user/dashboard')} className="mt-10 px-12 py-5 bg-linear-to-r from-primary to-primary-container text-white rounded-full font-technical font-black text-xs uppercase tracking-widest shadow-ambient-lg hover:scale-105 active:scale-95 transition-all">Launch New Session</button>
+                <button onClick={() => navigate('/user/dashboard')} className="mt-10 px-12 py-5 bg-linear-to-r from-primary to-primary-container text-white rounded-full font-technical font-black text-xs uppercase tracking-widest shadow-ambient-lg hover:scale-105 active:scale-95 transition-all">Start New Practice</button>
               </div>
             ) : (
               Object.entries(filteredGroups).map(([exam, subjects]) => (

@@ -12,6 +12,7 @@ import { HabitRow } from "./HabitRow";
 import { GridHeader } from "./GridHeader";
 import { GridDayHeaderRow } from "./grid/GridDayHeaderRow";
 import { GridWeekFooterRow } from "./grid/GridWeekFooterRow";
+import { useState } from "react";
 
 // Modular Logic
 import { useTrackerGridLogic } from "./hooks/useTrackerGridLogic";
@@ -45,6 +46,7 @@ interface TrackerGridProps {
   setEditingHabitId: (id: string | null) => void;
   setShowSelector: (show: boolean) => void;
   manifestDemo?: () => void;
+  setHabits?: React.Dispatch<React.SetStateAction<Habit[]>>;
 }
 
 export default function TrackerGrid(props: TrackerGridProps) {
@@ -65,28 +67,56 @@ export default function TrackerGrid(props: TrackerGridProps) {
     onShowAddTask,
     setEditingHabitId,
     manifestDemo,
+    setHabits,
   } = props;
 
-    const {
+  const navigate = useNavigate();
+  const {
     monthName,
     viewMode, setViewMode, activeWeek, setActiveWeek,
     searchTerm, setSearchTerm, unlockPastDays, setUnlockPastDays,
     reminderTest, setReminderTest, renderedDays, realHabits,
     dailyStats, overallProgress, habitsWithStreaks,
     editHabit, handleDelete, dailyPercents, weeklyDone,
-    duplicateHabit, dismissRenewal, dismissedRenewals
+    duplicateHabit, dismissRenewal, dismissedRenewals, updateHabitData, createHabit
   } = useTrackerGridLogic(
     initialHabits,
     initialProgress,
     viewMonth,
     viewYear,
     onRefresh,
+    setHabits,
     onModalOpenHandled,
     onShowAddTask,
     setEditingHabitId,
     () => {}, // mock setValue
     selectedDate
   );
+
+  const [draftHabits, setDraftHabits] = useState<Partial<Habit>[]>([]);
+
+  const handleCreateDraft = () => {
+    setDraftHabits([...draftHabits, { 
+      id: `draft-${Date.now()}`,
+      name: "",
+      start_time: "09:00",
+      end_time: "10:00",
+      priority: "MEDIUM",
+      duration_type: "MONTHLY"
+    }]);
+  };
+
+  const handleUpdateDraft = (id: string, updates: Partial<Habit>) => {
+    setDraftHabits(draftHabits.map(h => h.id === id ? { ...h, ...updates } : h));
+  };
+
+  const handleSaveDraft = async (id: string, data: Habit) => {
+    const draft = draftHabits.find(h => h.id === id);
+    if (draft) {
+      await createHabit({ ...draft, ...data });
+      setDraftHabits(draftHabits.filter(h => h.id !== id));
+    }
+  };
 
   return (
     <div className="flex flex-col text-on-surface w-full h-full bg-white/90 min-w-0 relative animate-in fade-in duration-700">
@@ -99,7 +129,7 @@ export default function TrackerGrid(props: TrackerGridProps) {
            </div>
            <div className="flex-1 max-w-md w-full space-y-2">
               <div className="flex justify-between items-end">
-                 <span className="text-[10px] font-technical font-black uppercase tracking-widest text-emerald-300 opacity-60">Active Days Manifestation</span>
+                 <span className="text-[10px] font-technical font-black uppercase tracking-widest text-emerald-300 opacity-60">Active Days Progress</span>
                  <span className="text-4xl font-black leading-none">{overallProgress}%</span>
               </div>
               <div className="h-6 bg-emerald-950/50 rounded-lg overflow-hidden border border-emerald-700/50 p-1">
@@ -159,11 +189,11 @@ export default function TrackerGrid(props: TrackerGridProps) {
                                <h3 className="text-2xl font-black tracking-tighter text-slate-800">Laboratory Onboarding</h3>
                              </div>
                              <p className="text-sm font-medium text-on-surface-variant leading-relaxed opacity-70">
-                               Your Greenhouse is currently hosting <span className="text-primary font-black">Laboratory Templates</span>. Manifest ritual manifestation to start your study persistence voyage.
+                               Your Greenhouse is currently hosting <span className="text-primary font-black">Laboratory Templates</span>. Add Templates to start your study persistence voyage.
                              </p>
                              <div className="flex flex-wrap gap-4 pt-2">
                                 <button onClick={manifestDemo} className="px-6 py-3 bg-emerald-600 text-white rounded-xl font-technical font-black text-[10px] uppercase tracking-widest shadow-lg shadow-emerald-500/20 hover:scale-105 active:scale-95 transition-all flex items-center gap-2">
-                                  Manifest Rituals <ArrowRight size={14} />
+                                  Create Tasks <ArrowRight size={14} />
                                 </button>
                                 <button onClick={onShowAddTask} className="px-6 py-3 bg-white border border-slate-200 text-slate-600 rounded-xl font-technical font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 transition-all">
                                   Start Fresh +
@@ -280,23 +310,49 @@ export default function TrackerGrid(props: TrackerGridProps) {
                       habit={habit}
                       cells={cells}
                       onToggle={onToggle}
-                      onEdit={() => editHabit(habit)}
+                      onEdit={() => navigate(`edit/${habit.id}`)}
                       onDelete={() => handleDelete(habit)}
                       onDuplicate={() => duplicateHabit(habit)}
+                      onUpdate={updateHabitData}
                       onDismiss={() => dismissRenewal(habit.id)}
                       unlockPastDays={unlockPastDays}
                       isExpired={isRecentlyExpired}
                     />
                   );
                 })}
+
+                {/* Inline Add Rows */}
+                {draftHabits.map((draft) => (
+                    <FastHabitRow
+                        key={draft.id}
+                        habit={draft as Habit}
+                        cells={renderedDays.map(day => ({ actualDayIdx: day - 1, isDone: false, isToday: false, isActive: true }))}
+                        onToggle={() => {}} // Can't toggle drafts
+                        onEdit={() => {}}
+                        onDelete={() => setDraftHabits(draftHabits.filter(h => h.id !== draft.id))}
+                        onDuplicate={() => {}}
+                        onUpdate={(id, updates) => handleUpdateDraft(id, updates)}
+                        onSave={(id, data) => handleSaveDraft(id, data)}
+                        onDismiss={() => {}}
+                        unlockPastDays={unlockPastDays}
+                    />
+                ))}
+
+                {/* Save Draft Button? No, let's add a save icon in HabitRow or just auto-save. The user wants "every habit row will be a formField". */}
+                {/* For drafts, we should probably have a 'Check' icon to save. I'll add a simple save button next to delete in HabitRow if it's a draft. */}
                 {/* Weekly Summary Row */}
-                <GridWeekFooterRow days={renderedDays} weeklyDone={weeklyDone} />
+                <GridWeekFooterRow 
+                  days={renderedDays} 
+                  weeklyDone={weeklyDone} 
+                  onAddTask={handleCreateDraft}
+                />
 
                 {/* Spacer logic if needed */}
               </>
             )}
           </tbody>
         </table>
+        
       </div>
 
       <AlertPopup 

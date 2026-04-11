@@ -1,8 +1,9 @@
-import React, { useMemo, useState, useRef, useEffect } from "react";
-import { Edit2, CheckSquare, Trash2, Sparkles, RefreshCw, X } from "lucide-react";
+import React, { useMemo, useEffect } from "react";
+import { Trash2, RefreshCw, X, CheckSquare, Pencil } from "lucide-react";
+import { useForm, Controller } from "react-hook-form";
 import { type Habit } from "./types";
 import { WEEK_COLORS } from "./constants";
-import { RitualTooltip } from "./grid/RitualTooltip";
+import { InlineTimePicker } from "./grid/InlineTimePicker";
 
 interface HabitRowProps {
   habit: Habit;
@@ -17,6 +18,8 @@ interface HabitRowProps {
   onDelete: () => void;
   onDuplicate?: () => void;
   onDismiss?: () => void;
+  onUpdate?: (id: string, updates: Partial<Habit>) => void;
+  onSave?: (id: string, data: Habit) => void;
   unlockPastDays?: boolean;
   isExpired?: boolean;
 }
@@ -37,13 +40,42 @@ export const HabitRow: React.FC<HabitRowProps> = ({
   onDelete,
   onDuplicate,
   onDismiss,
+  onUpdate,
+  onSave,
   unlockPastDays = false,
   isExpired = false,
 }) => {
-  const [tooltipVisible, setTooltipVisible] = useState(false);
-  const longPressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [isPickerOpen, setIsPickerOpen] = React.useState(false);
+  const { register, control, handleSubmit, reset } = useForm<Habit>({
+    defaultValues: habit
+  });
 
-  const currentStreak = useMemo(() => {
+  // Sync with prop changes (e.g. after save/refresh)
+  useEffect(() => {
+    reset(habit);
+  }, [habit, reset]);
+
+  const onSubmit = (data: Habit) => {
+    // If name is empty, we don't save
+    if (!data.name?.trim()) return;
+
+    // OPTIMIZATION: Dirty manifestation check. If no reality shift, cease synchronization.
+    const isDirty = (
+      data.name !== habit.name || 
+      data.start_time !== habit.start_time || 
+      data.end_time !== habit.end_time
+    );
+
+    if (!isDirty && !habit.id?.toString().startsWith("draft-")) return;
+    
+    if (habit.id?.toString().startsWith("draft-")) {
+       onSave?.(habit.id, data);
+    } else {
+       onUpdate?.(habit.id, data);
+    }
+  };
+
+  const current_streak = useMemo(() => {
     let streak = 0;
     for (let i = cells.length - 1; i >= 0; i--) {
       if (cells[i].isDone) streak++;
@@ -52,7 +84,7 @@ export const HabitRow: React.FC<HabitRowProps> = ({
     return streak;
   }, [cells]);
 
-  const maxStreak = useMemo(() => {
+  const max_streak = useMemo(() => {
     let max = 0;
     let current = 0;
     cells.forEach((c) => {
@@ -65,37 +97,9 @@ export const HabitRow: React.FC<HabitRowProps> = ({
     return Math.max(max, current);
   }, [cells]);
 
-  // Long press logic for mobile
-  const handlePointerDown = () => {
-    longPressTimer.current = setTimeout(() => {
-      setTooltipVisible(true);
-    }, 500);
-  };
-
-  const handlePointerUp = () => {
-    if (longPressTimer.current) {
-      clearTimeout(longPressTimer.current);
-    }
-  };
-
-  const handlePointerLeave = () => {
-    if (longPressTimer.current) {
-      clearTimeout(longPressTimer.current);
-    }
-    setTooltipVisible(false);
-  };
-
-  useEffect(() => {
-    return () => {
-      if (longPressTimer.current) {
-        clearTimeout(longPressTimer.current);
-      }
-    };
-  }, []);
-
   return (
-    <tr key={habit.id} className="group/row hover:bg-slate-50/50 transition-all duration-500 h-12 border-b border-slate-100 last:border-0 relative animate-in fade-in slide-in-from-bottom-1 ease-out">
-      <td className={`sticky left-0 bg-white/80 backdrop-blur-md border-r border-slate-300 p-0 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] transition-all group-hover/row:bg-slate-50/50 w-[400px] ${tooltipVisible ? "z-40" : "z-20"}`}>
+    <tr key={habit.id} className={`group/row hover:bg-slate-50/50 transition-all duration-500 h-12 border-b border-slate-100 last:border-0 relative animate-in fade-in slide-in-from-bottom-1 ease-out ${isPickerOpen ? "z-100" : ""}`}>
+      <td className={`sticky left-0 bg-white/80 backdrop-blur-md border-r border-slate-300 p-0 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] transition-all group-hover/row:bg-slate-50/50 w-[440px] ${isPickerOpen ? "z-100" : "z-20"}`}>
         <div className="flex h-full w-full">
           {isExpired ? (
             <div className="flex-1 flex items-center gap-3 px-6 animate-in fade-in slide-in-from-left-4 duration-500">
@@ -117,47 +121,78 @@ export const HabitRow: React.FC<HabitRowProps> = ({
           ) : (
             <>
               {/* Main Habit Column */}
-              <div
-                className="w-[220px] h-full flex items-center pl-6 pr-4 gap-4 border-r border-slate-100 relative"
-                onMouseEnter={() => setTooltipVisible(true)}
-                onMouseLeave={handlePointerLeave}
-                onPointerDown={handlePointerDown}
-                onPointerUp={handlePointerUp}
-              >
-                <RitualTooltip habit={habit} visible={tooltipVisible} />
-                <div className={`w-1 h-8 rounded-full shrink-0 ${habit.priority === "HIGH" ? "bg-red-500" : habit.priority === "MEDIUM" ? "bg-amber-500" : "bg-emerald-500"}`} />
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[11px] font-black tracking-tight text-slate-800 truncate uppercase cursor-help">{habit.name}</span>
-                    {habit.isDemo && (
-                      <span className="text-[8px] font-technical font-black px-1.5 py-0.5 bg-primary/10 text-primary rounded-md uppercase tracking-wider">Template</span>
-                    )}
-                  </div>
-                </div>
-                <div className="flex items-center gap-1 opacity-0 group-hover/row:opacity-100 transition-all shrink-0">
-                  <button
-                    onClick={onEdit}
-                    className="p-2 hover:bg-primary/10 rounded-full text-slate-400 hover:text-primary transition-all active:scale-90"
-                    title="Refine Ritual"
-                  >
-                    <Edit2 className="size-3.5" />
-                  </button>
-                  <button
-                    onClick={onDelete}
-                    className="p-2 hover:bg-red-50 rounded-full text-slate-400 hover:text-red-500 transition-all active:scale-95"
-                    title="Remove Manifestation"
-                  >
-                    <Trash2 className="size-3.5" />
-                  </button>
+              <div className="w-[220px] h-full flex items-center pl-2 pr-4 gap-4 border-r border-slate-100 relative">
+                {/* <div className={`w-1 h-8 rounded-full shrink-0 ${habit.priority === "HIGH" ? "bg-red-500" : habit.priority === "MEDIUM" ? "bg-amber-500" : "bg-emerald-500"}`} /> */}
+                <div className="flex-1 w-full">
+                  <input
+                    type="text"
+                    {...register("name", { required: true })}
+                    onBlur={handleSubmit(onSubmit)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.currentTarget.blur();
+                      }
+                    }}
+                    className="w-full bg-transparent border-none text-[11px] h-[40px] font-black tracking-tight text-slate-800 uppercase focus:ring-1 focus:ring-emerald-500/20 rounded px-1 outline-none"
+                    placeholder="Add Task Here"
+                  />
+                  {habit.isDemo && (
+                    <span className="text-[8px] font-technical font-black px-1.5 py-0.5 bg-primary/10 text-primary rounded-md uppercase tracking-wider mt-0.5 inline-block">Template</span>
+                  )}
                 </div>
               </div>
               {/* Start Time Column */}
-              <div className="w-[90px] border-r border-slate-100 flex items-center justify-center p-2 text-[10px] font-technical font-black text-slate-500/80">
-                {format12h(habit.start_time || "")}
+              <div className="w-[100px] border-r border-slate-100 flex items-center justify-center p-1">
+                <Controller
+                  name="start_time"
+                  control={control}
+                  render={({ field }) => (
+                    <InlineTimePicker 
+                      value={habit.start_time || "09:00"} 
+                      onOpenChange={setIsPickerOpen}
+                      onChange={(val) => {
+                        field.onChange(val);
+                        // Direct manifestation: bypass form race condition for immediate sync
+                        onUpdate?.(habit.id, { start_time: val });
+                      }} 
+                    />
+                  )}
+                />
               </div>
               {/* End Time Column */}
-              <div className="w-[90px] flex items-center justify-center p-2 text-[10px] font-technical font-black text-slate-500/80 uppercase">
-                {format12h(habit.end_time || "")}
+              <div className="w-[100px] border-r border-slate-100 flex items-center justify-center p-1">
+                <Controller
+                  name="end_time"
+                  control={control}
+                  render={({ field }) => (
+                    <InlineTimePicker 
+                      value={habit.end_time || "10:00"} 
+                      onOpenChange={setIsPickerOpen}
+                      onChange={(val) => {
+                        field.onChange(val);
+                        // Direct manifestation: bypass form race condition for immediate sync
+                        onUpdate?.(habit.id, { end_time: val });
+                      }} 
+                    />
+                  )}
+                />
+              </div>
+              {/* Actions Column */}
+              <div className="w-[80px] flex items-center justify-center gap-1 p-1 group-hover/row:opacity-100 transition-opacity">
+                <button
+                  onClick={onEdit}
+                  className="p-2 hover:bg-emerald-50 text-emerald-600 rounded-full transition-all active:scale-95"
+                  title="Refine Ritual"
+                >
+                  <Pencil className="size-3.5" />
+                </button>
+                <button
+                  onClick={onDelete}
+                  className="p-2 hover:bg-red-50 text-primary rounded-full transition-all active:scale-95"
+                  title="Remove Task"
+                >
+                  <Trash2 className="text-primary size-3.5" />
+                </button>
               </div>
             </>
           )}
@@ -204,10 +239,10 @@ export const HabitRow: React.FC<HabitRowProps> = ({
       })}
 
       <td className="sticky right-[40px] z-30 bg-surface border-l border-slate-200 px-2 text-[11px] font-technical font-black text-slate-800 text-center w-[40px]">
-        {currentStreak}
+        {current_streak}
       </td>
       <td className="sticky right-0 z-30 bg-surface border-l border-slate-200 px-2 text-[11px] font-technical font-black text-slate-800 text-center w-[40px]">
-        {maxStreak}
+        {max_streak}
       </td>
     </tr>
   );

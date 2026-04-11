@@ -14,6 +14,7 @@ export const useTrackerGridLogic = (
   viewMonth: number,
   viewYear: number,
   onRefresh: () => void,
+  setHabits?: React.Dispatch<React.SetStateAction<Habit[]>>,
   onModalOpenHandled?: () => void,
   onShowAddTask?: () => void,
   setEditingHabitId?: (id: string | null) => void,
@@ -43,7 +44,20 @@ export const useTrackerGridLogic = (
   const [reminderTest, setReminderTest] = useState<any>(null);
   const [lastTriggeredId, setLastTriggeredId] = useState<string | null>(null);
   const [isDuplicating, setIsDuplicating] = useState(false);
-  const [dismissedRenewals, setDismissedRenewals] = useState<Set<string>>(new Set());
+  
+  // Persistent Dismissal Manifestation via localStorage
+  const [dismissedRenewals, setDismissedRenewals] = useState<Set<string>>(() => {
+    try {
+      const saved = localStorage.getItem("dismissed_renewals");
+      return saved ? new Set(JSON.parse(saved)) : new Set();
+    } catch (e) {
+      return new Set();
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem("dismissed_renewals", JSON.stringify(Array.from(dismissedRenewals)));
+  }, [dismissedRenewals]);
 
   // Sync active week to current date
   useEffect(() => {
@@ -135,9 +149,9 @@ export const useTrackerGridLogic = (
           isExpiredYesterday = prevDate.getTime() === endDate.getTime();
         }
 
-        // UNIFIED SUPPRESSION: Only show expired tasks if NO active version exists today
+        // UNIFIED SUPPRESSION: Only show expired tasks if NO active version exists today AND not dismissed
         if (isExpiredYesterday) {
-           return !activeHabitNames.has(habit.name.trim().toLowerCase());
+           return !activeHabitNames.has(habit.name.trim().toLowerCase()) && !dismissedRenewals.has(habit.id);
         }
 
         return false;
@@ -145,7 +159,7 @@ export const useTrackerGridLogic = (
     }
 
     return list;
-  }, [initialHabits, searchTerm, selectedDate]);
+  }, [initialHabits, searchTerm, selectedDate, dismissedRenewals]);
 
   const duplicateHabit = useCallback(async (habit: Habit) => {
     if (!user?.id || !selectedDate || isDuplicating) return;
@@ -382,7 +396,7 @@ export const useTrackerGridLogic = (
           break;
         }
       }
-      return { ...h, currentStreak, maxStreak };
+      return { ...h, current_streak: currentStreak, max_streak: maxStreak };
     });
   }, [filteredHabits, initialProgress]);
 
@@ -450,14 +464,73 @@ export const useTrackerGridLogic = (
     if (!window.confirm(`Are you sure you want to delete "${habit.name}"? This action is permanent.`)) return;
     try {
       const table = habit.is_mastery ? "user_mastery" : "study_habits";
+      
+      // OPTIMISTIC: Manifest Removal Locally
+      if (setHabits) {
+        setHabits(prev => prev.filter(h => String(h.id) !== String(habit.id)));
+      }
+
       const { error } = await supabase.from(table).delete().eq("id", habit.id);
       if (error) throw error;
-      notify({ message: "Manifestation removed", title: "Success", status: "success" });
-      onRefresh();
+      notify({ message: "Task Removed", title: "Success", status: "success" });
+      // Removed onRefresh() - Only Re-Fetch on Error Logic below
     } catch (err: any) {
       notify({ message: err.message || "Failed to remove ritual", title: "Error", status: "error" });
+      onRefresh(); // Restore state on failure
     }
   }, [notify, onRefresh]);
+
+  const updateHabitData = useCallback(async (id: string, updates: Partial<Habit>) => {
+    try {
+      const habit = initialHabits.find(h => String(h.id) === String(id));
+      if (!habit) return;
+      const table = habit.is_mastery ? "user_mastery" : "study_habits";
+      
+      // Sanitization: Remove calculated fields that don't exist in the DB schema
+      const { current_streak, max_streak, ...cleanUpdates } = updates as any;
+
+      // OPTIMISTIC: Synchronize manifestations locally
+      if (setHabits) {
+        setHabits(prev => prev.map(h => String(h.id) === String(id) ? { ...h, ...cleanUpdates } : h));
+      }
+
+      const { error } = await supabase.from(table).update(cleanUpdates).eq("id", id);
+      if (error) throw error;
+      // Removed onRefresh() 
+      notify({ message: "Task Updated Succesfully", status: "success", title: "Task Updated" });
+    } catch (err: any) {
+      notify({ message: err.message || "Update Failed", title: "Error", status: "error" });
+      onRefresh(); // Manifest restoration on failure
+    }
+  }, [initialHabits, notify, onRefresh]);
+
+  const createHabit = useCallback(async (habitData: Partial<Habit>) => {
+    if (!user?.id) return;
+    try {
+      const scheduledDate = selectedDate || new Date();
+      const newHabit: any = {
+        user_id: user.id,
+        name: habitData.name || "New Task",
+        priority: habitData.priority || "MEDIUM",
+        start_time: habitData.start_time || "09:00",
+        end_time: habitData.end_time || "10:00",
+        progress: Array(31).fill(false),
+        month: viewMonth,
+        year: viewYear,
+        exam_id: examId,
+        is_recurring: habitData.duration_type !== "DAILY",
+        duration_type: habitData.duration_type || "MONTHLY",
+        scheduled_date: scheduledDate.toISOString().split('T')[0]
+      };
+      
+      const { error } = await supabase.from("study_habits").insert(newHabit);
+      if (error) throw error;
+      onRefresh();
+      notify({ message: "Task created", title: "Success", status: "success" });
+    } catch (err: any) {
+      notify({ message: err.message || "Creation Failed", title: "Error", status: "error" });
+    }
+  }, [user?.id, selectedDate, viewMonth, viewYear, examId, onRefresh, notify]);
 
   return {
     viewMonth, viewYear, monthName: new Date(viewYear, viewMonth - 1).toLocaleString("default", { month: "long" }),
@@ -466,7 +539,7 @@ export const useTrackerGridLogic = (
     reminderTest, setReminderTest, renderedDays, realHabits, filteredHabits,
     dailyStats, overallProgress, dailyHours, habitsWithStreaks,
     dailyPercents, weeklyDone,
-    handleAddMastery, editHabit, handleDelete,
+    handleAddMastery, editHabit, handleDelete, updateHabitData, createHabit,
     duplicateHabit, dismissRenewal, dismissedRenewals
   };
 };

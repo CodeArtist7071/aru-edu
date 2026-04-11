@@ -117,7 +117,7 @@ const SubjectsManagement: React.FC = () => {
       required: true 
     },
     { name: "display_order", label: "Display Ranking", type: "number" },
-    { name: "is_active", label: "Portal Active Manifestation", type: "checkbox" },
+    { name: "is_active", label: "Active in Portal", type: "checkbox" },
   ];
 
   const handleApply = async (formData: any) => {
@@ -166,16 +166,16 @@ const SubjectsManagement: React.FC = () => {
       <header className="space-y-8">
         <div>
           <h2 className="text-4xl font-bold tracking-tight text-slate-800 dark:text-slate-100 italic">
-            Knowledge Sectors
+            Subjects Management
           </h2>
           <p className="text-[10px] text-[#16a34a] uppercase font-black tracking-[0.4em] mt-3">
-            Managing Curriculum subjects via Hierarchy Orchestration
+            Managing subjects and curriculum hierarchy
           </p>
         </div>
 
         {/* Unified Hierarchical Control Bar */}
         <div className="flex flex-wrap items-center gap-4 w-full">
-            <div className="flex-1 flex items-center gap-2 p-1.5 bg-slate-100/50 dark:bg-slate-900/50 backdrop-blur-xl rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+            <div className="flex-1 flex items-center gap-2 p-1.5 bg-slate-100/50 dark:bg-slate-900/50 backdrop-blur-xl rounded-4xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
                 {/* 1. Exam Board */}
                 <select 
                     value={selectedBoard}
@@ -203,7 +203,7 @@ const SubjectsManagement: React.FC = () => {
                     setEditingItem(null);
                     setIsModalOpen(true);
                 }}
-                className="group shrink-0 flex items-center gap-4 px-10 py-5 bg-[#16a34a] hover:bg-[#15803d] text-white rounded-[2rem] font-black text-[11px] uppercase tracking-[0.2em] shadow-xl shadow-[#16a34a]/10 hover:-translate-y-1 transition-all duration-300"
+                className="group shrink-0 flex items-center gap-4 px-10 py-5 bg-[#16a34a] hover:bg-[#15803d] text-white rounded-4xl font-black text-[11px] uppercase tracking-[0.2em] shadow-xl shadow-[#16a34a]/10 hover:-translate-y-1 transition-all duration-300"
             >
                 <Plus size={20} className="group-hover:rotate-90 transition-transform duration-500" />
                 <span>Add Subject</span>
@@ -216,7 +216,7 @@ const SubjectsManagement: React.FC = () => {
               <div className="size-16 bg-slate-200 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-slate-400 mb-6 group-hover:scale-110 transition-transform">
                   <Plus size={32} />
               </div>
-              <p className="text-lg font-black text-slate-400 tracking-tight text-center uppercase">Manifest an Exam Board<br/><span className="text-[10px] opacity-60">to unlock the knowledge sectors</span></p>
+              <p className="text-lg font-black text-slate-400 tracking-tight text-center uppercase">Select an Exam Board<br/><span className="text-[10px] opacity-60">to unlock associated subjects</span></p>
           </div>
       ) : (
           <AdminTable
@@ -232,7 +232,7 @@ const SubjectsManagement: React.FC = () => {
               setIsModalOpen(true);
             }}
             onDelete={(id) => {
-              if (window.confirm("Verify: Remove this subject from the lattice?")) deleteItem(id);
+              if (window.confirm("Verify: Remove this subject from the system?")) deleteItem(id);
             }}
             loading={loading}
           />
@@ -240,7 +240,7 @@ const SubjectsManagement: React.FC = () => {
 
       <AdminFormModal
         isOpen={isModalOpen}
-        title={editingItem ? "Edit Subject Node" : "Add Subject Node"}
+        title={editingItem ? "Edit Subject" : "Add Subject"}
         fields={fields}
         initialData={editingItem}
         onClose={() => setIsModalOpen(false)}

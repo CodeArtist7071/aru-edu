@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { reducer as notificationsReducer } from "reapop";
 import userReducer from "./slice/userSlice";
 import examReducer from "./slice/examSlice";
 import examSubjectReducer from "./slice/examSubjectSlice";
@@ -19,6 +20,7 @@ export const store = configureStore({
     habits: habitReducer,
     examBoards: examBoardReducer,
     adaptive: adaptiveReducer,
+    notifications: notificationsReducer,
     ui: uiReducer,
   },
 });

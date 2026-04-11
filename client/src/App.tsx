@@ -156,7 +156,7 @@ function App() {
     defaultProps: {
       position: "top-right",
       dismissible: true,
-      dismissAfter: 1,
+      dismissAfter: 3000,
     },
   });
 

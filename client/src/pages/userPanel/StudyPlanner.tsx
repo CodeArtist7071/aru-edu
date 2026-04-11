@@ -50,6 +50,7 @@ export default function StudyPlannerPage() {
     handleToggle,
     handleCopyPreviousMonth,
     handleMonthChange,
+    setHabits,
     manifestDemo
   } = useStudyPlanner(user, examId, profile);
 
@@ -156,8 +157,8 @@ export default function StudyPlannerPage() {
       <AlertPopup 
         isOpen={!!reminderTest} 
         onClose={() => setReminderTest(null)}
-        title="Botanical Reminder"
-        message={`It's time for "${reminderTest?.name}". Master this milestone to grow your knowledge forest.`}
+        title="Study Reminder"
+        message={`It's time for "${reminderTest?.name}". Complete this session to achieve your exam goals.`}
       >
         <div className="flex gap-4 w-full justify-end mt-4">
           <button 
@@ -221,8 +222,8 @@ export default function StudyPlannerPage() {
         <div className="hidden lg:block relative min-h-screen will-change-contents">
           <section className={`transition-all duration-800 ease-(--ease-premium) transform origin-right will-change-[transform,opacity,filter] ${outlet ? "scale-[0.94] opacity-30 blur-md pointer-events-none -translate-x-16" : "scale-100 opacity-100 blur-0"}`}>
             <div className="px-2 mb-8">
-              <h3 className="text-[11px] font-technical font-black uppercase tracking-[0.4em] text-on-surface-variant opacity-60">Monthly Persistence Grid</h3>
-              <p className="text-sm font-bold text-on-surface mt-2 tracking-tight">Your botanical routines and recurring study rituals.</p>
+              <h3 className="text-[11px] font-technical font-black uppercase tracking-[0.4em] text-on-surface-variant opacity-60">Monthly Performance Grid</h3>
+              <p className="text-sm font-bold text-on-surface mt-2 tracking-tight">Your study routines and recurring tasks.</p>
             </div>
             <div className="mb-6">
               <ExamTicker targetedExams={targetedExams} selectedExam={examId || ""} setSelectedExam={(id) => navigate(`/user/plan-study/${id}`)} />
@@ -254,10 +255,17 @@ export default function StudyPlannerPage() {
                 onShowMastery={onShowMastery}
                 manifestDemo={manifestDemo}
                 setShowSelector={setIsAddMasteryOpen}
+                setHabits={setHabits}
               />
             </div>
           </section>
         </div>
+
+        {/* OVERLAY BACKDROP */}
+        <div 
+          onClick={() => navigate(-1)}
+          className={`fixed inset-0 z-[90] bg-black/5 backdrop-blur-sm transition-all duration-700 ease-in-out ${outlet ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+        />
 
         {/* OVERLAY PANEL */}
         <div className={`hidden lg:block fixed inset-y-0 right-0 z-100 transition-all duration-700 ease-in-out transform will-change-[transform,opacity] ${outlet ? "translate-x-0 opacity-100 pointer-events-auto" : "translate-x-full opacity-0 pointer-events-none"} w-full md:max-w-[540px]`} style={{ transitionTimingFunction: 'var(--ease-premium)' }}>
