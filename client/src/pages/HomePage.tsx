@@ -107,7 +107,7 @@ const Hompage = () => {
                   src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=1974&auto=format&fit=crop" 
                   alt="Journaling" 
                   className="size-full object-cover group-hover:scale-105 transition-transform duration-3000"
-                  fetchpriority="high"
+                  fetchPriority="high"
                   decoding="sync"
                   loading="eager"
                 />
