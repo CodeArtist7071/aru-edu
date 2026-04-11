@@ -19,7 +19,7 @@ export type Habit = {
 
 export type PlannerStats = {
   totalCompleted: number;
-  current_streak: number;
+  currentStreak: number;
   xp: number;
   level: number;
   xpInLevel: number;
