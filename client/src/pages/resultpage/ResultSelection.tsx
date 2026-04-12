@@ -19,7 +19,7 @@ const cardData: cardDataProps[] = [
         completed: 124,
         avgScore: "78%",
         icon: <Edit3Icon className="size-4 md:size-20" />,
-        buttonText: "View Results"
+        buttonText: "View All Practice Results"
     },
     {
         title: "Mock Exam Results",
@@ -27,7 +27,7 @@ const cardData: cardDataProps[] = [
         completed: 8,
         avgScore: "#42",
         icon: <Layers className="size-4 md:size-20" />,
-        buttonText: "Explore Analytics"
+        buttonText: "View All Mock Results"
     }
 ]
 
@@ -50,11 +50,11 @@ const ResultSelection = () => {
             <main className="max-w-5xl px-6">
 
                 {/* Header - Massive Editorial */}
-                <div className="mb-5 md:mb-24">
-                    <h2 className="text-2xl mt-4 md:text-6xl font-black tracking-tighter leading-[0.85]">
+                <div className="mb-5 md:mb-15">
+                    <h1 className="mt-4 md:text-6xl font-black tracking-tighter leading-[0.85]">
                         Growth <span className="text-primary">Matrix</span>
-                    </h2>
-                    <p className="max-w-2xl text-sm mt-3 md:mt-8 text-on-surface-variant/70 font-medium leading-relaxed">
+                    </h1>
+                    <p className="max-w-2xl mt-2 text-on-surface-variant/70 font-medium leading-relaxed">
                         Assess your cognitive evolution across focused chapter drills and comprehensive exam simulations.
                     </p>
                 </div>
@@ -62,19 +62,19 @@ const ResultSelection = () => {
                 {/* Cards - Tonal Sectioning */}
                 <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
                     {cardData.map((el, index) => (
-                        <div key={index} className="bg-surface-container-low p-1 md:p-12 rounded-xl flex flex-col justify-between hover:bg-surface-container-high transition-all duration-500 group shadow-ambient-sm hover:shadow-ambient-lg">
+                        <div key={index} className="bg-surface-container-low p-1 md:p-10 rounded-3xl flex flex-col justify-between hover:bg-surface-container-high transition-all duration-500 group shadow-ambient-sm hover:shadow-ambient-lg">
                             <div className="flex justify-between items-center">
                                 <div className="w-full flex flex-row md:flex-col gap-4">
-                                    <div className="w-10 h-10 md:w-20 md:h-20 bg-surface-container-high rounded-3xl flex items-center justify-center mb-10 group-hover:scale-110 transition-transform duration-500 shadow-sm">
-                                        <div className="w-10 flex justify-center items-center h-5 md:text-primary">
+                                    <div className="w-15 h-15 bg-surface-container-high rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500 shadow-sm">
+                                        <div className="w-8 flex justify-center items-center h-5 md:text-primary">
                                             {el.icon}
                                         </div>
                                     </div>
                                     <div>
-                                        <h3 className="text-md md:text-3xl font-bold mb-3 tracking-tight">
+                                        <h2 className="font-bold mb-3 tracking-tight">
                                             {el.title}
-                                        </h3>
-                                        <p className="text-on-surface-variant/70 mb-5 md:mb-10 text-xs md:text-lg leading-relaxed">
+                                        </h2>
+                                        <p className="text-on-surface-variant/70 mb-5 md:mb-10 leading-relaxed">
                                             {el.description}
                                         </p>
                                     </div>
@@ -83,12 +83,12 @@ const ResultSelection = () => {
                             </div>
                             <div className="flex gap-4 md:gap-10 mb-4 md:mb-10">
                                 <div>
-                                    <p className="text-xs md:text-[10px] font-mono font-bold uppercase tracking-widest text-on-surface-variant/40 mb-1">Synthesized</p>
-                                    <p className="text-xl md:text-3xl font-mono font-black text-primary">{el.completed}</p>
+                                    <p className=" font-mono font-bold uppercase tracking-widest text-on-surface-variant/40 mb-1">Test Completed</p>
+                                    <p className=" font-mono font-black text-primary">{el.completed}</p>
                                 </div>
                                 <div>
-                                    <p className="text-xs md:text-[10px] font-mono font-bold uppercase tracking-widest text-on-surface-variant/40 mb-1">Index Score</p>
-                                    <p className="text-xl md:text-3xl font-mono font-black text-secondary">{el.avgScore}</p>
+                                    <p className=" font-mono font-bold uppercase tracking-widest text-on-surface-variant/40 mb-1">Average Score Obtained</p>
+                                    <p className=" font-mono font-black text-secondary">{el.avgScore}</p>
                                 </div>
                             </div>
 
@@ -103,7 +103,7 @@ const ResultSelection = () => {
                 </div>
 
                 {/* Latest Report - Technical Slip */}
-                <div className="mt-5 md:mt-24">
+                {/* <div className="mt-5 md:mt-24">
                     <h4 className="text-[10px] font-mono font-black uppercase tracking-[0.4em] text-on-surface-variant/40 mb-8 flex items-center gap-6">
                         Latest Sync Report
                         <div className="h-px flex-1 bg-on-surface-variant/10"></div>
@@ -133,7 +133,7 @@ const ResultSelection = () => {
                             </div>
                         </div>
                     ))}
-                </div>
+                </div> */}
             </main>
         </div>
     );

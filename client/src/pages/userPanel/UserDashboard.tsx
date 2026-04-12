@@ -259,17 +259,17 @@ const UserDashboard = () => {
 
   return (
     <div className="relative min-h-screen">
-      <div className="space-y-12 pb-20 p-2 lg:p-6 animate-reveal">
+      <div className="space-y-6 p-2 lg:p-6 animate-reveal">
         <section className="relative px-2">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
             <div className="animate-greeting">
-              <h1 className="text-2xl lg:text-6xl font-black tracking-tighter text-on-surface leading-[0.85] mb-4">
-                Namaskar,<br/>
+              <span className="text-xl lg:text-5xl  font-black tracking-tighter text-on-surface leading-[0.85] pb-4">
+                Namaskar,
                 <span className="text-primary italic font-serif -ml-2 lg:-ml-4 drop-shadow-sm select-none">
-                  {(profile?.full_name || user?.identities?.[0]?.identity_data?.name)?.split(' ')[0]}
+                  {" "}{(profile?.full_name || user?.identities?.[0]?.identity_data?.name)?.split(' ')[0]}
                 </span>
-              </h1>
-              <p className="text-on-surface-variant max-w-xl text-sm lg:text-2xl leading-relaxed opacity-0 animate-greeting-delay font-medium font-narrative">
+              </span>
+              <p className="text-on-surface-variant max-w-xl text-sm lg:text-xl leading-relaxed opacity-0 animate-greeting-delay font-medium font-narrative">
                 Your OPSC preparation is <span className="font-technical font-black text-primary border-b-2 border-primary/20">0%</span> complete.
                 You are currently in the top <span className="font-technical font-black text-primary border-b-2 border-primary/20">0%</span> of active candidates.
               </p>
@@ -311,7 +311,7 @@ const UserDashboard = () => {
               loading={examsLoading}
             />
 
-            <section>
+            {/* <section>
               <h3 className="text-[11px] font-technical pt-4 font-black uppercase tracking-[0.4em] text-on-surface-variant opacity-60 mb-4 px-2">Preparation Analytics</h3>
               <div className="bg-surface-container-high rounded-3xl p-5 md:p-10 shadow-ambient">
                 <div className="space-y-5 md:space-y-10">
@@ -333,7 +333,7 @@ const UserDashboard = () => {
                   ))}
                 </div>
               </div>
-            </section>
+            </section> */}
           </div>
 
           <div className="lg:col-span-4 space-y-12">

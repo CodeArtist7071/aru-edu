@@ -202,7 +202,7 @@ export default function UserPanelLayout() {
   };
 
   return (
-    <div className={`flex h-screen bg-surface font-narrative text-on-surface overflow-hidden transition-colors duration-500 ${isEyeProtectionActive ? "eye-protection-active" : ""}`}>
+    <div className={`flex h-dvh bg-surface font-narrative text-on-surface overflow-hidden transition-colors duration-500 ${isEyeProtectionActive ? "eye-protection-active" : ""}`}>
       {/* Action Center Component - Temporarily Suspended */}
       {/* <ActionCenter /> */}
 
@@ -225,15 +225,15 @@ export default function UserPanelLayout() {
       >
         {/* Logo Section */}
 
-        <div className="h-28 flex items-center px-8 mb-4">
+        <div className="h-28 flex items-center px-4 mb-4">
           <div className="flex items-center gap-4 group cursor-pointer" onClick={() => navigate("/")}>
-            <div className="size-12 bg-linear-to-br from-indigo-600 to-primary rounded-2xl flex items-center justify-center text-white shadow-lg shadow-primary/20 group-hover:rotate-6 transition-all duration-300">
+            <div className="size-12 bg-linear-to-br from-primary to-primary rounded-2xl flex items-center justify-center text-white shadow-lg shadow-primary/20 group-hover:rotate-6 transition-all duration-300">
               <School className="size-6" />
             </div>
             {!isCollapsed && (
               <div className="flex flex-col">
                 <h1 className="text-2xl font-black tracking-tighter leading-none text-primary">ARUMIND</h1>
-                <span className="text-[10px] font-technical uppercase tracking-[0.2em] text-on-surface-variant opacity-60">Digital Journal</span>
+                <span className="text-[10px] font-technical uppercase tracking-[0.2em] text-on-surface-variant opacity-60">Your Personal Assistant</span>
               </div>
             )}
           </div>
@@ -311,9 +311,9 @@ export default function UserPanelLayout() {
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 flex flex-col relative overflow-hidden bg-surface transition-colors duration-500">
+      <main className="flex-1 flex flex-col relative overflow-hidden bg-surface-container-low backdrop-blur-3xl transition-colors duration-500">
         {/* Editorial Dynamic Header - Now Multi-State */}
-        <header className="h-15 md:h-32 bg-surface/40 backdrop-blur-3xl flex items-center justify-between px-5 md:px-10 sticky top-0 z-20 border-b border-outline-variant/10">
+        <header className="h-15 md:h-25  flex items-center justify-between px-5 md:px-10 sticky top-0 z-20 border-b border-outline-variant/10">
           {!isTestActive ? (
             // Standard View: Page Context
             <>
@@ -389,7 +389,7 @@ export default function UserPanelLayout() {
                 )}
 
                 {/* Language Toggle */}
-                <div className="hidden bg-surface-container-low p-1 rounded-full shadow-inner border border-outline-variant/5">
+                {/* <div className="hidden bg-surface-container-low p-1 rounded-full shadow-inner border border-outline-variant/5">
                   <button
                     type="button"
                     onClick={() => dispatch(setTestLanguage("en"))}
@@ -406,7 +406,7 @@ export default function UserPanelLayout() {
                   >
                     OD
                   </button>
-                </div>
+                </div> */}
 
                 {/* Final Submit Button */}
                 <button
@@ -424,32 +424,32 @@ export default function UserPanelLayout() {
         <div
           ref={scrollRef}
           key={location.pathname}
-          className="flex-1 bg-surface-container-low h-full overflow-y-auto custom-scrollbar p-0 lg:p-10"
+          className="flex-1 bg-surface-container-low h-full overflow-y-auto custom-scrollbar p-0 lg:px-10"
         >
           <Outlet />
         </div>
 
         {/* Mobile Nav - Android 15 (Material 3) Navigation Bar Manifestation */}
-        <nav className={`lg:hidden h-auto pb-[env(safe-area-inset-bottom)] backdrop-blur-2xl flex justify-around items-center sticky bottom-0 z-40 border-t border-outline-variant/10 shadow-ambient transition-all duration-500 ease-botanical ${showNav ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
+        <nav className={`lg:hidden fixed bottom-0 left-0 right-0 h-auto pb-[env(safe-area-inset-bottom)] backdrop-blur-2xl flex justify-around items-center z-40 border-t border-outline-variant/10 shadow-ambient transition-all duration-500 ease-botanical ${showNav ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
           }`}>
           {mobileNavItems.map((item) => (
             <NavLink
               key={item.label}
               to={item.path}
               end={item.path === "/user/dashboard"}
-              className="flex-1 flex flex-col items-center justify-center pt-2 pb-1"
+              className="flex-1 flex flex-col items-center justify-center py-1.5"
             >
               {({ isActive }) => (
                 <>
-                  <div className="relative p-4 flex items-center justify-center mb-1">
+                  <div className="relative p-2 flex items-center justify-center mb-0.5">
                     {/* Material 3 Active Pill Indicator */}
-                    <div className={`absolute inset-0 bg-primary rounded-full transition-all duration-400 ease-botanical ${isActive ? "opacity-100  -translate-y-10 scale-100" : "opacity-0 scale-75"}`} />
+                    <div className={`absolute inset-0 bg-primary rounded-full transition-all duration-400 ease-botanical ${isActive ? "opacity-100  -translate-y-8 scale-100" : "opacity-0 scale-75"}`} />
                     
-                    <div className={`relative z-10 transition-all duration-300 ${isActive ? "text-surface-container-high -translate-y-10 scale-110" : "text-on-surface-variant/70"}`}>
+                    <div className={`relative z-10 transition-all duration-300 ${isActive ? "text-surface-container-high -translate-y-8 scale-110" : "text-on-surface-variant/70"}`}>
                       {cloneElement(item.icon as React.ReactElement<any>, { size: 24 })}
                     </div>
                   </div>
-                  <span className={`text-[10px] text-center font-technical font-black uppercase tracking-wider transition-colors duration-300 ${isActive ? "text-primary opacity-100 -translate-y-10" : "text-on-surface-variant/40 opacity-0"
+                  <span className={`text-[10px] text-center font-technical font-black uppercase tracking-wider transition-colors duration-300 ${isActive ? "text-primary opacity-100 -translate-y-8" : "text-on-surface-variant/40 opacity-0"
                     }`}>
                     {item.label}
                   </span>

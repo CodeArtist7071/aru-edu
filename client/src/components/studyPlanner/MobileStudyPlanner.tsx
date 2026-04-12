@@ -383,10 +383,10 @@ export const MobileStudyPlanner: React.FC<MobileStudyPlannerProps> = ({
         <div className="space-y-6 animate-reveal">
           {/* Daily Tasks */}
           <section>
-            <div className="flex items-center justify-between my-4 px-2">
+            <div className="flex items-center justify-between py-5 px-2">
               <div className="flex items-center gap-2">
                 <Zap size={16} className="text-primary" />
-                <h3 className="text-sm font-black uppercase tracking-[0.2em] text-on-surface-variant">Daily Tasks</h3>
+                <h3 className="text-sm font-black uppercase tracking-[0.2em] text-on-surface-variant">Your Tasks</h3>
               </div>
               <div className="flex items-center gap-3">
                 <button 
@@ -401,7 +401,7 @@ export const MobileStudyPlanner: React.FC<MobileStudyPlannerProps> = ({
               </div>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-3 h-[calc(100vh-200px)] overflow-y-auto">
               {dailyTasks.length > 0 ? dailyTasks.map((task: any) => (
                 <div 
                   key={task.id}

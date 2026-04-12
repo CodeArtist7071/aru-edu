@@ -112,10 +112,10 @@ const Exam = () => {
   return (
     <div className="text-on-surface min-h-screen font-narrative antialiased transition-colors duration-700">
       {/* Main Content */}
-      <main className="max-w-300 mx-auto w-full px-4 md:px-10">
+      <main className="max-w-300 mx-auto w-full">
         {/* Page Header - Asymmetrical & Editorial */}
         <div className="md:mb-16 mb-6 max-w-2xl">
-          <h1 className="text-xl mt-3 md:text-6xl font-black tracking-tight mb-6 leading-[0.9] text-on-surface animate-reveal">
+          <h1 className="mt-3 text-2xl md:text-5xl font-black tracking-tight mb-6 leading-[0.9] text-on-surface animate-reveal">
             Subject-wise <span className="text-primary italic">Curriculum</span>
           </h1>
           <p className="text-on-surface-variant text-sm md:text-lg leading-relaxed max-w-md animate-reveal opacity-80" style={{ animationDelay: '0.1s' }}>

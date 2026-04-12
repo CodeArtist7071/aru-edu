@@ -81,11 +81,13 @@ export const UpcomingMockTest = ({
 
   return (
     <section>
-      <div className="flex justify-between items-center mb-8 px-2">
-        <h3 className="text-[11px] font-technical font-black uppercase tracking-[0.4em] text-on-surface-variant opacity-60">Your Upcoming Tests</h3>
-        <div className="flex items-center gap-2">
-           <span className="text-[8px] font-black uppercase tracking-widest text-[#16a34a] opacity-60">Upcoming Tests</span>
-           <Clock className="size-3.5 text-primary animate-pulse" />
+      <div className="flex justify-between items-center mb-10 px-2">
+        <h3 className="text-[11px] font-technical font-black uppercase tracking-[0.4em] text-on-surface-variant opacity-60">Upcoming Tests</h3>
+        <div className="flex justify-between items-center gap-2">
+          <div className="block gap-2">
+           <p className="text-[8px] font-black uppercase tracking-widest text-[#16a34a] opacity-60">View Your Upcoming Scheduled Test</p>
+          </div>
+          <Clock className="size-3.5 text-primary animate-pulse" />
         </div>
       </div>
       <div className="bg-primary/95 backdrop-blur-md rounded-4xl overflow-hidden shadow-ambient p-3 ring-1 ring-white/10">
