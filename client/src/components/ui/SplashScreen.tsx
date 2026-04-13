@@ -35,9 +35,8 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ isVisible }) => {
           <div className="absolute -inset-8 bg-primary/10 rounded-full animate-ping opacity-20" />
           <div className="absolute -inset-16 bg-primary/5 rounded-full animate-pulse-slow opacity-10" />
           
-          {/* Logo Hexagon Manifest */}
-          <div className="size-32 bg-white dark:bg-surface-container-low rounded-[2.5rem] shadow-ambient flex items-center justify-center border border-on-surface/5 animate-reveal transform hover:rotate-12 transition-transform duration-1000">
-             <Target className="size-16 text-primary animate-splash-bloom" />
+          <div className="size-32 bg-white dark:bg-surface-container-low rounded-[2.5rem] shadow-ambient flex items-center justify-center border border-on-surface/5 animate-reveal transform hover:rotate-12 transition-transform duration-1000 overflow-hidden">
+             <img src="/66.png" alt="Arumind Logo" className="size-24 object-contain animate-splash-bloom" />
           </div>
         </div>
 
