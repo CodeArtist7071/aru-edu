@@ -19,7 +19,7 @@ export default defineConfig({
       devOptions: {
         enabled: true,
       },
-      includeAssets: ["apple-touch-icon.png", "vite.svg", "screenshot-wide.png", "screenshot-mobile.png"],
+      includeAssets: ["apple-touch-icon.png", "vite.svg"],
       manifest: {
         name: "Arumind - Performance Analytics Dashboard",
         short_name: "Arumind",
@@ -47,21 +47,6 @@ export default defineConfig({
             sizes: "180x180",
             type: "image/png",
             purpose: "apple touch icon",
-          },
-        ],
-        screenshots: [
-          {
-            src: "screenshot-wide.png",
-            sizes: "1280x720",
-            type: "image/png",
-            form_factor: "wide",
-            label: "Desktop Dashboard View"
-          },
-          {
-            src: "screenshot-mobile.png",
-            sizes: "750x1334",
-            type: "image/png",
-            label: "Mobile Study Planner View"
           },
         ],
       },
