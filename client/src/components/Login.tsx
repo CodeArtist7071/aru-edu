@@ -116,7 +116,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-6 lg:p-12 min-h-screen">
+    <div className="flex flex-col items-center justify-center p-1 lg:p-12 min-h-screen">
       <div className="w-full max-w-md space-y-12">
         {/* Brand Header */}
         <div className="text-center space-y-4">

@@ -11,75 +11,78 @@ export const Header = () => {
   console.log("usersss.....!!", user);
 
   return (
-    <header className="flex h-20 px-6 lg:px-12 items-center justify-between bg-surface/90 sticky top-0 z-60 backdrop-blur-2xl shadow-[0_10px_40px_-15px_rgba(27,28,21,0.06)]">
-      <div className="flex items-center gap-8">
-        <div className="flex items-center gap-3 text-primary group cursor-pointer" onClick={() => navigate("/")}>
-          <div className="size-10 bg-primary/10 rounded-xl flex items-center justify-center group-hover:bg-primary group-hover:text-on-primary transition-all duration-500 shadow-sm">
-            <Notebook className="size-6" />
+    <header className="flex h-16 sm:h-20 px-4 sm:px-8 lg:px-12 items-center justify-between bg-surface/95 sticky top-0 z-50 backdrop-blur-xl border-b border-on-surface/5 shadow-sm">
+      <div className="flex items-center gap-4 sm:gap-10 h-full">
+        <div 
+          className="flex items-center gap-2 sm:gap-3 text-primary group cursor-pointer transition-transform active:scale-95" 
+          onClick={() => navigate("/")}
+        >
+          <div className="size-8 sm:size-10 bg-primary/10 rounded-lg sm:rounded-xl flex items-center justify-center group-hover:bg-primary group-hover:text-on-primary transition-all duration-300">
+            <Notebook className="size-5 sm:size-6" />
           </div>
-          <div className="flex flex-col">
-            <h2 className="text-2xl font-black leading-none tracking-tighter text-on-surface">
+          <div className="flex flex-col justify-center">
+            <h2 className="text-md sm:text-2xl font-bold leading-none tracking-tight text-on-surface">
               Arumind
             </h2>
-            <span className="text-[8px] font-technical font-black uppercase tracking-[0.2em] text-on-surface-variant opacity-40 mt-1">Push Beyond Limits</span>
+            <span className="hidden sm:block text-[10px] sm:text-[11px] font-semibold text-on-surface-variant/60 uppercase tracking-widest mt-0.5">Push Beyond Limits</span>
           </div>
         </div>
-        <nav className="hidden lg:flex items-center gap-10">
-          {["Exams", "Courses", "Test Series", "Current Affairs"].map(
-            (item) => (
-              <a
-                key={item}
-                className="text-on-surface-variant hover:text-primary text-[10px] font-technical font-black uppercase tracking-[0.2em] transition-all duration-300 relative group"
-                href="#"
-              >
-                {item}
-                <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-1 bg-primary/20 rounded-full transition-all duration-500 group-hover:w-8" />
-              </a>
-            ),
-          )}
+        
+        <nav className="hidden lg:flex items-center gap-8 h-full">
+          {["Exams", "Courses", "Test Series", "Current Affairs"].map((item) => (
+            <a
+              key={item}
+              className="text-on-surface-variant hover:text-primary text-xs font-bold uppercase tracking-widest transition-colors relative group h-full flex items-center leading-none"
+              href="#"
+            >
+              {item}
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+            </a>
+          ))}
         </nav>
       </div>
-      <div className="flex items-center gap-4">
-        <div className="hidden sm:flex relative group">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant size-4 opacity-40 group-focus-within:text-primary group-focus-within:opacity-100 transition-all" />
+
+      <div className="flex items-center gap-3 sm:gap-5">
+        <div className="hidden md:flex relative group items-center">
+          <Search className="absolute left-4 text-on-surface-variant/40 size-4 group-focus-within:text-primary transition-colors" />
           <input
-            className="bg-surface-container-low text-on-surface border-none rounded-full pl-12 pr-6 py-2.5 text-[11px] font-technical font-black uppercase tracking-widest focus:ring-2 focus:ring-primary/20 w-48 lg:w-72 transition-all placeholder:text-on-surface-variant/30"
-            placeholder="Search Journal..."
+            className="bg-surface-container-low border border-transparent focus:border-primary/20 rounded-full pl-11 pr-5 py-2 text-xs font-bold uppercase tracking-widest w-48 lg:w-64 transition-all leading-none"
+            placeholder="Search..."
             type="text"
           />
         </div>
 
-        {/* Theme Toggle */}
         <button
           onClick={toggleTheme}
-          className="size-10 rounded-full bg-surface-container-low flex items-center justify-center text-on-surface-variant hover:text-primary transition-all duration-500 border border-on-surface/5"
+          className="hidden size-9 sm:size-10 rounded-full bg-surface-container-low md:flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors border border-on-surface/5"
           title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
         >
           {theme === "light" ? <Moon className="size-4" /> : <Sun className="size-4" />}
         </button>
+
         {user ? (
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-3 sm:gap-6 h-full">
             <button
               onClick={() => navigate("/user/dashboard")}
-              className="bg-linear-to-r from-primary to-primary-container text-on-primary px-8 py-3 rounded-full text-[10px] font-technical font-black uppercase tracking-widest shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all duration-300"
+              className="bg-primary text-on-primary px-5 sm:px-8 py-2 sm:py-2.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-widest hover:bg-primary-container transition-colors shadow-sm"
             >
               Dashboard
             </button>
-            <div className="size-10 bg-primary/10 rounded-full flex items-center justify-center text-primary font-technical font-black border border-primary/20 cursor-pointer hover:bg-primary hover:text-white transition-all">
+            <div className="size-8 sm:size-10 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold text-sm sm:text-base cursor-pointer hover:bg-primary hover:text-white transition-colors">
               {user.email?.[0].toUpperCase()}
             </div>
           </div>
         ) : (
-          <div className="flex gap-4">
+          <div className="flex gap-2 sm:gap-4 items-center h-full">
             <button
               onClick={() => navigate("/login")}
-              className="text-on-surface-variant hover:text-primary px-6 py-3 rounded-full text-[10px] font-technical font-black uppercase tracking-widest transition-all"
+              className="text-on-surface-variant hover:text-primary px-5 md:px-6 py-2 text-[10px] md:text-xs font-bold uppercase tracking-widest transition-colors"
             >
               Login
             </button>
             <button
               onClick={() => navigate("/register")}
-              className="bg-linear-to-r from-primary to-primary-container text-on-primary px-8 py-3 rounded-full text-[10px] font-technical font-black uppercase tracking-widest shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all duration-300"
+              className="bg-primary text-on-primary px-5 sm:px-8 py-2 sm:py-2.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-widest hover:bg-primary-container transition-colors shadow-sm"
             >
               Sign Up
             </button>

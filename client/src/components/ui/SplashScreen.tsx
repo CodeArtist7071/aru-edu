@@ -47,7 +47,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ isVisible }) => {
           </h1>
           <div className="flex items-center gap-4 justify-center">
              <div className="h-px w-8 bg-on-surface/10" />
-             <p className="text-[10px] font-technical font-black uppercase tracking-[0.4em] text-on-surface-variant opacity-40">
+             <p className="text-2xs font-black uppercase tracking-[0.4em] text-on-surface-variant opacity-40 leading-none">
                AI STUDY SPACE
              </p>
              <div className="h-px w-8 bg-on-surface/10" />
@@ -59,11 +59,11 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ isVisible }) => {
            <div className="flex gap-10">
              <div className="flex flex-col items-center gap-2 opacity-20">
                 <Zap className="size-4" />
-                <span className="text-[8px] font-technical font-black uppercase tracking-widest">Hydrating</span>
+                <span className="text-3xs font-black uppercase tracking-widest leading-none">Hydrating</span>
              </div>
              <div className="flex flex-col items-center gap-2 opacity-20">
                 <Shield className="size-4" />
-                <span className="text-[8px] font-technical font-black uppercase tracking-widest">Authorized</span>
+                <span className="text-3xs font-black uppercase tracking-widest leading-none">Authorized</span>
              </div>
            </div>
            
@@ -76,7 +76,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ isVisible }) => {
 
       {/* Footer Branding */}
       <div className="absolute bottom-12 text-center opacity-20 animate-reveal" style={{ animationDelay: '0.6s' }}>
-        <p className="text-[9px] font-technical font-black uppercase tracking-[0.2em]">
+        <p className="text-3xs font-black uppercase tracking-[0.2em] leading-none">
           Ecosystem Version 1.0 <span className="mx-2">•</span> 2024
         </p>
       </div>
