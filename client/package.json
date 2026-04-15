@@ -16,6 +16,7 @@
     "@mediapipe/face_mesh": "^0.4.1633559619",
     "@reduxjs/toolkit": "^2.11.2",
     "@supabase/supabase-js": "^2.98.0",
+    "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.2.1",
     "@tensorflow-models/face-landmarks-detection": "^1.0.6",
     "@tensorflow/tfjs": "^4.22.0",

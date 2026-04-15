@@ -85,7 +85,7 @@ const AuthRoute = ({ children }: { children: React.ReactNode }) => {
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<HomePage />} />
+      <Route path="/" element={<AuthRoute><HomePage /></AuthRoute>} />
       <Route element={<Authlayout />}>
         <Route path="/login" element={<AuthRoute><Login /></AuthRoute>} />
         <Route path="/register" element={<AuthRoute><Register /></AuthRoute>} />

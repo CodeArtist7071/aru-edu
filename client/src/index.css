@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @theme {
   --color-primary: var(--primary);
@@ -21,7 +22,11 @@
   /* Ghost Border */
 
   --font-narrative: "Manrope", sans-serif;
+  --font-editorial: "Manrope", sans-serif; /* Pivot to Sans for consistency */
   --font-technical: "Space Grotesk", monospace;
+
+  --font-size-2xs: 0.625rem;
+  --font-size-3xs: 0.5rem;
 
   --shadow-ambient: 0 10px 40px rgba(27, 28, 21, 0.06);
   --shadow-ambient-lg: 0 20px 60px rgba(13, 14, 11, 0.12);
@@ -37,15 +42,15 @@
   }
 
   :root {
-    --primary: #006e2f;
-    --primary-container: #22c55e;
+    --primary: #154212;
+    --primary-container: #2d5a27;
     --on-primary: #ffffff;
 
-    --surface: #fbfaee;
-    --surface-container-low: #e2e2e2;
-    --surface-container-high: #f3f2ea;
-    --surface-container-highest: #e4e3d7;
-    --surface-container-lowest: #ffffff;
+    --surface: #fbf9f5;
+    --surface-container-low: #efeeea;
+    --surface-container-high: #ffffff;
+    --surface-container-highest: #e4e2de;
+    --surface-container-lowest: #fbf9f5;
     --surface-dim: #dbdbcf;
 
     --on-surface: #1b1c15;
@@ -75,7 +80,7 @@
   }
 
   body {
-    @apply bg-surface text-on-surface font-narrative antialiased transition-colors duration-700 ease-[var(--ease-botanical)];
+    @apply bg-surface text-on-surface font-narrative antialiased transition-colors duration-700 ease-[var(--ease-botanical)] leading-normal;
   }
 }
 
@@ -335,31 +340,15 @@
     transition: filter 0.8s var(--ease-botanical);
   }
 
-  /* Flagship Botanical Scrollbar */
-  .botanical-scrollbar {
-    scrollbar-width: thin;
-    scrollbar-color: var(--primary) transparent;
-  }
-  .botanical-scrollbar::-webkit-scrollbar {
-    height: 6px;
-    width: 6px;
-    display: block !important;
-  }
-  .botanical-scrollbar::-webkit-scrollbar-track {
-    background: transparent;
-    border-radius: 100px;
-  }
-  .botanical-scrollbar::-webkit-scrollbar-thumb {
-    background-color: var(--primary);
-    opacity: 0.4;
-    border-radius: 100px;
-    border: 2px solid transparent;
-    background-clip: content-box;
-  }
-  .botanical-scrollbar::-webkit-scrollbar-thumb:hover {
-    background-color: var(--primary-container);
+  /* Core Theme Animations & Glass (Subtle remains) */
+  .glass-editorial {
+    @apply bg-surface-container-high/60 backdrop-blur-xl border border-white/10;
   }
 }
+
+  .cta-gradient {
+    background: linear-gradient(135deg, #154212, #2d5a27);
+  }
 
 .ag-theme-alpine {
   --ag-cell-horizontal-padding: 10px;
