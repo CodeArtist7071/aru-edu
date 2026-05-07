@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import { supabase } from "../utils/supabase";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { StatusBanner } from "./ui/StatusBanner";
 
 interface RegisterProps {
   name: string;
@@ -26,6 +27,7 @@ interface RegisterProps {
 
 const Register = () => {
   const navigate = useNavigate();
+  const [error, setError] = useState<any>();
 
   const {
     register,
@@ -37,8 +39,9 @@ const Register = () => {
   const password = watch("create_password");
 
   async function onSubmit(details: RegisterProps) {
+    setError(null);
     const { data, error } = await supabase.auth.signUp({
-      email: details.email,
+      email: details.email.trim(),
       password: details.create_password,
       options: {
         emailRedirectTo: `${window.location.origin}/login`,
@@ -52,7 +55,10 @@ const Register = () => {
     if (data.user?.aud === "authenticated") {
       navigate("/user/dashboard");
     }
-    if (error) console.error(error);
+    if (error) {
+      setError(error);
+      console.error(error);
+    }
   }
 
   return (
@@ -109,8 +115,12 @@ const Register = () => {
             <p className="text-on-surface-variant font-medium">Join thousands of students preparing for success.</p>
           </div>
 
-          {/* Google Identity Ritual (Social First) */}
-          <div className="space-y-8 animate-reveal">
+          {/* Card */}
+          <div className="bg-surface p-10 rounded-[3rem] shadow-ambient border border-on-surface/5 space-y-8 animate-reveal overflow-hidden">
+            {error && <StatusBanner status={error} />}
+
+            {/* Google Identity Ritual (Social First) */}
+            <div className="space-y-8 animate-reveal">
             <button
               onClick={async () => {
                 await supabase.auth.signInWithOAuth({
@@ -160,6 +170,9 @@ const Register = () => {
                 error={errors.email}
                 labelIcon={<Mail className="size-4" />}
                 {...register("email", { required: "Email is required" })}
+                autoCapitalize="none"
+                autoCorrect="off"
+                spellCheck="false"
               />
               <InputWithLabel
                 label="Mobile Number"
@@ -179,6 +192,9 @@ const Register = () => {
                   error={errors.create_password}
                   labelIcon={<LockIcon className="size-4" />}
                   {...register("create_password", { required: "Required" })}
+                  autoComplete="new-password"
+                  autoCorrect="off"
+                  spellCheck="false"
                 />
                 <InputWithLabel
                   label="Confirm Password"
@@ -191,6 +207,9 @@ const Register = () => {
                     required: "Required",
                     validate: (val) => val === password || "Mismatch"
                   })}
+                  autoComplete="new-password"
+                  autoCorrect="off"
+                  spellCheck="false"
                 />
               </div>
             </div>

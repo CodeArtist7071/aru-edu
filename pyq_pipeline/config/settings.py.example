@@ -1,0 +1,16 @@
+import os
+
+# Supabase configuration (Mirrored from doc_pipeline)
+SUPABASE_URL = "https://vqrkyepybgcieeypqimh.supabase.co"
+SUPABASE_KEY = "your-supabase-key-here"
+SUPABASE_SERVICE_ROLE_KEY = "your-supabase-service-role-key-here"
+
+# Google Vision logic
+GOOGLE_APPLICATION_CREDENTIALS = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "doc_pipeline", "google-vision-ocr.json"))
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = GOOGLE_APPLICATION_CREDENTIALS
+
+# Vertex AI configuration (Mirrored from working doc_pipeline)
+PROJECT_ID = "aruedu"
+LOCATION = "us-central1"
+API_KEY = "your-vertex-ai-api-key-here"
+GEMINI_MODEL = "gemini-2.5-flash"

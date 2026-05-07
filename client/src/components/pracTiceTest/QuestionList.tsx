@@ -108,9 +108,9 @@ export const QuestionList = ({
                 {q.options.map((opt: any) => (
                   <div key={opt.l} className="relative flex items-center">
                     <label className={`
-                      flex w-full items-center p-2.5 md:p-4 rounded-xl transition-all duration-500 cursor-pointer
+                      flex w-full items-center p-2.5 md:p-4 rounded-xl transition-all duration-500 cursor-pointer group/opt
                       ${currentAnswer === opt.l
-                        ? 'bg-surface-container-highest shadow-inner ring-1 ring-primary/20 scale-[1.01]'
+                        ? 'bg-surface-container-highest shadow-inner ring-1 ring-primary/30 scale-[1.01]'
                         : 'bg-surface-container-lowest hover:bg-white hover:scale-[1.01] hover:shadow-ambient'
                       }
                     `}>
@@ -118,56 +118,47 @@ export const QuestionList = ({
                         type="radio"
                         value={opt.l}
                         {...register(`answers.${q.id}`, {
-                          onChange: () => {
+                          onChange: (e) => {
+                            const val = e.target.value;
+                            // Immediate One-Tap Recording
                             setConfirmedAnswers((prev) => ({
                               ...prev,
-                              [q.id]: false,
+                              [q.id]: true,
                             }));
+                            if (onConfirm) onConfirm(q.id, val);
                           },
                         })}
-                        className="size-3.5 md:size-5 text-primary focus:ring-primary/30 border-outline-variant transition-all"
+                        className="size-3.5 md:size-5 text-primary focus:ring-primary/30 border-outline-variant transition-all cursor-pointer"
                       />
 
                       <div className="ml-3 md:ml-6 flex flex-col gap-0.5 flex-1">
                         <div className="flex items-center gap-2 md:gap-5">
-                          <span className="hidden sm:flex items-center justify-center size-5 md:size-8 rounded-lg bg-surface-container-high font-technical font-black text-[9px] md:text-xs text-on-surface-variant">
+                          <span className={`
+                            hidden sm:flex items-center justify-center size-5 md:size-8 rounded-lg font-technical font-black text-[9px] md:text-xs transition-all
+                            ${currentAnswer === opt.l ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'bg-surface-container-high text-on-surface-variant'}
+                          `}>
                             {opt.l}
                           </span>
                           <span
-                            className="font-bold text-[11px] md:text-base lg:text-lg text-on-surface"
+                            className={`font-bold text-[11px] md:text-base lg:text-lg transition-colors ${currentAnswer === opt.l ? 'text-primary' : 'text-on-surface'}`}
                             dangerouslySetInnerHTML={{ __html: opt.v }}
                           />
                         </div>
                         {isOdia && odiaData?.options?.find((o: any) => o.l === opt.l) && (
                           <div
-                            className="ml-0 lg:ml-13 text-primary text-xs font-bold opacity-80"
+                            className={`ml-0 lg:ml-13 text-xs font-bold opacity-80 transition-colors ${currentAnswer === opt.l ? 'text-primary' : 'text-primary/70'}`}
                             dangerouslySetInnerHTML={{ __html: odiaData.options.find((o: any) => o.l === opt.l)?.v || '' }}
                           />
                         )}
                       </div>
 
-                      {/* Status indicator inside selection (confirmed) */}
-                      {confirmedAnswers[q.id] && currentAnswer === opt.l && (
-                        <div className="size-1.5 md:size-3 bg-primary rounded-full animate-pulse shadow-[0_0_15px_rgba(34,197,94,0.6)]" />
+                      {/* Immediate Status Feedback */}
+                      {currentAnswer === opt.l && (
+                        <div className="flex items-center gap-2 animate-in fade-in zoom-in duration-300">
+                          <div className="size-1.5 md:size-2.5 bg-primary rounded-full animate-pulse shadow-[0_0_15px_rgba(34,197,94,0.6)]" />
+                        </div>
                       )}
                     </label>
-
-                    {/* Show Confirm button only if this option is selected BUT not confirmed */}
-                    {currentAnswer === opt.l && !confirmedAnswers[q.id] && (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setConfirmedAnswers((prev) => ({
-                            ...prev,
-                            [q.id]: true,
-                          }));
-                          if (onConfirm) onConfirm(q.id, currentAnswer);
-                        }}
-                        className="absolute right-2 md:right-4 bg-linear-to-r from-primary to-primary-container text-white px-3 py-1.5 md:px-6 md:py-2 rounded-full text-[8px] md:text-[10px] font-technical font-black uppercase tracking-widest shadow-ambient-lg transition-all animate-in slide-in-from-right-4 hover:scale-110 active:scale-95 cursor-pointer"
-                      >
-                        Select
-                      </button>
-                    )}
                   </div>
                 ))}
               </div>

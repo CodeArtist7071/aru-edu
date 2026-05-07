@@ -1,1 +1,282 @@
-[{"id":1,"exam":"CHSE12","g":"12","sub":"General Studies","ch":"Sports, Awards & Summits","diff":"H","q":"Which Indian athlete holds the national record in the men's javelin throw, surpassing the 88-meter mark?","opt":[{"l":"A","v":"Neeraj Chopra"},{"l":"B","v":"Annu Rani"},{"l":"C","v":"Shivpal Singh"},{"l":"D","v":"Rohit Yadav"}],"ans":"A"},{"id":2,"exam":"CHSE12","g":"12","sub":"General Studies","ch":"Sports, Awards & Summits","diff":"H","q":"The prestigious 'Laureus World Sportsman of the Year' award is often referred to as the 'Oscars of Sports'. In which year did Lionel Messi win this award for the first time?","opt":[{"l":"A","v":"2019"},{"l":"B","v":"2020"},{"l":"C","v":"2021"},{"l":"D","v":"2022"}],"ans":"B"},{"id":3,"exam":"CHSE12","g":"12","sub":"General Studies","ch":"Sports, Awards & Summits","diff":"H","q":"The 'Mahindra Scorpio' trophy is awarded annually in which domestic Indian cricket tournament?","opt":[{"l":"A","v":"Ranji Trophy"},{"l":"B","v":"Vijay Hazare Trophy"},{"l":"C","v":"Syed Mushtaq Ali Trophy"},{"l":"D","v":"Deodhar Trophy"}],"ans":"A"},{"id":4,"exam":"CHSE12","g":"12","sub":"General Studies","ch":"Sports, Awards & Summits","diff":"H","q":"Which country hosted the 2022 FIFA World Cup, the first to be held in the Arab world?","opt":[{"l":"A","v":"Saudi Arabia"},{"l":"B","v":"United Arab Emirates"},{"l":"C","v":"Qatar"},{"l":"D","v":"Bahrain"}],"ans":"C"},{"id":5,"exam":"CHSE12","g":"12","sub":"General Studies","ch":"Sports, Awards & Summits","diff":"H","q":"The Dronacharya Award, given to outstanding sports coaches in India, is named after which legendary figure from the Mahabharata?","opt":[{"l":"A","v":"Arjuna"},{"l":"B","v":"Bhishma"},{"l":"C","v":"Dronacharya"},{"l":"D","v":"Kripa"}],"ans":"C"},{"id":6,"exam":"CHSE12","g":"12","sub":"General Studies","ch":"Sports, Awards & Summits","diff":"H","q":"The G20 Summit is a forum for leaders of the world's major economies. Which of these is NOT a permanent member of the G20?","opt":[{"l":"A","v":"India"},{"l":"B","v":"France"},{"l":"C","v":"Canada"},{"l":"D","v":"Switzerland"}],"ans":"D"},{"id":7,"exam":"CHSE12","g":"12","sub":"General Studies","ch":"Sports, Awards & Summits","diff":"H","q":"The Nobel Prize in Literature is awarded annually. Who was the first Indian to win the Nobel Prize in Literature?","opt":[{"l":"A","v":"Rabindranath Tagore"},{"l":"B","v":"Amartya Sen"},{"l":"C","v":"Mother Teresa"},{"l":"D","v":"C. V. Raman"}],"ans":"A"},{"id":8,"exam":"CHSE12","g":"12","sub":"General Studies","ch":"Sports, Awards & Summits","diff":"H","q":"The 'ICC Player of the Year' award for Test cricket is named after which legendary cricketer?","opt":[{"l":"A","v":"Sir Garfield Sobers Trophy"},{"l":"B","v":"Sir Jack Hobbs Trophy"},{"l":"C","v":"Sir Donald Bradman Trophy"},{"l":"D","v":"Sir Vivian Richards Trophy"}],"ans":"C"},{"id":9,"exam":"CHSE12","g":"12","sub":"General Studies","ch":"Sports, Awards & Summits","diff":"H","q":"The Ryder Cup is a biennial men's golf competition contested between teams from Europe and which other continent?","opt":[{"l":"A","v":"Asia"},{"l":"B","v":"North America"},{"l":"C","v":"South America"},{"l":"D","v":"Africa"}],"ans":"B"},{"id":10,"exam":"CHSE12","g":"12","sub":"General Studies","ch":"Sports, Awards & Summits","diff":"H","q":"The 'Commonwealth Games' are held every four years. Which city hosted the 2010 Commonwealth Games?","opt":[{"l":"A","v":"Melbourne"},{"l":"B","v":"Delhi"},{"l":"C","v":"Glasgow"},{"l":"D","v":"Gold Coast"}],"ans":"B"}]
+[
+  {
+    "id": 1,
+    "exam": "CHSE12",
+    "g": "12",
+    "sub": "General Studies / General awareness",
+    "ch": "Geography of India and the world",
+    "diff": "Hardest",
+    "q": "Which of the following river systems in India originates from the Amarkantak Plateau and flows through a rift valley before emptying into the Arabian Sea?",
+    "opt": [
+      {
+        "l": "A",
+        "v": "Mahanadi"
+      },
+      {
+        "l": "B",
+        "v": "Godavari"
+      },
+      {
+        "l": "C",
+        "v": "Narmada"
+      },
+      {
+        "l": "D",
+        "v": "Tapti"
+      }
+    ],
+    "ans": "C"
+  },
+  {
+    "id": 2,
+    "exam": "CHSE12",
+    "g": "12",
+    "sub": "General Studies / General awareness",
+    "ch": "Geography of India and the world",
+    "diff": "Hardest",
+    "q": "The 'Ring of Fire' is a major area in the basin of the Pacific Ocean where a large number of earthquakes and volcanic eruptions occur. Which tectonic plates are primarily involved in this phenomenon?",
+    "opt": [
+      {
+        "l": "A",
+        "v": "North American Plate and Eurasian Plate"
+      },
+      {
+        "l": "B",
+        "v": "Pacific Plate and surrounding plates (e.g., Nazca, Cocos, Philippine Sea)"
+      },
+      {
+        "l": "C",
+        "v": "African Plate and South American Plate"
+      },
+      {
+        "l": "D",
+        "v": "Antarctic Plate and Indian Plate"
+      }
+    ],
+    "ans": "B"
+  },
+  {
+    "id": 3,
+    "exam": "CHSE12",
+    "g": "12",
+    "sub": "General Studies / General awareness",
+    "ch": "Geography of India and the world",
+    "diff": "Hardest",
+    "q": "Consider the following statements about the Western Ghats of India: 1. They are older than the Himalayas. 2. They run parallel to the eastern coast of India. 3. They are recognized as a UNESCO World Heritage Site for their biodiversity. Which of the statements are correct?",
+    "opt": [
+      {
+        "l": "A",
+        "v": "1 and 2 only"
+      },
+      {
+        "l": "B",
+        "v": "1 and 3 only"
+      },
+      {
+        "l": "C",
+        "v": "2 and 3 only"
+      },
+      {
+        "l": "D",
+        "v": "1, 2 and 3"
+      }
+    ],
+    "ans": "B"
+  },
+  {
+    "id": 4,
+    "exam": "CHSE12",
+    "g": "12",
+    "sub": "General Studies / General awareness",
+    "ch": "Geography of India and the world",
+    "diff": "Hardest",
+    "q": "The monsoon rainfall in India is primarily influenced by the differential heating of land and sea. Which of the following phenomena is crucial for the onset and withdrawal of the Indian monsoon?",
+    "opt": [
+      {
+        "l": "A",
+        "v": "Jet Streams"
+      },
+      {
+        "l": "B",
+        "v": "El Niño Southern Oscillation (ENSO)"
+      },
+      {
+        "l": "C",
+        "v": "Tropical Cyclones"
+      },
+      {
+        "l": "D",
+        "v": "Subtropical Westerly Jet"
+      }
+    ],
+    "ans": "D"
+  },
+  {
+    "id": 5,
+    "exam": "CHSE12",
+    "g": "12",
+    "sub": "General Studies / General awareness",
+    "ch": "Geography of India and the world",
+    "diff": "Hardest",
+    "q": "Which of the following is the largest drainage basin in the world by discharge volume?",
+    "opt": [
+      {
+        "l": "A",
+        "v": "Congo River Basin"
+      },
+      {
+        "l": "B",
+        "v": "Nile River Basin"
+      },
+      {
+        "l": "C",
+        "v": "Amazon River Basin"
+      },
+      {
+        "l": "D",
+        "v": "Mississippi River Basin"
+      }
+    ],
+    "ans": "C"
+  },
+  {
+    "id": 6,
+    "exam": "CHSE12",
+    "g": "12",
+    "sub": "General Studies / General awareness",
+    "ch": "Geography of India and the world",
+    "diff": "Hardest",
+    "q": "The 'Great Dividing Range' is a major mountain system in which continent?",
+    "opt": [
+      {
+        "l": "A",
+        "v": "North America"
+      },
+      {
+        "l": "B",
+        "v": "South America"
+      },
+      {
+        "l": "C",
+        "v": "Africa"
+      },
+      {
+        "l": "D",
+        "v": "Australia"
+      }
+    ],
+    "ans": "D"
+  },
+  {
+    "id": 7,
+    "exam": "CHSE12",
+    "g": "12",
+    "sub": "General Studies / General awareness",
+    "ch": "Geography of India and the world",
+    "diff": "Hardest",
+    "q": "Which strait separates the Indian Ocean from the Pacific Ocean and connects the mainland of Australia to Tasmania?",
+    "opt": [
+      {
+        "l": "A",
+        "v": "Strait of Malacca"
+      },
+      {
+        "l": "B",
+        "v": "Bass Strait"
+      },
+      {
+        "l": "C",
+        "v": "Torres Strait"
+      },
+      {
+        "l": "D",
+        "v": "Cook Strait"
+      }
+    ],
+    "ans": "B"
+  },
+  {
+    "id": 8,
+    "exam": "CHSE12",
+    "g": "12",
+    "sub": "General Studies / General awareness",
+    "ch": "Geography of India and the world",
+    "diff": "Hardest",
+    "q": "The 'Cherrapunji' region in Northeast India receives exceptionally high rainfall. Which of the following mountain ranges are responsible for this phenomenon?",
+    "opt": [
+      {
+        "l": "A",
+        "v": "Aravalli Range"
+      },
+      {
+        "l": "B",
+        "v": "Eastern Ghats"
+      },
+      {
+        "l": "C",
+        "v": "Khasi Hills"
+      },
+      {
+        "l": "D",
+        "v": "Vindhya Range"
+      }
+    ],
+    "ans": "C"
+  },
+  {
+    "id": 9,
+    "exam": "CHSE12",
+    "g": "12",
+    "sub": "General Studies / General awareness",
+    "ch": "Geography of India and the world",
+    "diff": "Hardest",
+    "q": "Which desert is the largest hot desert in the world and covers a significant portion of North Africa?",
+    "opt": [
+      {
+        "l": "A",
+        "v": "Gobi Desert"
+      },
+      {
+        "l": "B",
+        "v": "Kalahari Desert"
+      },
+      {
+        "l": "C",
+        "v": "Sahara Desert"
+      },
+      {
+        "l": "D",
+        "v": "Arabian Desert"
+      }
+    ],
+    "ans": "C"
+  },
+  {
+    "id": 10,
+    "exam": "CHSE12",
+    "g": "12",
+    "sub": "General Studies / General awareness",
+    "ch": "Geography of India and the world",
+    "diff": "Hardest",
+    "q": "The phenomenon of 'Tsunami' is caused by seismic activities under the ocean. Which of the following statements accurately describes its origin?",
+    "opt": [
+      {
+        "l": "A",
+        "v": "Volcanic eruptions on the seabed"
+      },
+      {
+        "l": "B",
+        "v": "Underwater earthquakes or landslides"
+      },
+      {
+        "l": "C",
+        "v": "Meteorite impacts in the ocean"
+      },
+      {
+        "l": "D",
+        "v": "Tectonic plate collisions beneath the ocean floor"
+      }
+    ],
+    "ans": "D"
+  }
+]

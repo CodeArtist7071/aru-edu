@@ -88,7 +88,7 @@ const Login = () => {
         reset();
       } else {
         const { data, error } = await supabase.auth.signInWithPassword({
-          email: info.email,
+          email: info.email.trim(),
           password: info.password,
         });
         
@@ -193,6 +193,9 @@ const Login = () => {
                     required: "Email is required",
                     pattern: { value: /^\S+@\S+\.\S+$/, message: "Invalid email" }
                   })}
+                  autoCapitalize="none"
+                  autoCorrect="off"
+                  spellCheck="false"
                 />
                 {!isResetMode && !isMagicLinkMode && (
                   <InputWithLabel
@@ -203,6 +206,9 @@ const Login = () => {
                     error={errors.password}
                     labelIcon={<EyeClosed className="size-4" />}
                     {...register("password", { required: !isResetMode && !isMagicLinkMode ? "Password is required" : false })}
+                    autoComplete="current-password"
+                    autoCorrect="off"
+                    spellCheck="false"
                   />
                 )}
 

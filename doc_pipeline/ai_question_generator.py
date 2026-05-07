@@ -22,8 +22,38 @@ def clean_json_output(text):
     return "[]"
 
 
-def load_prompt():
-    prompt_path = os.path.join("ai_prompt", "question_prompt.txt")
+def load_prompt(subject_name):
+    """
+    Dynamically loads the subject-specific prompt for the given subject.
+    If no specific prompt is found, falls back to the generic question_prompt.txt.
+    """
+    subject_map = {
+        "Arithmetic and Data Interpretation": "math_prompt.txt",
+        "Logical Reasoning": "reasoning_prompt.txt",
+        "Computer Awareness": "computer_prompt.txt",
+        "General Knowledge (Odisha)": "gk_prompt.txt",
+        "English": "english_prompt.txt",
+        "General Studies": "gs_prompt.txt",
+        "Odia": "odia_prompt.txt",
+        "Everyday Science": "science_prompt.txt",
+        "Everyday Science-PMPET": "science_prompt.txt",
+        "Mathematics-PMPET": "math_prompt.txt",
+        "Reasoning-PMPET": "reasoning_prompt.txt",
+        "Computer Awareness-PMPET": "computer_prompt.txt",
+        "General Studies-PMPET": "gs_prompt.txt",
+        "Odia-PMPET": "odia_prompt.txt",
+        "General English-PMPET": "english_prompt.txt"
+    }
+
+    filename = subject_map.get(subject_name, "question_prompt.txt")
+    prompt_path = os.path.join("ai_prompt", filename)
+
+    if not os.path.exists(prompt_path):
+        print(f"[PROMPT] No specific prompt for '{subject_name}' (Tried {filename}). Falling back to generic.")
+        prompt_path = os.path.join("ai_prompt", "question_prompt.txt")
+    else:
+        print(f"[PROMPT] Using dedicated prompt: {filename} for Subject: '{subject_name}'")
+
     with open(prompt_path, "r", encoding="utf-8") as f:
         return f.read()
         
@@ -109,10 +139,10 @@ def get_round_robin_subject_chapter(mapping):
 def fetch_ids(exam_name, subject_name, chapter_name):
     exam_res = supabase.table("exams").select("id").eq("name", exam_name).execute()
     exam_id = exam_res.data[0]["id"] if exam_res.data else None
-
+    
     subj_res = supabase.table("subjects").select("id").eq("name", subject_name).execute()
     subj_id = subj_res.data[0]["id"] if subj_res.data else None
-
+    print("subject_data:---",subject_name,subj_id)
     chap_res = supabase.table("chapters").select("id").eq("name", chapter_name).execute()
     chap_id = chap_res.data[0]["id"] if chap_res.data else None
 
@@ -167,20 +197,26 @@ def push_to_supabase(questions_data, exam_id, subject_id, chapter_id):
 def generate_questions(
     use_vertexai=False, project=None, location=None, async_mode=False
 ):
-    print("Loading mapping and prompt...")
+    print("Loading mapping and subject...")
     mapping = get_mapping()
-    base_prompt = load_prompt()
+    
+    exam_name, subject_name, chapter_name = get_round_robin_subject_chapter(mapping)
+    print(f"Targeting Exam: {exam_name}, Subject: {subject_name}, Chapter: {chapter_name}")
+
+    base_prompt = load_prompt(subject_name)
+
     model = GeminiModel(
         use_vertexai=use_vertexai, project=project, location=location, async_mode=async_mode
     )
 
-    exam_name, subject_name, chapter_name = get_round_robin_subject_chapter(mapping)
-    print(f"Targeting Exam: {exam_name}, Subject: {subject_name}, Chapter: {chapter_name}")
-
     prompt = base_prompt + f"\n\nGenerate exactly 10 questions for Subject: '{subject_name}', Chapter: '{chapter_name}'."
 
     print("Connecting to Gemini Model to generate 10 questions...")
-    response_text = model.generate(prompt)
+    response_text = model.generate(
+        prompt, 
+        response_mime_type="application/json",
+        config={"max_output_tokens": 4096, "temperature": 0.7}
+    )
 
     # Save raw model response for debugging
     os.makedirs("outputs", exist_ok=True)

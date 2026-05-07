@@ -649,18 +649,45 @@ def main(pdf_path):
 # -------------------------------
 
 if __name__ == "__main__":
+    import sys
+    
+    # --------------------------------------------------
+    # MODE 1: DIRECT CLI MANIFESTATION
+    # --------------------------------------------------
+    if len(sys.argv) > 1:
+        target_path = sys.argv[1]
+        if os.path.exists(target_path):
+            log(f"MANUAL OVERRIDE: Processing specific entity: {target_path}")
+            main(target_path)
+        else:
+            log(f"CRITICAL ERROR: Entity not found at path: {target_path}")
+        sys.exit(0)
 
-    log("Downloading PDFs from Google Drive")
+    # --------------------------------------------------
+    # MODE 2: HYBRID LATTICE MODE (DRIVE + LOCAL)
+    # --------------------------------------------------
+    log("INITIALIZING HYBRID LATTICE MODE (Cloud Sync + Local Discovery)")
 
-    pdf_files = download_pdfs()
+    # Discovery A: Cloud Synchronization
+    try:
+        log("Orchestrating Google Drive Synchronization...")
+        drive_files = download_pdfs()
+    except Exception as e:
+        log(f"CLOUD SYNC WARNING: {e}. Falling back to strictly local manifestation.")
+        drive_files = []
 
-    log(f"Found {len(pdf_files)} PDFs")
+    # Discovery B: Local Repository Scanning
+    PDF_DIR = "pdfs"
+    os.makedirs(PDF_DIR, exist_ok=True)
+    local_files = [os.path.join(PDF_DIR, f) for f in os.listdir(PDF_DIR) if f.lower().endswith(".pdf")]
 
-    for pdf in pdf_files:
+    # Discovery C: Unified Set Deduplication
+    unified_pool = sorted(list(set(drive_files + local_files)))
 
-        log(f"Processing {pdf}")
+    log(f"Unified pool synchronized. Total unique entities for evaluation: {len(unified_pool)}")
 
-        main(pdf)
+    for pdf_manifest in unified_pool:
+        main(pdf_manifest)
 
 
 

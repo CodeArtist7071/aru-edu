@@ -1,0 +1,17 @@
+{
+  "mappings": [
+    {
+      "exam_name": "CGL",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "board_name": "OSSC",
+      "board_id": "7f35f854-24bb-4b99-89dc-d1ac9701b750",
+      "chapter_name": "Computer Fundamentals",
+      "chapter_id": "b8411ef1-21e5-4215-a456-6ff957b29696"
+    },
+    {
+      "keyword": "Computer Awareness",
+      "subject_name": "Computer Awareness",
+      "subject_id": "6fdb7f5a-cce6-4c16-8d0e-b8f76423fc00"
+    }
+  ]
+}

@@ -22,7 +22,7 @@
   /* Ghost Border */
 
   --font-narrative: "Manrope", sans-serif;
-  --font-editorial: "Manrope", sans-serif; /* Pivot to Sans for consistency */
+  --font-editorial: "Roboto Flex", sans-serif;
   --font-technical: "Space Grotesk", monospace;
 
   --font-size-2xs: 0.625rem;
@@ -37,6 +37,15 @@
 }
 
 @layer base {
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* App-Native: Prevents browser bounce */
+    overscroll-behavior: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
   html {
     scroll-behavior: smooth;
   }
@@ -61,19 +70,19 @@
   }
 
   .dark {
-    --primary: #22c55e;
-    --primary-container: #006e2f;
-    --on-primary: #052e16;
+    --primary: #52b788; /* Sage Green */
+    --primary-container: #2d6a4f; /* Forest Green */
+    --on-primary: #081c15;
 
-    --surface: #0f120e;
-    --surface-container-low: #181d16;
-    --surface-container-high: #242b21;
-    --surface-container-highest: #2d3629;
-    --surface-container-lowest: #374232;
-    --surface-dim: #0a0d09;
+    --surface: #0b0d0b; /* Deep Charcoal */
+    --surface-container-low: #141714;
+    --surface-container-high: #1b201b;
+    --surface-container-highest: #252b25;
+    --surface-container-lowest: #080908;
+    --surface-dim: #050605;
 
-    --on-surface: #e2e3d9;
-    --on-surface-variant: #bfc9bc;
+    --on-surface: #d8e2dc; /* Pale Sage */
+    --on-surface-variant: #95a5a6;
 
     --background: var(--surface);
     --foreground: var(--on-surface);
@@ -81,12 +90,24 @@
 
   body {
     @apply bg-surface text-on-surface font-narrative antialiased transition-colors duration-700 ease-[var(--ease-botanical)] leading-normal;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Optimize momentum scrolling for all scrollable pods */
+  .overflow-y-auto {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
   }
 }
 
 @layer utilities {
   .glass {
-    @apply bg-surface-container-high/20 backdrop-blur-xl;
+    @apply bg-surface-container-high/40 backdrop-blur-2xl border border-white/5;
+  }
+
+  .liquid-glass {
+    @apply bg-surface/60 backdrop-blur-3xl border border-white/10;
   }
 
   @keyframes reveal-greeting {
@@ -343,6 +364,22 @@
   /* Core Theme Animations & Glass (Subtle remains) */
   .glass-editorial {
     @apply bg-surface-container-high/60 backdrop-blur-xl border border-white/10;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-primary/20 rounded-full;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary/40;
   }
 }
 

@@ -110,28 +110,28 @@ const Exam = () => {
   }
 
   return (
-    <div className="text-on-surface min-h-screen font-narrative antialiased transition-colors duration-700">
+    <div className="text-on-surface min-h-screen px-3 font-narrative antialiased transition-colors duration-700">
       {/* Main Content */}
       <main className="max-w-300 mx-auto w-full">
         {/* Page Header - Asymmetrical & Editorial */}
-        <div className="md:mb-16 mb-6 max-w-2xl">
-          <h1 className="mt-3 text-2xl md:text-5xl font-black tracking-tight mb-6 leading-[0.9] text-on-surface animate-reveal">
-            Subject-wise <span className="text-primary italic">Curriculum</span>
+        <div className="md:mb-16 mb-1 max-w-2xl">
+          <h1 className="mt-3 text-2xl md:text-5xl font-black tracking-tight mb-6 leading-[1.2] text-on-surface animate-reveal">
+            Select Chapters from<span className="text-primary italic pl-1">the Subjects below</span>
           </h1>
-          <p className="text-on-surface-variant text-sm md:text-lg leading-relaxed max-w-md animate-reveal opacity-80" style={{ animationDelay: '0.1s' }}>
+          <p className="text-on-surface-variant text-md md:text-lg leading-relaxed max-w-md animate-reveal opacity-80" style={{ animationDelay: '0.1s' }}>
             Target your weak areas and track your growth across the OSSC CGL
             ecosystem.
           </p>
         </div>
 
         {/* --- STICKY EXAM PREFERENCE TICKER --- */}
-        <div className="sticky -top-3 md:-top-6 lg:-top-10 z-40 dark:bg-surface-container-low/80 backdrop-blur-3xl border-b border-on-surface/5 -mx-6 lg:-mx-10 px-6 lg:px-10 py-6 mb-12 shadow-sm transition-all duration-500">
-          <div className="flex-col md:flex-row max-w-300 mx-auto overflow-x-auto custom-scrollbar-hide flex items-center justify-between gap-2">
+        <div className="sticky -top-3 md:-top-6 lg:-top-10 z-40 dark:bg-surface-container-low/80 backdrop-blur-3xl border-b border-on-surface/5 -mx-6 lg:-mx-10 px-6 lg:px-10 pt-6 shadow-sm transition-all duration-500">
+          <div className="hidden flex-col md:flex-row max-w-300 mx-auto custom-scrollbar-hide md:flex items-center justify-start gap-2">
             <div className="flex items-center gap-3 mr-6 shrink-0">
               <Target className="size-4 text-primary" />
-              <span className="text-[10px] font-technical uppercase tracking-[0.3em] font-black opacity-40">Active Landscapes:</span>
+              <span className="text-[10px] font-technical uppercase tracking-[0.3em] font-black opacity-40">Select Exams:</span>
             </div>
-            <div className="overflow-x-scroll">
+            <div className="hidden overflow-x-scroll">
               <ExamTicker
                 targetedExams={targetedExams}
                 selectedExam={eid || ""}
@@ -142,125 +142,127 @@ const Exam = () => {
           </div>
         </div>
 
-        {data.map((subject: any, index: number) => {
-          // Technical Verification: ensure parent subject existence manifestation
-          if (!subject.subjects) return null;
+        <div className="max-h-[70dvh] overflow-y-auto pr-1 md:pr-3 custom-scrollbar pt-2 pb-12">
+          {data.map((subject: any, index: number) => {
+            // Technical Verification: ensure parent subject existence manifestation
+            if (!subject.subjects) return null;
 
-          if (subject.exam_id === eid)
-            return (
-              <section
-                key={index}
-                className="bg-surface-container-low rounded-3xl overflow-hidden hover-bloom mb-5 md:mb-12 transition-all duration-500 ease-botanical"
-              >
-                {/* Subject Header - Accordion Toggle */}
-                <div
-                  onClick={() => toggleSubject(subject.subjects.id)}
-                  className="p-4 md:p-8 bg-surface-container-high/40 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 cursor-pointer group"
+            if (subject.exam_id === eid)
+              return (
+                <section
+                  key={index}
+                  className="bg-surface-container-low rounded-3xl overflow-hidden hover-bloom mb-5 md:mb-12 transition-all duration-500 ease-botanical"
                 >
-                  <div className="flex items-center gap-2 md:gap-4 flex-1">
-                    <div className="md:size-14 size-10 bg-primary/10 rounded-xl md:rounded-2xl flex text-black items-center justify-center transition-transform duration-500 group-hover:scale-110">
-                      <span className="text-primary text-2xl">
-                        <BookCopy className="md:w-[50px] md:h-[50px] w-[20px] h-[20px]" />
-                      </span>
-                    </div>
-                    <div>
-                      <h2 className="text-sm md:text-2xl font-bold tracking-tight text-on-surface">
-                        {subject.subjects.name}
-                      </h2>
-                      <p className="text-xs md:text-sm text-on-surface-variant max-w-sm opacity-60">
-                        {subject.subjects.description}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-8 w-full md:w-auto">
-                    <div className="w-full md:w-48">
-                      <div className="flex justify-between items-baseline mb-3">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-primary font-mono opacity-70">Study Progress</span>
-                        <span className="text-sm font-bold font-mono">4 <span className="text-on-surface-variant/40 font-normal">/</span> 12</span>
+                  {/* Subject Header - Accordion Toggle */}
+                  <div
+                    onClick={() => toggleSubject(subject.subjects.id)}
+                    className="p-4 md:p-8 bg-surface-container-high/40 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 cursor-pointer group"
+                  >
+                    <div className="flex items-center gap-2 md:gap-4 flex-1">
+                      <div className="md:size-14 size-10 bg-primary/10 rounded-xl md:rounded-2xl flex text-black items-center justify-center transition-transform duration-500 group-hover:scale-110">
+                        <span className="text-primary text-2xl">
+                          <BookCopy className="md:w-[50px] md:h-[50px] w-[20px] h-[20px]" />
+                        </span>
                       </div>
-                      <div className="w-full h-3 bg-surface-container-highest rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-primary-container rounded-full transition-all duration-1000 ease-botanical"
-                          style={{ width: "33%" }}
-                        />
+                      <div>
+                        <h2 className="text-sm md:text-2xl font-bold tracking-tight text-on-surface">
+                          {subject.subjects.name}
+                        </h2>
+                        <p className="text-xs md:text-sm text-on-surface-variant max-w-sm opacity-60">
+                          {subject.subjects.description}
+                        </p>
                       </div>
                     </div>
 
-                    <div className={`p-2 rounded-full bg-surface-container-highest text-on-surface-variant transition-transform duration-500 ${expandedSubjects.has(subject.subjects.id) ? "rotate-180" : ""}`}>
-                      <ChevronDown size={20} />
+                    <div className="flex items-center gap-8 w-full md:w-auto">
+                      <div className="w-full md:w-48">
+                        <div className="flex justify-between items-baseline mb-3">
+                          <span className="text-[10px] font-bold uppercase tracking-widest text-primary font-mono opacity-70">Study Progress</span>
+                          <span className="text-sm font-bold font-mono">4 <span className="text-on-surface-variant/40 font-normal">/</span> 12</span>
+                        </div>
+                        <div className="w-full h-3 bg-surface-container-highest rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-primary-container rounded-full transition-all duration-1000 ease-botanical"
+                            style={{ width: "33%" }}
+                          />
+                        </div>
+                      </div>
+
+                      <div className={`p-2 rounded-full bg-surface-container-highest text-on-surface-variant transition-transform duration-500 ${expandedSubjects.has(subject.subjects.id) ? "rotate-180" : ""}`}>
+                        <ChevronDown size={20} />
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Collapsible Content */}
-                <div className={`grid transition-all duration-500 ease-botanical ${expandedSubjects.has(subject.subjects.id) ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
-                  <div className="overflow-hidden">
-                    <div className="px-4 py-8 space-y-2 bg-surface/30">
-                      {/* Chapter Items */}
-                      {e_data.map((item, idx) => {
-                        // Technical Verification: ensure chapter subject manifestation
-                        if (!item.subjects || !subject.subjects) return null;
+                  {/* Collapsible Content */}
+                  <div className={`grid transition-all duration-500 ease-botanical ${expandedSubjects.has(subject.subjects.id) ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
+                    <div className="overflow-hidden">
+                      <div className="px-4 py-8 space-y-2 bg-surface/30">
+                        {/* Chapter Items */}
+                        {e_data.map((item, idx) => {
+                          // Technical Verification: ensure chapter subject manifestation
+                          if (!item.subjects || !subject.subjects) return null;
 
-                        if (subject.subjects.id === item.subjects.id) {
-                          return (
-                            <div
-                              onClick={() =>
-                                handleButton(item.subjects.id, item.id)
-                              }
-                              key={idx}
-                              className="group flex flex-row p-2 md:p-5 mx-2 rounded-2xl  justify-between items-center cursor-pointer hover:bg-surface-container-high transition-all duration-300 ease-botanical"
-                            >
-                              <div className="flex mb-6 md:mb-0  items-center gap-5">
-                                <div className={`size-2 rounded-full ${attemptedChapters.has(item.id) ? "bg-primary" : "bg-on-surface-variant/20 group-hover:bg-primary/40"}`} />
-                                <div>
-                                  <h4 className="font-bold text-on-surface  text-lg group-hover:text-primary transition-colors">
-                                    {item.name}
-                                  </h4>
-                                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-on-surface-variant/60">
-                                    Completed 2 days ago
-                                  </span>
+                          if (subject.subjects.id === item.subjects.id) {
+                            return (
+                              <div
+                                onClick={() =>
+                                  handleButton(item.subjects.id, item.id)
+                                }
+                                key={idx}
+                                className="group flex flex-row p-2 md:p-5 mx-2 rounded-2xl  justify-between items-center cursor-pointer hover:bg-surface-container-high transition-all duration-300 ease-botanical"
+                              >
+                                <div className="flex mb-6 md:mb-0  items-center gap-5">
+                                  <div className={`size-2 rounded-full ${attemptedChapters.has(item.id) ? "bg-primary" : "bg-on-surface-variant/20 group-hover:bg-primary/40"}`} />
+                                  <div>
+                                    <h4 className="font-bold text-on-surface  text-sm group-hover:text-primary transition-colors">
+                                      {item.name}
+                                    </h4>
+                                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-on-surface-variant/60">
+                                      Completed 2 days ago
+                                    </span>
+                                  </div>
+                                </div>
+                                <div className="hidden md:block">
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleButton(item.subjects.id, item.id);
+                                    }}
+                                    className={`md:mt-0 px-6 py-2.5 rounded-full text-sm font-black transition-all duration-300 shadow-sm ${attemptedChapters.has(item.id)
+                                        ? "bg-surface-container-highest text-on-surface hover:bg-surface-dim"
+                                        : "bg-linear-to-r from-primary to-primary-container text-white hover:scale-105 active:scale-95 shadow-primary/20 hover:shadow-lg"
+                                      }`}
+                                  >
+                                    {attemptedChapters.has(item.id) ? "Retake Test" : "Take Test"}
+                                  </button>
+                                </div>
+                                <div className="block md:hidden">
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleButton(item.subjects.id, item.id);
+                                    }}
+                                    className={`md:mt-0 p-2 rounded-full text-sm font-black transition-all duration-300 shadow-sm ${attemptedChapters.has(item.id)
+                                        ? "bg-surface-container-highest text-on-surface hover:bg-surface-dim"
+                                        : "bg-linear-to-r from-primary to-primary-container text-white hover:scale-105 active:scale-95 shadow-primary/20 hover:shadow-lg"
+                                      }`}
+                                  >
+                                    <ArrowRight />
+                                  </button>
                                 </div>
                               </div>
-                              <div className="hidden md:block">
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleButton(item.subjects.id, item.id);
-                                  }}
-                                  className={`md:mt-0 px-6 py-2.5 rounded-full text-sm font-black transition-all duration-300 shadow-sm ${attemptedChapters.has(item.id)
-                                      ? "bg-surface-container-highest text-on-surface hover:bg-surface-dim"
-                                      : "bg-linear-to-r from-primary to-primary-container text-white hover:scale-105 active:scale-95 shadow-primary/20 hover:shadow-lg"
-                                    }`}
-                                >
-                                  {attemptedChapters.has(item.id) ? "Retake Test" : "Take Test"}
-                                </button>
-                              </div>
-                              <div className="block md:hidden">
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleButton(item.subjects.id, item.id);
-                                  }}
-                                  className={`md:mt-0 p-2 rounded-full text-sm font-black transition-all duration-300 shadow-sm ${attemptedChapters.has(item.id)
-                                      ? "bg-surface-container-highest text-on-surface hover:bg-surface-dim"
-                                      : "bg-linear-to-r from-primary to-primary-container text-white hover:scale-105 active:scale-95 shadow-primary/20 hover:shadow-lg"
-                                    }`}
-                                >
-                                  <ArrowRight />
-                                </button>
-                              </div>
-                            </div>
-                          );
-                        }
-                        return null;
-                      })}
+                            );
+                          }
+                          return null;
+                        })}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </section>
-            );
-        })}
+                </section>
+              );
+          })}
+        </div>
 
         {/* --- ADAPTIVE PREFERENCES MANIFEST (ACTION SHEET) --- */}
         {showPrefs && (

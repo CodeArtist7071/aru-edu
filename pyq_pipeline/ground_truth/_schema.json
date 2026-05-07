@@ -1,0 +1,19 @@
+{
+  "page_number": 1,
+  "source_pdf": "Rakesh Yadav Maths 7300 Book PDF.pdf",
+  "questions": [
+    {
+      "question_number": 1,
+      "question": "Full question text here...",
+      "options": {
+        "A": "Option A text",
+        "B": "Option B text",
+        "C": "Option C text",
+        "D": "Option D text"
+      },
+      "correct_answer": "B",
+      "chapter": "Percentage",
+      "difficulty": "Easy"
+    }
+  ]
+}

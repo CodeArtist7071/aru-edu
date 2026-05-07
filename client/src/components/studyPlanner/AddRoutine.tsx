@@ -337,51 +337,51 @@ export const AddRoutine = () => {
 
   if (showWelcome) {
     return (
-      <div className="h-full bg-surface shadow-ambient-lg border-l border-on-surface/5 flex flex-col animate-reveal-right overflow-hidden md:rounded-[2.5rem]">
-        <div className="h-1 w-full bg-linear-to-r from-green-500 via-emerald-400 to-green-600" />
-        
-        <div className="flex-1 flex flex-col px-10 pt-12 pb-10 overflow-y-auto">
-          <div className="mb-12">
-            <h1 className="text-4xl font-black tracking-tighter text-on-surface leading-snug">
-              Advance <br />
-              <span className="text-primary italic">Edit Task</span>
-            </h1>
-            <div className="h-1 w-12 bg-primary/20 mt-6 rounded-full" />
-            <p className="text-[10px] font-technical uppercase tracking-[0.4em] text-on-surface-variant opacity-40 mt-8">
-              Boutique Planner Protocol
-            </p>
-          </div>
+      <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 backdrop-blur-sm animate-in fade-in duration-500">
+        <div className="w-full max-w-md h-[85vh] liquid-glass flex flex-col rounded-t-[3rem] animate-in slide-in-from-bottom-full duration-700 ease-premium overflow-hidden">
+          <div className="h-1.5 w-12 bg-white/20 rounded-full mx-auto mt-4 shrink-0" />
+          
+          <div className="flex-1 flex flex-col px-10 pt-8 pb-10 overflow-y-auto custom-scrollbar">
+            <div className="mb-10 text-center">
+              <h1 className="text-4xl font-black tracking-tighter text-on-surface leading-tight">
+                Design Your <br />
+                <span className="text-primary italic">Ritual Flow</span>
+              </h1>
+              <p className="text-[10px] font-technical uppercase tracking-[0.4em] text-primary mt-6">
+                Strategic Planning Protocol
+              </p>
+            </div>
 
-          <div className="space-y-8 flex-1">
-            {[
-              { icon: <Book size={20} />, title: "Add Custom Duration to your task", desc: "Add (weekly,monthly,custom) duration to your task" },
-              { icon: <RefreshCw size={20} />, title: "Automatically Calculate Duration", desc: "Eaasily Set task for weekly,monthly,custom duration" },
-              { icon: <Sparkles size={20} />, title: "Add Chapters", desc: "For convenience we have added the chapters based on your relevant exam" },
-              { icon: <Calendar size={20} />, title: "Sync with Google Calendar", desc: "Automatic sync with Google Calendar." },
-            ].map((feature, i) => (
-              <div key={i} className="flex items-start gap-6 group">
-                <div className="size-12 rounded-2xl bg-surface-container-high/40 flex items-center justify-center text-primary group-hover:bg-primary/10 transition-colors shrink-0">
-                  {feature.icon}
+            <div className="space-y-8 flex-1">
+              {[
+                { icon: <Book size={20} />, title: "Custom Durations", desc: "Flexibly set tasks for Today, Weekly, or Monthly cycles." },
+                { icon: <RefreshCw size={20} />, title: "Auto-Calculated Cycles", desc: "End dates computed automatically for consistency." },
+                { icon: <Sparkles size={20} />, title: "Syllabus Integration", desc: "Native support for exam-specific chapter rituals." },
+                { icon: <Calendar size={20} />, title: "Cloud Manifestation", desc: "Bi-directional sync with Google Calendar." },
+              ].map((feature, i) => (
+                <div key={i} className="flex items-start gap-6 group">
+                  <div className="size-12 rounded-2xl bg-white/5 flex items-center justify-center text-primary group-hover:bg-primary/10 transition-colors shrink-0">
+                    {feature.icon}
+                  </div>
+                  <div>
+                    <h3 className="text-xs font-black uppercase tracking-widest text-on-surface mb-1">
+                      {feature.title}
+                    </h3>
+                    <p className="text-[11px] text-on-surface-variant/60 font-medium leading-relaxed">
+                      {feature.desc}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-xs font-black uppercase tracking-widest text-on-surface mb-1">
-                    {feature.title}
-                  </h3>
-                  <p className="text-[11px] text-on-surface-variant/60 font-medium leading-relaxed">
-                    {feature.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
 
-          <div className="mt-12">
-            <button 
-              onClick={handleProceed}
-              className="w-full py-6 bg-on-surface text-surface rounded-[3rem] font-black uppercase text-[10px] tracking-[0.4em] transition-all hover:bg-primary hover:shadow-xl hover:shadow-primary/20 active:scale-95 flex items-center justify-center gap-3 group"
-            >
-              Proceed to Workspace <ArrowRight size={16} />
-            </button>
+            <div className="mt-8">
+              <button 
+                onClick={handleProceed}
+                className="w-full py-6 bg-primary text-on-primary rounded-[2.5rem] font-black uppercase text-[10px] tracking-[0.4em] transition-all shadow-xl shadow-primary/20 active:scale-95 flex items-center justify-center gap-3 group"
+              >
+                Enter Creator Workspace <ArrowRight size={16} />
+              </button>
           </div>
         </div>
       </div>
@@ -389,210 +389,141 @@ export const AddRoutine = () => {
   }
 
   return (
-    <div className="h-full bg-surface shadow-ambient-lg border-l border-on-surface/5 flex flex-col animate-reveal-right overflow-hidden md:rounded-[2.5rem]">
-      <div className="h-1 w-full bg-linear-to-r from-green-500 via-emerald-400 to-green-600" />
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 backdrop-blur-sm animate-in fade-in duration-500">
+      <div className="w-full max-w-md h-[85vh] liquid-glass flex flex-col rounded-t-[3rem] animate-in slide-in-from-bottom-full duration-700 ease-premium overflow-hidden">
+        <div className="h-1.5 w-12 bg-white/20 rounded-full mx-auto mt-4 shrink-0" />
 
-      <div className="flex items-center justify-between px-8 pt-6 pb-6">
-        <div>
-          <h2 className="text-2xl font-black tracking-tighter text-on-surface leading-none">
-            {editingHabitId ? "Edit Task" : "Add Task"}
-          </h2>
-          <p className="text-[9px] font-technical uppercase tracking-[0.3em] text-on-surface-variant opacity-40 mt-2">
-            {editingHabitId ? "Optimize Patterns" : "Design Persistence"}
-          </p>
-        </div>
-        <button
-          onClick={() => navigate(-1)}
-          className="size-10 rounded-2xl bg-surface-container-high/40 text-on-surface-variant hover:bg-surface-container-highest hover:text-primary transition-all duration-300 flex items-center justify-center group"
-        >
-          <ChevronLeft className="size-5 group-hover:-translate-x-1 transition-transform" />
-        </button>
-      </div>
-
-      <div className="flex-1 overflow-y-auto px-8 pb-10 space-y-6 custom-scrollbar scroll-smooth">
-        <ToastBanner toast={toast} />
-
-        {/* AI INPUT RITUAL */}
-        {/* {!editingHabitId && (
-          <div className="bg-surface-container-low border border-on-surface/5 rounded-[2.5rem] p-6 space-y-4 shadow-inner">
-            <div className="flex items-center gap-3">
-              <div className="size-8 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
-                <Sparkles size={16} />
-              </div>
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">AI Natural Language Sync</span>
-              {aiFilled && <span className="ml-auto text-[9px] font-black uppercase tracking-widest text-green-600 flex items-center gap-2 animate-reveal"><CheckCircle2 size={12} /> Sync Complete</span>}
-            </div>
-            <div className="flex gap-3">
-              <input 
-                value={aiInput} 
-                onChange={(e) => setAiInput(e.target.value)} 
-                onKeyDown={(e) => e.key === "Enter" && handleAIParse()} 
-                placeholder="e.g. History revision from 2pm to 4pm..." 
-                className="flex-1 bg-surface-container-high/50 border-none px-5 py-4 rounded-2xl text-sm font-medium text-on-surface placeholder:text-on-surface-variant/40 outline-none focus:ring-2 focus:ring-primary/20 transition-all" 
-              />
-              <button 
-                type="button" 
-                onClick={handleAIParse} 
-                disabled={aiParsing} 
-                className="size-14 bg-primary text-white rounded-2xl flex items-center justify-center hover:scale-105 active:scale-95 disabled:opacity-50 transition-all shadow-lg shadow-primary/20"
-              >
-                {aiParsing ? <Loader size={20} className="animate-spin" /> : <ArrowRight size={20} />}
-              </button>
-            </div>
+        <div className="flex items-center justify-between px-8 pt-6 pb-6">
+          <div>
+            <h2 className="text-2xl font-black tracking-tighter text-on-surface leading-none">
+              {editingHabitId ? "Refine Ritual" : "Open Ritual"}
+            </h2>
+            <p className="text-[9px] font-technical uppercase tracking-[0.3em] text-primary mt-2">
+              {editingHabitId ? "Optimize Patterns" : "Design Persistence"}
+            </p>
           </div>
-        )} */}
-
-        {/* DURATION TOGGLE */}
-        <div>
-          <label className="text-[10px] font-black uppercase tracking-widest text-primary ml-2 flex flex-wrap mb-1"><Tag size={12} className="mr-2" />Select the Duration of your Task</label>
-          <div className="flex bg-surface-container-high p-1 rounded-2xl flex-wrap">
-            <button type="button" onClick={() => setValue("duration_type", "DAILY")} className={`flex-1 py-3 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "DAILY" ? "bg-white text-primary shadow-sm" : "text-on-surface-variant opacity-40"}`}>Today</button>
-            <button type="button" onClick={() => setValue("duration_type", "WEEKLY")} className={`flex-1 py-3 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "WEEKLY" ? "bg-white text-primary shadow-sm" : "text-on-surface-variant opacity-40"}`}>Weekly</button>
-            <button type="button" onClick={() => setValue("duration_type", "MONTHLY")} className={`flex-1 py-3 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "MONTHLY" ? "bg-white text-primary shadow-sm" : "text-on-surface-variant opacity-40"}`}>Monthly</button>
-            <button type="button" onClick={() => setValue("duration_type", "CUSTOM")} className={`flex-1 py-3 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${durationType === "CUSTOM" ? "bg-white text-primary shadow-sm" : "text-on-surface-variant opacity-40"}`}>Custom</button>
-          </div>
+          <button
+            onClick={() => navigate(-1)}
+            className="size-12 rounded-full bg-white/5 text-on-surface-variant hover:text-on-surface transition-all duration-300 flex items-center justify-center"
+          >
+            <X className="size-6" />
+          </button>
         </div>
 
+        <div className="flex-1 overflow-y-auto px-8 pb-10 space-y-8 custom-scrollbar scroll-smooth">
+          <ToastBanner toast={toast} />
 
-
-        {/* SOURCE TOGGLE */}
-        <div>
-          <label className="text-[10px] font-black uppercase tracking-widest text-primary opacity-60 ml-2 flex flex-wrap mb-1"><span className="flex flex-wrap "><Tag size={12} className="mr-2" />{"--Please select Task if you want to add your own task"}<br /> {"---Please select Chapter if you want to add a chapter as routine."}</span></label>
-          <div className="flex bg-surface-container-high p-1 rounded-2xl">
-            <button type="button" onClick={() => setUseChapter(false)} className={`flex-1 py-3 text-[10px] font-black uppercase tracking-[0.2em] rounded-xl transition-all ${!useChapter ? "bg-white text-primary shadow-sm" : "text-on-surface-variant opacity-40"}`}>Task</button>
-            <button type="button" onClick={() => setUseChapter(true)} className={`flex-1 py-3 text-[10px] font-black uppercase tracking-[0.2em] rounded-xl transition-all ${useChapter ? "bg-white text-primary shadow-sm" : "text-on-surface-variant opacity-40"}`}>Chapter</button>
-          </div>
-        </div>
-
-
-        {/* NAME / CHAPTER SECTION */}
-        <div className="space-y-3">
-          <label className="text-[10px] font-black uppercase tracking-widest text-primary opacity-60 ml-2 flex items-center gap-2">
-            <Tag size={12} /> {useChapter ? "Chapter Name" : " Task Name"}
-          </label>
-          {useChapter ? (
-            <select {...register("chapter_id", { required: useChapter ? "Chapter is required" : false })} className="w-full bg-surface-container-low px-6 py-5 rounded-4xl text-sm font-bold text-on-surface border-none outline-none focus:ring-2 focus:ring-primary/10 appearance-none shadow-sm">
-              <option value="">-- Choose Segment --</option>
-              {chapters.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
-            </select>
-          ) : (
-            <input
-              {...register("habit", { required: !useChapter ? "Task name is required" : false, minLength: { value: 2, message: "At least 2 characters" } })}
-              placeholder="e.g. Quantum Physics Revision..."
-              className={`w-full bg-surface-container-low px-6 py-5 rounded-4xl text-sm font-bold text-on-surface border-none outline-none transition-all shadow-sm ${errors.habit ? "ring-2 ring-red-400" : "focus:ring-2 focus:ring-primary/10"}`}
-            />
-          )}
-        </div>
-
-        {/* TIME SELECTION */}
-        <div className="grid grid-cols-2 gap-6">
-          <Controller name="start_time" control={control} rules={{ required: "Start time is mandatory" }} render={({ field }) => (
-            <TimePicker label="Select Time when you will start" value={field.value} onChange={field.onChange} error={errors.start_time?.message} />
-          )} />
-          <Controller name="end_time" control={control} rules={{ required: "End time is mandatory" }} render={({ field }) => (
-            <TimePicker label="Select Time when you will end" value={field.value} onChange={field.onChange} error={errors.end_time?.message} />
-          )} />
-        </div>
-
-        {/* DATE SELECTION */}
-        <div className={`space-y-3 animate-reveal ${durationType === "CUSTOM" ? "col-span-2" : ""}`}>
-          <label className="text-[10px] font-black uppercase tracking-widest text-primary opacity-60 ml-2 flex items-center gap-2">
-            <Calendar size={12} /> {durationType === "DAILY" ? "Scheduled Date" : "Start Date"}
-            {computedEndDate && <span className="ml-auto opacity-40">Auto-calculated End Date</span>}
-            {durationType === "CUSTOM" && <span className="ml-auto opacity-40">Set End Date</span>}
-          </label>
-          <div className="flex items-center gap-3">
-            <input
-              type="date"
-              {...register("date", { required: true })}
-              className="w-full bg-surface-container-low px-6 py-5 rounded-4xl text-sm font-technical font-black text-on-surface border-none outline-none focus:ring-2 focus:ring-primary/10 shadow-sm transition-all"
-            />
-            {computedEndDate && (
-              <>
-                <div className="text-primary/40 font-black animate-in fade-in zoom-in-50 duration-500">→</div>
-                <div
-                  className="w-full bg-surface-container-lowest px-6 py-5 rounded-4xl text-sm font-technical font-black text-on-surface-variant/60 border border-outline-variant/10 cursor-not-allowed shadow-inner transition-all flex items-center animate-in fade-in slide-in-from-right-4 duration-500"
-                  title="Calculated automatically based on Routine Duration"
-                >
-                  {computedEndDate}
-                </div>
-              </>
-            )}
-            {durationType === "CUSTOM" && (
-              <>
-                <div className="text-primary/40 font-black animate-in fade-in zoom-in-50 duration-500">→</div>
-                <input
-                  type="date"
-                  {...register("end_date", {
-                    required: durationType === "CUSTOM",
-                    validate: value => !value || !dateValue || new Date(value) >= new Date(dateValue) || "End Date cannot be before Start Date"
-                  })}
-                  className={`w-full bg-surface-container-low px-6 py-5 rounded-4xl text-sm font-technical font-black text-on-surface border-none outline-none focus:ring-2 focus:ring-primary/10 shadow-sm transition-all animate-in fade-in slide-in-from-right-4 duration-500 ${errors.end_date ? "ring-2 ring-red-400 focus:ring-red-500" : ""}`}
-                />
-              </>
-            )}
-          </div>
-          {errors.end_date && <p className="text-red-500 text-[10px] ml-4 animate-in fade-in">{errors.end_date.message}</p>}
-        </div>
-
-        {/* PRIORITY SELECTION */}
-        {/* <div className="space-y-4">
-           <label className="text-[10px] font-black uppercase tracking-widest text-primary opacity-60 ml-2">Priority Magnitude</label>
-           <div className="grid grid-cols-3 gap-3">
-             {(["HIGH", "MEDIUM", "LOW"] as const).map((p) => {
-               const m = priorityMeta[p];
-               const isSelected = priority === p;
-               return (
-                 <label key={p} className={`flex flex-col items-center justify-center gap-2 py-5 rounded-[2.5rem] border-2 cursor-pointer transition-all duration-500 overflow-hidden relative group ${isSelected ? `${m.bg} ${m.text} border-primary` : "bg-surface-container-low text-on-surface-variant/40 border-transparent hover:bg-surface-container-high"}`}>
-                   <input type="radio" value={p} {...register("priority", { required: true })} className="hidden" />
-                   <div className={`size-3 rounded-full ${isSelected ? m.dot : "bg-on-surface-variant/20 group-hover:bg-primary/20"}`} />
-                   <span className="text-[9px] font-technical font-black uppercase tracking-widest">{p}</span>
-                 </label>
-               );
-             })}
-           </div>
-        </div> */}
-
-        {/* GOOGLE CALENDAR SYNC */}
-        <div className="p-8 bg-linear-to-br from-surface-container-low to-surface rounded-[3rem] border border-on-surface/5 flex items-center justify-between shadow-inner">
-          <div className="flex items-center gap-5">
-            <div className={`size-14 rounded-2xl flex items-center justify-center transition-all ${connected ? 'bg-primary/10 text-primary shadow-sm' : 'bg-surface-container-high text-on-surface-variant/40'}`}>
-              <Calendar size={24} />
-            </div>
-            <div>
-              <p className="text-xs font-black text-on-surface tracking-widest uppercase">Calendar Sync</p>
-              <p className="text-[9px] text-on-surface-variant font-medium mt-1 font-technical uppercase tracking-widest leading-loose">
-                {connected ? "Manifested in your Cloud" : "Authentication Pending"}
-              </p>
-            </div>
-          </div>
-          {connected ? (
-            <label className="relative inline-flex items-center cursor-pointer group">
-              <input type="checkbox" {...register("syncToCalendar")} className="sr-only peer" />
-              <div className="w-16 h-8 rounded-full transition-all bg-surface-container-highest peer-checked:bg-primary after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:after:translate-x-8 shadow-inner"></div>
+          {/* DURATION TOGGLE */}
+          <div className="space-y-3">
+            <label className="text-[10px] font-black uppercase tracking-widest text-primary ml-2 flex items-center gap-2">
+              <Calendar size={12} /> Cycle Duration
             </label>
-          ) : (
-            <button
-              type="button"
-              onClick={() => onRequestConnection && onRequestConnection()}
-              className="px-6 py-3 bg-surface-container-highest rounded-full text-[9px] font-technical font-black uppercase tracking-widest text-primary hover:bg-primary hover:text-white transition-all"
-            >
-              Link
-            </button>
-          )}
-        </div>
+            <div className="flex bg-black/20 p-1.5 rounded-3xl">
+              {["DAILY", "WEEKLY", "MONTHLY", "CUSTOM"].map((d) => (
+                <button 
+                  key={d}
+                  type="button" 
+                  onClick={() => setValue("duration_type", d as any)} 
+                  className={`flex-1 py-3 text-[9px] font-black uppercase tracking-widest rounded-2xl transition-all duration-500 ${
+                    durationType === d ? "bg-primary text-on-primary shadow-lg" : "text-on-surface/40"
+                  }`}
+                >
+                  {d === "DAILY" ? "Today" : d.toLowerCase()}
+                </button>
+              ))}
+            </div>
+          </div>
 
-        <button
-          onClick={handleSubmit(onSubmit)}
-          disabled={isSubmitting}
-          className="w-full py-6 bg-linear-to-r from-green-600 to-emerald-500 hover:from-green-700 hover:to-emerald-600 disabled:opacity-60 text-white rounded-[3rem] font-black uppercase text-xs tracking-[0.3em] transition-all shadow-xl shadow-green-500/20 active:scale-95 flex items-center justify-center gap-3"
-        >
-          {isSubmitting ? (
-            <><Loader size={18} className="animate-spin" /> Manifesting...</>
-          ) : (
-            <>{editingHabitId ? "Update Task" : "Open Task"} <Sparkles size={16} /></>
-          )}
-        </button>
+          {/* SOURCE TOGGLE */}
+          <div className="space-y-3">
+            <label className="text-[10px] font-black uppercase tracking-widest text-on-surface/40 ml-2">Protocol Source</label>
+            <div className="flex bg-black/20 p-1.5 rounded-3xl">
+              <button type="button" onClick={() => setUseChapter(false)} className={`flex-1 py-3 text-[9px] font-black uppercase tracking-widest rounded-2xl transition-all duration-500 ${!useChapter ? "bg-primary text-on-primary shadow-lg" : "text-on-surface/40"}`}>Custom Task</button>
+              <button type="button" onClick={() => setUseChapter(true)} className={`flex-1 py-3 text-[9px] font-black uppercase tracking-widest rounded-2xl transition-all duration-500 ${useChapter ? "bg-primary text-on-primary shadow-lg" : "text-on-surface/40"}`}>Syllabus Chapter</button>
+            </div>
+          </div>
+
+          {/* NAME / CHAPTER SECTION */}
+          <div className="space-y-3">
+            <label className="text-[10px] font-black uppercase tracking-widest text-on-surface/40 ml-2">
+              {useChapter ? "Select Chapter Segment" : "Ritual Identifier"}
+            </label>
+            {useChapter ? (
+              <select {...register("chapter_id", { required: useChapter ? "Chapter is required" : false })} className="w-full bg-white/5 border border-white/5 px-6 py-5 rounded-[2rem] text-sm font-bold text-on-surface outline-none focus:ring-2 focus:ring-primary/20 appearance-none">
+                <option value="">-- Choose Segment --</option>
+                {chapters.map(c => <option key={c.id} value={c.id} className="bg-surface">{c.name}</option>)}
+              </select>
+            ) : (
+              <input
+                {...register("habit", { required: !useChapter ? "Task name is required" : false, minLength: { value: 2, message: "At least 2 characters" } })}
+                placeholder="e.g. MCQ Practice: Ancient History..."
+                className={`w-full bg-white/5 border border-white/5 px-6 py-5 rounded-[2rem] text-sm font-bold text-on-surface outline-none focus:ring-2 focus:ring-primary/20 transition-all ${errors.habit ? "border-red-500" : ""}`}
+              />
+            )}
+          </div>
+
+          {/* TIME SELECTION */}
+          <div className="grid grid-cols-2 gap-6">
+            <Controller name="start_time" control={control} render={({ field }) => (
+              <TimePicker label="Start Epoch" value={field.value} onChange={field.onChange} />
+            )} />
+            <Controller name="end_time" control={control} render={({ field }) => (
+              <TimePicker label="End Epoch" value={field.value} onChange={field.onChange} />
+            )} />
+          </div>
+
+          {/* DATE SELECTION */}
+          <div className="space-y-3">
+            <label className="text-[10px] font-black uppercase tracking-widest text-on-surface/40 ml-2">Temporal Window</label>
+            <div className="flex items-center gap-4">
+              <input
+                type="date"
+                {...register("date", { required: true })}
+                className="flex-1 bg-white/5 border border-white/5 px-6 py-5 rounded-[2rem] text-sm font-technical font-black text-on-surface outline-none focus:ring-2 focus:ring-primary/20"
+              />
+              {computedEndDate && (
+                <div className="flex-1 bg-primary/5 border border-primary/20 px-6 py-5 rounded-[2rem] text-sm font-technical font-black text-primary flex items-center justify-center gap-2">
+                  <ArrowRight size={14} /> {computedEndDate}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* GOOGLE CALENDAR SYNC */}
+          <div className="p-6 bg-white/5 rounded-[2.5rem] border border-white/5 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className={`size-12 rounded-2xl flex items-center justify-center transition-all ${connected ? 'bg-primary/20 text-primary' : 'bg-white/5 text-white/20'}`}>
+                <Calendar size={20} />
+              </div>
+              <div>
+                <p className="text-[10px] font-black text-on-surface uppercase tracking-widest">Calendar Sync</p>
+                <p className="text-[8px] text-on-surface-variant font-technical uppercase mt-0.5 tracking-wider">
+                  {connected ? "Identity Linked" : "Cloud Disconnected"}
+                </p>
+              </div>
+            </div>
+            {connected ? (
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" {...register("syncToCalendar")} className="sr-only peer" />
+                <div className="w-14 h-7 rounded-full transition-all bg-white/10 peer-checked:bg-primary after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-7"></div>
+              </label>
+            ) : (
+              <button type="button" onClick={onRequestConnection} className="px-5 py-2.5 bg-white/10 rounded-full text-[9px] font-black uppercase tracking-widest text-primary hover:bg-primary hover:text-on-primary transition-all">Link</button>
+            )}
+          </div>
+
+          <button
+            onClick={handleSubmit(onSubmit)}
+            disabled={isSubmitting}
+            className="w-full py-6 bg-primary text-on-primary rounded-[2.5rem] font-black uppercase text-[10px] tracking-[0.4em] transition-all shadow-2xl shadow-primary/40 active:scale-95 flex items-center justify-center gap-3 disabled:opacity-50"
+          >
+            {isSubmitting ? (
+              <Loader size={18} className="animate-spin" />
+            ) : (
+              <>{editingHabitId ? "Update Manifestation" : "Establish Ritual"} <Sparkles size={16} /></>
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );

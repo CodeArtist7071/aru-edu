@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { ChevronLeft } from "lucide-react";
 import { FormProvider } from "react-hook-form";
 import { QuestionList } from "../pracTiceTest/QuestionList";
 import { QuestionPalette } from "./QuestionPalette";
@@ -13,9 +14,17 @@ export const MobilePracticeTest = ({ logic }: { logic: any }) => {
     questions, language, timeLeft, violations, lastViolation, proctoringStatus, 
     showWarning, cameraReady, faceDetected, openAlert, showSubmitConfirm, counts, 
     confirmedAnswers, setConfirmedAnswers, methods, onSubmit, 
-    handleConfirm, cancelExit, confirmExit, videoRef, mode, setShowWarning, setShowSubmitConfirm, setOpenAlert,
-    minimized, setMinimized
+    setShowWarning, setShowSubmitConfirm, setOpenAlert,
+    minimized, setMinimized, handlePreSubmit, handleConfirm, mode, videoRef,
+    confirmExit, cancelExit
   } = logic;
+
+  const formatTime = (seconds: number | null) => {
+    if (seconds === null) return "00:00";
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  };
 
   const questionRef = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -23,7 +32,37 @@ export const MobilePracticeTest = ({ logic }: { logic: any }) => {
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <div className="text-on-surface font-narrative min-h-screen flex flex-col transition-colors duration-700 ease-botanical pb-20">
-          <main className="flex-1 w-full pt-4 pb-4 pl-2 pr-12 md:pr-32 animate-reveal relative">
+          {/* Persistent Examination Header */}
+          <header className="fixed top-0 left-0 right-0 z-50 bg-surface/80 backdrop-blur-2xl border-b border-outline-variant/10 h-20 flex items-center px-4 md:px-8">
+            <div className="flex-1">
+              <button 
+                type="button"
+                onClick={() => setOpenAlert(true)}
+                className="size-10 flex items-center justify-center bg-surface-container-high rounded-xl text-on-surface-variant hover:text-primary transition-colors"
+              >
+                <ChevronLeft size={20} />
+              </button>
+            </div>
+
+            <div className="flex-1 flex flex-col items-center">
+              <span className="text-[10px] font-technical font-black uppercase tracking-[0.3em] text-primary mb-1">Chronos</span>
+              <div className={`text-xl font-technical font-black tracking-tighter ${timeLeft !== null && timeLeft < 300 ? 'text-error animate-pulse' : 'text-on-surface'}`}>
+                {formatTime(timeLeft)}
+              </div>
+            </div>
+
+            <div className="flex-1 flex justify-end">
+              <button 
+                type="button"
+                onClick={handlePreSubmit}
+                className="bg-primary text-white px-6 py-2.5 rounded-full font-technical font-black text-[10px] uppercase tracking-widest shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all"
+              >
+                Submit
+              </button>
+            </div>
+          </header>
+
+          <main className="flex-1 w-full pt-24 pb-4 pl-2 pr-12 md:pr-32 animate-reveal relative">
             <div className="w-full">
               <QuestionList 
                 confirmedAnswers={confirmedAnswers} 
@@ -105,7 +144,7 @@ export const MobilePracticeTest = ({ logic }: { logic: any }) => {
                 </div>
 
                 <div className="flex flex-col gap-3">
-                   <button type="button" onClick={() => methods.handleSubmit(onSubmit)()} className="w-full p-4 bg-linear-to-r from-primary to-primary-container text-white rounded-full font-technical font-black text-xs uppercase tracking-widest shadow-ambient-lg flex items-center justify-center gap-3">Manifest Submission <Target size={16} /></button>
+                   <button type="button" onClick={methods.handleSubmit(onSubmit)} className="w-full p-4 bg-linear-to-r from-primary to-primary-container text-white rounded-full font-technical font-black text-xs uppercase tracking-widest shadow-ambient-lg flex items-center justify-center gap-3">Manifest Submission <Target size={16} /></button>
                    <button type="button" onClick={() => setShowSubmitConfirm(false)} className="w-full p-3 text-[10px] font-technical font-black uppercase tracking-widest text-on-surface-variant/60">Re-evaluate</button>
                 </div>
              </div>

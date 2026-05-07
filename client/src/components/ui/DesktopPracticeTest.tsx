@@ -1,4 +1,5 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
+import { ChevronLeft, Target } from "lucide-react";
 import { FormProvider } from "react-hook-form";
 import { QuestionList } from "../pracTiceTest/QuestionList";
 import { QuestionPalette } from "./QuestionPalette";
@@ -6,7 +7,6 @@ import AdvancedProctoring from "./AdvanceProctoring";
 import ViolationFeed from "./ViolationFeed";
 import ViolationWarningModal from "./ViolationWarningModel";
 import { AlertPopup } from "./AlertPopup";
-import { Target } from "lucide-react";
 
 export const DesktopPracticeTest = ({ logic }: { logic: any }) => {
   const {
@@ -14,8 +14,15 @@ export const DesktopPracticeTest = ({ logic }: { logic: any }) => {
     showWarning, cameraReady, faceDetected, openAlert, showSubmitConfirm, counts, 
     confirmedAnswers, setConfirmedAnswers, methods, onSubmit, 
     handleConfirm, cancelExit, confirmExit, videoRef, mode, setShowWarning, setShowSubmitConfirm,
-    minimized, setMinimized
+    minimized, setMinimized, handlePreSubmit, setOpenAlert
   } = logic;
+
+  const formatTime = (seconds: number | null) => {
+    if (seconds === null) return "00:00";
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  };
 
   const questionRef = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -23,6 +30,41 @@ export const DesktopPracticeTest = ({ logic }: { logic: any }) => {
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <div className="text-on-surface font-narrative min-h-screen flex flex-col transition-colors duration-700 ease-botanical">
+          {/* Desktop Persistent Header */}
+          <header className="sticky top-0 z-50 bg-surface/90 backdrop-blur-3xl border-b border-outline-variant/10 h-24 flex items-center shadow-sm">
+            <div className="max-w-7xl mx-auto w-full px-12 flex justify-between items-center">
+               <div className="flex items-center gap-6">
+                  <button 
+                    type="button" 
+                    onClick={() => setOpenAlert(true)}
+                    className="p-3 bg-surface-container-high rounded-2xl text-on-surface-variant hover:text-primary transition-all"
+                  >
+                    <ChevronLeft size={24} />
+                  </button>
+                  <div className="h-10 w-px bg-outline-variant/20 mx-2" />
+                  <div>
+                    <span className="text-[10px] font-technical font-black uppercase tracking-[0.4em] text-primary opacity-60">Examination Manifestation</span>
+                    <h2 className="text-2xl font-technical font-black text-on-surface tracking-tighter -mt-1">Practice Session</h2>
+                  </div>
+               </div>
+
+               <div className="flex flex-col items-center">
+                  <span className="text-[10px] font-technical font-black uppercase tracking-[0.3em] text-on-surface-variant/40 mb-1">Temporal Balance</span>
+                  <div className={`text-4xl font-technical font-black tracking-tighter ${timeLeft !== null && timeLeft < 300 ? 'text-error animate-pulse' : 'text-on-surface'}`}>
+                    {formatTime(timeLeft)}
+                  </div>
+               </div>
+
+               <button 
+                type="button"
+                onClick={handlePreSubmit}
+                className="px-10 py-4 bg-primary text-white rounded-full font-technical font-black uppercase tracking-widest text-xs shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all"
+               >
+                 Submit Attempt
+               </button>
+            </div>
+          </header>
+
           <main className="flex-1 max-w-7xl mx-auto w-full grid lg:grid-cols-12 gap-8 p-6 lg:p-12 animate-reveal relative">
             <div className="col-span-full lg:col-span-8">
               <QuestionList 
@@ -104,7 +146,7 @@ export const DesktopPracticeTest = ({ logic }: { logic: any }) => {
 
                 <div className="flex gap-6">
                    <button type="button" onClick={() => setShowSubmitConfirm(false)} className="flex-1 p-4 text-xs font-technical font-black uppercase tracking-widest text-on-surface-variant/60 hover:text-on-surface transition-all">Re-evaluate</button>
-                   <button type="button" onClick={() => methods.handleSubmit(onSubmit)()} className="flex-1 p-4 bg-linear-to-r from-primary to-primary-container text-white rounded-full font-technical font-black text-xs uppercase tracking-widest shadow-ambient-lg hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3">Manifest Submission <Target size={18} /></button>
+                   <button type="button" onClick={methods.handleSubmit(onSubmit)} className="flex-1 p-4 bg-linear-to-r from-primary to-primary-container text-white rounded-full font-technical font-black text-xs uppercase tracking-widest shadow-ambient-lg hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3">Manifest Submission <Target size={18} /></button>
                 </div>
              </div>
           </AlertPopup>

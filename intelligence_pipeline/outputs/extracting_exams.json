@@ -1,0 +1,22 @@
+{
+  "matched_exams": [
+    {
+      "id": "f773d816-8ffc-45bc-a843-c75db9a47f19",
+      "name": "Computer Awareness",
+      "full_name": "Computer Awareness",
+      "exam_board_id": "f81eea7e-3e58-4fe6-ac6c-82682450a830"
+    }
+  ],
+  "matched_subjects": [
+    {
+      "id": "6fdb7f5a-cce6-4c16-8d0e-b8f76423fc00",
+      "name": "Computer Awareness"
+    },
+    {
+      "id": "0d3e0ab3-f9d9-4a35-9e17-4c5a6025b177",
+      "name": "General Studies / General awareness",
+      "description": "Polity, Economy, History, Geography, Odisha GK & Current Affairs."
+    }
+  ],
+  "matched_boards": []
+}
