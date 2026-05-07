@@ -9,11 +9,21 @@ export const useStudyPlanner = (user: any, examId: string | undefined, profile: 
   const [loading, setLoading] = useState(true);
   
   const now = new Date();
+  now.setHours(0, 0, 0, 0); // Normalize to midnight for exact matching
   const [viewMonth, setViewMonth] = useState(now.getMonth() + 1);
   const [viewYear, setViewYear] = useState(now.getFullYear());
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date>(now);
   const [isSettingUp, setIsSettingUp] = useState(false);
   const [hasPrevMonthTasks, setHasPrevMonthTasks] = useState(false);
+  
+  // ALWAYS DEFAULT TO TODAY ON MOUNT
+  useEffect(() => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    setViewMonth(today.getMonth() + 1);
+    setViewYear(today.getFullYear());
+    setSelectedDate(today);
+  }, []);
 
   const fetchData = useCallback(async () => {
     if (!user?.id) return;
@@ -201,9 +211,38 @@ export const useStudyPlanner = (user: any, examId: string | undefined, profile: 
     setSelectedDate(new Date(newYear, newMonth - 1, 1));
   }, [viewMonth, viewYear]);
 
+  const handleDeleteHabit = useCallback(async (id: string, isMastery: boolean) => {
+    if (!user?.id) return;
+    try {
+      setLoading(true);
+      const table = isMastery ? "user_mastery" : "study_habits";
+      const { error } = await supabase.from(table).delete().eq("id", id);
+      if (error) throw error;
+      
+      setHabits(prev => prev.filter(h => h.id !== id));
+      setProgress(prev => {
+        const next = { ...prev };
+        delete next[id];
+        return next;
+      });
+    } catch (err) {
+      console.error("Delete Failed:", err);
+    } finally {
+      setLoading(false);
+    }
+  }, [user?.id]);
+
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  const handleJumpToToday = useCallback(() => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    setViewMonth(today.getMonth() + 1);
+    setViewYear(today.getFullYear());
+    setSelectedDate(today);
+  }, []);
 
   return {
     habits,
@@ -220,6 +259,8 @@ export const useStudyPlanner = (user: any, examId: string | undefined, profile: 
     handleToggle,
     handleCopyPreviousMonth,
     handleMonthChange,
+    handleJumpToToday,
+    handleDeleteHabit,
     setHabits,
     setProgress,
     manifestDemo: async () => {

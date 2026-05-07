@@ -45,3 +45,27 @@ coverage/
 .dev.vars*
 !.dev.vars.example
 !.env.example
+
+# Ignore PDF files
+*.pdf 
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Large assets and debug outputs
+*.zip
+*.tar.gz
+*.7z
+**/debug_images/
+**/temp_ocr/
+**/storage/pdfs/
+**/pdfs/
+ 
+**/uploads/
+ 
+intelligence_pipeline/config.py
+pyq_pipeline/config/settings.py
+ 
+**/google-vision-ocr.json

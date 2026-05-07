@@ -1,0 +1,99 @@
+--------------------------------------------------
+HUMAN READABILITY & PERCEPTION LAYER (VERY IMPORTANT)
+--------------------------------------------------
+
+The question must be easily readable and naturally understandable by a student.
+
+Apply the following:
+
+1. Natural Language Flow:
+   - Write questions as a teacher would speak in an exam.
+   - Avoid overly compressed or robotic expressions.
+   - Prefer clarity over compactness.
+
+2. Cognitive Simplicity:
+   - Break complex expressions into readable segments.
+   - Use brackets to improve visual clarity, not just correctness.
+   - Avoid long unbroken expressions.
+
+3. Visual Cleanliness:
+   - Ensure expressions are easy to scan quickly.
+   - Avoid cluttered numbers or stacked operations.
+   - Maintain spacing where needed for readability.
+
+4. Student Thinking Alignment:
+   - The question should guide the student toward a solving path.
+   - Do NOT confuse through bad phrasing — only through logical traps.
+
+5. Trap Design (Important):
+   - Wrong options should come from:
+     • common calculation mistakes
+     • sign errors
+     • skipped steps
+   - NOT from confusing wording.
+
+6. Avoid Cognitive Overload:
+   - Do NOT combine too many operations in a single line without structure.
+   - If needed, rewrite expression for clarity.
+
+7. Instruction Clarity:
+   - Use clear directives:
+     • "Solve for x"
+     • "Find the value of"
+     • "Determine the ratio"
+   - Avoid vague phrasing.
+
+8. Mathematical + Language Balance:
+   - Maintain a balance between symbolic math and readable text.
+   - Ensure a student can understand the question in one read.
+
+--------------------------------------------------
+- Each question should be understandable within 5–7 seconds of reading.
+- Avoid unnecessary wording; avoid overly dense expressions.
+- Prioritize clarity first, difficulty second.
+
+
+
+--------------------------------------------------
+MATHEMATICAL RENDERING FOR HUMAN READABILITY
+--------------------------------------------------
+
+All mathematical expressions must be formatted for optimal human readability using HTML subscripts and superscripts where appropriate.
+
+STRICT RULES:
+
+1. Exponents (MANDATORY):
+   - ALWAYS use <sup> for powers
+   - Never use ^ symbol
+   - Examples:
+     x<sup>2</sup>, (a+b)<sup>2</sup>, 10<sup>3</sup>
+
+2. Logarithms (MANDATORY SUBSCRIPT):
+   - Use base as subscript
+   - Example:
+     log<sub>10</sub>(x), log<sub>2</sub>(8)
+
+3. Indexed variables:
+   - Use <sub> for indices
+   - Example:
+     x<sub>1</sub>, a<sub>2</sub>, T<sub>n</sub>
+
+4. Combined expressions:
+   - Maintain clarity:
+     x<sub>1</sub><sup>2</sup>, a<sub>n</sub><sup>3</sup>
+
+5. DO NOT use:
+   - ^ for powers
+   - _ for subscripts
+   - LaTeX-style formatting
+
+6. Readability priority:
+   - Expressions must look like printed textbook math
+   - Avoid dense inline expressions when formatting improves clarity
+
+7. Spacing:
+   - Ensure expressions remain readable:
+     x<sub>1</sub> + x<sub>2</sub>
+     NOT: x<sub>1</sub>+x<sub>2</sub>
+
+--------------------------------------------------

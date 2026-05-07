@@ -1,0 +1,5619 @@
+{
+  "pdf": "maths-e-book-2-0-by-aditya-ranjan-sir_compress",
+  "page_range": [
+    21,
+    44
+  ],
+  "total_questions": 175,
+  "valid_questions": 170,
+  "questions": [
+    {
+      "id": 1,
+      "pdf_q_num": 20,
+      "exam": "SSC CHSL",
+      "exam_year": "2021",
+      "q": "The cost price of a chair is Rs. 1,800. Later, its cost price becomes Rs. 2,100, What is the percentage increase in the cost price of the chair?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "16"
+        },
+        {
+          "l": "B",
+          "v": "16"
+        },
+        {
+          "l": "C",
+          "v": "16"
+        },
+        {
+          "l": "D",
+          "v": "16"
+        }
+      ],
+      "ans": "C",
+      "diff": null,
+      "page": 21,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 21,
+      "exam": "SSC CHSL",
+      "exam_year": "2021",
+      "q": "Geeta scored 30% and failed by 50 marks, while Sandeep who scored 45% marks, got 25 marks more than the minimum marks required to pass the examination. How many marks did Vimal get if he scored 64% marks?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "320"
+        },
+        {
+          "l": "B",
+          "v": "436"
+        },
+        {
+          "l": "C",
+          "v": "256"
+        },
+        {
+          "l": "D",
+          "v": "500"
+        }
+      ],
+      "ans": "A",
+      "diff": null,
+      "page": 21,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 22,
+      "exam": "SSC CHSL",
+      "exam_year": "2021",
+      "q": "What is the value of x, if 25% of 480 + 30% of 500 + x% of 90 = 35% of 900?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "45"
+        },
+        {
+          "l": "B",
+          "v": "50"
+        },
+        {
+          "l": "C",
+          "v": "55"
+        },
+        {
+          "l": "D",
+          "v": "40"
+        }
+      ],
+      "ans": "C",
+      "diff": null,
+      "page": 21,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 23,
+      "exam": "SSC CHSL",
+      "exam_year": "2021",
+      "q": "What is the value of 9% of 5500 + 2.4% of 1100 - 40% of 1600?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "-118.6"
+        },
+        {
+          "l": "B",
+          "v": "181.6"
+        },
+        {
+          "l": "C",
+          "v": "-181.6"
+        },
+        {
+          "l": "D",
+          "v": "118.6"
+        }
+      ],
+      "ans": "B",
+      "diff": null,
+      "page": 21,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 24,
+      "exam": "SSC CHSL",
+      "exam_year": "2021",
+      "q": "Raghav spends 80% of his income. If his income increases by 12% and his expenditure increases by 17.5%, then what is the percentage decrease in his savings?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "12%"
+        },
+        {
+          "l": "B",
+          "v": "10%"
+        },
+        {
+          "l": "C",
+          "v": "8%"
+        },
+        {
+          "l": "D",
+          "v": "15%"
+        }
+      ],
+      "ans": "B",
+      "diff": null,
+      "page": 21,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 25,
+      "exam": "SSC CHSL",
+      "exam_year": "2021",
+      "q": "Renu spends 68% of her income. When her income increases by 40%, she increases her expenditure by 30%. Her savings are increased by:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "37.98%"
+        },
+        {
+          "l": "B",
+          "v": "62.5%"
+        },
+        {
+          "l": "C",
+          "v": "51.6%"
+        },
+        {
+          "l": "D",
+          "v": "61.25%"
+        }
+      ],
+      "ans": "D",
+      "diff": null,
+      "page": 21,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 26,
+      "exam": "SSC CHSL",
+      "exam_year": "2021",
+      "q": "A's salary is 15% less than B's salary. B's salary is 30% less than C's salary. By how much percent approximately, is C's salary more than A's salary?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "45"
+        },
+        {
+          "l": "B",
+          "v": "75"
+        },
+        {
+          "l": "C",
+          "v": "40"
+        },
+        {
+          "l": "D",
+          "v": "68"
+        }
+      ],
+      "ans": "D",
+      "diff": null,
+      "page": 21,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 27,
+      "exam": "SSC CHSL",
+      "exam_year": "2021",
+      "q": "24% of Reena’s salary is equal to 38% of Sunita’s salary. Veena’s salary is two-third of the total salary of Reena and Sunita. If Veena’s salary is Rs 62,000, then Sunita’s salary is:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs. 32,000"
+        },
+        {
+          "l": "B",
+          "v": "Rs. 38,000"
+        },
+        {
+          "l": "C",
+          "v": "Rs. 35,000"
+        },
+        {
+          "l": "D",
+          "v": "Rs. 36,000"
+        }
+      ],
+      "ans": "B",
+      "diff": null,
+      "page": 21,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 28,
+      "exam": "SSC CHSL",
+      "exam_year": "2021",
+      "q": "Rita spends 25% of her monthly income on house rent and 30% of the remaining income on food. If she saves Rs 5,250, what is her monthly income?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs 12,000"
+        },
+        {
+          "l": "B",
+          "v": "Rs 16,000"
+        },
+        {
+          "l": "C",
+          "v": "Rs 10,000"
+        },
+        {
+          "l": "D",
+          "v": "Rs 14,000"
+        }
+      ],
+      "ans": "D",
+      "diff": null,
+      "page": 21,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 29,
+      "exam": "SSC CHSL",
+      "exam_year": "2021",
+      "q": "In a survey it was found that in a constituency, 55% of voters are male and the rest are female. 40% of the male voters are literate and 33 of the female voters are illiterate. What percentage of the voters are literate?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "52%"
+        },
+        {
+          "l": "B",
+          "v": "48%"
+        },
+        {
+          "l": "C",
+          "v": "54%"
+        },
+        {
+          "l": "D",
+          "v": "37%"
+        }
+      ],
+      "ans": "C",
+      "diff": null,
+      "page": 22,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 30,
+      "exam": "SSC CHSL",
+      "exam_year": "2021",
+      "q": "In an examination of 180 marks of a subject, 75% marks are allocated for theory and the rest for project work. Veena scored 60% in theory. What percentage of marks must she score in the project to achieve an overall 62% marks in the subject?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "64"
+        },
+        {
+          "l": "B",
+          "v": "66"
+        },
+        {
+          "l": "C",
+          "v": "65"
+        },
+        {
+          "l": "D",
+          "v": "68"
+        }
+      ],
+      "ans": "C",
+      "diff": null,
+      "page": 22,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 31,
+      "exam": "SSC CHSL",
+      "exam_year": "2021",
+      "q": "In a class, 60% of the students are girls and the rest are boys. 45% of the girls pass an examination and 40% of the boys failed. If the number of girls who failed is 66, the number of boys who passed the examination is:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "36"
+        },
+        {
+          "l": "B",
+          "v": "48"
+        },
+        {
+          "l": "C",
+          "v": "54"
+        },
+        {
+          "l": "D",
+          "v": "60"
+        }
+      ],
+      "ans": "A",
+      "diff": null,
+      "page": 22,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 33,
+      "exam": "SSC CHSL",
+      "exam_year": "2021",
+      "q": "35% of the students in a college are girls and the rest are boys. The total number of students in the college is 2800. 75% of the boys and 85% of the girls passed the final examination. The percentage of total students who passed the final examination is:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "80%"
+        },
+        {
+          "l": "B",
+          "v": "82%"
+        },
+        {
+          "l": "C",
+          "v": "78%"
+        },
+        {
+          "l": "D",
+          "v": "78.5%"
+        }
+      ],
+      "ans": "B",
+      "page": 22,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 34,
+      "exam": "SSC CHSL",
+      "exam_year": "2021",
+      "q": "The expenditure on food is 35% of the income of a particular family. If the income is raised by 30%, then how much percentage (to the nearest whole number) of food expenditure is less than the initial percentage to keep the food expenditure unchanged?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "2"
+        },
+        {
+          "l": "B",
+          "v": "23"
+        },
+        {
+          "l": "C",
+          "v": "17"
+        },
+        {
+          "l": "D",
+          "v": "20"
+        }
+      ],
+      "ans": "A",
+      "page": 22,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 35,
+      "exam": "SSC CHSL",
+      "exam_year": "2021",
+      "q": "If decreasing 180 by x% gives the same result as increasing 60 by x%, then x% of 410 will be more than (x + 20)% of 210 (correct to two decimal places) by:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "37.57%"
+        },
+        {
+          "l": "B",
+          "v": "36.57%"
+        },
+        {
+          "l": "C",
+          "v": "39.46%"
+        },
+        {
+          "l": "D",
+          "v": "31.67%"
+        }
+      ],
+      "ans": "A",
+      "diff": null,
+      "page": 22,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 36,
+      "exam": "SSC CHSL",
+      "exam_year": "2021",
+      "q": "If A is 28% less than B and C is 25% less than the sum of A and B, then by what percentage will C be more than A (correct to one decimal place)?",
+      "opt": [
+        {
+          "l": "a",
+          "v": "84.3%"
+        },
+        {
+          "l": "b",
+          "v": "75.5%"
+        },
+        {
+          "l": "c",
+          "v": "81.6%"
+        },
+        {
+          "l": "d",
+          "v": "79.2%"
+        }
+      ],
+      "ans": "B",
+      "diff": null,
+      "page": 23,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 37,
+      "exam": "SSC CHSL",
+      "exam_year": "2021",
+      "q": "The price of an article increases by 5% every year. If the difference between its price at the end of the second and the third year is Rs. 52.50, then what will be its price at the end of the first year?",
+      "opt": [
+        {
+          "l": "a",
+          "v": "Rs. 1,000"
+        },
+        {
+          "l": "b",
+          "v": "Rs. 950"
+        },
+        {
+          "l": "c",
+          "v": "Rs. 840"
+        },
+        {
+          "l": "d",
+          "v": "Rs. 900"
+        }
+      ],
+      "ans": "C",
+      "diff": null,
+      "page": 23,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 38,
+      "exam": "SSC CHSL",
+      "exam_year": "2021",
+      "q": "Savita spends 20% of her monthly income on groceries, 15% of the remaining on rent and then 60% of the left over on children's education and others. If she saves Rs. 9,792 a month, then how much (in Rs.) does she spend on rent?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "3,960"
+        },
+        {
+          "l": "B",
+          "v": "4,320"
+        },
+        {
+          "l": "C",
+          "v": "4,450"
+        },
+        {
+          "l": "D",
+          "v": "4,200"
+        }
+      ],
+      "ans": "B",
+      "diff": null,
+      "page": 23,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 1,
+      "exam": "SSC MTS",
+      "exam_year": "2021",
+      "q": "An employee gets two successive increments in his salary, as a result of which his salary becomes 2.5 times the initial salary. What was his first percentage increment, if the second percentage increment was 4 times as high as the first?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "25%"
+        },
+        {
+          "l": "B",
+          "v": "50%"
+        },
+        {
+          "l": "C",
+          "v": "12%"
+        },
+        {
+          "l": "D",
+          "v": "10%"
+        }
+      ],
+      "ans": "B",
+      "diff": null,
+      "page": 23,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 2,
+      "exam": "SSC MTS",
+      "exam_year": "2021",
+      "q": "The marks obtained by a student in Mathematics, Chemistry and Physics are, respectively, 195 out of 200, 133 out of 180 and 153 out of 160. His average score in per cent (correct to one decimal place) is:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "89.1"
+        },
+        {
+          "l": "B",
+          "v": "84.6"
+        },
+        {
+          "l": "C",
+          "v": "96.2"
+        },
+        {
+          "l": "D",
+          "v": "86.7"
+        }
+      ],
+      "ans": "D",
+      "diff": null,
+      "page": 23,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 3,
+      "exam": "SSC MTS",
+      "exam_year": "2021",
+      "q": "If the radius of a sphere is increased by 16 3 %, then by what per cent would its surface area increase (correct to one decimal place)?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "33.9%"
+        },
+        {
+          "l": "B",
+          "v": "35.6%"
+        },
+        {
+          "l": "C",
+          "v": "34.8%"
+        },
+        {
+          "l": "D",
+          "v": "36.1%"
+        }
+      ],
+      "ans": "B",
+      "page": 23,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 5,
+      "exam": "SSC MTS",
+      "exam_year": "2021",
+      "q": "The price of an article increases by 20% every year. If the difference between the price of the article at the end of the third year and at the end of the fourth year is Rs 324, what is the price of the article at the end of the second year?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs 1350"
+        },
+        {
+          "l": "B",
+          "v": "Rs 1250"
+        },
+        {
+          "l": "C",
+          "v": "Rs 1260"
+        },
+        {
+          "l": "D",
+          "v": "Rs 1180"
+        }
+      ],
+      "ans": "D",
+      "diff": null,
+      "page": 24,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 6,
+      "exam": "SSC MTS",
+      "exam_year": "2021",
+      "q": "Due to some crisis, some people from State A migrated to State B,and thereby the population of the second State increased by 19.96%. However, at a later stage, all of them returned to State A. Then by what percentage (correct up to two decimal places) did the population of State B decrease?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "16.64"
+        },
+        {
+          "l": "B",
+          "v": "17.54"
+        },
+        {
+          "l": "C",
+          "v": "18.24"
+        },
+        {
+          "l": "D",
+          "v": "19.96"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 24,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 7,
+      "exam": "SSC MTS",
+      "exam_year": "2021",
+      "q": "The cost of manufacturing an item was Rs. 24,000, and 20% of it was spent on packaging and its shipment to a retailer. The manufacturer made a profit of 50%, while the retailer incurred a loss of 20% in selling it to a customer. At what price (in Rs.) was the item sold by the retailer?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "35,268"
+        },
+        {
+          "l": "B",
+          "v": "34,560"
+        },
+        {
+          "l": "C",
+          "v": "37,664"
+        },
+        {
+          "l": "D",
+          "v": "32,400"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 24,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 1,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "4 pupil multiplied a figure by 3 5 than 5 3 . What ts the percentage error in the calculation?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "64"
+        },
+        {
+          "l": "B",
+          "v": "47"
+        },
+        {
+          "l": "C",
+          "v": "58"
+        },
+        {
+          "l": "D",
+          "v": "52"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 24,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 2,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "70% of students in a class are girls and 70% of girls have chosen soccer as their favourite sport. If 98 girls have chosen soccer as their favourite sport, what is the total number of students in the class?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "180"
+        },
+        {
+          "l": "B",
+          "v": "225"
+        },
+        {
+          "l": "C",
+          "v": "175"
+        },
+        {
+          "l": "D",
+          "v": "200"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 24,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 3,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "The population of a village is 9,000. If the annual birth rate is 12.5% and the annual death rate is 2.5%, calculate the population after three years.",
+      "opt": [
+        {
+          "l": "A",
+          "v": "12256"
+        },
+        {
+          "l": "B",
+          "v": "11979"
+        },
+        {
+          "l": "C",
+          "v": "10959"
+        },
+        {
+          "l": "D",
+          "v": "10755"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 24,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 4,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "In an election between two candidates, Ravi gets 65% of total valid votes. If total votes were 6000, what is the number of valid votes that the other candidate Sushil gets, if 25% of total votes were invalid?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "1775"
+        },
+        {
+          "l": "B",
+          "v": "1625"
+        },
+        {
+          "l": "C",
+          "v": "1575"
+        },
+        {
+          "l": "D",
+          "v": "1525"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 25,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 5,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "A man P purchased a land for Rs. 4,32,000 on the outskirts of a city. Due to some reason, its value depreciated at 25% per annum and he sold it to Q after 2 years. At this time, the city expanded and new projects of infrastructures started coming up. As a result of the expansion, there was an appreciation of real estate prices at the rate of 50%. What would be the value (in Rs.) of the land after 2 years, from the time Q bought the land from P?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs. 5,46,750"
+        },
+        {
+          "l": "B",
+          "v": "Rs. 5,57,450"
+        },
+        {
+          "l": "C",
+          "v": "Rs. 5,76,450"
+        },
+        {
+          "l": "D",
+          "v": "Rs. 6,05,070"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 25,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 7,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "In an election between two candidates, 80% of the eligible voters cast their votes, 5% of the votes cast were declared invalid. A caddidate got 10545 votes, which were 75% of the total valid votes. Find the total number of eligible voters.",
+      "opt": [
+        {
+          "l": "A",
+          "v": "17800"
+        },
+        {
+          "l": "B",
+          "v": "18500"
+        },
+        {
+          "l": "C",
+          "v": "18250"
+        },
+        {
+          "l": "D",
+          "v": "18000"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 25,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 8,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "A bike is purchased for Rs. 50,000. Its rate depreciates at 10% annually. In how many years will its value be Rs. 36,450?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "3"
+        },
+        {
+          "l": "B",
+          "v": "2"
+        },
+        {
+          "l": "C",
+          "v": "5"
+        },
+        {
+          "l": "D",
+          "v": "4"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 25,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 9,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "A family spends Rs. 240 per month to buy sugar. A rise of 25% in the price of sugar compels the family to reduce the monthly consumption of sugar by 1.5 kg as it decides to spend the same amount of money on purchase of the commodity. What is the increased price per kg of sugar?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs. 32"
+        },
+        {
+          "l": "B",
+          "v": "Rs. 35"
+        },
+        {
+          "l": "C",
+          "v": "Rs. 40"
+        },
+        {
+          "l": "D",
+          "v": "Rs. 38"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 25,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 10,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "By what percent the new price of the article must be increased to restore its former value, if the cost of the article is cut by 25% in the past?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "34"
+        },
+        {
+          "l": "B",
+          "v": "33"
+        },
+        {
+          "l": "C",
+          "v": "33%"
+        },
+        {
+          "l": "D",
+          "v": "34%"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 25,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 11,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "The population of a city increases at the rate of 10% per annum. If the population of the city was 2 crore in 2018, then the population of the city in the year 2021 was:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "2.3 Crore"
+        },
+        {
+          "l": "B",
+          "v": "2.6 Crore"
+        },
+        {
+          "l": "C",
+          "v": "2.662 Crore"
+        },
+        {
+          "l": "D",
+          "v": "2.42 Crore"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 26,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 12,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "In a Panchayat election, three candidates were there in the fray. The losing candidates got an equal number of votes and the winning candidate got as many votes as the rest of the two got collectively. If the total votes polled were 1500, find the number of votes that the winning candidate got assume all votes polled were valid.",
+      "opt": [
+        {
+          "l": "A",
+          "v": "750"
+        },
+        {
+          "l": "B",
+          "v": "625"
+        },
+        {
+          "l": "C",
+          "v": "575"
+        },
+        {
+          "l": "D",
+          "v": "800"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 26,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 13,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "A software company has only 3 divisions that have 20, 30 and 40 employees, respectively. If the working percentage of this during a weekend were 20%, 30% and 40%, respectively, then the working percentage of the entire company during that weekend was approximately:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "0.0032"
+        },
+        {
+          "l": "B",
+          "v": "3.2"
+        },
+        {
+          "l": "C",
+          "v": "0.032"
+        },
+        {
+          "l": "D",
+          "v": "32"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 26,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 14,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "In an election, the winning candidate received 15744 votes, which are 48% of the electorate. The only other candidate received 22% of the electorate. What is the number of members who did NOT vote?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "9860"
+        },
+        {
+          "l": "B",
+          "v": "9870"
+        },
+        {
+          "l": "C",
+          "v": "9840"
+        },
+        {
+          "l": "D",
+          "v": "9850"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 26,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 15,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "X’s salary is increased by 20% and then decreased by 20%. What is the change in salary?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "4% Decrease"
+        },
+        {
+          "l": "B",
+          "v": "4% Increase"
+        },
+        {
+          "l": "C",
+          "v": "2% Decrease"
+        },
+        {
+          "l": "D",
+          "v": "2% Increase"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 26,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 16,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "The population of a town is 80,000. It decreases by 8% in the first year and increases by 5% in the second year. What will be the population of the town at the end of 2 years?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "76150"
+        },
+        {
+          "l": "B",
+          "v": "86140"
+        },
+        {
+          "l": "C",
+          "v": "77280"
+        },
+        {
+          "l": "D",
+          "v": "82540"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 26,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 17,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "Find the sum of money which when increased by 15% becomes Rs. 19,320.",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs. 16,800"
+        },
+        {
+          "l": "B",
+          "v": "Rs. 16,000"
+        },
+        {
+          "l": "C",
+          "v": "Rs. 17,000"
+        },
+        {
+          "l": "D",
+          "v": "Rs. 17,800"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 26,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 18,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "In a class, the ratio of the number of boys to that of the girls is 11:9. 30% of the boys and 20% of the girls passed an exam. Find the percentage of students who passed the exam.",
+      "opt": [
+        {
+          "l": "A",
+          "v": "3.92%"
+        },
+        {
+          "l": "B",
+          "v": "20%"
+        },
+        {
+          "l": "C",
+          "v": "24.5%"
+        },
+        {
+          "l": "D",
+          "v": "25.5%"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 26,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 19,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "In an election between two candidates, 10% of the voters did not cast their vote and 5% of the votes polled were found invalid. The successful candidate got 55% of the valid votes and won by a majority of 1710 votes. How many voters were enrolled?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "20000"
+        },
+        {
+          "l": "B",
+          "v": "21000"
+        },
+        {
+          "l": "C",
+          "v": "19000"
+        },
+        {
+          "l": "D",
+          "v": "20500"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 26,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 20,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "If the price of rice is raised by 20%, then by what percentage should a person reduce his consumption of rice so that his expenditure remains the same? (correct to one decimal place)",
+      "opt": [
+        {
+          "l": "A",
+          "v": "14.7%"
+        },
+        {
+          "l": "B",
+          "v": "18.7%"
+        },
+        {
+          "l": "C",
+          "v": "16.7%"
+        },
+        {
+          "l": "D",
+          "v": "12.7%"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 27,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 21,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "Admissions into a commerce course of a university increase by 5% every year. If the number of admissions presently is 2400 into that course, after three years, the number of admissions is Nearest to an integer:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "2778"
+        },
+        {
+          "l": "B",
+          "v": "2770"
+        },
+        {
+          "l": "C",
+          "v": "2775"
+        },
+        {
+          "l": "D",
+          "v": "2780"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 27,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 22,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "A number is increased by 10% and then the increased number is decreased by 20%. The net increase or decrease is:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "18% Decrease"
+        },
+        {
+          "l": "B",
+          "v": "2% Decrease"
+        },
+        {
+          "l": "C",
+          "v": "12% Decrease"
+        },
+        {
+          "l": "D",
+          "v": "12% Increase"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 27,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 23,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "In an election, there were three candidates: A, B and C. 10% of the eligible voters did not vote. Out of those who voted, 45% voted for A, 35% voted for B and the remaining 20% voted for C. 30% of the votes polled for A and 20% of the votes polled for B were later deemed invalid, while all the votes polled for C were deemed valid. If A got 882 more valid votes than B did, how many valid votes did C receive?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "5020"
+        },
+        {
+          "l": "B",
+          "v": "5040"
+        },
+        {
+          "l": "C",
+          "v": "5050"
+        },
+        {
+          "l": "D",
+          "v": "5060"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 27,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 24,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "The price of a tablet is first increased by 10%, and then decreased by 2.5% due to reduction in sales. What is the net percentage change in the final price of the tablet?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Decrease by 8.75%"
+        },
+        {
+          "l": "B",
+          "v": "Increase by 7.25%"
+        },
+        {
+          "l": "C",
+          "v": "Increase by 6.35%"
+        },
+        {
+          "l": "D",
+          "v": "Decrease by 5.5%"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 27,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 25,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "In an engineering institution, a student’s grade is assessed based on Internal tests (30%), assignments (30%) and external exams (40%). If a student scored 90% in internal tests, 95% in assignments and 75% in the external exams, then the overall grade of the student is:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "86.25%"
+        },
+        {
+          "l": "B",
+          "v": "85.25%"
+        },
+        {
+          "l": "C",
+          "v": "86%"
+        },
+        {
+          "l": "D",
+          "v": "85.50%"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 27,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 26,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "The population of a country has been growing at a rate of 4% every decade. If the projected population of the country in 2030 is given as 1,58,18,400, what was the population of the country in 2000?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "1,40,62,000"
+        },
+        {
+          "l": "B",
+          "v": "1,40,65,200"
+        },
+        {
+          "l": "C",
+          "v": "1,40,56,200"
+        },
+        {
+          "l": "D",
+          "v": "1,40,62,500"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 27,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 27,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "The population of a town is increasing at the rate of 5% per annum. What will be the population of the town on this basis after two years, if the present population is 16000?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "17600"
+        },
+        {
+          "l": "B",
+          "v": "17640"
+        },
+        {
+          "l": "C",
+          "v": "17620"
+        },
+        {
+          "l": "D",
+          "v": "17680"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 28,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 28,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "The price of a TV has been reduced by 20%. In order to restore the original price, the new price must be increased by:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "20%"
+        },
+        {
+          "l": "B",
+          "v": "28%"
+        },
+        {
+          "l": "C",
+          "v": "31%"
+        },
+        {
+          "l": "D",
+          "v": "25%"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 28,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 29,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "One candidate received 60% of the total valid votes in an election between two candidates. A total of 20% of the votes were invalid. What is the number of valid votes the other candidate received if the total votes were 16250?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "2990"
+        },
+        {
+          "l": "B",
+          "v": "4760"
+        },
+        {
+          "l": "C",
+          "v": "5200"
+        },
+        {
+          "l": "D",
+          "v": "5800"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 28,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 30,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "In a decade, a town’s population grew from 1,75,000 to 2,62,500. What is the averageannual percentage increase in population?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "8%"
+        },
+        {
+          "l": "B",
+          "v": "3%"
+        },
+        {
+          "l": "C",
+          "v": "5%"
+        },
+        {
+          "l": "D",
+          "v": "10%"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 28,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 31,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "The value of a machine depreciates every year by 10%. If its present value is Rs. 35,000, then the value of the machine after 2 years will be:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs. 28,350"
+        },
+        {
+          "l": "B",
+          "v": "Rs. 27,225"
+        },
+        {
+          "l": "C",
+          "v": "Rs. 28,000"
+        },
+        {
+          "l": "D",
+          "v": "Rs. 27,750"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 28,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 32,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "Atan election there were two candidates. A candidate got 38% of votes and lost by 7200 votes. The total number of valid votes is __________.",
+      "opt": [
+        {
+          "l": "A",
+          "v": "27360"
+        },
+        {
+          "l": "B",
+          "v": "30000"
+        },
+        {
+          "l": "C",
+          "v": "273600"
+        },
+        {
+          "l": "D",
+          "v": "3600"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 28,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 33,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "The number 36 is increased by a certain percentage and becomes 63. Calculate that percentage.",
+      "opt": [
+        {
+          "l": "A",
+          "v": "50%"
+        },
+        {
+          "l": "B",
+          "v": "75%"
+        },
+        {
+          "l": "C",
+          "v": "60%"
+        },
+        {
+          "l": "D",
+          "v": "85%"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 28,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 34,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "When the price of a watch was reduced by 20%, the number of watches sold is increased by 40%. What was the effect on the sales in percentage?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "12% Increase"
+        },
+        {
+          "l": "B",
+          "v": "30% Decrease"
+        },
+        {
+          "l": "C",
+          "v": "12% Decrease"
+        },
+        {
+          "l": "D",
+          "v": "30% Increase"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 28,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 35,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "A man bought a piece of land for Rs. 48,000. He sold two-fifth of it at a loss of 10%. At what gain percentage (rounded off to 1 decimal place) should he sell the remaining land to earn an overall profit of 42%?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "76.7%"
+        },
+        {
+          "l": "B",
+          "v": "84.3%"
+        },
+        {
+          "l": "C",
+          "v": "79.5%"
+        },
+        {
+          "l": "D",
+          "v": "89.8%"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 28,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 36,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "If the length and the breadth of a rectangle are increased by 15% and 20%, respectively, then by how much percent the area of the rectangle will increase?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "32%"
+        },
+        {
+          "l": "B",
+          "v": "38%"
+        },
+        {
+          "l": "C",
+          "v": "36%"
+        },
+        {
+          "l": "D",
+          "v": "48%"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 28,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 37,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "Two years ago,the population of a village was 1,000. The population increased by 10% is the first year and decreased by 10% in the second year. Find the present population.",
+      "opt": [
+        {
+          "l": "A",
+          "v": "985"
+        },
+        {
+          "l": "B",
+          "v": "980"
+        },
+        {
+          "l": "C",
+          "v": "990"
+        },
+        {
+          "l": "D",
+          "v": "995"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 29,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 38,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "Two numbers, A and B, are such that the sum of 10% of A and 8% of B is 3 5 th of the sum of 12% of A and 16% of B. The ratio A : B is:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "2 : 3"
+        },
+        {
+          "l": "B",
+          "v": "4 : 7"
+        },
+        {
+          "l": "C",
+          "v": "2 : 7"
+        },
+        {
+          "l": "D",
+          "v": "4 : 3"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 29,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 39,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "The salaries of P and Q together amount to Rs. 1,20,000. P spends 95% of his salary and Q 85% of his. If their savings are the same, then what is P’s salary?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs. 80,000"
+        },
+        {
+          "l": "B",
+          "v": "Rs. 72,000"
+        },
+        {
+          "l": "C",
+          "v": "Rs. 90,000"
+        },
+        {
+          "l": "D",
+          "v": "Rs. 60,000"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 29,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 40,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "The monthly income of Manisha was Rs. 1,20,000 and her monthly expenditure was Rs. 55,000. Next year, her income increased by 22% and her expenditure increase by 10%. Find the percentage increase in her savings (correct to 2 decimal places).",
+      "opt": [
+        {
+          "l": "A",
+          "v": "28.16%"
+        },
+        {
+          "l": "B",
+          "v": "26.25%"
+        },
+        {
+          "l": "C",
+          "v": "32.15%"
+        },
+        {
+          "l": "D",
+          "v": "30.08%"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 29,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 41,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "A family spends 8% of its monthly income on charity. In a particular month, the family spent Rs.1,200 on charity. What is the income in that month?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs.15,000"
+        },
+        {
+          "l": "B",
+          "v": "Rs.16,000"
+        },
+        {
+          "l": "C",
+          "v": "Rs.12,000"
+        },
+        {
+          "l": "D",
+          "v": "Rs.18,000"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 29,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 42,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "Bhanu spends 20% of his monthly salary on rent, 10% on stationery, 14% on transport, 18% on electricity, and the balance of Rs.1,520 on remaining items. What is the monthly salary of Bhanu?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs.10,000"
+        },
+        {
+          "l": "B",
+          "v": "Rs.6,000"
+        },
+        {
+          "l": "C",
+          "v": "Rs.4,000"
+        },
+        {
+          "l": "D",
+          "v": "Rs.2,000"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 29,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 43,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "The population of a city increases by 10% annually. If its present population is 21,000,what will be the population in 3 years?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "27951"
+        },
+        {
+          "l": "B",
+          "v": "27981"
+        },
+        {
+          "l": "C",
+          "v": "27971"
+        },
+        {
+          "l": "D",
+          "v": "27961"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 29,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 44,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "A man spends 15% of his income on house rent, 60% of the rest on household expenses and saves the rest. If he saves Rs.52,500, what is his total income (in Rs., rounded off to the nearest tens)?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "154410"
+        },
+        {
+          "l": "B",
+          "v": "145400"
+        },
+        {
+          "l": "C",
+          "v": "154540"
+        },
+        {
+          "l": "D",
+          "v": "154420"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 29,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 45,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "Madhuri spends 80% of her salary and Sushma spends 95% of her salary. But the savings of both are equal. Find the income of Sushma, if the sum of their incomes is Rs.10,000.",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs.9,000"
+        },
+        {
+          "l": "B",
+          "v": "Rs.8,000"
+        },
+        {
+          "l": "C",
+          "v": "Rs.4,000"
+        },
+        {
+          "l": "D",
+          "v": "Rs.5,000"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 30,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 46,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "The population of a country has been declining at 1% every decade. If the projected population of the country in 2030 is given as 1940598, what was the population of the country in 2000?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "2000000"
+        },
+        {
+          "l": "B",
+          "v": "1999990"
+        },
+        {
+          "l": "C",
+          "v": "2000450"
+        },
+        {
+          "l": "D",
+          "v": "2000616"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 30,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 47,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "The monthly income of a person was Rs.12,000 and his monthly expenditure was Rs.10,000. In the next year, his income increased by 12% and his expenditure by 5%. Find the percentage increase in his savings.",
+      "opt": [
+        {
+          "l": "A",
+          "v": "48%"
+        },
+        {
+          "l": "B",
+          "v": "45%"
+        },
+        {
+          "l": "C",
+          "v": "47%"
+        },
+        {
+          "l": "D",
+          "v": "46%"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 30,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 48,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "A sells an article to B at 10% profit. B sells it to C at 25% profit. If C pays Rs.6,875 for it, then the price at which A bought it is:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs.4,665"
+        },
+        {
+          "l": "B",
+          "v": "Rs.4,850"
+        },
+        {
+          "l": "C",
+          "v": "Rs.5,000"
+        },
+        {
+          "l": "D",
+          "v": "Rs.5,500"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 30,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 49,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "The value of a residential flat constructed at a cost of Rs.10,00,000 is depreciating at a rate of 10% per annum. What will be its value 3 years after the construction",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs.2,78,000"
+        },
+        {
+          "l": "B",
+          "v": "Rs.7,29,000"
+        },
+        {
+          "l": "C",
+          "v": "Rs.7,92,000"
+        },
+        {
+          "l": "D",
+          "v": "Rs.6,29,000"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 30,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 50,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "Sonam is a cab driver, who plies within a city. The number of kilometres that she drives on a Tuesday was 12.5% less than the number of kilometres that she drives on the day before.On the other hand, the number of kilometres that she drives on Wednesday was 20% more than the number of kilometres that she drives on Tuesday. If Sonam drives a total of 336 km on Wednesday, how many kilometres did she drive on Monday?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "315 km"
+        },
+        {
+          "l": "B",
+          "v": "318 km"
+        },
+        {
+          "l": "C",
+          "v": "320 km"
+        },
+        {
+          "l": "D",
+          "v": "324 km"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 30,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 51,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "Two numbers X and Y are such that the sum of 18% of X and 8% of Y is one-third of the sum of 22% of X and 36% of Y. Find the ratio of X and Y.",
+      "opt": [
+        {
+          "l": "A",
+          "v": "2:5"
+        },
+        {
+          "l": "B",
+          "v": "3:11"
+        },
+        {
+          "l": "C",
+          "v": "3:8"
+        },
+        {
+          "l": "D",
+          "v": "8:3"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 30,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 52,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "In an election between two candidates, one of the candidates secured 35% of the votes cast and was defeated by the other candidate by 1296 votes. If there were no invalid votes, then the total number of votes polled was:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "4546"
+        },
+        {
+          "l": "B",
+          "v": "4230"
+        },
+        {
+          "l": "C",
+          "v": "4456"
+        },
+        {
+          "l": "D",
+          "v": "4320"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 31,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 53,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "During his entire school life, John’s average marks in science was 80% and his average marks in mathematics was 90%. If his combined average marks in science and mathematics was 84%, while the total marks obtained by him in science was 54,000, what was John’s total marks obtained in mathematics?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "90000"
+        },
+        {
+          "l": "B",
+          "v": "81000"
+        },
+        {
+          "l": "C",
+          "v": "36000"
+        },
+        {
+          "l": "D",
+          "v": "60000"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 31,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 54,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "In an election between Ram and Shyamal, one got 30% of the total votes and thus lost by 900 votes. If 90% of the voters voted and no invalid or illegal votes were cast, then what was the numbers of voters in the voting list?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "2800"
+        },
+        {
+          "l": "B",
+          "v": "2500"
+        },
+        {
+          "l": "C",
+          "v": "2700"
+        },
+        {
+          "l": "D",
+          "v": "2300"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 31,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 55,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "A man spends 10 2 % of his salary on items of daily used and 30% of the remainder on house rent; after that, he is left with Rs.12,000. How much is his salary (consider the round-up value)?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs.18,050"
+        },
+        {
+          "l": "B",
+          "v": "Rs.19,154"
+        },
+        {
+          "l": "C",
+          "v": "Rs.10,054"
+        },
+        {
+          "l": "D",
+          "v": "Rs.19,000"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 31,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 56,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "64% of the students of a class are girls and 81.25% of the girls have chosen soccer as their favourite sport. If 143 girls have chosen soccer as their favourite sport, what is the total number of students in the class?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "270"
+        },
+        {
+          "l": "B",
+          "v": "280"
+        },
+        {
+          "l": "C",
+          "v": "300"
+        },
+        {
+          "l": "D",
+          "v": "275"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 31,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 57,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "In an election between two candidates, 15% of the voters did not cast their votes and 10% of the votes polled were found invalid. The successful candidate got 55% of the valid votes and won by a majority of 6120 votes. The number of voters enrolled on the voters list was:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "70000"
+        },
+        {
+          "l": "B",
+          "v": "80000"
+        },
+        {
+          "l": "C",
+          "v": "72000"
+        },
+        {
+          "l": "D",
+          "v": "75000"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 31,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 58,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "The price of an article is reduced by 30% but the daily sale of the article increased by 35%. The net percentage effect on the daily sale receipts is:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Increase"
+        },
+        {
+          "l": "B",
+          "v": "Increase"
+        },
+        {
+          "l": "C",
+          "v": "Decrease"
+        },
+        {
+          "l": "D",
+          "v": "Decrease"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 31,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 59,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "In an election between two candidates, a candidate who gets 72% of votes is elected by a majority of 572 votes. Find the total number of the votes polled. (assuming all votes are valid)",
+      "opt": [
+        {
+          "l": "A",
+          "v": "1100"
+        },
+        {
+          "l": "B",
+          "v": "900"
+        },
+        {
+          "l": "C",
+          "v": "1500"
+        },
+        {
+          "l": "D",
+          "v": "1300"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 32,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 60,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "When the price of an article was reduced by 25%, its sale was increased by 75%. Calculate the net effect on revenue.",
+      "opt": [
+        {
+          "l": "A",
+          "v": "31.25% Decrease"
+        },
+        {
+          "l": "B",
+          "v": "31.25% Increase"
+        },
+        {
+          "l": "C",
+          "v": "39.75% Increase"
+        },
+        {
+          "l": "D",
+          "v": "39.75% Decrease"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 32,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 61,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "A number is first increased by 25% and then decreased by 10%. If the resulting number is 72, what is the original number?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "75"
+        },
+        {
+          "l": "B",
+          "v": "84"
+        },
+        {
+          "l": "C",
+          "v": "64"
+        },
+        {
+          "l": "D",
+          "v": "56"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 32,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 62,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "In an election that was contested by 2 candidates, one candidate got 20% of the total votes and yet lost by 600 votes. What is the total number of votes cast in the election, assuming all votes are valid?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "900"
+        },
+        {
+          "l": "B",
+          "v": "700"
+        },
+        {
+          "l": "C",
+          "v": "800"
+        },
+        {
+          "l": "D",
+          "v": "1000"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 32,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 63,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "If the tax on a commodity is diminished by 20% and its consumption increased by 15%, the revenue decreases by:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "8%"
+        },
+        {
+          "l": "B",
+          "v": "12%"
+        },
+        {
+          "l": "C",
+          "v": "10%"
+        },
+        {
+          "l": "D",
+          "v": "6%"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 32,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 64,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "In an election between two candidates, one got 40% of the total valid votes, and 30% of the votes were invalid. If the total number of votes was 7500, the number of valid votes that the other candidate got was:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "1540"
+        },
+        {
+          "l": "B",
+          "v": "3250"
+        },
+        {
+          "l": "C",
+          "v": "2350"
+        },
+        {
+          "l": "D",
+          "v": "3150"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 32,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 65,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "In an assembly election of two candidates, the winner got 56% of the total valid votes. 5% of the total votes were declared invalid. If the total number of voters is 3,20,000 then what is the number of valid votes polled for the winning candidate?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "174020"
+        },
+        {
+          "l": "B",
+          "v": "175240"
+        },
+        {
+          "l": "C",
+          "v": "170420"
+        },
+        {
+          "l": "D",
+          "v": "170240"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 32,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 66,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "The population of village has been continuously increasing at the rate of 10% per year. If its present population is 54,450, what was it two years ago?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "48000"
+        },
+        {
+          "l": "B",
+          "v": "45000"
+        },
+        {
+          "l": "C",
+          "v": "52000"
+        },
+        {
+          "l": "D",
+          "v": "50000"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 32,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 67,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "In an examination it is required to get a minimum of 340 marks in aggregate to pass. A student gets 244 marks and is declared failed by 12% of the total marks. What are the maximum aggregate marks a student can get?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "1000"
+        },
+        {
+          "l": "B",
+          "v": "800"
+        },
+        {
+          "l": "C",
+          "v": "960"
+        },
+        {
+          "l": "D",
+          "v": "720"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 33,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 68,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "The population of a city increased by 5%, 2% and 6% in the first, second and third year, respectively. At the end of the third year, the population became 56,763. Find thec initial population of the city.",
+      "opt": [
+        {
+          "l": "A",
+          "v": "53000"
+        },
+        {
+          "l": "B",
+          "v": "52000"
+        },
+        {
+          "l": "C",
+          "v": "51000"
+        },
+        {
+          "l": "D",
+          "v": "50000"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 33,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 69,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "The population of a city is 225000. If the annual birth rate and death rates are 4.5% and 2.5%, respectively, calculate the increase in the population of the city after 2 years.",
+      "opt": [
+        {
+          "l": "A",
+          "v": "9099"
+        },
+        {
+          "l": "B",
+          "v": "9090"
+        },
+        {
+          "l": "C",
+          "v": "9909"
+        },
+        {
+          "l": "D",
+          "v": "9009"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 33,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 70,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "The price of a book is first increased by 8% and later decreased by 8%. What is the percentage change in the price of the book?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "No change"
+        },
+        {
+          "l": "B",
+          "v": "decrease by 0.64%"
+        },
+        {
+          "l": "C",
+          "v": "increase by 0.064%"
+        },
+        {
+          "l": "D",
+          "v": "increase by 0.64%"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 33,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 71,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "The price of a pen is first increased by 15% and later on the price was decreased by 20% due to reduction in sales. Find the net percentage change in the final price of a pen.",
+      "opt": [
+        {
+          "l": "A",
+          "v": "25%"
+        },
+        {
+          "l": "B",
+          "v": "8%"
+        },
+        {
+          "l": "C",
+          "v": "-8%"
+        },
+        {
+          "l": "D",
+          "v": "-16%"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 33,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 72,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "In an examination, Gopal secured 15% more marks than Asha, and Asha secured 10% more marks than Sachin. How much per cent more marks did Gopal secure than Sachin?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "25.5%"
+        },
+        {
+          "l": "B",
+          "v": "26.5%"
+        },
+        {
+          "l": "C",
+          "v": "25%"
+        },
+        {
+          "l": "D",
+          "v": "24.5%"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 33,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 73,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "The expenses of a family on rice, vegetables and cooking oil are in the ratio 9 : 11 : 5. If the prices of these items increases by 10%, 20% and 30%, respectively, then the total expenses of the family on these items will increase by:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "14.8%"
+        },
+        {
+          "l": "B",
+          "v": "192%"
+        },
+        {
+          "l": "C",
+          "v": "18.4%"
+        },
+        {
+          "l": "D",
+          "v": "16.2%"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 33,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 74,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "After spending 20% of his salary on grocery and 30% of the remainder on monthly house rent, a man is left with Rs. 8,400. What is his monthly salary?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs. 42,000"
+        },
+        {
+          "l": "B",
+          "v": "Rs. 28,000"
+        },
+        {
+          "l": "C",
+          "v": "Rs. 16.800"
+        },
+        {
+          "l": "D",
+          "v": "Rs. 15,000"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 33,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 75,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "Two numbers are less than a third number by 30% and 37% respectively. By how much is the second number lesser than the first?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "3%"
+        },
+        {
+          "l": "B",
+          "v": "7%"
+        },
+        {
+          "l": "C",
+          "v": "4%"
+        },
+        {
+          "l": "D",
+          "v": "10%"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 34,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 76,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "Number B is 17.5% less than number A, while number C is 22.5% more than number B. If the value of C is given as 8085, what is the value of A?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "7800"
+        },
+        {
+          "l": "B",
+          "v": "7750"
+        },
+        {
+          "l": "C",
+          "v": "8000"
+        },
+        {
+          "l": "D",
+          "v": "8100"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 34,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 77,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "In a school, the final grades of a subject for an academic year are calculated, based on the grades that a student gets in his assignments, tests and a final exam. Assignments have the weightage of 28%, tests of 22%, and the final exam of 50%. If a student has an assignment grade of 80, a test grade of 75, an exam grade of 86, then his overall grade for the year is _______ .",
+      "opt": [
+        {
+          "l": "A",
+          "v": "81.9"
+        },
+        {
+          "l": "B",
+          "v": "80.5"
+        },
+        {
+          "l": "C",
+          "v": "84.6"
+        },
+        {
+          "l": "D",
+          "v": "90.2"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 34,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 78,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "The salaries of X, Y and Z are in the ratio 2 : 3 : 5. By what percentage is the salary of Z more than that of X?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "100"
+        },
+        {
+          "l": "B",
+          "v": "200"
+        },
+        {
+          "l": "C",
+          "v": "120"
+        },
+        {
+          "l": "D",
+          "v": "150"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 34,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 79,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "Kumar’s salary is Rs. 30,000 per month. He spends 25% of this on food and rent and 20% of the remaining on education. But he pays 5% of his total salary on paying the income tax and saves Rs. 8,000 after all these three deductions. What is the amount (in Rs.) available with him after his savings?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "8500"
+        },
+        {
+          "l": "B",
+          "v": "7500"
+        },
+        {
+          "l": "C",
+          "v": "7250"
+        },
+        {
+          "l": "D",
+          "v": "8550"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 34,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 80,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "A woman spends 25% of her income. If her expenditure is Rs. 1,250, then find her income.",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs. 2,500"
+        },
+        {
+          "l": "B",
+          "v": "Rs. 5,000"
+        },
+        {
+          "l": "C",
+          "v": "Rs. 1,250"
+        },
+        {
+          "l": "D",
+          "v": "Rs. 1,000"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 34,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 81,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "The tax on a commodity diminishes by 14% and its consumption increases by 10%. Find the effect on revenue.",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Decreases by 9.5%"
+        },
+        {
+          "l": "B",
+          "v": "Decreases by 6.5%"
+        },
+        {
+          "l": "C",
+          "v": "Decreases by 5.4%"
+        },
+        {
+          "l": "D",
+          "v": "Decreases by 7.4%"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 34,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 82,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "40% of Ranita’s income is equal to 56% of Bhaskar’s income. If Ranita’s income was Rs. 800 more than what it is and Bhaskar’s income was Rs. 2,000 more than what it is, then the ratio of the incomes of Ranita and Bhaskar would have been 4 : 3. What is the actual combined income of Ranita and Bhaskar?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs. 67,200"
+        },
+        {
+          "l": "B",
+          "v": "Rs. 68,200"
+        },
+        {
+          "l": "C",
+          "v": "Rs. 66,800"
+        },
+        {
+          "l": "D",
+          "v": "Rs. 67,800"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 34,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 83,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "A sells a car to B at a gain of 10% and B again sells it to C ata profit of 5%. If C pays Rs. 4,06,000 to B, what is the cost price of the car for A? (Consider integral part only)",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs. 3,50,000"
+        },
+        {
+          "l": "B",
+          "v": "Rs. 3,68,950"
+        },
+        {
+          "l": "C",
+          "v": "Rs. 3,51,515"
+        },
+        {
+          "l": "D",
+          "v": "Rs. 4,51,515"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 35,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 84,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "There is a continuous growth in the population of a village at the rate of 5% per annum. If its present population is 18522, what was the population of the village 3 years ago?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "17500"
+        },
+        {
+          "l": "B",
+          "v": "16400"
+        },
+        {
+          "l": "C",
+          "v": "16000"
+        },
+        {
+          "l": "D",
+          "v": "17200"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 35,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 85,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "The expenditure of a company increases by 25%, then increases by 30%, then further decreases by 20%.The overall percentage change in expenditure is:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "10"
+        },
+        {
+          "l": "B",
+          "v": "30"
+        },
+        {
+          "l": "C",
+          "v": "34"
+        },
+        {
+          "l": "D",
+          "v": "22"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 35,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 86,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "The ratio of income and expenditure of a person is 8 : 5. If her income increases by 25% and her expenditure increases by 28%, then what is the percentage increase in her savings?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "18%"
+        },
+        {
+          "l": "B",
+          "v": "20%"
+        },
+        {
+          "l": "C",
+          "v": "16"
+        },
+        {
+          "l": "D",
+          "v": "22"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 35,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 88,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "A man spends 20% of his monthly salary on food and one-fourth of the remaining salary on charity. If he saves Rs. 9,600 per month, which is equal to half of the balance after spending on food and charity, then his monthly salary is:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs. 28,000"
+        },
+        {
+          "l": "B",
+          "v": "Rs. 32,000"
+        },
+        {
+          "l": "C",
+          "v": "Rs. 26,000"
+        },
+        {
+          "l": "D",
+          "v": "Rs. 30,000"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 35,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 89,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "The price of a bike is Rs. 75,500. What will be the price of the bike after a reduction of 17%?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs. 68,650"
+        },
+        {
+          "l": "B",
+          "v": "Rs. 68,680"
+        },
+        {
+          "l": "C",
+          "v": "Rs. 62,665"
+        },
+        {
+          "l": "D",
+          "v": "Rs. 62,650"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 35,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 90,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "P sold an item to Q at a 20% gain, and Q sold it to R at a loss of 10%. If R bought the item for Rs. 1,080, then at what price did P purchase it?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs. 5000"
+        },
+        {
+          "l": "B",
+          "v": "Rs. 3000"
+        },
+        {
+          "l": "C",
+          "v": "Rs. 1000"
+        },
+        {
+          "l": "D",
+          "v": "Rs. 800"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 35,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 91,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "In a panchayat election Candidate A secured 30% of the total votes and did NOT qualify by 6 votes. Candidate B secured 40% of the total votes and got 6 votes more than the bare minimum to qualify. The total number of votes were __________.",
+      "opt": [
+        {
+          "l": "a",
+          "v": "140"
+        },
+        {
+          "l": "b",
+          "v": "160"
+        },
+        {
+          "l": "c",
+          "v": "100"
+        },
+        {
+          "l": "d",
+          "v": "120"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 36,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 92,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "A person could save 20% of his income. A year later, his income increased by 25% but he could save the same amount only as before. By what percentage has his expenditure increased?",
+      "opt": [
+        {
+          "l": "a",
+          "v": "27.5%"
+        },
+        {
+          "l": "b",
+          "v": "32.5%"
+        },
+        {
+          "l": "c",
+          "v": "31.25%"
+        },
+        {
+          "l": "d",
+          "v": "29.75%"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 36,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 94,
+      "exam": "SSC CHSL",
+      "exam_year": "2022",
+      "q": "A student's marks were incorrectly entered as 94 instead of 69. Due to this error, the average marks of the class got increased by 1.25. What is the number of students in the class?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "15"
+        },
+        {
+          "l": "B",
+          "v": "25"
+        },
+        {
+          "l": "C",
+          "v": "20"
+        },
+        {
+          "l": "D",
+          "v": "22"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 36,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 1,
+      "exam": "SSC MTS",
+      "exam_year": "2022",
+      "q": "The side of a square is increased by 25%. What is the percentage increase in its area?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "62.5%"
+        },
+        {
+          "l": "B",
+          "v": "57.5%"
+        },
+        {
+          "l": "C",
+          "v": "50%"
+        },
+        {
+          "l": "D",
+          "v": "56.25%"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 36,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 2,
+      "exam": "SSC MTS",
+      "exam_year": "2022",
+      "q": "There are two numbers 'x' and 'y'. 40% of 'x' is equal to 60% of 'y’. If the average of 'x' and 'y' is 225, then what is the difference between 'x' and 'y'?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "85"
+        },
+        {
+          "l": "B",
+          "v": "80"
+        },
+        {
+          "l": "C",
+          "v": "75"
+        },
+        {
+          "l": "D",
+          "v": "90"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 36,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 3,
+      "exam": "SSC MTS",
+      "exam_year": "2022",
+      "q": "If Chetan's present income is Rs.40,000 and it increases by 1% annually, then what will be his income 2 years from now?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs.50,800"
+        },
+        {
+          "l": "B",
+          "v": "Rs.58,000"
+        },
+        {
+          "l": "C",
+          "v": "Rs.40,804"
+        },
+        {
+          "l": "D",
+          "v": "Rs.44,854"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 36,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 4,
+      "exam": "SSC MTS",
+      "exam_year": "2022",
+      "q": "Aman gave 30% of his monthly income to his father and of the remaining income he gave 30% to his daughter and 25% to his wife. Aman invested the amount of money still remaining from his monthly income equally in three schemes. If he invested Rs.42.000 in each scheme, what is Aman's monthly income (in Rs. thousand)?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "300"
+        },
+        {
+          "l": "B",
+          "v": "400"
+        },
+        {
+          "l": "C",
+          "v": "200"
+        },
+        {
+          "l": "D",
+          "v": "500"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 36,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 5,
+      "exam": "SSC MTS",
+      "exam_year": "2022",
+      "q": "In a bag, the number of Rs.5 coins is 8 more than the number of Rs.10 coins but 20% less than the number of 22 coins. If the total amount in the bag is Rs.270, what is the number of Rs.5 coins?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "15"
+        },
+        {
+          "l": "B",
+          "v": "20"
+        },
+        {
+          "l": "C",
+          "v": "25"
+        },
+        {
+          "l": "D",
+          "v": "18"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 37,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 6,
+      "exam": "SSC MTS",
+      "exam_year": "2022",
+      "q": "Two craftsmen, A and B, are paid a total of Rs.700 per week by their employer. If A is paid 250% of the sum paid to B, how much is A paid per week?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs.300"
+        },
+        {
+          "l": "B",
+          "v": "Rs.200"
+        },
+        {
+          "l": "C",
+          "v": "Rs.500"
+        },
+        {
+          "l": "D",
+          "v": "Rs.450"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 37,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 7,
+      "exam": "SSC MTS",
+      "exam_year": "2022",
+      "q": "The ratio of 45% of 80% of A to 30% of 40% of B is 15: 4. If the average of A and B is 67.5, what is the value of A - B?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "10"
+        },
+        {
+          "l": "B",
+          "v": "18"
+        },
+        {
+          "l": "C",
+          "v": "12"
+        },
+        {
+          "l": "D",
+          "v": "15"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 37,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 8,
+      "exam": "SSC MTS",
+      "exam_year": "2022",
+      "q": "A person spends 40% of his monthly income. The monthly income of the person is increased by 15% and his expenditure is decreased by 22%. What is the approximate percentage increase in his savings?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "40%"
+        },
+        {
+          "l": "B",
+          "v": "44%"
+        },
+        {
+          "l": "C",
+          "v": "32%"
+        },
+        {
+          "l": "D",
+          "v": "36%"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 37,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 9,
+      "exam": "SSC MTS",
+      "exam_year": "2022",
+      "q": "B is 10% more than A. C is 20% less than A. B is what percentage more than C?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "45%"
+        },
+        {
+          "l": "B",
+          "v": "27.5%"
+        },
+        {
+          "l": "C",
+          "v": "37.5%"
+        },
+        {
+          "l": "D",
+          "v": "25%"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 37,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 10,
+      "exam": "SSC MTS",
+      "exam_year": "2022",
+      "q": "The monthly income of a person is Rs.15,000. He saves 20% of his income. If his income increases by 10% and his nominal savings remains the same, then what will be his new expenditure?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs.13000"
+        },
+        {
+          "l": "B",
+          "v": "Rs.14500"
+        },
+        {
+          "l": "C",
+          "v": "Rs.13500"
+        },
+        {
+          "l": "D",
+          "v": "Rs.14000"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 37,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 11,
+      "exam": "SSC MTS",
+      "exam_year": "2022",
+      "q": "Mx. Stark gave 30% of the money he had to Bruce. He also gave 30% of the remaining amount to each of Natasha, Captain and Vision. Half of the remaining amount he spent on miscellaneous items, and the remaining amount of Rs.14,000 he deposited in Marvel's Fund. How much money did Mr. Stark initially have?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs.3,90,000"
+        },
+        {
+          "l": "B",
+          "v": "Rs.4,00,000"
+        },
+        {
+          "l": "C",
+          "v": "Rs.3,70,000"
+        },
+        {
+          "l": "D",
+          "v": "Rs.3,00,000"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 37,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 1,
+      "exam": "SSC CGL MAINS",
+      "exam_year": "2022",
+      "q": "Three years ago, Raman’s salary was Rs.45000. His salary is increased by 10 percent, A percent and 20 percent in first, second and third year respectively. Raman’s present salary is Rs.83160. What is the value of A?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "50"
+        },
+        {
+          "l": "B",
+          "v": "40"
+        },
+        {
+          "l": "C",
+          "v": "54"
+        },
+        {
+          "l": "D",
+          "v": "30"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 38,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 2,
+      "exam": "SSC CGL MAINS",
+      "exam_year": "2022",
+      "q": "Price of rice is decreased by 25 percent and therefore a person can purchase 30 kg more rice in the same expenditure. If expenditure is Rs.5400, then what was the original price of rice per kg?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs.90 per kg"
+        },
+        {
+          "l": "B",
+          "v": "Rs.75 per kg"
+        },
+        {
+          "l": "C",
+          "v": "Rs.50 per kg"
+        },
+        {
+          "l": "D",
+          "v": "Rs.60 per kg"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 38,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 3,
+      "exam": "SSC CGL MAINS",
+      "exam_year": "2022",
+      "q": "Raju spends 10 percent and 20 percent of his income on transport and food respectively. He spends 30 percent of the remaining income on clothing. He saves rest of his income. If his saving is Rs.26460, then what will be total expenditure on food and clothing together?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs.26420"
+        },
+        {
+          "l": "B",
+          "v": "Rs.22140"
+        },
+        {
+          "l": "C",
+          "v": "Rs.23440"
+        },
+        {
+          "l": "D",
+          "v": "Rs.24480"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 38,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 4,
+      "exam": "SSC CGL MAINS",
+      "exam_year": "2022",
+      "q": "Salary of Mohit is 60 percent more than Vijay.\nSalary of Vijay is how much percent less than\nMohit?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "42.5"
+        },
+        {
+          "l": "B",
+          "v": "47.5"
+        },
+        {
+          "l": "C",
+          "v": "37.5"
+        },
+        {
+          "l": "D",
+          "v": "45"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 38,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 5,
+      "exam": "SSC CGL MAINS",
+      "exam_year": "2022",
+      "q": "Rohit’s income is Rs.32000. If his expenses is\n30 percent of total income, then what will be\nthe saving of Rohit?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs.18600"
+        },
+        {
+          "l": "B",
+          "v": "Rs.19200"
+        },
+        {
+          "l": "C",
+          "v": "Rs.24600"
+        },
+        {
+          "l": "D",
+          "v": "Rs.22400"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 38,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 1,
+      "exam": "SSC Phase X",
+      "exam_year": "2022",
+      "q": "28% of the people eligible to vote are between\n20 to 25 years. In an election 75% of those\neligible to vote who were between 20 to 25\nyears actually voted. In that election the\nnumber of persons between 20 to 25 who\nactually voted was what percentage of those\neligible to vote?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "25%"
+        },
+        {
+          "l": "B",
+          "v": "21%"
+        },
+        {
+          "l": "C",
+          "v": "28%"
+        },
+        {
+          "l": "D",
+          "v": "22"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 38,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 2,
+      "exam": "SSC Phase X",
+      "exam_year": "2022",
+      "q": "In an election, 35% of the voters voted for candidate P whereas 50% of the remaining voted for candidate Q. The remaining voters did not vote. If the difference between those who voted for candidate P and those who did not vote was 1000, the number of individuals eligible for casting a vote in that election was:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "40000"
+        },
+        {
+          "l": "B",
+          "v": "60000"
+        },
+        {
+          "l": "C",
+          "v": "75000"
+        },
+        {
+          "l": "D",
+          "v": "55000"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 38,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 3,
+      "exam": "SSC Phase X",
+      "exam_year": "2022",
+      "q": "A family saves 30% of the total income and the savings amount to Rs.600 less than half of the expenditure. If the expenditure is spent on health, food and education in the ratio of 3 : 5 : 6, then what amount of expenditure is spent on education?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs.1,800"
+        },
+        {
+          "l": "B",
+          "v": "Rs.3,600"
+        },
+        {
+          "l": "C",
+          "v": "Rs.7,200"
+        },
+        {
+          "l": "D",
+          "v": "Rs.8,400"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 39,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 4,
+      "exam": "SSC Phase X",
+      "exam_year": "2022",
+      "q": "The current population of a village is 1000 and its population is increasing at the rate of 10% every year. What will be the population of the village after three years?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "1331"
+        },
+        {
+          "l": "B",
+          "v": "1500"
+        },
+        {
+          "l": "C",
+          "v": "1210"
+        },
+        {
+          "l": "D",
+          "v": "1100"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 39,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 5,
+      "exam": "SSC Phase X",
+      "exam_year": "2022",
+      "q": "Shalini spends 60% of her salary. If her salary is increased by 40% and her expenditure is also increased by 30%, find the percentage increment or decrement in her savings.",
+      "opt": [
+        {
+          "l": "A",
+          "v": "45% increment"
+        },
+        {
+          "l": "B",
+          "v": "55% decrement"
+        },
+        {
+          "l": "C",
+          "v": "45% decrement"
+        },
+        {
+          "l": "D",
+          "v": "55% increment"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 39,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 6,
+      "exam": "SSC Phase X",
+      "exam_year": "2022",
+      "q": "A number is first increased by 5% and then it is further increased by 15%. The original number increased altogether by:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "19.75%"
+        },
+        {
+          "l": "B",
+          "v": "20.75%"
+        },
+        {
+          "l": "C",
+          "v": "22.75%"
+        },
+        {
+          "l": "D",
+          "v": "21.75%"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 39,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 7,
+      "exam": "SSC Phase X",
+      "exam_year": "2022",
+      "q": "Suppose the cost of a car increases by 10% and then decreases by 20%. Due to some reason again the cost increases by 15%. The resulting cost percentage increase or decrease is:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "1.2% decrease"
+        },
+        {
+          "l": "B",
+          "v": "1.2% increase"
+        },
+        {
+          "l": "C",
+          "v": "5% increase"
+        },
+        {
+          "l": "D",
+          "v": "15% decrease"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 39,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 8,
+      "exam": "SSC Phase X",
+      "exam_year": "2022",
+      "q": "The income of an employees is 30% more than his expenditure. If his income decreases by 10% and his expenditure increases by 3%, then by what per cent does his saving decrease or increase?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "48 increase"
+        },
+        {
+          "l": "B",
+          "v": "53 decrease"
+        },
+        {
+          "l": "C",
+          "v": "50 increase"
+        },
+        {
+          "l": "D",
+          "v": "52 decrease"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 39,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 9,
+      "exam": "SSC Phase X",
+      "exam_year": "2022",
+      "q": "If a reduction of 10% in the price of rice enables a person to obtain 22kg more for Rs.250, then the original price of rice per kg is.",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs.1.26"
+        },
+        {
+          "l": "B",
+          "v": "Rs.1.24"
+        },
+        {
+          "l": "C",
+          "v": "Rs.1.22"
+        },
+        {
+          "l": "D",
+          "v": "Rs.1.20"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 39,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 10,
+      "exam": "SSC Phase X",
+      "exam_year": "2022",
+      "q": "The population of a town increases by 20% annually. If its present population is 15000, what will be the population in 2 years?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "21400"
+        },
+        {
+          "l": "B",
+          "v": "21500"
+        },
+        {
+          "l": "C",
+          "v": "21600"
+        },
+        {
+          "l": "D",
+          "v": "21300"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 39,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 11,
+      "exam": "SSC Phase X",
+      "exam_year": "2022",
+      "q": "The ratio of income to expenditure of a person is 5 : 2. What percentage of his income is he saving?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "55%"
+        },
+        {
+          "l": "B",
+          "v": "60%"
+        },
+        {
+          "l": "C",
+          "v": "52%"
+        },
+        {
+          "l": "D",
+          "v": "40%"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 40,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 12,
+      "exam": "SSC Phase X",
+      "exam_year": "2022",
+      "q": "If the length of a rectangle is increased by 30% and breadth is reduced by 15%, find the percent change in the area of the rectangle.",
+      "opt": [
+        {
+          "l": "A",
+          "v": "10.5% decrement"
+        },
+        {
+          "l": "B",
+          "v": "12.5% decrement"
+        },
+        {
+          "l": "C",
+          "v": "12.5% increment"
+        },
+        {
+          "l": "D",
+          "v": "12.5% increment"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 40,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 13,
+      "exam": "SSC Phase X",
+      "exam_year": "2022",
+      "q": "Ranjeet spends 30% of his monthly salary on food, 15% of the remaining salary on clothes, 25% of the remaining salary on rent and 20% of the remaining salary on fuel and still saves an amount of Rs 5,355. What is Ranjit's monthly salary?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs.17,000"
+        },
+        {
+          "l": "B",
+          "v": "Rs.15000"
+        },
+        {
+          "l": "C",
+          "v": "Rs.20,000"
+        },
+        {
+          "l": "D",
+          "v": "Rs.12000"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 40,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 14,
+      "exam": "SSC Phase X",
+      "exam_year": "2022",
+      "q": "Only two candidate were contesting against each other in an election of a village. One candidate got 43.5% voters and was defeated by 3744 votes. How many votes did the winning candidate get?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "16200"
+        },
+        {
+          "l": "B",
+          "v": "16500"
+        },
+        {
+          "l": "C",
+          "v": "16272"
+        },
+        {
+          "l": "D",
+          "v": "15275"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 40,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 15,
+      "exam": "SSC Phase X",
+      "exam_year": "2022",
+      "q": "A person received a yearly salary hike of 15%, 20% and 25% in 3 successive years. What is the total salary of the person after 3 years if his initial salary was Rs.20,000?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "Rs.34,500"
+        },
+        {
+          "l": "B",
+          "v": "Rs.35,000"
+        },
+        {
+          "l": "C",
+          "v": "Rs.30,000"
+        },
+        {
+          "l": "D",
+          "v": "Rs.32,500"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 40,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 1,
+      "exam": "SSC CPO",
+      "exam_year": "2020",
+      "q": "If each side of a rectangle is decreased by 11%, then its area will decrease by:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "24.31%"
+        },
+        {
+          "l": "B",
+          "v": "25%"
+        },
+        {
+          "l": "C",
+          "v": "21.13%"
+        },
+        {
+          "l": "D",
+          "v": "20.79%"
+        }
+      ],
+      "ans": "D",
+      "diff": null,
+      "page": 40,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 2,
+      "exam": "SSC CPO",
+      "exam_year": "2020",
+      "q": "The price of diesel increased by 16%. A person wants to increase his expenditure on diesel by 10% only. By what percentage. correct to one decimal place, should he reduce his consumption?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "6.5%"
+        },
+        {
+          "l": "B",
+          "v": "5.2%"
+        },
+        {
+          "l": "C",
+          "v": "4.5%"
+        },
+        {
+          "l": "D",
+          "v": "3.7%"
+        }
+      ],
+      "ans": "B",
+      "diff": null,
+      "page": 40,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 3,
+      "exam": "SSC CPO",
+      "exam_year": "2020",
+      "q": "If decreasing 110 by x% gives the same result as increasing 50 by x% , then x% of 650 is what percentage more than (x + 20)% of 180? (correct to nearest integer)",
+      "opt": [
+        {
+          "l": "A",
+          "v": "80%"
+        },
+        {
+          "l": "B",
+          "v": "90%"
+        },
+        {
+          "l": "C",
+          "v": "136%"
+        },
+        {
+          "l": "D",
+          "v": "154%"
+        }
+      ],
+      "ans": "C",
+      "diff": null,
+      "page": 40,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 4,
+      "exam": "SSC CPO",
+      "exam_year": "2020",
+      "q": "If A’s salary is 60% more than B’s salary, then by what percentage is B’s salary less than that of A?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "47.7%"
+        },
+        {
+          "l": "B",
+          "v": "33.3%"
+        },
+        {
+          "l": "C",
+          "v": "37.5%"
+        },
+        {
+          "l": "D",
+          "v": "45%"
+        }
+      ],
+      "ans": "C",
+      "diff": null,
+      "page": 41,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 5,
+      "exam": "SSC CPO",
+      "exam_year": "2020",
+      "q": "If house tax is paid before the due date, one gets a reduction of 12% on the amount of the bill. By paying the tax before the due date, a person got a reduction of Rs.2,100. The amount (in Rs.) of house tax was:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "25,000"
+        },
+        {
+          "l": "B",
+          "v": "17,500"
+        },
+        {
+          "l": "C",
+          "v": "21,000"
+        },
+        {
+          "l": "D",
+          "v": "18,000"
+        }
+      ],
+      "ans": "B",
+      "diff": null,
+      "page": 41,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 6,
+      "exam": "SSC CPO",
+      "exam_year": "2020",
+      "q": "Rice is now being sold at Rs.29 per kg. During the last month, its cost was Rs.25 per kg. By now much percentage should a family reduce its consumption, so as to keep the expenditure the same as before?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "15%"
+        },
+        {
+          "l": "B",
+          "v": "12%"
+        },
+        {
+          "l": "C",
+          "v": "13%"
+        },
+        {
+          "l": "D",
+          "v": "14%"
+        }
+      ],
+      "ans": "D",
+      "diff": null,
+      "page": 41,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 7,
+      "exam": "SSC CPO",
+      "exam_year": "2020",
+      "q": "The monthly salary of a person was Rs.750,000, He used to spend on Family expenses (E), Taxes (T), Charity (C), and the rest were his savings. E was 60% of the income, T was 20% of E, and C was 15% of T. When his salary got raised by 40%, he maintained the percentage level of E, but T becomes 30% of E and C becomes 20% of T. The difference between the two savings (in Rs.) is:",
+      "opt": [
+        {
+          "l": "a",
+          "v": "128"
+        },
+        {
+          "l": "b",
+          "v": "220"
+        },
+        {
+          "l": "c",
+          "v": "130"
+        },
+        {
+          "l": "d",
+          "v": "250"
+        }
+      ],
+      "ans": "B",
+      "diff": null,
+      "page": 41,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 8,
+      "exam": "SSC CPO",
+      "exam_year": "2020",
+      "q": "If the area of a square is decreased by 19%, then the diagonal of the square is decreased by:",
+      "opt": [
+        {
+          "l": "a",
+          "v": "15%"
+        },
+        {
+          "l": "b",
+          "v": "12%"
+        },
+        {
+          "l": "c",
+          "v": "10%"
+        },
+        {
+          "l": "d",
+          "v": "5%"
+        }
+      ],
+      "ans": "C",
+      "diff": null,
+      "page": 41,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 9,
+      "exam": "SSC CPO",
+      "exam_year": "2020",
+      "q": "A person's salary increased from Rs.8,100 to Rs.9,000. What is the percentage increase in his salary?",
+      "opt": [
+        {
+          "l": "a",
+          "v": ""
+        },
+        {
+          "l": "b",
+          "v": "13"
+        },
+        {
+          "l": "c",
+          "v": "11"
+        },
+        {
+          "l": "d",
+          "v": ""
+        }
+      ],
+      "ans": "C",
+      "diff": null,
+      "page": 41,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 10,
+      "exam": "SSC CPO",
+      "exam_year": "2020",
+      "q": "The monthly salary of a person was Rs.75,000. He used to spend on Family Expenses (E), Taxes (T), Charity (C) and rest were his savings. E was 60% of the income, T was 20% of E, and C was 15% of T. When his salary got raised by 40%, he maintained the percentage level of E, but T became 30% of E and C became 20% of T. The ratio of the savings of his earlier salary to that of his present salary is:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "655 : 644"
+        },
+        {
+          "l": "B",
+          "v": "325 : 337"
+        },
+        {
+          "l": "C",
+          "v": "644 : 655"
+        },
+        {
+          "l": "D",
+          "v": "337 : 325"
+        }
+      ],
+      "ans": "A",
+      "diff": null,
+      "page": 41,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 11,
+      "exam": "SSC CPO",
+      "exam_year": "2020",
+      "q": "A man spends 75% of his income. If his income increases by 28% and his expenditure increases by 20%, then what is the increase or decrease percentage in his savings?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "52% increase"
+        },
+        {
+          "l": "B",
+          "v": "13% decrease"
+        },
+        {
+          "l": "C",
+          "v": "13% increase"
+        },
+        {
+          "l": "D",
+          "v": "52% decrease"
+        }
+      ],
+      "ans": "A",
+      "diff": null,
+      "page": 42,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 12,
+      "exam": "SSC CPO",
+      "exam_year": "2020",
+      "q": "A person’s salary has increased from Rs.7,000 to Rs.12,000. What is the percentage increase in his salary?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "71"
+        },
+        {
+          "l": "B",
+          "v": "61"
+        },
+        {
+          "l": "C",
+          "v": "69"
+        },
+        {
+          "l": "D",
+          "v": "76"
+        }
+      ],
+      "ans": "A",
+      "diff": null,
+      "page": 42,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 13,
+      "exam": "SSC CPO",
+      "exam_year": "2022",
+      "q": "If house tax is paid before the due date, one gets a reduction of 12% on the amount of the bill. By paying the tax before the due date, a person got a reduction of Rs.2,100. The amount (in Rs.) of house tax paid was:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "25,000"
+        },
+        {
+          "l": "B",
+          "v": "15,400"
+        },
+        {
+          "l": "C",
+          "v": "21,000"
+        },
+        {
+          "l": "D",
+          "v": "17,500"
+        }
+      ],
+      "ans": "?",
+      "diff": null,
+      "page": 42,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 14,
+      "exam": "SSC CPO",
+      "exam_year": "2020",
+      "q": "If 49% of X = Y, then Y% of 50 is:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "40% of Y"
+        },
+        {
+          "l": "B",
+          "v": "24.5% of Y"
+        },
+        {
+          "l": "C",
+          "v": "50% of X"
+        },
+        {
+          "l": "D",
+          "v": "24.5% of X"
+        }
+      ],
+      "ans": "D",
+      "diff": null,
+      "page": 42,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 15,
+      "exam": "SSC CPO",
+      "exam_year": "2020",
+      "q": "Anumber is first increased by 40% and then decreased by 25%, again increased by 15% and then decreased by 20%. What is the net increase/decrease per cent in the number?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "7.2% decrease"
+        },
+        {
+          "l": "B",
+          "v": "6.4% increase"
+        },
+        {
+          "l": "C",
+          "v": "3.4% increase"
+        },
+        {
+          "l": "D",
+          "v": "3.4% decrease"
+        }
+      ],
+      "ans": "D",
+      "diff": null,
+      "page": 42,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 16,
+      "exam": "SSC CPO",
+      "exam_year": "2020",
+      "q": "A class has five sections that have 25, 30, 40, 45 and 60 students, respectively. The pass percentage of these sections are 20%, 30%, 35%, 40% and 100%, respectively. The pass percentage of the entire class is:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "87%"
+        },
+        {
+          "l": "B",
+          "v": "63%"
+        },
+        {
+          "l": "C",
+          "v": "53%"
+        },
+        {
+          "l": "D",
+          "v": "79%"
+        }
+      ],
+      "ans": "C",
+      "diff": null,
+      "page": 42,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 17,
+      "exam": "SSC CPO",
+      "exam_year": "2020",
+      "q": "If 25% of 400 + 35% of 1260 + 27% of 1800 = 1020 + x, then the value of x lies between:",
+      "opt": [
+        {
+          "l": "A",
+          "v": "6 to 10"
+        },
+        {
+          "l": "B",
+          "v": "0 to 5"
+        },
+        {
+          "l": "C",
+          "v": "0 to 15"
+        },
+        {
+          "l": "D",
+          "v": "16 to 20"
+        }
+      ],
+      "ans": "A",
+      "diff": null,
+      "page": 42,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 18,
+      "exam": "SSC CPO",
+      "exam_year": "2020",
+      "q": "If decreasing 110 by x% gives the same results as increasing 50 by x%, then x% of 650 is what percentage (correct to that nearest integer) more than (x - 10)% of 780?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "17%"
+        },
+        {
+          "l": "B",
+          "v": "12%"
+        },
+        {
+          "l": "C",
+          "v": "18%"
+        },
+        {
+          "l": "D",
+          "v": "14%"
+        }
+      ],
+      "ans": "D",
+      "diff": null,
+      "page": 42,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 19,
+      "exam": "SSC CPO",
+      "exam_year": "2020",
+      "q": "If each side of a square is decreased by 17%, then by what percentage does its area decrease?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "30.79%"
+        },
+        {
+          "l": "B",
+          "v": "31.11%"
+        },
+        {
+          "l": "C",
+          "v": "25%"
+        },
+        {
+          "l": "D",
+          "v": "44.31%"
+        }
+      ],
+      "ans": "B",
+      "diff": null,
+      "page": 42,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 20,
+      "exam": "SSC CPO",
+      "exam_year": "2020",
+      "q": "The price of diesel is increased by 26%. A person wants to increase his expenditure by 15% only. By what percentage, correct to one decimal place, should he decrease his consumption?",
+      "opt": [
+        {
+          "l": "A",
+          "v": "7.2%"
+        },
+        {
+          "l": "B",
+          "v": "6.5%"
+        },
+        {
+          "l": "C",
+          "v": "8.7%"
+        },
+        {
+          "l": "D",
+          "v": "9.5%"
+        }
+      ],
+      "ans": "C",
+      "diff": null,
+      "page": 43,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 21,
+      "exam": "SSC CPO",
+      "exam_year": "2020",
+      "q": "If A's salary is 30% more than B's salary, then by what percentage is B's salary less than that of A? (correct to one decimal place)",
+      "opt": [
+        {
+          "l": "A",
+          "v": "17.5%"
+        },
+        {
+          "l": "B",
+          "v": "23.1%"
+        },
+        {
+          "l": "C",
+          "v": "25%"
+        },
+        {
+          "l": "D",
+          "v": "19.7%"
+        }
+      ],
+      "ans": "B",
+      "diff": null,
+      "page": 43,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 1,
+      "pdf_q_num": 23,
+      "exam": "SSC CPO",
+      "exam_year": "2020",
+      "q": "A's salary is 35% more than B's salary. How much percent is B's salary less than that of A's? (correct to the nearest integer)",
+      "opt": [
+        {
+          "l": "a",
+          "v": "20%"
+        },
+        {
+          "l": "b",
+          "v": "35%"
+        },
+        {
+          "l": "c",
+          "v": "26%"
+        },
+        {
+          "l": "d",
+          "v": "17.5%"
+        }
+      ],
+      "ans": "C",
+      "diff": null,
+      "page": 43,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 2,
+      "pdf_q_num": 24,
+      "exam": "SSC CPO",
+      "exam_year": "2020",
+      "q": "In an entrance examination at different centres, a total of 25, 30. 40, 45, 60 and 100 students appeared. The pass percentages of the different centres are 20%, 30%, 35%, 40%, 50% and 75%, respectively. The pass percentage of the entrance examination is: (correct to the nearest integer)",
+      "opt": [
+        {
+          "l": "a",
+          "v": "43%"
+        },
+        {
+          "l": "b",
+          "v": "53%"
+        },
+        {
+          "l": "c",
+          "v": "50%"
+        },
+        {
+          "l": "d",
+          "v": "59%"
+        }
+      ],
+      "ans": "C",
+      "diff": null,
+      "page": 43,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    },
+    {
+      "id": 3,
+      "pdf_q_num": 25,
+      "exam": "SSC CPO",
+      "exam_year": "2020",
+      "q": "Ramesh spends 40% of his monthly salary on food, 18% on house rent, 12% on entertainment, and 5% on conveyance. But due to a family function, he has to borrow Rs.16,000 from a money lender to meet the expenses of Rs.20,000. His monthly salary is:",
+      "opt": [
+        {
+          "l": "a",
+          "v": "Rs.18,000"
+        },
+        {
+          "l": "b",
+          "v": "Rs.16,500"
+        },
+        {
+          "l": "c",
+          "v": "Rs.16,000"
+        },
+        {
+          "l": "d",
+          "v": "Rs.15,000"
+        }
+      ],
+      "ans": "C",
+      "diff": null,
+      "page": 43,
+      "pdf_id": "324295b5-d239-4455-94a9-f936a136d1ed",
+      "exam_id": "2f6b18b5-0f6a-44db-9bea-31c5abbecad6",
+      "subject_id": "aa858570-be89-4bd0-87ee-31d6f57bbd26",
+      "sub": "Maths",
+      "confidence": 1.0
+    }
+  ],
+  "timestamp": "2026-05-05T03:50:44.032672"
+}

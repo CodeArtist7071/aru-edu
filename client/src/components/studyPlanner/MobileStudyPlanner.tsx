@@ -9,7 +9,11 @@ import {
   Calendar,
   MoreVertical,
   CheckCircle2,
-  Sparkles
+  Sparkles,
+  X,
+  ChevronDown,
+  Trash2,
+  Edit3
 } from "lucide-react";
 import { type Habit } from "./types";
 
@@ -33,12 +37,13 @@ interface MobileStudyPlannerProps {
   onEditHabit: (habit: Habit) => void;
   onSync: (habit: Habit) => void;
   onSyncAll: () => void;
+  onDeleteHabit: (id: string, isMastery: boolean) => void;
   isSettingUp: boolean;
   hasPrevMonthTasks: boolean;
   onCopyPrevious: () => void;
   onStartFresh: () => void;
   manifestDemo: () => void;
-  masteryOnly: (Habit & { scheduledDay: number })[];
+  onJumpToToday: () => void;
 }
 
 export const getTodayStr = () => new Date().toISOString().split('T')[0];
@@ -108,24 +113,54 @@ export const MobileStudyPlanner: React.FC<MobileStudyPlannerProps> = ({
   onEditHabit,
   onSync,
   onSyncAll,
+  onDeleteHabit,
   isSettingUp,
   hasPrevMonthTasks,
   onCopyPrevious,
   onStartFresh,
   manifestDemo,
-  masteryOnly
+  onJumpToToday,
 }) => {
-  const [isMilestoneOpen, setIsMilestoneOpen] = React.useState(false);
-  const [isAddExpanded, setIsAddExpanded] = React.useState(false);
+  const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [isSyncing, setIsSyncing] = useState(false);
-  const [viewMode, setViewMode] = useState<'weekly' | 'monthly'>('weekly');
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [showReward, setShowReward] = useState<{ show: boolean, xp: number } | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const touchStartY = useRef<number | null>(null);
   const today = new Date();
-  const isCurrentMonth = today.getMonth() + 1 === viewMonth && today.getFullYear() === viewYear;
+  
+  // DYNAMIC HEADER STATE (Syncs with selection)
+  const [displayMonth, setDisplayMonth] = useState(viewMonth);
+  const [displayYear, setDisplayYear] = useState(viewYear);
 
-  const monthName = useMemo(() => {
-    return new Date(viewYear, viewMonth - 1).toLocaleString('default', { month: 'long' });
-  }, [viewMonth, viewYear]);
+  useEffect(() => {
+    setDisplayMonth(selectedDate.getMonth() + 1);
+    setDisplayYear(selectedDate.getFullYear());
+  }, [selectedDate, viewMonth, viewYear]);
+
+  const displayMonthName = useMemo(() => {
+    return new Date(displayYear, displayMonth - 1).toLocaleString('default', { month: 'long' });
+  }, [displayMonth, displayYear]);
+
+  const infiniteDays = useMemo(() => {
+    // STABLE ANCHOR: Use the 1st of the currently viewed month as the reference point
+    // This prevents the ticker from "jumping" when you select different days
+    const anchor = new Date(viewYear, viewMonth - 1, 1);
+    const startRange = new Date(anchor);
+    // Runway: 90 days before the 1st, 180 total days to cover roughly 6 months
+    startRange.setDate(anchor.getDate() - 90);
+
+    return Array.from({ length: 180 }, (_, i) => {
+      const d = new Date(startRange);
+      d.setDate(startRange.getDate() + i);
+      d.setHours(0, 0, 0, 0); // Normalize ticker dates
+      return {
+        dayNum: d.getDate(),
+        dayName: d.toLocaleString('default', { weekday: 'short' }),
+        date: d
+      };
+    });
+  }, [viewMonth, viewYear]); // Ticker stable per month switch
 
   // Generate days for the Month Ribbon
   const daysInMonth = useMemo(() => {
@@ -141,7 +176,7 @@ export const MobileStudyPlanner: React.FC<MobileStudyPlannerProps> = ({
       cellDate.setHours(0, 0, 0, 0);
 
       const hasTask = habits.some(h => {
-        if (h.isDemo) return true;
+        if (h.isDemo) return false;
         if (!h.scheduled_date) return false;
         
         const startDate = new Date(h.scheduled_date);
@@ -178,11 +213,9 @@ export const MobileStudyPlanner: React.FC<MobileStudyPlannerProps> = ({
       };
     });
 
-    if (viewMode === 'monthly') {
-      // For calendar view, we need the first day of the month to align correctly
+    if (isExpanded) {
+      // Month Grid Alignment
       const firstDayOfMonth = new Date(viewYear, viewMonth - 1, 1).getDay();
-      // Adjust if your week starts on Monday (Monday = 1, Sunday = 0 originally)
-      // Arumind seems to use Sunday as 0 based on standard Date object
       const padding = Array.from({ length: firstDayOfMonth }, (_, i) => ({
         dayNum: -i,
         dayName: "",
@@ -193,24 +226,85 @@ export const MobileStudyPlanner: React.FC<MobileStudyPlannerProps> = ({
       return [...padding, ...allDays];
     }
 
-    // Weekly Window Logic: Show 7 days centered on selectedDate if possible
+    // Weekly Window Logic (Horizontally scrolling ticker)
     const selectedIdx = selectedDate.getDate() - 1;
     let start = Math.max(0, selectedIdx - 3);
     let end = Math.min(daysInMonth, start + 7);
     if (end === daysInMonth) start = Math.max(0, end - 7);
     
     return allDays.slice(start, end);
-  }, [daysInMonth, viewMonth, viewYear, viewMode, selectedDate, hasTasksByDay]);
+  }, [daysInMonth, viewMonth, viewYear, isExpanded, selectedDate, hasTasksByDay]);
 
-  // Auto-scroll logic remains for centering in ticker mode
+  // Handle Swipe-to-Expand gesture on the header
+  const handleTouchStart = (e: React.TouchEvent) => { touchStartY.current = e.touches[0].clientY; };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartY.current === null) return;
+    const deltaY = e.changedTouches[0].clientY - touchStartY.current;
+    if (deltaY > 50) setIsExpanded(true);
+    if (deltaY < -50) setIsExpanded(false);
+    touchStartY.current = null;
+  };
+
+  const scrollTimeout = useRef<any>(null);
+  const isScrollSelecting = useRef(false);
+
+  const handleTickerScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    if (isExpanded) return;
+    const container = e.currentTarget;
+    
+    // Clear previous timeout
+    if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
+    
+    scrollTimeout.current = setTimeout(() => {
+      // ITEM_WIDTH = button (48px) + gap (8px) = 56px
+      const ITEM_WIDTH = 56;
+      const index = Math.round(container.scrollLeft / ITEM_WIDTH);
+      
+      if (index >= 0 && index < infiniteDays.length) {
+        const closestDate = infiniteDays[index].date;
+        if (closestDate.getTime() !== selectedDate.getTime()) {
+          isScrollSelecting.current = true;
+          onSelectDate(closestDate);
+        }
+      }
+    }, 40); // Tighter 40ms debounce for near-instant response
+  };
+
+  const onCenterDate = (date: Date) => {
+    if (scrollRef.current && !isExpanded) {
+      const el = scrollRef.current.querySelector(`[data-date="${date.toISOString()}"]`);
+      if (el) el.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    }
+    onSelectDate(date);
+  };
+
+  // INITIAL MOUNT: Always show the present date as selected and centered
   useEffect(() => {
-    if (scrollRef.current && viewMode === 'weekly') {
-      const selectedEl = scrollRef.current.querySelector('[data-selected="true"]');
+    // Force immediate sync of header month name
+    setDisplayMonth(today.getMonth() + 1);
+    setDisplayYear(today.getFullYear());
+
+    const timer = setTimeout(() => {
+      onJumpToToday();
+    }, 50); // Immediate reset to today
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    // Only auto-scroll to center if the change DID NOT come from a scroll event
+    // (e.g., first load, returning from month grid, or external selection)
+    if (isScrollSelecting.current) {
+      isScrollSelecting.current = false;
+      return;
+    }
+
+    if (scrollRef.current && !isExpanded) {
+      const selectedEl = scrollRef.current.querySelector(`[data-date="${selectedDate.toISOString()}"]`);
       if (selectedEl) {
         selectedEl.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
       }
     }
-  }, [selectedDate, viewMode]);
+  }, [isExpanded, selectedDate]);
 
   const realHabits = useMemo(() => {
     return habits.filter(h => !h.isDemo);
@@ -220,7 +314,7 @@ export const MobileStudyPlanner: React.FC<MobileStudyPlannerProps> = ({
     const dayIndex = selectedDate.getDate() - 1;
     return habits
       .filter(h => {
-        if (h.isDemo) return true; // Demos always show up in the planner for initial setup
+        if (h.isDemo) return false; // Demos hidden as requested
 
         // 1. One-Off rituals or Mastery milestones: Manifest on their exact date
         if (h.is_mastery || (h as any).is_recurring === false) {
@@ -240,18 +334,25 @@ export const MobileStudyPlanner: React.FC<MobileStudyPlannerProps> = ({
           
           if (cellDate < startDate) return false;
 
-          if (h.duration_type === "DAILY") return cellDate.getTime() === startDate.getTime();
+          // Daily Rituals should show every day from start onwards
+          if (h.duration_type === "DAILY") return true;
+
+          // Weekly rituals show for the first 7 days
           if (h.duration_type === "WEEKLY") {
             const endDate = new Date(startDate);
-            endDate.setDate(startDate.getDate() + 6);
-            return cellDate <= endDate;
+            endDate.setDate(startDate.getDate() + 7);
+            return cellDate < endDate;
           }
+          
+          // Custom rituals show until their end date
           if (h.duration_type === "CUSTOM" && h.scheduled_end_date) {
             const endDate = new Date(h.scheduled_end_date);
-            endDate.setHours(23,59,59,999);
+            endDate.setHours(23, 59, 59, 999);
             return cellDate <= endDate;
           }
-          return true; // Monthly
+
+          // Monthly rituals show for the entire month context
+          return true;
         }
 
         return true;
@@ -301,203 +402,346 @@ export const MobileStudyPlanner: React.FC<MobileStudyPlannerProps> = ({
   // }
 
   return (
-    <>
-      <div className="relative p-2 animate-reveal bg-surface">
-        {/* Month Ribbon & View Toggle */}
-        <div className="flex items-center justify-between px-4 mb-4">
-          <div className="flex items-center gap-2">
-            <button onClick={() => onMonthChange("prev")} className="p-2 rounded-xl bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high transition-colors">
-              <ChevronLeft size={16} />
-            </button>
-            <div className="flex flex-col">
-              <h3 className="text-sm font-black uppercase tracking-tighter text-on-surface leading-tight">{monthName}</h3>
-              <span className="text-[8px] font-technical text-on-surface-variant opacity-40 uppercase tracking-widest font-black">{viewYear}</span>
-            </div>
-            <button onClick={() => onMonthChange("next")} className="p-2 rounded-xl bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high transition-colors">
-              <ChevronRight size={16} />
-            </button>
-          </div>
+    <div className="relative min-h-screen bg-surface flex flex-col font-editorial select-none">
+      {/* Liquid Glass Date Ribbon - Stacks beneath Layout Header */}
+      <div 
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        className={`sticky top-0 z-30 liquid-glass pt-2 pb-4 px-4 flex flex-col gap-4 border-b border-white/10 transition-all duration-700 ease-premium ${
+          isExpanded ? 'h-auto pb-6' : 'h-auto'
+        }`}
+      >
+        <div className="w-full flex items-center justify-between">
+           {/* QUICK JUMP: TODAY */}
+           <button 
+             onClick={onJumpToToday}
+             className="px-4 py-2 bg-primary/10 text-primary rounded-full text-[8px] font-technical font-black uppercase tracking-[0.2em] active:scale-90 transition-all border border-primary/20"
+           >
+             Jump to Today
+           </button>
 
-          <div className="flex bg-surface-container-low p-1 rounded-2xl border border-on-surface/5 shadow-inner">
+          <div className="flex justify-end items-center gap-3">
             <button 
-              onClick={() => setViewMode('weekly')}
-              className={`px-4 py-2 text-[8px] font-black uppercase tracking-widest rounded-xl transition-all duration-300 ${viewMode === 'weekly' ? 'bg-primary text-white shadow-ambient shadow-primary/20 scale-105' : 'text-on-surface-variant/40 hover:text-on-surface-variant'}`}
+              onClick={() => onMonthChange("prev")} 
+              className="size-10 rounded-full flex items-center justify-center bg-white/5 hover:bg-white/10 text-on-surface transition-all active:scale-95"
             >
-              Week
+              <ChevronLeft size={18} />
             </button>
+            <div onClick={() => setIsExpanded(!isExpanded)}>
+              <h3 className="text-xl px-2 font-black tracking-tight text-on-surface flex items-center gap-2 text-right">
+                {displayMonthName} <ChevronDown size={14} className={`text-primary transition-transform duration-500 ${isExpanded ? 'rotate-180' : ''}`} />
+              </h3>
+              <p className="text-[10px] font-technical uppercase tracking-[0.2em] text-primary text-right">{displayYear}</p>
+            </div>
             <button 
-              onClick={() => setViewMode('monthly')}
-              className={`px-4 py-2 text-[8px] font-black uppercase tracking-widest rounded-xl transition-all duration-300 ${viewMode === 'monthly' ? 'bg-primary text-white shadow-ambient shadow-primary/20 scale-105' : 'text-on-surface-variant/40 hover:text-on-surface-variant'}`}
+              onClick={() => onMonthChange("next")} 
+              className="size-10 rounded-full flex items-center justify-center bg-white/5 hover:bg-white/10 text-on-surface transition-all active:scale-95"
             >
-              Month
+              <ChevronRight size={18} />
             </button>
           </div>
         </div>
 
-        {/* Date Ribbon */}
-        <div 
-          ref={scrollRef}
-          className={`grid grid-cols-7 gap-1 px-1 pb-4 bg-surface transition-all duration-700 ease-(--ease-premium) overflow-hidden ${
-            viewMode === 'monthly' ? 'max-h-[400px] opacity-100' : 'max-h-[80px]'
-          }`}
-        >
-          {days.map((d, i) => {
-            if ((d as any).isPadding) {
-               return <div key={`padding-${i}`} className="h-12 w-full invisible" />;
-            }
+        {/* Liquid Transition Wrapper: Ticker & Grid Layers */}
+        <div className={`relative transition-all duration-700 ease-premium overflow-hidden ${
+          isExpanded ? 'min-h-[300px]' : 'h-20'
+        }`}>
+          {/* LAYER 1: HORIZONTAL TICKER (Infinite Runway) */}
+          <div 
+            ref={scrollRef}
+            onScroll={!isExpanded ? handleTickerScroll : undefined}
+            className={`flex gap-2 overflow-x-auto no-scrollbar transition-all duration-700 ease-premium absolute inset-0 py-2 snap-x snap-mandatory px-[45%] ${
+              isExpanded ? 'opacity-0 blur-md scale-95 pointer-events-none translate-y-4' : 'opacity-100 blur-0 scale-100 translate-y-0'
+            }`}
+          >
+            {/* SELECTION FOCUS RING - Tactile Lens */}
+            {!isExpanded && (
+              <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 size-12 border-2 border-primary/40 rounded-xl pointer-events-none z-20 shadow-[0_0_15px_rgba(var(--primary-rgb),0.15)] ring-4 ring-primary/5" />
+            )}
 
-            const isSelected = selectedDate.getDate() === d.dayNum && 
-                               selectedDate.getMonth() === d.date.getMonth() &&
-                               selectedDate.getFullYear() === d.date.getFullYear();
-            const isCurrentToday = today.getDate() === d.dayNum && 
-                                   today.getMonth() === d.date.getMonth() &&
-                                   today.getFullYear() === d.date.getFullYear();
-            
-            // Apply delay to Monthly cells that are not in the first row to create a "bloom" effect
-            const isExtendedDay = viewMode === 'monthly' && i > 6;
+            {infiniteDays.map((d, i) => {
+               const isSelected = selectedDate.getDate() === d.dayNum && 
+                                 selectedDate.getMonth() === d.date.getMonth() &&
+                                 selectedDate.getFullYear() === d.date.getFullYear();
+               const isCurrentToday = today.getDate() === d.dayNum && 
+                                      today.getMonth() === d.date.getMonth() &&
+                                      today.getFullYear() === d.date.getFullYear();
+               
+               const yesterday = new Date(today); yesterday.setDate(today.getDate() - 1);
+               const tomorrow = new Date(today); tomorrow.setDate(today.getDate() + 1);
+               const isYesterday = d.date.toDateString() === yesterday.toDateString();
+               const isTomorrow = d.date.toDateString() === tomorrow.toDateString();
 
-            return (
-              <button
-                key={d.dayNum}
-                data-selected={isSelected}
-                onClick={() => onSelectDate(d.date)}
-                className={`py-3 rounded-2xl flex flex-col items-center relative transition-all duration-500 w-full active:scale-95 ${
-                  isSelected ? 'bg-primary text-white shadow-ambient-lg scale-105 z-10' : 
-                  isCurrentToday ? 'bg-primary/10 text-primary border border-primary/20' : 
-                  'bg-surface-container-low text-on-surface-variant'
-                } ${isExtendedDay ? 'animate-in fade-in slide-in-from-bottom-4' : ''}`}
-                style={isExtendedDay ? { animationDelay: `${(i - 7) * 20}ms` } : {}}
+               return (
+                 <button
+                   key={`${d.date.toISOString()}-${i}`}
+                   data-date={d.date.toISOString()}
+                   onClick={() => onCenterDate(d.date)}
+                   className={`date-button shrink-0 flex flex-col items-center justify-center gap-1 transition-all duration-300 active:scale-95 snap-center w-12 py-2 rounded-xl relative ${
+                     isSelected 
+                       ? 'text-primary border border-primary/40 bg-primary/10 transition-all font-black scale-125' 
+                       : isCurrentToday 
+                         ? 'text-primary opacity-100 border border-primary/20' 
+                         : 'text-on-surface/20 border border-transparent'
+                   }`}
+                 >
+                   <span className={`text-[8px] font-black uppercase tracking-tighter ${isSelected ? 'opacity-100' : 'opacity-40'}`}>
+                     {isCurrentToday ? 'Today' : isYesterday ? 'Yest' : isTomorrow ? 'Tomw' : d.dayName}
+                   </span>
+                   <span className="text-base font-black tracking-tighter">{d.dayNum}</span>
+                   {isCurrentToday && (
+                     <div className="size-1 bg-primary rounded-full absolute -bottom-1" />
+                   )}
+                 </button>
+               );
+            })}
+          </div>
+
+          {/* LAYER 2: MONTH GRID (Calendar View) */}
+          <div 
+            className={`flex flex-wrap justify-center gap-2 py-2 transition-all duration-700 ease-premium ${
+              isExpanded ? 'opacity-100 blur-0 scale-100 translate-y-0' : 'opacity-0 blur-md scale-105 pointer-events-none -translate-y-4'
+            }`}
+          >
+            {days.map((d, i) => {
+               if ((d as any).isPadding) return <div key={`padding-${i}`} className="size-10 shrink-0" />;
+
+               const isSelected = selectedDate.getDate() === d.dayNum && 
+                                 selectedDate.getMonth() === d.date.getMonth() &&
+                                 selectedDate.getFullYear() === d.date.getFullYear();
+               const isCurrentToday = today.getDate() === d.dayNum && 
+                                      today.getMonth() === d.date.getMonth() &&
+                                      today.getFullYear() === d.date.getFullYear();
+
+               return (
+                 <button
+                   key={`grid-${d.date.toISOString()}-${i}`}
+                   onClick={() => {
+                     onCenterDate(d.date);
+                     setIsExpanded(false);
+                   }}
+                   className={`size-10 rounded-xl shrink-0 flex flex-col items-center justify-center gap-0.5 transition-all duration-300 active:scale-90 ${
+                     isSelected 
+                       ? 'bg-primary text-on-primary shadow-lg shadow-primary/30' 
+                       : isCurrentToday 
+                         ? 'bg-primary/20 border border-primary/30 text-primary' 
+                         : 'bg-white/5 border border-white/5 text-on-surface/60'
+                   }`}
+                 >
+                   <span className="text-[7px] font-black uppercase tracking-tighter opacity-40">{d.dayName}</span>
+                   <span className="text-xs font-black tracking-tighter">{d.dayNum}</span>
+                 </button>
+               );
+            })}
+          </div>
+        </div>
+
+        {/* Pull Tab Indicator */}
+        <div className="flex justify-center mt-1">
+          <div className="w-10 h-1 bg-white/10 rounded-full" />
+        </div>
+      </div>
+
+      {/* Daily Agenda: Visibility Loop */}
+      <div className="flex-1 px-4 pt-4 pb-10 space-y-2 relative flex flex-col overflow-hidden">
+        <header className="flex items-center justify-between">
+          <div className="space-y-1">
+            <h2 className="text-xl font-black tracking-tighter text-on-surface">Today’s All Tasks</h2>
+            <p className="text-[10px] font-technical uppercase tracking-[0.3em] text-primary/60">Explore all your tasks</p>
+          </div>
+          <div className="text-right">
+            <p className="text-2xl font-black text-on-surface tracking-tighter">{dailyTasks.filter(t => t.isCompleted).length}/{dailyTasks.length}</p>
+            <p className="text-[10px] font-technical uppercase tracking-widest text-on-surface-variant/40">Tasks Complete</p>
+          </div>
+        </header>
+
+        <section className="flex-1 overflow-y-auto pt-6 pb-10 space-y-8 custom-scrollbar relative">
+          {dailyTasks.length > 0 ? dailyTasks.map((task: any) => (
+            <SwipeableRitualCard
+              key={task.id}
+              task={task}
+              onEdit={() => onEditHabit(task)}
+              onDelete={() => onDeleteHabit(task.id, !!task.is_mastery)}
+              onToggle={() => {
+                onToggle(task.id, selectedDate.getDate() - 1);
+                if (!task.isCompleted) {
+                  setShowReward({ show: true, xp: 50 });
+                  setTimeout(() => setShowReward(null), 3000);
+                }
+              }}
+              onSync={() => onSync(task)}
+            />
+          )) : (
+            <div className="p-12 rounded-xl border border-dashed border-white/10 text-center space-y-4">
+              <div className="size-16 bg-white/5 rounded-full flex items-center justify-center mx-auto text-white/20">
+                <Calendar size={32} />
+              </div>
+              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface-variant/40">No Task Found</p>
+              <button 
+                onClick={() => onAddHabit("routine")} 
+                className="px-8 py-4 bg-primary text-on-primary rounded-full text-[10px] font-black uppercase tracking-widest shadow-xl shadow-primary/20 active:scale-95 transition-all"
               >
-                <span className="text-[8px] font-black uppercase tracking-tighter mb-1">{d.dayName}</span>
-                <span className="text-xs font-black">{d.dayNum}</span>
-                {d.hasTask && (
-                  <div className={`absolute bottom-1.5 size-1 rounded-full transition-all duration-500 ${isSelected ? 'bg-white' : 'bg-primary animate-pulse'}`} />
-                )}
+                Add Task
               </button>
-            );
-          })}
-        </div>
+            </div>
+          )}
+
+          {/* Glimpse Factor: Show next day edge if tasks exist */}
+          <div className="h-20 bg-linear-to-b from-white/5 to-transparent rounded-t-[3rem] opacity-20 border-t border-white/5 text-center pt-4">
+            <p className="text-[8px] font-technical uppercase tracking-[0.5em] text-white/60">Horizon Glimpse</p>
+          </div>
+        </section>
       </div>
 
-      <div className="flex-1 flex flex-col px-4 pb-20 overflow-y-auto">
-        <div className="space-y-6 animate-reveal">
-          {/* Daily Tasks */}
-          <section>
-            <div className="flex items-center justify-between py-5 px-2">
-              <div className="flex items-center gap-2">
-                <Zap size={16} className="text-primary" />
-                <h3 className="text-sm font-black uppercase tracking-[0.2em] text-on-surface-variant">Your Tasks</h3>
-              </div>
+      {/* Floating Action Button: Control Zone */}
+      <button 
+        onClick={() => onAddHabit("routine")}
+        className="fixed bottom-32 right-6 size-16 bg-primary text-on-primary rounded-3xl shadow-2xl shadow-primary/40 flex items-center justify-center z-40 active:scale-90 transition-all hover:scale-105 group"
+      >
+        <Plus size={32} className="group-hover:rotate-90 transition-transform duration-500" />
+      </button>
+
+      {/* Reward Feedback Modal (Screen 3) */}
+      {showReward && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center px-6 animate-in fade-in zoom-in-95 duration-500">
+          <div className="liquid-glass p-8 rounded-[3rem] border border-primary/30 text-center shadow-3xl shadow-primary/20 space-y-4 max-w-xs w-full">
+            <div className="size-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto text-primary animate-bounce">
+              <Sparkles size={40} />
+            </div>
+            <div className="space-y-1">
+              <h3 className="text-2xl font-black tracking-tighter text-on-surface">Task Complete!</h3>
+              <p className="text-[10px] font-technical uppercase tracking-[0.3em] text-primary">+{showReward.xp} XP Earned</p>
+            </div>
+            <p className="text-xs font-medium text-on-surface-variant/60">Task Completed. Your neural pathways are strengthening.</p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// ── SWIPEABLE RITUAL CARD ───────────────────────────────────────────────────
+const SwipeableRitualCard = ({ task, onEdit, onDelete, onToggle, onSync }: any) => {
+  const [offset, setOffset] = useState(0);
+  const touchStart = useRef<number | null>(null);
+  const isDragging = useRef(false);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStart.current = e.touches[0].clientX;
+    isDragging.current = true;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging.current || touchStart.current === null) return;
+    const currentX = e.touches[0].clientX;
+    const deltaX = currentX - touchStart.current;
+    
+    // Limits
+    if (deltaX > 80) setOffset(80);
+    else if (deltaX < -80) setOffset(-80);
+    else setOffset(deltaX);
+  };
+
+  const handleTouchEnd = () => {
+    isDragging.current = false;
+    // Snap logic
+    if (offset > 40) setOffset(80);
+    else if (offset < -40) setOffset(-80);
+    else setOffset(0);
+  };
+
+  return (
+    <div className="relative overflow-visible group">
+      {/* Background Actions */}
+      <div className="absolute inset-0 flex items-center justify-between rounded-lg overflow-hidden">
+        {/* EDIT (Right Swamp) */}
+        <button 
+          onClick={() => {
+            setOffset(0);
+            onEdit();
+          }}
+          className={`h-full w-25 flex flex-col rounded-tl-xl rounded-bl-xl items-center justify-center gap-1 bg-primary text-on-primary transition-all duration-300 ${offset > 0 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}
+        >
+          <Edit3 size={20} />
+          <span className="text-[8px] font-black uppercase tracking-widest">Edit</span>
+        </button>
+
+        {/* DELETE (Left Swamp) */}
+        <button 
+          onClick={() => {
+            if (confirm("Abolish this ritual?")) {
+              setOffset(0);
+              onDelete();
+            }
+          }}
+          className={`h-full w-25 flex rounded-tr-xl rounded-br-xl flex-col items-center justify-center gap-1 bg-red-600 text-white transition-all duration-300 ${offset < 0 ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}
+        >
+          <Trash2 size={20} />
+          <span className="text-[8px] font-black uppercase tracking-widest">Delete</span>
+        </button>
+      </div>
+
+      {/* Main Card */}
+      <div 
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onClick={() => offset !== 0 && setOffset(0)}
+        style={{ transform: `translateX(${offset}px)` }}
+        className={`relative p-2 h-20 rounded-xl border transition-all duration-300 flex flex-col gap-4 glass z-10 ${
+          task.isCompleted ? 'opacity-40 border-primary/20 scale-[0.98]' : 'border-white/5 shadow-ambient-lg'
+        }`}
+      >
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-6 flex-1 pr-4 transition-opacity">
+            <div className={`size-10 rounded-xl flex items-center justify-center transition-all duration-700 ${
+              task.isCompleted ? 'bg-primary/10 text-primary shadow-inner shadow-primary/20' : 'bg-surface-container-high/60 text-on-surface-variant/40'
+            }`}>
+              {task.isCompleted ? <CheckCircle2 size={20} className="animate-in zoom-in-50" /> : <Zap size={20} />}
+            </div>
+
+            <div className="space-y-1.5 flex-1">
+              <h4 className={`text-sm font-black tracking-tight leading-tight transition-all duration-700 ${
+                task.isCompleted ? "line-through grayscale italic text-primary" : "text-on-surface"
+              }`}>
+                {task.name}
+              </h4>
               <div className="flex items-center gap-3">
-                <button 
-                  onClick={onSyncAll}
-                  className="text-xs font-black uppercase tracking-widest text-primary hover:opacity-60 transition-opacity"
-                >
-                  Sync All
-                </button>
-                <span className="text-xs font-technical font-black text-on-surface-variant/40">
-                  {dailyTasks.filter(t => !t.isDemo && t.isCompleted).length} / {dailyTasks.filter(t => !t.isDemo).length} Done
+                <span className="text-[9px] font-technical font-black tracking-widest text-primary uppercase opacity-60">
+                  {task.priority || 'MEDIUM'}
                 </span>
+                <div className="flex items-center gap-1.5 text-[9px] font-technical font-black text-on-surface-variant/40 uppercase tracking-widest">
+                  <Clock size={10} /> {task.start_time || "--:--"}
+                </div>
               </div>
             </div>
+          </div>
 
-            <div className="space-y-3 h-[calc(100vh-200px)] overflow-y-auto">
-              {dailyTasks.length > 0 ? dailyTasks.map((task: any) => (
-                <div 
-                  key={task.id}
-                  onClick={() => !task.isDemo && onToggle(task.id, selectedDate.getDate() - 1)}
-                  className={`group relative p-4 rounded-4xl border transition-all duration-500 flex items-center justify-between active:scale-[0.98] ${
-                    task.isCompleted ? 'bg-primary/5 border-primary/20' : 
-                    task.isDemo ? 'bg-surface-container-low border-on-surface/5 opacity-80' :
-                    'bg-surface-container-low border-on-surface/5'
-                  }`}
-                >
-                  <div className="flex items-center gap-4 flex-1 min-w-0">
-                    <div className={`size-10 rounded-2xl flex items-center justify-center transition-all duration-500 ${
-                      task.isCompleted ? 'bg-primary text-white shadow-ambient shadow-primary/20' : 
-                      'bg-surface-container-high text-on-surface-variant/40'
-                    }`}>
-                      {task.isCompleted ? <CheckCircle2 size={24} className="animate-in zoom-in-50 duration-300" /> : <Target size={24} />}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className={`text-xs font-black tracking-tight leading-none mb-1.5 transition-all duration-500 ${task.isCompleted ? "text-primary/60 line-through grayscale italic" : "text-on-surface"} ${task.isDemo ? "opacity-40" : ""}`}>
-                        {task.name} {task.isDemo && "(Demo)"}
-                      </h4>
-                      <div className="flex items-center gap-3">
-                        <span className={`text-[8px] font-technical font-black uppercase tracking-widest px-2 py-0.5 rounded-full transition-colors duration-500 ${task.priority === 'HIGH' ? 'bg-red-500/10 text-red-600' : 'bg-surface-container-highest text-on-surface-variant/60'
-                          }`}>
-                          {task.priority}
-                        </span>
-                        <div className="flex items-center gap-1 text-[8px] font-technical font-black text-on-surface-variant/40 uppercase tracking-widest">
-                          <Clock size={10} /> {task.start_time || "--:--"}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    {task.isDemo ? (
-                      <button
-                        onClick={(e) => { e.stopPropagation(); manifestDemo(); }}
-                        className="px-4 py-2 rounded-full bg-primary text-white text-[9px] font-black uppercase tracking-widest shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all flex items-center gap-2"
-                      >
-                         <Sparkles size={10} /> Add
-                      </button>
-                    ) : (
-                      <>
-                        <button
-                          onClick={(e) => { e.stopPropagation(); onEditHabit(task); }}
-                          className="size-10 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant/60 hover:text-primary active:scale-90 transition-all duration-300"
-                        >
-                          <MoreVertical size={18} />
-                        </button>
-                        <button
-                          onClick={(e) => { e.stopPropagation(); onSync(task); }}
-                          className="size-10 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant/60 hover:text-primary active:scale-90 transition-all duration-300"
-                        >
-                          <Calendar size={16} />
-                        </button>
-                      </>
-                    )}
-                  </div>
-                </div>
-              )) : (
-                <div className="p-8 rounded-4xl bg-surface-container-low border border-dashed border-on-surface/5 text-center space-y-2">
-                  <p className="text-[10px] font-black uppercase tracking-widest text-on-surface-variant opacity-40">No tasks scheduled for today</p>
-                  <button onClick={() => onAddHabit("routine")} className="text-[10px] font-black uppercase tracking-widest text-primary flex items-center justify-center gap-2 mx-auto">
-                    <Plus size={12} /> Add Habit
-                  </button>
-                </div>
-              )}
-            </div>
-          </section>
-
-          {/* Mastery Section (Scrollable horizontal) */}
-          <section className="pb-4">
-            <div className="flex items-center gap-2 mb-4 px-2">
-              <Award size={16} className="text-primary" />
-              <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface-variant">Syllabus Milestones</h3>
-            </div>
-            <div className="flex gap-4 overflow-x-auto no-scrollbar py-2">
-              {masteryOnly.length > 0 ? masteryOnly.map((m) => (
-                <div key={m.id} className="shrink-0 w-48 p-4 rounded-4xl bg-emerald-50 border border-emerald-100/50 space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="size-8 bg-white rounded-xl flex items-center justify-center text-primary shadow-sm">
-                      <Target size={16} />
-                    </div>
-                    <span className="text-[8px] font-technical font-black bg-white px-2 py-1 rounded-full text-primary uppercase shadow-sm">Day {m.scheduledDay}</span>
-                  </div>
-                  <h4 className="text-[11px] font-black text-on-surface line-clamp-2 leading-tight">{m.name}</h4>
-                </div>
-              )) : (
-                <div className="w-full p-6 bg-surface-container-low rounded-4xl border border-dashed border-on-surface/5 text-center">
-                  <p className="text-[10px] font-black uppercase text-on-surface-variant opacity-40">No milestones set</p>
-                </div>
-              )}
-            </div>
-          </section>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggle();
+            }}
+            className={`size-10 rounded-full flex items-center justify-center border-2 transition-all duration-500 active:scale-90 ${
+              task.isCompleted 
+                ? 'bg-primary border-primary text-on-primary shadow-lg shadow-primary/40' 
+                : 'bg-transparent border-white/10 text-white/20 hover:border-primary/40'
+            }`}
+          >
+            <CheckCircle2 size={25} />
+          </button>
         </div>
+        
+        {/* Mini Meta info */}
+         {!task.isDemo && task.is_mastery && (
+          <div className="flex items-center gap-2 pt-2 border-t border-white/5">
+              <span className="text-[8px] font-technical font-black text-primary uppercase tracking-[0.2em] bg-primary/10 px-3 py-1 rounded-full">
+                Mastery Quest
+              </span>
+          </div>
+         )}
       </div>
-    </>
+    </div>
   );
 };
 

@@ -1,0 +1,50 @@
+[
+  {
+    "page_number": 1,
+    "question_number": 81,
+    "question": "The difference between a number and its reciprocal is 9/20, then the number is:",
+    "options": {"A": "5/4", "B": "4/5", "C": "20/9", "D": "9/20"},
+    "correct_answer": "A",
+    "chapter_name": "Number System"
+  },
+  {
+    "page_number": 1,
+    "question_number": 82,
+    "question": "If x + 1/x = 5, then find the value of x² + 1/x²",
+    "options": {"A": "23", "B": "27", "C": "25", "D": "20"},
+    "correct_answer": "A",
+    "chapter_name": "Number System"
+  },
+  {
+    "page_number": 1,
+    "question_number": 83,
+    "question": "If x + 1/x = 3, then find x⁴ + 1/x⁴",
+    "options": {"A": "47", "B": "49", "C": "50", "D": "52"},
+    "correct_answer": "B",
+    "chapter_name": "Number System"
+  },
+  {
+    "page_number": 2,
+    "question_number": 101,
+    "question": "If x + y = 5 and xy = 6, then find x² + y²",
+    "options": {"A": "13", "B": "12", "C": "14", "D": "15"},
+    "correct_answer": "A",
+    "chapter_name": "Number System"
+  },
+  {
+    "page_number": 2,
+    "question_number": 102,
+    "question": "If x - y = 1 and xy = 6, then find x² + y²",
+    "options": {"A": "13", "B": "14", "C": "11", "D": "15"},
+    "correct_answer": "A",
+    "chapter_name": "Number System"
+  },
+  {
+    "page_number": 2,
+    "question_number": 103,
+    "question": "MISTAKE TEST: Wrong answer option",
+    "options": {"A": "10", "B": "20", "C": "30", "D": "40"},
+    "correct_answer": "C",
+    "chapter_name": "Number System"
+  }
+]

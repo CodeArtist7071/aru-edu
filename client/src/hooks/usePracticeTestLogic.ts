@@ -220,48 +220,84 @@ export const usePracticeTestLogic = () => {
   }, [mode, stopProctoring]);
 
   const onSubmit = async (data: any) => {
-    if (!attemptId) return;
+    let currentAttemptId = attemptId;
+
+    // Last-Second Recovery: If state's attemptId is null, check localStorage or DB
+    if (!currentAttemptId && user?.id && cid) {
+      const stored = localStorage.getItem(`practice_attempt_${cid}`);
+      if (stored) {
+        currentAttemptId = stored;
+        setAttemptId(stored);
+      } else {
+        // Final DB fallback lookup
+        const { data: recovered } = await supabase.from("test_attempts").select("id").eq("user_id", user.id).eq("chapter_id", cid).eq("status", "STARTED").order("started_at", { ascending: false }).limit(1).maybeSingle();
+        if (recovered) {
+          currentAttemptId = recovered.id;
+          setAttemptId(recovered.id);
+        }
+      }
+    }
+
+    if (!currentAttemptId) {
+      notify({ title: "Manifestation Error", message: "Examination session not found. Please refresh the page.", status: "error" });
+      return;
+    }
 
     try {
       const total_questions = questions?.length || 0;
       let total_marks = 0;
       let score = 0;
 
+      const userAnswers = data?.answers || {};
+
       questions?.forEach((q: any) => {
         total_marks += q.marks || 0;
-        if (data.answers[q.id] === q.correct_answer) score += q.marks || 0;
+        if (userAnswers[q.id] === q.correct_answer) score += q.marks || 0;
       });
 
       const payload = (questions || []).map((q: any) => ({
         attempt_id: attemptId,
         question_id: q.id,
         is_submitted: true,
-        ...(data.answers[q.id] ? { selected_option: data.answers[q.id] } : {})
+        ...(userAnswers[q.id] ? { selected_option: userAnswers[q.id] } : {})
       }));
 
-      await supabase.from("test_attempt_answers").upsert(payload, { onConflict: "attempt_id,question_id" });
-      const { data: updateData, error: attemptError } = await supabase
+      // 1. Manifest Answer Data
+      const { error: answersError } = await supabase.from("test_attempt_answers").upsert(payload, { onConflict: "attempt_id,question_id" });
+      if (answersError) throw answersError;
+
+      // 2. Finalize Attempt Status
+      const { error: attemptError } = await supabase
         .from("test_attempts")
         .update({ 
           status: "COMPLETED", 
           submitted_at: new Date().toISOString(),
-          total_questions, total_marks, score
+          total_questions, 
+          total_marks, 
+          score
         })
-        .eq("id", attemptId)
-        .select();
+        .eq("id", attemptId);
 
       if (attemptError) throw attemptError;
 
+      // 3. UI Cleanup & Immediate Navigation
       localStorage.removeItem(`practice_test_${cid}`);
       stopProctoring();
-      await seedAbilityFromMockTest(user?.id, eid, attemptId);
+      isNavigatingAwayRef.current = true;
       
       notify({ title: "Success", message: "Examination Manifested.", status: "success" });
-      isNavigatingAwayRef.current = true;
       navigate(`/user/results/${attemptId}`);
+
+      // 4. Background Data Seeding (Non-Blocking)
+      try {
+        seedAbilityFromMockTest(user?.id, eid, attemptId);
+      } catch (seedErr) {
+        console.warn("Background ability seeding encountered an issue:", seedErr);
+      }
+      
     } catch (error: any) {
       console.error("Submission failed:", error);
-      notify({ title: "Error", message: "Submission unsuccessful.", status: "error" });
+      notify({ title: "Manifestation Failed", message: "Could not finalize your entry. Please check your connection.", status: "error" });
     }
   };
 
@@ -342,24 +378,36 @@ export const usePracticeTestLogic = () => {
     };
   }, [registerViolation, mode]);
 
-  // Attempt Tracking
+  // Attempt Tracking & Recovery
   useEffect(() => {
     const createAttempt = async () => {
       if (!user?.id || !cid || attemptId || isCreatingRef.current) return;
+      
+      // Try recovery from localStorage first
+      const cachedId = localStorage.getItem(`practice_attempt_${cid}`);
+      if (cachedId) {
+        setAttemptId(cachedId);
+        return;
+      }
+
       isCreatingRef.current = true;
       try {
         const { data: existing } = await supabase.from("test_attempts").select("id").eq("user_id", user.id).eq("chapter_id", cid).eq("status", "STARTED").order("started_at", { ascending: false }).limit(1).maybeSingle();
         if (existing) {
           setAttemptId(existing.id);
+          localStorage.setItem(`practice_attempt_${cid}`, existing.id);
           return;
         }
         const { data } = await supabase.from("test_attempts").insert({ user_id: user.id, exam_id: eid, subject_id: sid, chapter_id: cid, status: "STARTED", started_at: new Date().toISOString() }).select().single();
-        if (data) setAttemptId(data.id);
+        if (data) {
+          setAttemptId(data.id);
+          localStorage.setItem(`practice_attempt_${cid}`, data.id);
+        }
       } catch (err) { console.error("Attempt creation failed:", err); }
       finally { isCreatingRef.current = false; }
     };
     createAttempt();
-  }, [user, eid, sid, cid, attemptId]);
+  }, [user?.id, eid, sid, cid, attemptId]);
 
   const handleConfirm = async (questionId: number, answer: string) => {
     if (!attemptId) return;

@@ -19,7 +19,8 @@ import {
   Timer,
   LayoutGrid,
   Book,
-  ShieldCheck
+  ShieldCheck,
+  User
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import InstallAppButton from "../components/InstallAppButton";
@@ -37,14 +38,12 @@ import {
 
 
 const routeMetadata: Record<string, { label: string; title: string }> = {
-  "/user/dashboard": { label: "Journal Overview", title: "Ecological Dashboard" },
-  "/user/performance": { label: "Growth Analysis", title: "Syllabus Mastery" },
-  "/user/plan-exams": { label: "Exam Rituals", title: "Strategic Planner" },
-  "/user/mock-tests": { label: "Simulation Lab", title: "Testing Grounds" },
-  "/user/results": { label: "Performance Records", title: "Achievement Manifest" },
+  "/user/dashboard": { label: "Journal Overview", title: "Growth Center" },
+  "/user/performance": { label: "Growth Analysis", title: "Growth Journey" },
+  "/user/plan-study": { label: "Exam Rituals", title: "Study Planner" },
+  "/user/mock-tests": { label: "Simulation Lab", title: "Mock Evaluation" },
+  "/user/results": { label: "Performance Records", title: "Achievement Log" },
   "/user/profile": { label: "Personal Identity", title: "User Manifesto" },
-  "/user/dashboard/exam-lists": { label: "Syllabus Discovery", title: "Exam Registry" },
-  "/user/results/history": { label: "Log Manifest", title: "Archive Manifest" },
 };
 
 export default function UserPanelLayout() {
@@ -93,7 +92,7 @@ export default function UserPanelLayout() {
     container.addEventListener("scroll", handleScroll, { passive: true });
     return () => container.removeEventListener("scroll", handleScroll);
   }, [lastScrollTop]);
-  
+
   // Sidebar Auto-Collapse Manifestation
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -116,11 +115,6 @@ export default function UserPanelLayout() {
       path: "/user/dashboard",
     },
     {
-      label: "Progress Meter",
-      icon: <TrendingUp size={20} />,
-      path: "/user/performance",
-    },
-    {
       label: "Time Table",
       icon: <History size={20} />,
       path: `/user/plan-study/${firstExamId}`,
@@ -129,6 +123,10 @@ export default function UserPanelLayout() {
       label: "Mock Test",
       icon: <Package size={20} />,
       path: "/user/mock-tests",
+    },{
+      label: "Progress Meter",
+      icon: <TrendingUp size={20} />,
+      path: "/user/performance",
     },
     // {
     //   label: "Practice",
@@ -139,7 +137,7 @@ export default function UserPanelLayout() {
       label: "Results",
       icon: <Target size={20} />,
       path: "/user/results",
-    },
+    }, 
   ];
 
   const navItems = [
@@ -192,7 +190,9 @@ export default function UserPanelLayout() {
     return `${m}:${s.toString().padStart(2, "0")}`;
   };
 
-  const currentMetadata = routeMetadata[location.pathname] || { label: "Plan Your Progress", title: "Study Planner" };
+  const activeRouteKey = Object.keys(routeMetadata).find(route => location.pathname.startsWith(route));
+  const currentMetadata = activeRouteKey ? routeMetadata[activeRouteKey] : { label: "Manifest Your Progress", title: "ARUMIND Journal" };
+  const isProfilePage = location.pathname === "/user/profile";
 
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
@@ -312,8 +312,8 @@ export default function UserPanelLayout() {
 
       {/* Main Content Area */}
       <main className="flex-1 flex flex-col relative overflow-hidden bg-surface-container-low backdrop-blur-3xl transition-colors duration-500">
-        {/* Editorial Dynamic Header - Now Multi-State */}
-        <header className="h-15 md:h-25  flex items-center justify-between px-5 md:px-10 sticky top-0 z-20 border-b border-outline-variant/10">
+        {/* Desktop Editorial Header */}
+        <header className="hidden lg:flex h-15 md:h-25 items-center justify-between px-5 md:px-10 sticky top-0 z-20 border-b border-outline-variant/10">
           {!isTestActive ? (
             // Standard View: Page Context
             <>
@@ -325,15 +325,6 @@ export default function UserPanelLayout() {
               </div>
 
               <div className="flex flex-col-reverse md:flex-row items-center gap-2 md:gap-6">
-                {/* Action Center Toggle - Temporarily Suspended */}
-                {/* <button 
-                    onClick={() => dispatch(toggleActionCenter())}
-                    className="size-14 rounded-4xl bg-surface-container-high/40 text-on-surface-variant hover:bg-surface-container-highest hover:text-primary transition-all duration-500 flex items-center justify-center group shadow-sm border border-outline-variant/5"
-                    title="Action Center"
-                  >
-                    <LayoutGrid className="size-6 group-hover:rotate-90 transition-transform duration-700" />
-                  </button> */}
-
                 <div className="flex flex-col items-end mr-2">
                   <p className="hidden md:block text-[9px] font-technical font-black text-on-surface-variant opacity-40 uppercase tracking-widest">{user?.email?.split('@')[0]}</p>
                   <div className="flex items-center gap-2">
@@ -346,22 +337,18 @@ export default function UserPanelLayout() {
                   onClick={() => navigate("/user/profile")}
                 >
                   {user?.user_metadata?.avatar_url || user?.identities?.[0]?.identity_data?.avatar_url ? (
-                    <>
-                      <img
-                        src={user?.user_metadata?.avatar_url || user?.identities?.[0]?.identity_data?.avatar_url}
-                        alt="ID"
-                        className="size-full object-cover"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </>
-
+                    <img
+                      src={user?.user_metadata?.avatar_url || user?.identities?.[0]?.identity_data?.avatar_url}
+                      alt="ID"
+                      className="size-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
                   ) : (
-                    <span className="relative z-10">{(profile?.full_name || user?.user_metadata?.full_name || user?.email)?.[0]?.toUpperCase() || ""}</span>
+                    <span className="relative z-10 text-white">{(profile?.full_name || user?.user_metadata?.full_name || user?.email)?.[0]?.toUpperCase() || ""}</span>
                   )}
                   <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
-
               </div>
             </>
           ) : (
@@ -375,7 +362,6 @@ export default function UserPanelLayout() {
               </div>
 
               <div className="flex items-center md:gap-8 gap-2">
-                {/* Timer Pod */}
                 {testTimeLeft !== null && (
                   <div className="flex items-center md:gap-5 gap-2 bg-surface-container-high/60 backdrop-blur-md md:px-8 md:py-3 px-4 py-2 rounded-full shadow-inner ring-1 ring-white/10 group">
                     <Timer className="text-tertiary size-5 animate-pulse" />
@@ -388,27 +374,6 @@ export default function UserPanelLayout() {
                   </div>
                 )}
 
-                {/* Language Toggle */}
-                {/* <div className="hidden bg-surface-container-low p-1 rounded-full shadow-inner border border-outline-variant/5">
-                  <button
-                    type="button"
-                    onClick={() => dispatch(setTestLanguage("en"))}
-                    className={`px-6 py-2 rounded-full text-[10px] font-technical font-black uppercase tracking-widest transition-all ${testLanguage === "en" ? "bg-white text-primary shadow-sm" : "text-on-surface-variant opacity-40 hover:opacity-100"
-                      }`}
-                  >
-                    EN
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => dispatch(setTestLanguage("od"))}
-                    className={`px-6 py-2 rounded-full text-[10px] font-technical font-black uppercase tracking-widest transition-all ${testLanguage === "od" ? "bg-white text-primary shadow-sm" : "text-on-surface-variant opacity-40 hover:opacity-100"
-                      }`}
-                  >
-                    OD
-                  </button>
-                </div> */}
-
-                {/* Final Submit Button */}
                 <button
                   onClick={() => dispatch(triggerTestSubmit())}
                   className="px-3 md:px-10 py-2 md:py-4 bg-linear-to-r from-primary to-primary-container text-white rounded-full font-technical font-black md:text-xs text-[10px] uppercase tracking-[0.3em] shadow-ambient-lg hover:scale-105 active:scale-95 transition-all cursor-pointer flex items-center gap-3 group"
@@ -421,12 +386,52 @@ export default function UserPanelLayout() {
           )}
         </header>
 
+        {/* Mobile Standardized Header: Native App Bar logic */}
+        {!isTestActive && (
+          <header className="lg:hidden fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl flex items-center justify-between px-6 h-16 border-b border-outline-variant/10">
+            <div className="flex items-center gap-4">
+              <div 
+                className="p-1 -ml-1 active:scale-90 active:bg-primary/5 rounded-full transition-all cursor-pointer"
+                onClick={() => navigate(-1)}
+              >
+                <ChevronLeft className="size-6 text-primary" />
+              </div>
+              <h1 className="font-technical font-black text-xl text-primary tracking-tighter">
+                {currentMetadata.title}
+              </h1>
+            </div>
+
+            <div 
+              className="size-9 rounded-2xl bg-primary/10 border border-primary/20 overflow-hidden shadow-sm active:scale-90 active:ring-4 active:ring-primary/10 transition-all cursor-pointer" 
+              onClick={() => navigate("/user/profile")}
+            >
+              {isProfilePage ? (
+                 <div className="size-full flex items-center justify-center bg-primary text-white">
+                    <User className="size-5" />
+                 </div>
+              ) : user?.user_metadata?.avatar_url || user?.identities?.[0]?.identity_data?.avatar_url ? (
+                <img
+                  src={user?.user_metadata?.avatar_url || user?.identities?.[0]?.identity_data?.avatar_url}
+                  alt="U"
+                  className="size-full object-cover p-0.5 rounded-2xl"
+                />
+              ) : (
+                <div className="size-full flex items-center justify-center text-primary font-bold text-xs">
+                  {(profile?.full_name || user?.user_metadata?.full_name || user?.email)?.[0]?.toUpperCase() || "U"}
+                </div>
+              )}
+            </div>
+          </header>
+        )}
+
         <div
           ref={scrollRef}
           key={location.pathname}
-          className="flex-1 bg-surface-container-low h-full overflow-y-auto custom-scrollbar p-0 lg:px-10"
+          className="flex-1 bg-surface-container-low h-full overflow-y-auto no-scrollbar md:custom-scrollbar pt-16 lg:pt-0 lg:px-10 overscroll-contain"
         >
-          <Outlet />
+          <div className="min-h-full flex flex-col">
+            <Outlet />
+          </div>
         </div>
 
         {/* Mobile Nav - Android 15 (Material 3) Navigation Bar Manifestation */}
@@ -444,7 +449,7 @@ export default function UserPanelLayout() {
                   <div className="relative p-2 flex items-center justify-center mb-0.5">
                     {/* Material 3 Active Pill Indicator */}
                     <div className={`absolute inset-0 bg-primary rounded-full transition-all duration-400 ease-botanical ${isActive ? "opacity-100  -translate-y-8 scale-100" : "opacity-0 scale-75"}`} />
-                    
+
                     <div className={`relative z-10 transition-all duration-300 ${isActive ? "text-surface-container-high -translate-y-8 scale-110" : "text-on-surface-variant/70"}`}>
                       {cloneElement(item.icon as React.ReactElement<any>, { size: 24 })}
                     </div>

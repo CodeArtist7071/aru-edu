@@ -1,0 +1,51 @@
+{
+  "questions": {
+    "id": "uuid",
+    "exam_id": "uuid",
+    "subject_id": "uuid",
+    "chapter_id": "uuid",
+    "correct_answer": "text",
+    "difficulty_level": "text",
+    "marks": "integer",
+    "negative_marks": "numeric",
+    "is_active": "boolean",
+    "created_at": "timestamp without time zone",
+    "pdf_id": "uuid",
+    "page_number": "integer",
+    "question": "text",
+    "options": "jsonb",
+    "diagram_present": "boolean",
+    "question_number": "integer",
+    "diagram_url": "text",
+    "paper_set": "uuid"
+  },
+  "question_explanations": {
+    "id": "uuid",
+    "question_id": "uuid",
+    "explanation_1": "text",
+    "explanation_2": "text",
+    "explanation_3": "text",
+    "explanation_4": "text",
+    "created_at": "timestamp with time zone",
+    "updated_at": "timestamp with time zone"
+  },
+  "question_correct_explanations": {
+    "id": "uuid",
+    "question_id": "uuid",
+    "explanation_1": "text",
+    "explanation_2": "text",
+    "explanation_3": "text",
+    "explanation_4": "text",
+    "created_at": "timestamp with time zone",
+    "updated_at": "timestamp with time zone"
+  },
+  "chapters": {
+    "id": "uuid",
+    "subject_id": "uuid",
+    "name": "text",
+    "display_order": "integer",
+    "created_at": "timestamp without time zone",
+    "exam_type": "public.exam_type",
+    "is_active": "boolean"
+  }
+}

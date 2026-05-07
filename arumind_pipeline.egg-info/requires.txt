@@ -1,0 +1,4 @@
+google-cloud-vision
+pymupdf
+supabase
+python-dotenv

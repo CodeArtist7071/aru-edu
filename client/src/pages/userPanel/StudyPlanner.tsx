@@ -50,6 +50,8 @@ export default function StudyPlannerPage() {
     handleToggle,
     handleCopyPreviousMonth,
     handleMonthChange,
+    handleJumpToToday,
+    handleDeleteHabit,
     setHabits,
     manifestDemo
   } = useStudyPlanner(user, examId, profile);
@@ -205,16 +207,25 @@ export default function StudyPlannerPage() {
             onSelectDate={setSelectedDate}
             onMonthChange={handleMonthChange}
             stats={stats}
-            onAddHabit={onAddHabit}
-            onEditHabit={(h) => { setEditingHabitId(h.id); setAddMode(h.is_mastery ? "test" : "routine"); setAutoOpenAddModal(true); }}
+            onAddHabit={(mode) => { 
+              setAddMode(mode); 
+              setEditingHabitId(null); 
+              setAutoOpenAddModal(true); 
+            }}
+            onEditHabit={(h) => { 
+              setEditingHabitId(h.id); 
+              setAddMode(h.is_mastery ? "test" : "routine"); 
+              setAutoOpenAddModal(true); 
+            }}
             onSync={handleSyncTaskToCalendar}
             onSyncAll={handleSyncAllTasks}
+            onDeleteHabit={handleDeleteHabit}
             isSettingUp={isSettingUp}
             hasPrevMonthTasks={hasPrevMonthTasks}
             onCopyPrevious={handleCopyPreviousMonth}
             onStartFresh={() => setIsSettingUp(false)}
             manifestDemo={manifestDemo}
-            masteryOnly={masteryOnly}
+            onJumpToToday={handleJumpToToday}
           />
         </div>
 
@@ -267,12 +278,12 @@ export default function StudyPlannerPage() {
           className={`fixed inset-0 z-[90] bg-black/5 backdrop-blur-sm transition-all duration-700 ease-in-out ${outlet ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
         />
 
-        {/* OVERLAY PANEL */}
+        {/* OVERLAY PANEL (DESKTOP ONLY) */}
         <div className={`hidden lg:block fixed inset-y-0 right-0 z-100 transition-all duration-700 ease-in-out transform will-change-[transform,opacity] ${outlet ? "translate-x-0 opacity-100 pointer-events-auto" : "translate-x-full opacity-0 pointer-events-none"} w-full md:max-w-[540px]`} style={{ transitionTimingFunction: 'var(--ease-premium)' }}>
           <Suspense fallback={<div className="h-full bg-surface/80 backdrop-blur-3xl border-l border-on-surface/5 animate-pulse" />}>
             {outlet && (
               <div className="h-full shadow-ambient-2xl border-l border-on-surface/5 backdrop-blur-3xl bg-surface/85">
-                <Outlet context={{ viewMonth, viewYear, initialHabits: habits, examId: examId || "", onRefresh: fetchData, onRequestConnection: () => setIsGooglePopupOpen(true), initialProgress: progress }} />
+                {/* The actual outlet content is now handled globally below */}
               </div>
             )}
           </Suspense>
@@ -325,6 +336,19 @@ export default function StudyPlannerPage() {
         viewYear={viewYear}
         viewMonth={viewMonth}
       />
+
+      {/* GLOBAL ROUTE OUTLET (Handles Add/Edit Bottom Sheets) */}
+      <Suspense fallback={null}>
+        <Outlet context={{ 
+          viewMonth, 
+          viewYear, 
+          initialHabits: habits, 
+          examId: examId || "", 
+          onRefresh: fetchData, 
+          onRequestConnection: () => setIsGooglePopupOpen(true), 
+          initialProgress: progress 
+        }} />
+      </Suspense>
     </div>
   );
 }

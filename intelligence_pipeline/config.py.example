@@ -1,0 +1,32 @@
+import os
+
+# --------------------------------------------------
+# INDEPENDENT CONFIGURATION FOR INTELLIGENCE PIPELINE
+# --------------------------------------------------
+
+# Supabase Credentials (Isolated)
+SUPABASE_URL = "https://vqrkyepybgcieeypqimh.supabase.co"
+SUPABASE_KEY = "your-supabase-key-here"
+
+# Google Cloud Vision Credentials
+# Pointing to the local copy within this pipeline
+GOOGLE_APPLICATION_CREDENTIALS = os.path.join(os.path.dirname(__file__), "google-vision-ocr.json")
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = GOOGLE_APPLICATION_CREDENTIALS
+
+# AI Models & Keys
+PROJECT_ID = "aruedu"
+LOCATION = "us-central1"
+API_KEY = "your-vertex-ai-api-key-here"
+GEMINI_MODEL = "gemini-2.5-flash-lite"
+
+# Pipeline Paths
+KB_DIR = os.path.join(os.path.dirname(__file__), "kb")
+PDF_DIR = os.path.join(os.path.dirname(__file__), "pdfs")
+OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "outputs")
+LOG_DIR = os.path.join(os.path.dirname(__file__), "logs")
+if not os.path.exists(LOG_DIR): os.makedirs(LOG_DIR)
+OCR_CACHE_DIR = os.path.join(os.path.dirname(__file__), "outputs", "ocr_cache")
+if not os.path.exists(OCR_CACHE_DIR): os.makedirs(OCR_CACHE_DIR)
+
+# Syllabus Reference (External but Read-Only)
+SYLLABUS_PATH = os.path.join("c:\\aruedu", "doc_pipeline", "syllabus.json")

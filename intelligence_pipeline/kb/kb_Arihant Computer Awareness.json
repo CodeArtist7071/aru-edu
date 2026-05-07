@@ -1,0 +1,282 @@
+{
+  "metadata": {
+    "exam_board": "SSC",
+    "exam_name": "Computer Awareness",
+    "year": "",
+    "subject": "Computer Awareness",
+    "chapter": "Database Concepts",
+    "exam_id": "f773d816-8ffc-45bc-a843-c75db9a47f19",
+    "board_id": "f81eea7e-3e58-4fe6-ac6c-82682450a830",
+    "subject_id": "6fdb7f5a-cce6-4c16-8d0e-b8f76423fc00",
+    "chapter_id": "40c002b3-69e9-49f1-b1cf-d2298d48f978"
+  },
+  "kb": {
+    "formulas": [],
+    "facts": [
+      {
+        "concept": "Computer System",
+        "statement": "A computer is the combination of Hardware and Software which converts data into information."
+      },
+      {
+        "concept": "Computer Functioning",
+        "statement": "Computer is responsible for performing four basic functions: Input, Processing, Output, and Storage."
+      },
+      {
+        "concept": "Computer Generations",
+        "statement": "Each generation of computer is characterized by a major technological development that fundamentally changed the way, computers operate."
+      },
+      {
+        "concept": "Charles Babbage",
+        "statement": "Charles Babbage is called the father of computer."
+      },
+      {
+        "concept": "Alan Turing",
+        "statement": "Alan Turing is known as the father of modern computer."
+      },
+      {
+        "concept": "John Von Neumann",
+        "statement": "The First Computer architecture was introduced by John Von Neumann in 1948."
+      },
+      {
+        "concept": "EDVAC",
+        "statement": "EDVAC was the first electronic computer constructed at the Moore School of Engineering (USA)."
+      },
+      {
+        "concept": "ENIAC",
+        "statement": "ENIAC was the world's first successful electronic computer which was developed by JP Eckert and JW Mauchly."
+      }
+    ],
+    "definitions": [
+      {
+        "term": "Computer",
+        "meaning": "The term computer is derived from the Latin word 'computerae' which means 'to compute'."
+      },
+      {
+        "term": "Input",
+        "meaning": "Information or data that is entered into a computer. It sends data and instructions to the Central Processing Unit (CPU)."
+      },
+      {
+        "term": "Processing",
+        "meaning": "The sequence of actions taken on data to convert it into information which is meaningful to the user. It can be calculations, comparisons or decisions taken by the computer."
+      },
+      {
+        "term": "Output",
+        "meaning": "It makes processed data available to the user."
+      },
+      {
+        "term": "Storage",
+        "meaning": "It stores data and programs permanently."
+      },
+      {
+        "term": "Hardware",
+        "meaning": "The collection of physical elements that constitute a computer system. It is a comprehensive term for all the physical parts of a computer. e.g., display screens, disks, keyboards. mouse, printers, scanner, chips, etc."
+      },
+      {
+        "term": "Software",
+        "meaning": "A set of programs and procedures. Software tells the hardware what to do and how to accomplish a task. e.g., web browsers, word processors, etc."
+      },
+      {
+        "term": "Data",
+        "meaning": "Unprocessed raw facts and figures, like numbers, text on pieces of paper, are known as data."
+      },
+      {
+        "term": "Information",
+        "meaning": "When data is processed, organized, structured or presented in a given context so as to be useful, then it is called information."
+      },
+      {
+        "term": "Instruction",
+        "meaning": "A command given to a computer in the computer language by the user."
+      },
+      {
+        "term": "Program",
+        "meaning": "A set of instructions given to a computer in order to perform some task."
+      },
+      {
+        "term": "Abacus",
+        "meaning": "First mechanical calculating device. It used set of beads for representing unit. A horizontal rod represent the one, tens, hundred, etc. Three dimensional structure. Holding numbers 0 to 9 only. Represent graphical structure of calculating result."
+      },
+      {
+        "term": "Napier's Bones",
+        "meaning": "Holding numbers 0 to 9 only. Represent graphical structure of calculating result."
+      },
+      {
+        "term": "Pascaline",
+        "meaning": "First mechanical adding machine. It was structured like rectangular box, with eight disc (represent number of units). The term carry was introduced in this period."
+      },
+      {
+        "term": "Card of Holes for Weaving Pattern",
+        "meaning": "First mechanical loom. Mainly weaved a silk based pattern."
+      },
+      {
+        "term": "Analytical Engine",
+        "meaning": "Used punched card for the sequence of operation. To program the machine, it used two-punchcard."
+      },
+      {
+        "term": "Tabulating Machine",
+        "meaning": "It used punched cards with round holes. Read one card at a time."
+      },
+      {
+        "term": "MARK-I",
+        "meaning": "Consists of interlocking panels of small glass, counters, switches and control circuits. Data can be entered manually. It is a combination of twenty accumulators. It can also be triggered different operations."
+      },
+      {
+        "term": "ENIAC",
+        "meaning": "It was first computer which provided storage capacity. Capable of storing instructions and data in memory. Also calculate table of squares and a list of prime numbers."
+      },
+      {
+        "term": "EDSAC",
+        "meaning": "First general-purpose electronic computer with large amount of input and output. Performed both numeric and textual information. Provided input/output units converting alphabetical and special characters to two-digit decimal code."
+      },
+      {
+        "term": "UNIVAC",
+        "meaning": "Used for addition and subtraction operation. Calculation of square roots can also be performed. Perform multiplication on numbers. Technology used for calculation called Rabdologia. Operation performed on the embedded rods. Perform addition and subtraction of two numbers. Mainly designed with regard to the pressure of liquid. Simplified the process of Textiles. Generally used for basic arithmetic operations. It was a decimal machine used sign and magnitude for representation of a number."
+      },
+      {
+        "term": "IBM-650 Computer",
+        "meaning": "It was the first electromechanical machine, which was designed to process the data for census in 1890. Mainly used in the war effort during World War-II. Magnetic drums are used for storage."
+      },
+      {
+        "term": "First Generation Computers (1940-56)",
+        "meaning": "Characterized by Vacuum tubes for switching devices and Magnetic drums for storage. Speed was in micro seconds. Used Batch operating system and Machine language (Binary number 0s and 1s). Applications were for scientific purposes (e.g., ENIAC, UNIVAC)."
+      },
+      {
+        "term": "Second Generation Computers (1956-63)",
+        "meaning": "Characterized by Transistors for switching devices and Magnetic core for storage. Speed was 10 micro seconds. Used Time-sharing system, Multitasking OS. Languages used were Assembly language and high-level language (e.g., FORTRAN, COBOL). Applications were for commercial production (e.g., PDP-8, IBM-1401)."
+      },
+      {
+        "term": "Third Generation Computers (1964-71)",
+        "meaning": "Characterized by Integrated Circuits (ICs) for switching devices and Magnetic core as primary storage. Speed was 100 nano seconds. Used Real-time system. Languages used were High level language (e.g., FORTRAN, COBOL, ALGOL). Applications included Database management system (e.g., NCR-395, B6500)."
+      },
+      {
+        "term": "Fourth Generation Computers (1971-Present)",
+        "meaning": "Characterized by Large Scale Integrated (LSI) circuits and microprocessors for switching devices, and Semiconductor memory, Winchester disk for storage. Speed was 10 pico seconds. Used Time sharing network, GUI interface. Languages used were PASCAL, ADA, COBOL-74, FORTRAN IV. Applications include Distributed systems (e.g., Intel 4004 chip, Macintosh)."
+      },
+      {
+        "term": "Fifth Generation Computers (Present and Beyond)",
+        "meaning": "Characterized by Super Large Scale Integrated (SLSI) chips. Applications include Artificial intelligence (e.g., Robotics). Enables mega chips."
+      }
+    ]
+  },
+  "generated_questions": [
+    {
+      "question": "Which of the following is considered the first electronic computer constructed at the Moore School of Engineering (USA)?",
+      "options": {
+        "A": "ENIAC",
+        "B": "EDVAC",
+        "C": "UNIVAC",
+        "D": "EDSAC"
+      },
+      "correct_answer": "B",
+      "explanation": "EDVAC was the first electronic computer constructed at the Moore School of Engineering (USA), as stated in the knowledge base.",
+      "difficulty_level": "Hard"
+    },
+    {
+      "question": "Who is widely recognized as the father of modern computer?",
+      "options": {
+        "A": "Charles Babbage",
+        "B": "John Von Neumann",
+        "C": "Alan Turing",
+        "D": "J.P. Eckert"
+      },
+      "correct_answer": "C",
+      "explanation": "Alan Turing is known as the father of modern computer, according to the provided facts.",
+      "difficulty_level": "Hard"
+    },
+    {
+      "question": "The term 'computer' is derived from which Latin word, meaning 'to compute'?",
+      "options": {
+        "A": "Computare",
+        "B": "Computerae",
+        "C": "Computare",
+        "D": "Computatus"
+      },
+      "correct_answer": "B",
+      "explanation": "The knowledge base states that the term computer is derived from the Latin word 'computerae', which means 'to compute'.",
+      "difficulty_level": "Hard"
+    },
+    {
+      "question": "Which of the following best describes the 'Processing' function of a computer?",
+      "options": {
+        "A": "Making processed data available to the user.",
+        "B": "Storing data and programs permanently.",
+        "C": "The sequence of actions taken on data to convert it into information.",
+        "D": "Information or data that is entered into a computer."
+      },
+      "correct_answer": "C",
+      "explanation": "Processing is defined as the sequence of actions taken on data to convert it into information, which involves calculations, comparisons, or decisions.",
+      "difficulty_level": "Hard"
+    },
+    {
+      "question": "Integrated Circuits (ICs) were the characteristic switching devices for which generation of computers?",
+      "options": {
+        "A": "Second Generation",
+        "B": "Third Generation",
+        "C": "Fourth Generation",
+        "D": "Fifth Generation"
+      },
+      "correct_answer": "B",
+      "explanation": "Third Generation Computers (1964-71) are characterized by Integrated Circuits (ICs) for switching devices.",
+      "difficulty_level": "Hard"
+    },
+    {
+      "question": "What was the primary storage technology used in Second Generation Computers?",
+      "options": {
+        "A": "Magnetic Drums",
+        "B": "Magnetic Core",
+        "C": "Semiconductor Memory",
+        "D": "Winchester Disk"
+      },
+      "correct_answer": "B",
+      "explanation": "Second Generation Computers (1956-63) were characterized by Transistors for switching devices and Magnetic core for storage.",
+      "difficulty_level": "Hard"
+    },
+    {
+      "question": "The Analytical Engine, which used punched cards for the sequence of operations, is associated with which historical figure?",
+      "options": {
+        "A": "Charles Babbage",
+        "B": "Blaise Pascal",
+        "C": "Herman Hollerith",
+        "D": "John Atanasoff"
+      },
+      "correct_answer": "A",
+      "explanation": "While not explicitly stated in the provided facts, Charles Babbage is historically credited with the design of the Analytical Engine, which used punched cards for programming. The definition for Analytical Engine confirms its use of punched cards.",
+      "difficulty_level": "Hard"
+    },
+    {
+      "question": "Which of the following devices is described as the 'first mechanical calculating device' that used beads for representing units?",
+      "options": {
+        "A": "Pascaline",
+        "B": "Napier's Bones",
+        "C": "Abacus",
+        "D": "Analytical Engine"
+      },
+      "correct_answer": "C",
+      "explanation": "The definition for Abacus states it was the first mechanical calculating device and used a set of beads for representing units.",
+      "difficulty_level": "Hard"
+    },
+    {
+      "question": "What was the main technological development that characterized each generation of computers, according to the provided facts?",
+      "options": {
+        "A": "Increased processing speed",
+        "B": "Reduced physical size",
+        "C": "A major technological development that fundamentally changed operation",
+        "D": "Introduction of user-friendly interfaces"
+      },
+      "correct_answer": "C",
+      "explanation": "The fact about Computer Generations states that 'Each generation of computer is characterized by a major technological development that fundamentally changed the way, computers operate.'",
+      "difficulty_level": "Hard"
+    },
+    {
+      "question": "According to the knowledge base, ENIAC was the world's first successful electronic computer developed by whom?",
+      "options": {
+        "A": "John Von Neumann and Alan Turing",
+        "B": "J.P. Eckert and W. Mauchly",
+        "C": "Charles Babbage and Ada Lovelace",
+        "D": "Thomas Watson and Howard Aiken"
+      },
+      "correct_answer": "B",
+      "explanation": "The fact about ENIAC states it was the world's first successful electronic computer which was developed by JP Eckert and JW Mauchly.",
+      "difficulty_level": "Hard"
+    }
+  ]
+}

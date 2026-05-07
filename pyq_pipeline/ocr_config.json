@@ -1,0 +1,39 @@
+{
+  "ocr": {
+    "primary": "google_vision",
+    "fallback": "tesseract",
+    "multi_pass": true,
+    "preprocessing": {
+      "grayscale": true,
+      "denoise": true,
+      "deskew": true,
+      "threshold": "adaptive"
+    }
+  },
+  "layout": {
+    "detect_columns": true,
+    "detect_blocks": true,
+    "min_block_height": 50
+  },
+  "text_cleaning": {
+    "remove_headers": true,
+    "remove_footers": true,
+    "normalize_spaces": true,
+    "fix_special_chars": true
+  },
+  "validation": {
+    "min_question_length": 10,
+    "min_options": 2,
+    "require_answer": true,
+    "confidence_thresholds": {
+      "accept": 0.9,
+      "reprocess": 0.7,
+      "flag": 0.7
+    }
+  },
+  "output": {
+    "format": "json",
+    "save_text_files": true,
+    "save_blocks": false
+  }
+}
