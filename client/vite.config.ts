@@ -53,6 +53,7 @@ export default defineConfig({
       workbox: {
         globPatterns: ["**/*.{js,css,html,ico,png,svg,wasm}"],
         maximumFileSizeToCacheInBytes: 12 * 1024 * 1024, // 12MB
+        navigateFallbackAllowlist: [/^\//],
       },
     }),
   ],

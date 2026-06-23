@@ -71,7 +71,7 @@ export const AdminFormModal: React.FC<AdminFormModalProps> = ({
               {title}
             </h3>
             <p className="text-[10px] uppercase font-black tracking-[0.3em] text-[#16a34a] mt-1">
-              Technical Specification Modification
+              Update the form fields below
             </p>
           </div>
           <button
@@ -145,7 +145,7 @@ export const AdminFormModal: React.FC<AdminFormModalProps> = ({
                       {...register(field.name, { required: field.required })}
                       className="bg-slate-50 dark:bg-slate-800/50 rounded-2xl px-6 py-5 text-sm font-medium border border-slate-200/50 dark:border-slate-700/30 focus:ring-2 focus:ring-[#16a34a]/20 focus:border-[#16a34a] focus:bg-white outline-none transition-all cursor-pointer h-[60px] appearance-none disabled:opacity-50"
                     >
-                      <option value="">Select manifestation...</option>
+                      <option value="">Select option...</option>
                       {field.options?.map((opt) => (
                         <option key={opt.value} value={opt.value}>
                           {opt.label}
@@ -160,7 +160,7 @@ export const AdminFormModal: React.FC<AdminFormModalProps> = ({
                         className="w-6 h-6 rounded-xl text-[#16a34a] focus:ring-[#16a34a] cursor-pointer"
                       />
                       <span className="text-sm font-bold text-slate-700 dark:text-slate-300">
-                        Active Lattice Node
+                        Active Status
                       </span>
                     </div>
                   ) : (
@@ -176,7 +176,7 @@ export const AdminFormModal: React.FC<AdminFormModalProps> = ({
                   )}
                   {errors[field.name] && (
                     <span className="text-[10px] text-red-500 font-black uppercase tracking-widest pl-2">
-                       Verification Required
+                       This field is required
                     </span>
                   )}
                 </div>
@@ -190,14 +190,14 @@ export const AdminFormModal: React.FC<AdminFormModalProps> = ({
               onClick={onClose}
               className="px-8 py-4 text-[11px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-all font-mono"
             >
-              / Cancel Request
+              Cancel
             </button>
             <button
               type="submit"
               className="flex items-center gap-4 px-10 py-5 text-[11px] font-black uppercase tracking-widest bg-[#16a34a] text-white rounded-2xl shadow-2xl shadow-[#16a34a]/30 hover:shadow-[#16a34a]/50 hover:-translate-y-0.5 transition-all active:scale-95 disabled:opacity-50"
             >
               <Save size={18} />
-              Save Manifestation
+              Save
             </button>
           </div>
         </form>

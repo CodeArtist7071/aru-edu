@@ -31,10 +31,16 @@ export default function ConfirmOAuthPage() {
           }
         });
     } else {
-      // If no token in hash, check query params (PKCE flow)
+      // If no token in hash, check query params (PKCE flow or errors)
       const queryParams = new URLSearchParams(window.location.search);
+      const errorMsg = queryParams.get("error_description") || queryParams.get("error");
       const code = queryParams.get("code");
-      if (!code) {
+
+      if (errorMsg) {
+        setStatus(`Authentication Error: ${decodeURIComponent(errorMsg).replace(/\+/g, ' ')}`);
+        // Optional: wait longer before redirecting so the user can read the error
+        setTimeout(() => navigate("/login"), 5000);
+      } else if (!code) {
         setStatus("Invalid Identity Token.");
         setTimeout(() => navigate("/login"), 2000);
       }

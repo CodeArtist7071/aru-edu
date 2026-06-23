@@ -13,6 +13,7 @@ import {
   Layout,
   Menu,
   X,
+  ChevronLeft,
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, Outlet } from "react-router-dom";
@@ -68,6 +69,7 @@ export default function AdminPanelLayout() {
   const { user } = useSelector((state: RootState) => state.user ?? null);
   const dispatch = useDispatch<AppDispatch>();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const handleLogout = () => {
     const { error }: any = supabase.auth.signOut();
@@ -108,11 +110,11 @@ export default function AdminPanelLayout() {
         />
       )}
 
-      {/* Sidebar Sidebar / Responsive Drawer */}
+      {/* Sidebar / Responsive Drawer */}
       <aside className={`
-        fixed lg:static inset-y-0 left-0 w-72 lg:w-64 
+        fixed lg:static inset-y-0 left-0 ${isCollapsed ? "w-20" : "w-72 lg:w-64"} 
         bg-surface dark:bg-slate-900 border-r border-outline-variant/5 lg:border-r 
-        z-50 flex flex-col transition-transform duration-500 ease-botanical
+        z-50 flex flex-col transition-all duration-500 ease-botanical
         ${isSidebarOpen ? "translate-x-0 shadow-2xl shadow-black/20" : "-translate-x-full lg:translate-x-0"}
       `}>
         {/* Mobile Close Button */}
@@ -126,15 +128,15 @@ export default function AdminPanelLayout() {
         </div>
 
         {/* Logo */}
-        <div className="p-6 lg:p-8 flex items-center gap-3">
-          <div className="w-8 h-8 bg-[#16a34a] rounded-lg flex items-center justify-center text-white">
+        <div className={`p-6 lg:p-8 flex items-center ${isCollapsed ? 'justify-center px-2' : 'gap-3'}`}>
+          <div className="w-8 h-8 shrink-0 bg-[#16a34a] rounded-lg flex items-center justify-center text-white">
             <School color="white" size={20} />
           </div>
-          <h2 className="text-xl font-bold tracking-tight text-on-surface">Exam Portal</h2>
+          {!isCollapsed && <h2 className="text-xl font-bold tracking-tight text-on-surface whitespace-nowrap overflow-hidden">Exam Portal</h2>}
         </div>
 
         {/* User Profile */}
-        <UserProfile user={user} />
+        {!isCollapsed && <UserProfile user={user} />}
 
         {/* Navigation */}
         <nav className="flex-1 px-4 space-y-1 overflow-y-auto custom-scrollbar">
@@ -144,26 +146,38 @@ export default function AdminPanelLayout() {
               to={item.path}
               onClick={() => setIsSidebarOpen(false)}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${
+                `flex items-center ${isCollapsed ? 'justify-center p-3' : 'gap-3 px-4 py-3'} rounded-xl transition-all duration-300 ${
                   isActive
                     ? "bg-[#16a34a]/10 text-[#16a34a] font-bold shadow-xs"
                     : "hover:bg-surface-container-high dark:hover:bg-slate-800 text-on-surface-variant"
                 }`
               }
+              title={isCollapsed ? item.label : undefined}
             >
-              <span className="opacity-70">{item.icon}</span>
-              <span className="text-sm tracking-tight">{item.label}</span>
+              <span className="opacity-70 shrink-0">{item.icon}</span>
+              {!isCollapsed && <span className="text-sm tracking-tight whitespace-nowrap overflow-hidden">{item.label}</span>}
             </NavLink>
           ))}
         </nav>
 
         {/* Upgrade CTA / Footer */}
-        <div className="p-4 border-t border-outline-variant/5">
+        <div className="p-4 border-t border-outline-variant/5 space-y-4">
+          <div className="flex gap-2">
+            <button
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              className="flex-1 hidden lg:flex items-center justify-center p-2 rounded-full bg-surface-container-high text-[#16a34a] hover:bg-surface-container-highest transition-all duration-300"
+            >
+              <ChevronLeft
+                className={`size-5 transition-transform duration-500 ${isCollapsed ? "rotate-180" : ""}`}
+              />
+            </button>
+          </div>
           <button
             onClick={handleLogout}
-            className="w-full py-3 bg-surface-container-high dark:bg-slate-800 text-[#16a34a] text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-primary hover:text-white transition-all duration-300"
+            className={`w-full py-3 bg-surface-container-high dark:bg-slate-800 text-[#16a34a] flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-primary hover:text-white transition-all duration-300 ${isCollapsed ? "px-2" : ""}`}
+            title={isCollapsed ? "Sign Out" : undefined}
           >
-            Sign Out
+            {isCollapsed ? <LogOut size={18} /> : "Sign Out"}
           </button>
         </div>
       </aside>

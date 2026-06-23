@@ -3,6 +3,7 @@ import { useTableData } from "../../hooks/useTableData";
 import { AdminTable } from "../../components/admin/AdminTable";
 import { AdminFormModal } from "../../components/admin/AdminFormModal";
 import { Plus } from "lucide-react";
+import { _setFixedWidth } from "ag-grid-community";
 
 /**
  * Question Repository Management Page.
@@ -44,9 +45,11 @@ const QuestionsManagement: React.FC = () => {
 
   const columns: any[] = [
     {
-      header: "Question Identity",
+      header: "Question",
       key: "question",
+      minWidth:500,
       autoHeight: true,
+      
       wrapText: true,
       render: (val: string) => (
         <div className="py-4 pr-10">
@@ -59,9 +62,10 @@ const QuestionsManagement: React.FC = () => {
     {
       header: "Chapters",
       key: "chapter_id",
+      minWidth:250,
       render: (val: string) => (
         <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 bg-slate-100 dark:bg-slate-800 dark:text-slate-400 px-3 py-1 rounded-lg">
-          {chaptersData.find(c => c.id === val)?.name || "Unmapped Node"}
+          {chaptersData.find(c => c.id === val)?.name || "Unknown Chapter"}
         </span>
       )
     },
@@ -91,29 +95,94 @@ const QuestionsManagement: React.FC = () => {
       )
     },
     {
-      header: "Question Options",
-      key: "options",
+      header: "Option A",
+      key: "opt_A",
+      minWidth:250,
       autoHeight: true,
       wrapText: true,
-      render: (val: any) => {
-        const opts = Array.isArray(val) ? val : [];
+      render: (_, row: any) => {
+        const opts = Array.isArray(row.options) ? row.options : [];
+        const opt = opts.find((o: any) => o.l === 'A');
         return (
-          <div className="flex gap-2 flex-col justify-center py-2 max-w-[280px]">
-            {opts.map((opt: any, i: number) => (
-              <span key={i} className="text-[9px] font-black uppercase tracking-tight px-2 py-0.5 rounded border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 text-slate-500 whitespace-nowrap">
-                <span className="text-[#16a34a] mr-1">{opt.l}:</span>
-                <span className="opacity-80">{opt.v}</span>
-              </span>
-            ))}
+          <div className="py-2 max-w-[200px]">
+            <span className="text-[10px] font-black uppercase tracking-normal py-0.5  bg-slate-50/50 dark:bg-slate-900/50 text-slate-500">
+              <span className="text-[#16a34a] mr-1">A:</span>
+              <span className="opacity-80">{opt?.v || "-"}</span>
+            </span>
           </div>
         );
       }
     },
     {
-      header: "Question Level",
-      key: "difficulty_level",
+      header: "Option B",
+      key: "opt_B",
+      minWidth:250,
+      autoHeight: true,
+      wrapText: true,
+      render: (_, row: any) => {
+        const opts = Array.isArray(row.options) ? row.options : [];
+        const opt = opts.find((o: any) => o.l === 'B');
+        return (
+          <div className="py-2 max-w-[200px]">
+            <span className="text-[10px] font-black uppercase tracking-normal px-2 py-0.5  bg-slate-50/50 dark:bg-slate-900/50 text-slate-500 whitespace-normal">
+              <span className="text-[#16a34a] mr-1">B:</span>
+              <span className="opacity-80">{opt?.v || "-"}</span>
+            </span>
+          </div>
+        );
+      }
+    },
+    {
+      header: "Option C",
+      key: "opt_C",
+      minWidth:250,
+      autoHeight: true,
+      wrapText: true,
+      render: (_, row: any) => {
+        const opts = Array.isArray(row.options) ? row.options : [];
+        const opt = opts.find((o: any) => o.l === 'C');
+        return (
+          <div className="py-2 max-w-[200px]">
+            <span className="text-[10px] font-black uppercase tracking-normal px-2 py-0.5  bg-slate-50/50 dark:bg-slate-900/50 text-slate-500 whitespace-normal">
+              <span className="text-[#16a34a] mr-1">C:</span>
+              <span className="opacity-80">{opt?.v || "-"}</span>
+            </span>
+          </div>
+        );
+      }
+    },
+    {
+      header: "Option D",
+      key: "opt_D",
+      minWidth:250,
+      autoHeight: true,
+      wrapText: true,
+      render: (_, row: any) => {
+        const opts = Array.isArray(row.options) ? row.options : [];
+        const opt = opts.find((o: any) => o.l === 'D');
+        return (
+          <div className="py-2 max-w-[200px]">
+            <span className="text-[10px] font-black uppercase tracking-normal px-2 py-0.5  bg-slate-50/50 dark:bg-slate-900/50 text-slate-500 whitespace-normal">
+              <span className="text-[#16a34a] mr-1">D:</span>
+              <span className="opacity-80">{opt?.v || "-"}</span>
+            </span>
+          </div>
+        );
+      }
+    },{
+      header: "Correct Answers",
+      key: "correct_answer",
       render: (val: string) => (
         <span className="font-black text-[#16a34a] bg-[#16a34a]/10 px-3 py-1 rounded-lg border border-[#16a34a]/20 text-[10px]">
+          {val}
+        </span>
+      )
+    },
+    {
+      header: "Difficulty",
+      key: "difficulty_level",
+      render: (val: string) => (
+        <span className="font-black text-[#16a34a] bg-[#16a34a]/10 px-3 py-1 rounded-lg border border-[#16a34a]/20 text-[12px]">
           {val}
         </span>
       )
@@ -159,7 +228,7 @@ const QuestionsManagement: React.FC = () => {
     // { name: "explanation", label: "Editorial Explanation", type: "textarea" },
     {
       name: "exam_id",
-      label: "Associated Examination",
+      label: "Exam",
       type: "select",
       options: exams.map(e => ({ label: e.name, value: e.id })),
       defaultValue: selectedExam !== "all" ? selectedExam : undefined,
@@ -168,7 +237,7 @@ const QuestionsManagement: React.FC = () => {
     },
     {
       name: "subject_id",
-      label: "Subject Classification",
+      label: "Subject",
       type: "select",
       options: subjects.map(s => ({ label: s.name, value: s.id })),
       defaultValue: selectedSubject !== "all" ? selectedSubject : undefined,
@@ -184,7 +253,7 @@ const QuestionsManagement: React.FC = () => {
       disabled: selectedChapter !== "all",
       required: true
     },
-    { name: "is_active", label: "Active Status", type: "checkbox" }
+    { name: "is_active", label: "Active", type: "checkbox" }
   ];
 
   const handleApply = async (formData: any) => {
@@ -254,12 +323,12 @@ const QuestionsManagement: React.FC = () => {
         {/* Unified Control Sanctuary */}
         <div className="flex flex-wrap items-center gap-4 w-full">
           {/* Hierarchical Orchestration Bar */}
-          <div className="flex-1 flex items-center gap-2 p-1.5 bg-slate-100/50 dark:bg-slate-900/50 backdrop-blur-xl rounded-4xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+          <div className="flex-1 flex items-center gap-2 bg-slate-100/50 dark:bg-slate-900/50 backdrop-blur-xl rounded-4xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
             {/* 1. Exam Board */}
             <select
               value={selectedBoard}
               onChange={(e) => { setSelectedBoard(e.target.value); setSelectedExam("all"); setSelectedSubject("all"); setSelectedChapter("all"); }}
-              className="flex-1 bg-transparent text-[9px] font-black uppercase tracking-widest px-6 py-4 border-r border-slate-200 dark:border-slate-800 outline-none hover:text-[#16a34a] transition-colors cursor-pointer"
+              className="flex-1 bg-transparent text-[12px] font-black uppercase tracking-widest px-6 py-4 border-r border-slate-200 dark:border-slate-800 outline-none hover:text-[#16a34a] transition-colors cursor-pointer"
             >
               <option value="all">1. Select Board</option>
               {boards.map(b => <option key={b.id} value={b.id}>{b.name}</option>)}
@@ -270,7 +339,7 @@ const QuestionsManagement: React.FC = () => {
               value={selectedExam}
               disabled={selectedBoard === "all"}
               onChange={(e) => { setSelectedExam(e.target.value); setSelectedSubject("all"); setSelectedChapter("all"); }}
-              className="flex-1 bg-transparent text-[9px] font-black uppercase tracking-widest px-6 py-4 border-r border-slate-200 dark:border-slate-800 outline-none disabled:opacity-20 disabled:cursor-not-allowed hover:enabled:text-[#16a34a] transition-colors cursor-pointer"
+              className="flex-1 bg-transparent text-[12px] w-[250px] font-black uppercase tracking-widest px-6 py-4 border-r border-slate-200 dark:border-slate-800 outline-none disabled:opacity-20 disabled:cursor-not-allowed hover:enabled:text-[#16a34a] transition-colors cursor-pointer"
             >
               <option value="all">2. Select Exam</option>
               {filteredExams.map(e => <option key={e.id} value={e.id}>{e.name}</option>)}
@@ -281,7 +350,7 @@ const QuestionsManagement: React.FC = () => {
               value={selectedSubject}
               disabled={selectedExam === "all"}
               onChange={(e) => { setSelectedSubject(e.target.value); setSelectedChapter("all"); }}
-              className="flex-1 bg-transparent text-[9px] font-black uppercase tracking-widest px-6 py-4 border-r border-slate-200 dark:border-slate-800 outline-none disabled:opacity-20 disabled:cursor-not-allowed hover:enabled:text-[#16a34a] transition-colors cursor-pointer"
+              className="flex-1 bg-transparent w-[250px] text-[12px] font-black uppercase tracking-widest px-6 py-4 border-r border-slate-200 dark:border-slate-800 outline-none disabled:opacity-20 disabled:cursor-not-allowed hover:enabled:text-[#16a34a] transition-colors cursor-pointer"
             >
               <option value="all">3. Select Subject</option>
               {filteredSubjects.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
@@ -292,7 +361,7 @@ const QuestionsManagement: React.FC = () => {
               value={selectedChapter}
               disabled={selectedSubject === "all"}
               onChange={(e) => setSelectedChapter(e.target.value)}
-              className="flex-1 bg-transparent text-[9px] font-black uppercase tracking-widest px-6 py-4 outline-none disabled:opacity-20 disabled:cursor-not-allowed hover:enabled:text-[#16a34a] transition-colors cursor-pointer"
+              className="flex-1 bg-transparent text-[12px] font-black uppercase tracking-widest px-6 py-4 outline-none disabled:opacity-20 disabled:cursor-not-allowed hover:enabled:text-[#16a34a] transition-colors cursor-pointer"
             >
               <option value="all">4. Select Chapter</option>
               {filteredChapters.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
@@ -305,7 +374,7 @@ const QuestionsManagement: React.FC = () => {
               setEditingItem(null);
               setIsModalOpen(true);
             }}
-            className="group shrink-0 flex items-center gap-4 px-10 py-5 bg-[#16a34a] hover:bg-[#15803d] text-white rounded-4xl font-black text-[11px] uppercase tracking-[0.2em] shadow-xl shadow-[#16a34a]/10 hover:-translate-y-1 transition-all duration-300"
+            className="group shrink-0 flex items-center gap-4 px-5 py-3.5 bg-[#16a34a] hover:bg-[#15803d] text-white rounded-4xl font-black text-[11px] uppercase tracking-[0.2em] shadow-xl shadow-[#16a34a]/10 hover:-translate-y-1 transition-all duration-300"
           >
             <Plus size={20} className="group-hover:rotate-90 transition-transform duration-500" />
             <span>Add Question</span>
@@ -332,7 +401,7 @@ const QuestionsManagement: React.FC = () => {
             setIsModalOpen(true);
           }}
           onDelete={(id) => {
-            if (window.confirm("Verify: Remove this question?"))
+            if (window.confirm("Are you sure you want to delete this question?"))
               deleteItem(id);
           }}
           loading={loading}

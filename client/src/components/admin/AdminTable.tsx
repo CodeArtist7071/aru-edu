@@ -11,7 +11,8 @@ import {
   ChevronRight,
   ArrowUpDown,
   ArrowUp,
-  ArrowDown
+  ArrowDown,
+  Menu
 } from "lucide-react";
 
 interface Column {
@@ -65,17 +66,31 @@ const CleanHeader = memo((props: any) => {
     props.progressSort(event.shiftKey);
   };
 
+  const onMenuClicked = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    props.showColumnMenu(event.currentTarget);
+  };
+
   return (
-    <div 
-      className="flex items-center gap-2 cursor-pointer group select-none py-1 h-full"
-      onClick={onSortRequested}
-    >
-      <span className="text-[11px] font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">
-        {props.displayName}
-      </span>
-      <div className="text-slate-400 group-hover:text-[#16a34a] transition-all">
-        {sort === 'asc' ? <ArrowUp size={12} /> : sort === 'desc' ? <ArrowDown size={12} /> : <ArrowUpDown size={12} className="opacity-0 group-hover:opacity-40" />}
+    <div className="flex items-center justify-between w-full h-full group">
+      <div 
+        className="flex items-center gap-2 cursor-pointer select-none py-1 h-full flex-1"
+        onClick={onSortRequested}
+      >
+        <span className="text-[11px] font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">
+          {props.displayName}
+        </span>
+        <div className="text-slate-400 group-hover:text-[#16a34a] transition-all">
+          {sort === 'asc' ? <ArrowUp size={12} /> : sort === 'desc' ? <ArrowDown size={12} /> : <ArrowUpDown size={12} className="opacity-0 group-hover:opacity-40" />}
+        </div>
       </div>
+      <button 
+        onClick={onMenuClicked}
+        className="p-1 text-slate-400 hover:text-[#16a34a] hover:bg-[#16a34a]/10 rounded transition-all opacity-0 group-hover:opacity-100"
+        title="Column Options"
+      >
+        <Menu size={14} />
+      </button>
     </div>
   );
 });
@@ -92,7 +107,7 @@ const ActionCell = memo(({ data, onEdit, onDelete }: any) => (
         onEdit(data);
       }}
       className="p-1.5 text-slate-400 hover:text-[#16a34a] hover:bg-[#16a34a]/5 rounded-lg transition-all"
-      title="Edit Resource"
+      title="Edit"
     >
       <Edit3 size={15} />
     </button>
@@ -102,7 +117,7 @@ const ActionCell = memo(({ data, onEdit, onDelete }: any) => (
         onDelete(data.id);
       }}
       className="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-500/5 rounded-lg transition-all"
-      title="Vaporize Resource"
+      title="Delete"
     >
       <Trash2 size={15} />
     </button>
@@ -144,7 +159,7 @@ export const AdminTable: React.FC<AdminTableProps> = memo(({
         sortable: true,
         filter: true,
         headerComponent: CleanHeader,
-        flex: col.flex ?? 1,
+        flex: col.width ? col.flex : (col.flex ?? 1),
         minWidth: col.minWidth ?? 160,
         width: col.width,
         pinned: col.pinned,
@@ -173,8 +188,9 @@ export const AdminTable: React.FC<AdminTableProps> = memo(({
       headerName: "Actions",
       field: "id",
       pinned: "right",
-      width: 140,
-      minWidth: 140,
+      width: 90,
+      minWidth: 100,
+      hide:false,
       sortable: false,
       filter: false,
       headerComponent: CleanHeader,
@@ -196,7 +212,7 @@ export const AdminTable: React.FC<AdminTableProps> = memo(({
     return (
       <div className="flex flex-col items-center justify-center p-32 text-slate-300">
         <Loader2 className="animate-spin text-[#16a34a] mb-4" size={32} />
-        <span className="text-[10px] font-bold uppercase tracking-widest">Sychronizing Sector...</span>
+        <span className="text-[10px] font-bold uppercase tracking-widest">Loading...</span>
       </div>
     );
   }
@@ -212,7 +228,7 @@ export const AdminTable: React.FC<AdminTableProps> = memo(({
           />
           <input
             type="text"
-            placeholder="Quick search repository..."
+            placeholder="Search..."
             value={quickFilterText}
             onChange={(e) => setQuickFilterText(e.target.value)}
             className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl pl-11 pr-5 py-2.5 text-sm font-medium outline-none focus:ring-2 focus:ring-[#16a34a]/20 focus:border-[#16a34a]/30 transition-all"
@@ -223,7 +239,7 @@ export const AdminTable: React.FC<AdminTableProps> = memo(({
           <button 
             onClick={onRefresh}
             className="group p-2 text-slate-500 hover:text-[#16a34a] hover:bg-[#16a34a]/5 rounded-lg transition-all"
-            title="Reload Ecosystem"
+            title="Refresh"
           >
             <RefreshCw size={16} className="group-active:rotate-180 transition-transform duration-500" />
           </button>
@@ -231,7 +247,7 @@ export const AdminTable: React.FC<AdminTableProps> = memo(({
           <div className="h-4 w-px bg-slate-200 dark:bg-slate-800" />
           
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Total Entities:</span>
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Total:</span>
             <span className="text-xs font-black text-slate-900 dark:text-slate-100 tabular-nums">{totalCount}</span>
           </div>
         </div>
@@ -262,7 +278,7 @@ export const AdminTable: React.FC<AdminTableProps> = memo(({
           onGridReady={(params: any) => {
             params.api.sizeColumnsToFit();
           }}
-          overlayNoRowsTemplate='<span class="text-[11px] font-bold uppercase tracking-widest opacity-20 italic">No Repository Manifested</span>'
+          overlayNoRowsTemplate='<span class="text-[11px] font-bold uppercase tracking-widest opacity-20 italic">No data available</span>'
         />
       </div>
 

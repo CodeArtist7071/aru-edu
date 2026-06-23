@@ -8,9 +8,9 @@ const supabaseUrl = VITE_SUPABASE_URL;
 const supabaseKey = supabase_annon_key;
 
 const supabase = createClient(supabaseUrl, supabaseKey);
-const adminSupabase = createClient(supabaseUrl, supabase_annon_key);
+
 if (!supabaseUrl || !supabaseKey) {
   throw new Error("Missing Supabase environment variables");
 }
-console.log(supabase);
-export { supabase, adminSupabase };
+
+export { supabase };

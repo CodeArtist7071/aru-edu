@@ -176,12 +176,12 @@ const ChaptersManagement: React.FC = () => {
 
         {/* Unified Hierarchical Control Bar */}
         <div className="flex flex-wrap items-center gap-4 w-full">
-            <div className="flex-1 flex items-center gap-2 p-1.5 bg-slate-100/50 dark:bg-slate-900/50 backdrop-blur-xl rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+            <div className="flex-1 flex items-center gap-2 bg-slate-100/50 dark:bg-slate-900/50 backdrop-blur-xl rounded-4xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
                 {/* 1. Exam Board */}
                 <select 
                     value={selectedBoard}
                     onChange={(e) => { setSelectedBoard(e.target.value); setSelectedExam("all"); setSelectedSubject("all"); }}
-                    className="flex-1 bg-transparent text-[9px] font-black uppercase tracking-widest px-6 py-4 border-r border-slate-200 dark:border-slate-800 outline-none hover:text-[#16a34a] transition-colors cursor-pointer"
+                    className="flex-1 bg-transparent text-[12px] font-black uppercase tracking-widest px-6 py-4 border-r border-slate-200 dark:border-slate-800 outline-none hover:text-[#16a34a] transition-colors cursor-pointer"
                 >
                     <option value="all">1. Select Board</option>
                     {boards.map(b => <option key={b.id} value={b.id}>{b.name}</option>)}
@@ -192,7 +192,7 @@ const ChaptersManagement: React.FC = () => {
                     value={selectedExam}
                     disabled={selectedBoard === "all"}
                     onChange={(e) => { setSelectedExam(e.target.value); setSelectedSubject("all"); }}
-                    className="flex-1 bg-transparent text-[9px] font-black uppercase tracking-widest px-6 py-4 border-r border-slate-200 dark:border-slate-800 outline-none disabled:opacity-30 hover:enabled:text-[#16a34a] transition-colors cursor-pointer"
+                    className="flex-1 bg-transparent w-[300px] text-[12px] font-black uppercase tracking-widest px-6 py-4 border-r border-slate-200 dark:border-slate-800 outline-none disabled:opacity-30 hover:enabled:text-[#16a34a] transition-colors cursor-pointer"
                 >
                     <option value="all">2. Select Exam</option>
                     {filteredExams.map(e => <option key={e.id} value={e.id}>{e.name}</option>)}
@@ -203,7 +203,7 @@ const ChaptersManagement: React.FC = () => {
                     value={selectedSubject}
                     disabled={selectedExam === "all"}
                     onChange={(e) => setSelectedSubject(e.target.value)}
-                    className="flex-1 bg-transparent text-[9px] font-black uppercase tracking-widest px-6 py-4 outline-none disabled:opacity-30 hover:enabled:text-[#16a34a] transition-colors cursor-pointer"
+                    className="flex-1 bg-transparent text-[12px] font-black uppercase tracking-widest px-2 py-4 outline-none disabled:opacity-30 hover:enabled:text-[#16a34a] transition-colors cursor-pointer"
                 >
                     <option value="all">3. Select Subject</option>
                     {filteredSubjects.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
@@ -215,7 +215,7 @@ const ChaptersManagement: React.FC = () => {
                     setEditingItem(null);
                     setIsModalOpen(true);
                 }}
-                className="group shrink-0 flex items-center gap-4 px-10 py-5 bg-[#16a34a] hover:bg-[#15803d] text-white rounded-[2rem] font-black text-[11px] uppercase tracking-[0.2em] shadow-xl shadow-[#16a34a]/10 hover:-translate-y-1 transition-all duration-300"
+                className="group shrink-0 flex items-center gap-4 px-10 py-3.5 bg-[#16a34a] hover:bg-[#15803d] text-white rounded-[2rem] font-black text-[11px] uppercase tracking-[0.2em] shadow-xl shadow-[#16a34a]/10 hover:-translate-y-1 transition-all duration-300"
             >
                 <Plus size={20} className="group-hover:rotate-90 transition-transform duration-500" />
                 <span>Add Chapter</span>
