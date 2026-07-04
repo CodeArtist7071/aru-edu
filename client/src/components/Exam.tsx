@@ -132,7 +132,7 @@ const Exam = () => {
   return (
     <div className="text-on-surface h-screen font-narrative antialiased transition-colors duration-700">
       {/* Main Content */}
-      <main className="max-w-300 w-full mx-auto px-4">
+      <main className=" w-full mx-auto px-4">
         {/* Page Header - Asymmetrical & Editorial */}
         <div className="md:mb-16 mb-6 max-w-2xl">
           <h1 className="mt-3 text-2xl md:text-5xl font-black tracking-tight mb-6 leading-[0.9] text-on-surface animate-reveal">
@@ -142,8 +142,7 @@ const Exam = () => {
             className="text-on-surface-variant text-sm md:text-lg leading-relaxed max-w-md animate-reveal opacity-80"
             style={{ animationDelay: "0.1s" }}
           >
-            Target your weak areas and track your growth across the OSSC CGL
-            ecosystem.
+            View all subjects and chapters for your selected exam. Select a chapter to start practicing with tailored preferences.  
           </p>
         </div>
 
@@ -169,7 +168,7 @@ const Exam = () => {
           </div>
         )}
 
-        <div className="h-[80vh] pb-20 overflow-y-auto">
+        <div className="h-[90vh] pb-20 overflow-y-auto">
           {data.map((subject: any, index: number) => {
             // Technical Verification: ensure parent subject existence manifestation
             if (!subject.subjects) return null;
@@ -249,14 +248,14 @@ const Exam = () => {
                                   handleButton(item.subjects.id, item.id)
                                 }
                                 key={idx}
-                                className="group flex flex-row p-2 md:p-5 mx-2 rounded-2xl  justify-between items-center cursor-pointer hover:bg-surface-container-high transition-all duration-300 ease-botanical"
+                                className="md:group  md:flex flex-row p-2 md:p-5 mx-2 rounded-2xl  md:justify-between md:items-center cursor-pointer hover:bg-surface-container-high transition-all duration-300 ease-botanical"
                               >
-                                <div className="flex mb-6 md:mb-0  items-center gap-5">
+                                <div className="flex mb-6 md:mb-0 md:justify-between items-center gap-5">
                                   <div
                                     className={`size-2 rounded-full ${attemptedChapters.has(item.id) ? "bg-primary" : "bg-on-surface-variant/20 group-hover:bg-primary/40"}`}
                                   />
                                   <div>
-                                    <h4 className="font-bold text-on-surface  text-lg group-hover:text-primary transition-colors">
+                                    <h4 className="font-bold text-on-surface text-sm  md:text-lg group-hover:text-primary transition-colors">
                                       {item.name}
                                     </h4>
                                     <span className="text-xs font-mono font-bold uppercase tracking-wider text-on-surface-variant/60">
@@ -264,13 +263,13 @@ const Exam = () => {
                                     </span>
                                   </div>
                                 </div>
-                                <div className="hidden md:block">
+                                <div className="block">
                                   <button
                                     onClick={(e) => {
                                       e.stopPropagation();
                                       handleButton(item.subjects.id, item.id);
                                     }}
-                                    className={`md:mt-0 px-6 py-2.5 rounded-full text-sm font-black transition-all duration-300 shadow-sm ${
+                                    className={`w-full md:mt-0 px-6 py-2.5 rounded-full text-sm font-black transition-all duration-300 shadow-sm ${
                                       attemptedChapters.has(item.id)
                                         ? "bg-surface-container-highest text-on-surface hover:bg-surface-dim"
                                         : "bg-linear-to-r from-primary to-primary-container text-white hover:scale-105 active:scale-95 shadow-primary/20 hover:shadow-lg"
@@ -281,7 +280,7 @@ const Exam = () => {
                                       : "Take Test"}
                                   </button>
                                 </div>
-                                <div className="block md:hidden">
+                                {/* <div className="block md:hidden">
                                   <button
                                     onClick={(e) => {
                                       e.stopPropagation();
@@ -295,7 +294,7 @@ const Exam = () => {
                                   >
                                     <ArrowRight />
                                   </button>
-                                </div>
+                                </div> */}
                               </div>
                             );
                           }

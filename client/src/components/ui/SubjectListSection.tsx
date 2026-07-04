@@ -60,7 +60,7 @@ export const SubjectListSection = ({
   const activeExam = targetedExams.find((e) => e.id === activeExamId);
 
   return (
-    <section className="block md:hidden">
+    <section onClick={()=>setToggle(!toggle)} className="block md:hidden bg-surface-container-high/20 rounded-2xl p-4">
       {/* Section Header */}
       <div className="flex justify-between items-center mb-4 px-4">
         <div className="space-y-1">
@@ -69,12 +69,12 @@ export const SubjectListSection = ({
           </h3>
           <p className="text-xs text-on-surface-variant opacity-60 font-medium">
             {hasMultipleExams
-              ? "Select an exam to see subjects"
+              ? "Give tests from the subjects "
               : "Master one subject at a time"}
           </p>
         </div>
         <button className="p-2 border border-primary rounded-full" onClick={() => setToggle(!toggle)}>
-          <ArrowUp size={15} className={`transform transition-transform ${toggle ? "rotate-180" : "rotate-0"}`} />
+          <ArrowUp size={15} className={`transform transition-transform text-primary ${toggle ? "rotate-180" : "rotate-0"}`} />
         </button>
       </div>
       <div className={`${toggle ? "block" : "hidden"} space-y-2 transform transition-all duration-500`}>

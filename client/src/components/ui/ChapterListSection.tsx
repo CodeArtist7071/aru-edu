@@ -55,14 +55,14 @@ export const ChapterListSection = ({
  console.log(activeSubjectId, "activeSubjectId");
   useEffect(() => {
     dispatch(fetchExamSubjects(listofExams));
-    setActiveSubjectId(subjectData[0]?.subject_id || subjectData[0]?.subjects?.id || "");
+    // setActiveSubjectId(subjectData[0]?.subject_id || subjectData[0]?.subjects?.id || "");
   }, [activeSubjectId]);
 
   // Get currently active exam data
   const activeExam = targetedExams.find((e) => e.id === activeSubjectId);
 
   return (
-    <section className="block md:hidden">
+    <section onClick={()=>setToggle(!toggle)} className="block md:hidden bg-surface-container-high/20 rounded-2xl p-4">
       {/* Section Header */}
       <div className="flex justify-between items-center mb-4 px-4">
         <div className="space-y-1">
@@ -71,7 +71,7 @@ export const ChapterListSection = ({
           </h3>
           <p className="text-xs text-on-surface-variant opacity-60 font-medium">
             {hasMultipleExams
-              ? "Select an exam to see subjects"
+              ? "Select Chapters and give tests."
               : "Master one subject at a time"}
           </p>
         </div>

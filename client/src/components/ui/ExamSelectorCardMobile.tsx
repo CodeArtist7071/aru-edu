@@ -88,6 +88,7 @@ export const ExamSelectorCardMobile = ({
       <div className="relative">
         {/* Left Arrow — ONLY shows when scrolled past start (scrollLeft > 0) */}
         <button
+          onClick={() => scroll("left")}
           className={`absolute left-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-white/90 shadow-md flex items-center justify-center backdrop-blur-sm transition-opacity duration-300 ${
             canScrollLeft
               ? "opacity-100 pointer-events-auto"
