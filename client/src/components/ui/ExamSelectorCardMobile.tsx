@@ -152,7 +152,7 @@ export const ExamSelectorCardMobile = ({
                   <div className="absolute right-3 top-3">
                     <div className="rounded-full">
                       <span className="text-[10px] font-technical font-black text-primary">
-                        {exam.progress || 0}% Done
+                      0% Done
                       </span>
                     </div>
                   </div>
@@ -176,7 +176,7 @@ export const ExamSelectorCardMobile = ({
                     <div className="h-2 bg-surface-container-high rounded-full overflow-hidden">
                       <div
                         className="h-full bg-gradient-to-r from-primary to-primary-container rounded-full transition-all duration-500"
-                        style={{ width: `${exam.progress || 0}%` }}
+                        // style={{ width: `${exam.progress || 0}%` }}
                       />
                     </div>
                   </div>
@@ -184,7 +184,7 @@ export const ExamSelectorCardMobile = ({
                   {/* Bottom Action */}
                   <div className="mt-3 flex items-center justify-between">
                     <span className="text-[10px] font-technical text-on-surface-variant opacity-50">
-                      Last: {exam.last_practiced || "Not started"}
+                      {/* Last: {exam?.last_practiced || "Not started"} */}
                     </span>
                     <div className="flex items-center gap-1 text-primary">
                       <span className="text-[10px] font-technical font-black uppercase tracking-widest">
