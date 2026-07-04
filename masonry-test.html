@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why Your Masonry Layout Is Broken</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  /* =============================================
+     THE CSS COLUMNS MECHANISM (How masonry works)
+     ============================================= */
+  
+  /*
+    CSS columns creates a "newspaper column" layout:
+    
+    Column 1        Column 2
+    ┌────────┐      ┌────────┐
+    │ Item 1 │      │ Item 2 │
+    │ (tall) │      │ (short)│
+    │        │      └────────┘
+    │        │      ┌────────┐
+    │        │      │ Item 3 │
+    │        │      │ (med)  │
+    └────────┘      └────────┘
+    ┌────────┐
+    │ Item 4 │
+    │ (tall) │
+    └────────┘
+    
+    KEY RULE: Items flow TOP → BOTTOM, then LEFT → RIGHT
+  */
+  
+  .masonry-working {
+    columns: 2;
+    column-gap: 0; /* Gap is controlled by children's margin-bottom */
+  }
+  
+  .masonry-item {
+    break-inside: avoid;        /* CRITICAL: prevents item splitting */
+    page-break-inside: avoid;   /* For Firefox */
+    -webkit-column-break-inside: avoid; /* For Safari/Chrome */
+    margin-bottom: 12px;         /* This IS your gap */
+  }
+  
+  /* Desktop: turn off columns, use grid */
+  @media (min-width: 768px) {
+    .masonry-working {
+      columns: 1;              /* Disable masonry */
+      display: grid;           /* Enable grid */
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    .masonry-item {
+      margin-bottom: 0;        /* Grid gap handles spacing */
+    }
+  }
+  
+  /* =============================================
+     YOUR ORIGINAL CODE — BROKEN VERSION
+     ============================================= */
+  
+  .broken-masonry {
+    columns: 2;           /* ← Says: "I want 2 columns" */
+    flex-wrap: wrap;      /* ← Says: "I want flexbox wrapping" */
+    gap: 12px;            /* ← Gap doesn't work on columns! */
+  }
+  /* 
+    WINNER: flex-wrap (flexbox overrides columns)
+    RESULT: All items in ONE row, wrapping. No masonry.
+  */
+  
+  /* =============================================
+     PROOF: Why gap doesn't work on columns
+     ============================================= */
+  
+  /* 
+    The CSS 'gap' property on a columns container
+    is IGNORED by all browsers. Only 'column-gap'
+    works, and even then it's horizontal spacing
+    between columns, not vertical spacing between items.
+    
+    To create space between items in columns,
+    you MUST use margin-bottom on the children.
+  */
+</style>
+</head>
+<body class="bg-white p-4">
+
+<h2 class="text-lg font-bold mb-2">Masonry Layout Proof</h2>
+<p class="text-sm text-gray-500 mb-6">
+  Open this file in Chrome. Resize the window to mobile width (&lt; 768px). 
+  Compare the "Working" vs "Broken" sections.
+</p>
+
+<!-- =============================================
+     WORKING VERSION (Fixed)
+     ============================================= -->
+<h3 class="text-green-600 font-bold mb-2">✅ WORKING: Proper CSS Columns</h3>
+<div class="masonry-working">
+  <div class="masonry-item">
+    <div class="p-4 bg-green-50 rounded-2xl border border-green-200">
+      <div class="w-8 h-8 bg-green-500 rounded-lg mb-2"></div>
+      <h4 class="font-bold text-sm">OPSC</h4>
+      <p class="text-xs text-gray-500">Civil Services</p>
+      <p class="text-xs text-gray-400 mt-2">This is a tall card with extra content that proves masonry works correctly.</p>
+    </div>
+  </div>
+  <div class="masonry-item">
+    <div class="p-4 bg-green-50 rounded-2xl border border-green-200">
+      <div class="w-8 h-8 bg-green-500 rounded-lg mb-2"></div>
+      <h4 class="font-bold text-sm">OSSC</h4>
+      <p class="text-xs text-gray-500">CGL</p>
+    </div>
+  </div>
+  <div class="masonry-item">
+    <div class="p-4 bg-green-50 rounded-2xl border border-green-200">
+      <div class="w-8 h-8 bg-green-500 rounded-lg mb-2"></div>
+      <h4 class="font-bold text-sm">OSSSC</h4>
+      <p class="text-xs text-gray-500">RI & ARI</p>
+      <p class="text-xs text-gray-400 mt-1">Medium height card</p>
+    </div>
+  </div>
+  <div class="masonry-item">
+    <div class="p-4 bg-green-50 rounded-2xl border border-green-200">
+      <div class="w-8 h-8 bg-green-500 rounded-lg mb-2"></div>
+      <h4 class="font-bold text-sm">Police</h4>
+      <p class="text-xs text-gray-500">Constable</p>
+      <p class="text-xs text-gray-400 mt-2">Another tall card with lots of content inside.</p>
+    </div>
+  </div>
+</div>
+
+<!-- =============================================
+     BROKEN VERSION (Your Original)
+     ============================================= -->
+<h3 class="text-red-600 font-bold mb-2 mt-8">❌ BROKEN: columns + flex (Your Code)</h3>
+<div class="columns-2 flex flex-wrap gap-3">
+  <div class="break-inside-avoid p-4 bg-red-50 rounded-2xl border border-red-200 mb-3">
+    <div class="w-8 h-8 bg-red-400 rounded-lg mb-2"></div>
+    <h4 class="font-bold text-sm">OPSC</h4>
+    <p class="text-xs text-gray-500">Civil Services</p>
+    <p class="text-xs text-gray-400 mt-2">This is a tall card with extra content.</p>
+  </div>
+  <div class="break-inside-avoid p-4 bg-red-50 rounded-2xl border border-red-200 mb-3">
+    <div class="w-8 h-8 bg-red-400 rounded-lg mb-2"></div>
+    <h4 class="font-bold text-sm">OSSC</h4>
+    <p class="text-xs text-gray-500">CGL</p>
+  </div>
+  <div class="break-inside-avoid p-4 bg-red-50 rounded-2xl border border-red-200 mb-3">
+    <div class="w-8 h-8 bg-red-400 rounded-lg mb-2"></div>
+    <h4 class="font-bold text-sm">OSSSC</h4>
+    <p class="text-xs text-gray-500">RI & ARI</p>
+    <p class="text-xs text-gray-400 mt-1">Medium height</p>
+  </div>
+  <div class="break-inside-avoid p-4 bg-red-50 rounded-2xl border border-red-200 mb-3">
+    <div class="w-8 h-8 bg-red-400 rounded-lg mb-2"></div>
+    <h4 class="font-bold text-sm">Police</h4>
+    <p class="text-xs text-gray-500">Constable</p>
+    <p class="text-xs text-gray-400 mt-2">Another tall card.</p>
+  </div>
+</div>
+<p class="text-xs text-red-500 mt-2">
+  ↑ Notice: Items are NOT in a masonry. They stack in one column because
+  <code>flex flex-wrap</code> overrides <code>columns-2</code>.
+</p>
+
+</body>
+</html>

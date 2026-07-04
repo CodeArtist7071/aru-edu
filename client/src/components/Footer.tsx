@@ -16,11 +16,11 @@ const Footer = () => {
               </div>
               <div>
                 <h2 className="text-3xl font-black leading-none tracking-tighter text-on-surface">Arumind</h2>
-                <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-on-surface-variant/40 leading-none">The Living Journal</span>
+                <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-on-surface-variant/40 leading-none">Free Exam Prep</span>
               </div>
           </div>
           <p className="text-on-surface-variant text-base leading-relaxed max-w-sm mx-auto lg:mx-0">
-            Empowering Odisha's aspirants with a learning experience that breathes. Precision, dedication, and the right guidance.
+            Free practice tests for OPSC, OSSC, and OSSSC exams. Built for students in Odisha.
           </p>
           <div className="flex gap-4 justify-center lg:justify-start">
             {[<Instagram size={18}/>, <Twitter size={18}/>, <Linkedin size={18}/>, <Facebook size={18}/>].map((icon, i) => (
@@ -62,10 +62,10 @@ const Footer = () => {
                 <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:rotate-12 transition-transform duration-1000">
                   <Notebook size={80} />
                 </div>
-                <h5 className="text-[9px] font-bold uppercase tracking-widest text-primary leading-none">Support Journal</h5>
-                <p className="text-xs font-bold text-on-surface leading-relaxed">Need technical guidance? Our experts are tracking.</p>
+                <h5 className="text-[9px] font-bold uppercase tracking-widest text-primary leading-none">Need Help?</h5>
+                <p className="text-xs font-bold text-on-surface leading-relaxed">Have questions? Talk to our support team.</p>
                 <button className="w-full bg-surface-container-high py-3 rounded-full text-[9px] font-bold uppercase tracking-widest hover:bg-primary hover:text-white transition-all">
-                  Consult Expert
+                  Contact Support
                 </button>
              </div>
           </div>
@@ -75,7 +75,7 @@ const Footer = () => {
       {/* Bottom Bar */}
       <div className="pt-12 border-t border-on-surface/10 flex flex-col md:flex-row justify-between items-center gap-8">
          <div className="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant/40">© 2026 Arumind — Crafted in Odisha</p>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant/40">© 2026 Arumind — Built for Odisha</p>
             <div className="hidden md:block w-1 h-1 bg-on-surface/10 rounded-full" />
             <div className="flex gap-6">
               {["Privacy", "Terms", "Refund"].map((item, i) => (
@@ -86,7 +86,7 @@ const Footer = () => {
          
          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/10">
             <div className="size-2 bg-primary rounded-full animate-pulse" />
-            <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-primary">All Systems Nominal</span>
+            <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-primary">App is Running</span>
          </div>
       </div>
       </div>

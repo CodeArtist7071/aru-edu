@@ -58,16 +58,16 @@ export const DesktopPerformanceAnalytics: React.FC<DesktopPerformanceAnalyticsPr
     <div className={className}>
       <section className="pt-8">
         <h1 className="text-6xl font-black leading-[0.9] tracking-tighter text-on-surface">
-          Preparation<span className="text-primary italic">&</span> <br />
+          Your Marks<span className="text-primary italic">&</span> <br />
           Progress.
         </h1>
         <p className="mt-8 text-on-surface-variant max-w-lg text-lg font-medium leading-relaxed opacity-80">
-          Your journey through the{" "}
+          See how you are doing in{" "}
           <span className="text-primary font-black px-2 py-0.5 bg-primary/5 rounded-lg">
             {targetedExams?.find((e: any) => e.id === selectedExam)?.name ||
-              "syllabus"}
+              "your exam"}
           </span>{" "}
-          preparation shows improving proficiency and steady progress.
+          preparation. Your score improves as you practice more.
         </p>
       </section>
 
@@ -83,17 +83,16 @@ export const DesktopPerformanceAnalytics: React.FC<DesktopPerformanceAnalyticsPr
         <section className="mt-16 text-center py-32 bg-surface-container-low/40 rounded-[4rem] border border-dashed border-outline-variant/10">
           <FlaskConical className="size-20 text-primary/10 mx-auto mb-8 animate-pulse" />
           <h2 className="text-3xl font-black text-on-surface tracking-tighter">
-            Please attempt a test to begin seeing your progress.
+            You haven't taken any tests yet.
           </h2>
           <p className="text-on-surface-variant max-w-md text-sm mx-auto mt-6 leading-relaxed">
-            No Test Progress found for <span className="text-primary font-bold">{targetedExams?.find((e: any) => e.id === selectedExam)?.name}</span>. 
-            Please give a test to begin seeing your progress.
+            Take a practice test for <span className="text-primary font-bold">{targetedExams?.find((e: any) => e.id === selectedExam)?.name}</span> to see your progress here.
           </p>
           <button
             onClick={() => navigate("/user/dashboard")}
             className="mt-12 px-10 py-4 bg-primary text-white rounded-full font-technical font-black uppercase tracking-widest text-[11px] shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all"
           >
-            Take Test
+            Start a Practice Test
           </button>
         </section>
       ) : (
@@ -103,13 +102,13 @@ export const DesktopPerformanceAnalytics: React.FC<DesktopPerformanceAnalyticsPr
               <TrendingUp size={28} />
             </div>
             <h3 className="text-[11px] font-technical font-black uppercase tracking-widest text-white opacity-60 mb-2">
-              You have taken
+              Tests you have taken
             </h3>
             <p className="text-8xl font-technical font-black text-white tracking-tighter leading-none">
               {metrics.testsCount || 0}
             </p>
             <p className="text-sm font-bold text-white mt-4">
-              Tests in this  {chartMode} test cycle
+              {chartMode} tests this month
             </p>
           </div>
 

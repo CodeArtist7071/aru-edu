@@ -19,9 +19,9 @@ export const GrowthChart = ({
             <div className="size-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
               <TrendingUp size={20} />
             </div>
-            Check your Progress
+            Your Progress Chart
           </h3>
-          <p className="text-[10px] font-technical font-black uppercase tracking-[0.4em] ml-5 text-on-surface-variant opacity-60">Review your progress for each chapter</p>
+          <p className="text-[10px] font-technical font-black uppercase tracking-[0.4em] ml-5 text-on-surface-variant opacity-60">See your score for each chapter</p>
         </div>
 
         <div className="flex sm:mt-4 md:mt-0 gap-1 bg-surface-container-high p-1 rounded-full shadow-inner">

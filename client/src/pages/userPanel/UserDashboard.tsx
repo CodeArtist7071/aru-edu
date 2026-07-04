@@ -13,7 +13,7 @@ import {
   Loader,
   Sparkles,
   Trash,
-  Edit3
+  Edit3,
 } from "lucide-react";
 import React, { useEffect, useRef, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,6 +25,9 @@ import { UpcomingMockTest } from "../../components/userDashboard/UpcomingMockTes
 import { DashboardDailyRoutine } from "../../components/userDashboard/DashboardDailyRoutine";
 import { ExamSelectorCard } from "../../components/ui/ExamSelectorCard";
 import Exam from "../../components/Exam";
+import { ExamSelectorCardMobile } from "../../components/ui/ExamSelectorCardMobile";
+import { SubjectListSection } from "../../components/ui/SubjectListSection";
+import { fetchExamSubjects } from "../../slice/examSubjectSlice";
 
 export interface Habit {
   id: string;
@@ -49,7 +52,10 @@ const format12h = (timeStr: string | undefined) => {
 
 const UserDashboard = () => {
   const { user, profile } = useSelector((state: RootState) => state.user);
-  const { examData, loading: examsLoading } = useSelector((state: RootState) => state.exams ?? { examData: [], loading: false });
+  const { examData, loading: examsLoading } = useSelector(
+    (state: RootState) => state.exams ?? { examData: [], loading: false },
+  );
+
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
@@ -69,7 +75,10 @@ const UserDashboard = () => {
   // const [selectedExamInDrawer, setSelectedExamInDrawer] = useState<string | null>(null);
 
   const [isQuickEditOpen, setIsQuickEditOpen] = useState(false);
-  const [quickEditData, setQuickEditData] = useState<{ habit: Habit, day: number } | null>(null);
+  const [quickEditData, setQuickEditData] = useState<{
+    habit: Habit;
+    day: number;
+  } | null>(null);
 
   const fetchDailyData = async () => {
     if (!user?.id) return;
@@ -131,7 +140,12 @@ const UserDashboard = () => {
     }
   };
 
-  const handleUpdateSchedule = async (id: string, isMastery: boolean, newDay: number, newTime: string) => {
+  const handleUpdateSchedule = async (
+    id: string,
+    isMastery: boolean,
+    newDay: number,
+    newTime: string,
+  ) => {
     if (!user?.id) return;
     try {
       const table = isMastery ? "user_mastery" : "study_habits";
@@ -143,7 +157,7 @@ const UserDashboard = () => {
         .update({
           progress: newProgress,
           start_time: newTime,
-          updated_at: new Date().toISOString()
+          updated_at: new Date().toISOString(),
         })
         .eq("id", id);
 
@@ -151,7 +165,7 @@ const UserDashboard = () => {
       await fetchDailyData();
     } catch (err) {
       console.error("Timeline Sync Failed:", err);
-      alert("Schedule Update Alert: " + (err as Error).message);
+      alert("Could not update: " + (err as Error).message);
     }
   };
 
@@ -169,9 +183,10 @@ const UserDashboard = () => {
 
   useEffect(() => {
     dispatch(fetchExams());
+    dispatch(fetchExamSubjects(examData?.[0]?.id || ""));
     fetchDailyData();
 
-    // Targeted manifestation: Enable scroll sync only for desktop environments
+    // Smooth scroll to target element on desktop
     const isDesktop = window.innerWidth >= 1024;
     if (!isDesktop) return;
 
@@ -179,19 +194,21 @@ const UserDashboard = () => {
       const element = targetRef.current;
       if (!element) return;
 
-      const scrollableParent = element.closest('.overflow-y-auto');
+      const scrollableParent = element.closest(".overflow-y-auto");
       if (scrollableParent) {
         const targetPos = element.offsetTop - 80;
         const startPos = scrollableParent.scrollTop;
         const distance = targetPos - startPos;
         const duration = 1500;
 
-        const cubicBezier = (t: number) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        const cubicBezier = (t: number) =>
+          t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
         const step = (timestamp: number) => {
           if (!start) start = timestamp;
           const progressStep = Math.min((timestamp - start) / duration, 1);
-          scrollableParent.scrollTop = startPos + distance * cubicBezier(progressStep);
+          scrollableParent.scrollTop =
+            startPos + distance * cubicBezier(progressStep);
           if (progressStep < 1) {
             requestAnimationFrame(step);
           }
@@ -238,8 +255,6 @@ const UserDashboard = () => {
       .sort((a, b) => (a.start_time || "").localeCompare(b.start_time || ""));
   }, [habits]);
 
-
-
   console.log("Daily Rituals:", dailyRituals);
 
   const targetedExams = useMemo(() => {
@@ -256,7 +271,6 @@ const UserDashboard = () => {
 
   if (examsLoading) return <DashboardSkeleton />;
 
-
   return (
     <div className="relative min-h-screen">
       <div className="space-y-6 p-2 lg:p-6 animate-reveal">
@@ -264,34 +278,45 @@ const UserDashboard = () => {
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
             <div className="animate-greeting">
               <span className="text-xl lg:text-5xl  font-black tracking-tighter text-on-surface leading-[0.85] pb-4">
-                Namaskar,
-                <span className="text-primary italic font-serif -ml-2 lg:-ml-4 drop-shadow-sm select-none">
-                  {" "}{(profile?.full_name || user?.identities?.[0]?.identity_data?.name)?.split(' ')[0]}
+                Good Morning,
+                <span className="text-primary italic font-serif capitalize lg:-ml-4 drop-shadow-sm select-none">
+                  {
+                    (
+                      profile?.full_name ||
+                      user?.identities?.[0]?.identity_data?.name
+                    )?.split(" ")[0]
+                  }
                 </span>
               </span>
-              <p className="text-on-surface-variant max-w-xl text-sm lg:text-xl leading-relaxed opacity-0 animate-greeting-delay font-medium font-narrative">
-                Your OPSC preparation is <span className="font-technical font-black text-primary border-b-2 border-primary/20">0%</span> complete.
-                You are currently in the top <span className="font-technical font-black text-primary border-b-2 border-primary/20">0%</span> of active candidates.
+              <p className="hidden md:block text-on-surface-variant max-w-xl text-sm lg:text-xl leading-relaxed opacity-0 animate-greeting-delay font-medium font-narrative">
+                Welcome to your study home! Start a test to see your progress.
               </p>
             </div>
 
-            <div className="flex  gap-4">
+            <div className="hidden lg:flex gap-4">
               <div className="bg-surface-container-low px-3 py-3 md:px-8 md:py-6 rounded-xl shadow-ambient hover:scale-105 transition-transform duration-500 group">
                 <p className="text-[9px] font-technical text-on-surface-variant uppercase font-black tracking-[0.2em] mb-2 opacity-50 group-hover:opacity-100 transition-opacity">
-                  Daily Streak
+                  Your Study Streak
                 </p>
                 <div className="flex items-center gap-3">
-                  <span className="text-4xl font-technical font-black text-tertiary">12</span>
+                  <span className="text-4xl font-technical font-black text-tertiary">
+                    12
+                  </span>
                   <FireIcon className="size-8 text-tertiary animate-pulse" />
                 </div>
               </div>
 
               <div className="bg-surface-container-low px-3 py-3 md:px-8 md:py-6 rounded-xl shadow-ambient hover:scale-105 transition-transform duration-500 group">
                 <p className="text-[9px] font-technical text-on-surface-variant uppercase font-black tracking-[0.2em] mb-2 opacity-50 group-hover:opacity-100 transition-opacity">
-                  Daily Goal
+                  Today's Study Target
                 </p>
                 <div className="flex items-center gap-4">
-                  <span className="text-3xl font-technical font-black text-on-surface">4/6 <span className="text-[10px] opacity-40 uppercase tracking-tighter ml-1">Hrs</span></span>
+                  <span className="text-3xl font-technical font-black text-on-surface">
+                    4/6{" "}
+                    <span className="text-[10px] opacity-40 uppercase tracking-tighter ml-1">
+                      Hours
+                    </span>
+                  </span>
                   <div className="w-20 h-5 bg-surface-container-high rounded-full overflow-hidden p-1 shadow-inner ring-1 ring-black/5">
                     <div className="bg-primary h-full w-[66%] rounded-full shadow-sm transition-all duration-1000" />
                   </div>
@@ -301,11 +326,16 @@ const UserDashboard = () => {
           </div>
         </section>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pt-0 md:pt-8">
-          <div className="lg:col-span-8 space-y-4 md:space-y-12">
-            <ExamSelectorCard 
-              
-              targetedExams={targetedExams} 
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 pt-0 md:pt-8">
+          <div className=" lg:col-span-8 space-y-4 md:space-y-12">
+            <ExamSelectorCard
+              targetedExams={targetedExams}
+              onSelect={(exam) => navigate(`exam/${exam.id}`)}
+              onViewAll={() => navigate("/select-exams")}
+              loading={examsLoading}
+            />
+            <ExamSelectorCardMobile
+              targetedExams={targetedExams}
               onSelect={(exam) => navigate(`exam/${exam.id}`)}
               onViewAll={() => navigate("/select-exams")}
               loading={examsLoading}
@@ -335,13 +365,22 @@ const UserDashboard = () => {
               </div>
             </section> */}
           </div>
+          <div>
+            <SubjectListSection
+              targetedExams={targetedExams}
+            />
+          </div>
 
-          <div className="lg:col-span-4 space-y-12">
+          <div className="hidden md:block lg:col-span-4 space-y-12">
             <UpcomingMockTest
               habits={habits}
               progress={progress}
               onDelete={handleDeleteRitual}
-              onNavigate={(examId, chapterId) => navigate(`exam/${examId}`, { state: { autoOpenChapterId: chapterId } })}
+              onNavigate={(examId, chapterId) =>
+                navigate(`exam/${examId}`, {
+                  state: { autoOpenChapterId: chapterId },
+                })
+              }
               onEdit={(habit, day) => {
                 setQuickEditData({ habit, day });
                 setIsQuickEditOpen(true);
@@ -411,13 +450,17 @@ const UserDashboard = () => {
           </div>
         </div>
 
-        <footer className="pt-20 pb-10 px-2 flex flex-col lg:flex-row items-center justify-between gap-8 border-t border-on-surface/5 opacity-30 group">
+        <footer className="hidden pt-20 pb-10 px-2 md:flex flex-col lg:flex-row items-center justify-between gap-8 border-t border-on-surface/5 opacity-30 group">
           <p className="text-[9px] font-technical font-black uppercase tracking-[0.4em] leading-relaxed max-w-sm text-center lg:text-left">
-            © 2026 OPREP EXAM PORTAL. ARCHITECTED FOR CONSISTENT GROWTH AND INTENTIONAL LEARNING.
+            © 2026 Arumind — Built for Odisha government exam students.
           </p>
           <div className="flex gap-8">
-            <span className="text-[9px] font-technical font-black uppercase tracking-widest cursor-help hover:text-primary transition-colors hover:underline">Privacy</span>
-            <span className="text-[9px] font-technical font-black uppercase tracking-widest cursor-help hover:text-primary transition-colors hover:underline">Terms</span>
+            <span className="text-[9px] font-technical font-black uppercase tracking-widest cursor-help hover:text-primary transition-colors hover:underline">
+              Privacy
+            </span>
+            <span className="text-[9px] font-technical font-black uppercase tracking-widest cursor-help hover:text-primary transition-colors hover:underline">
+              Terms
+            </span>
           </div>
         </footer>
       </div>
@@ -429,17 +472,19 @@ const UserDashboard = () => {
         <div className="absolute inset-0 bg-linear-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
         <CheckSquare className="size-6 transition-transform group-hover:rotate-12" />
         <div className="absolute -top-1 -right-1 size-4 bg-tertiary rounded-full border-2 border-primary flex items-center justify-center animate-bounce">
-          <span className="text-[8px] font-black">{dailyRituals.filter(r => !progress[r.id]?.[today - 1]).length}</span>
+          <span className="text-[8px] font-black">
+            {dailyRituals.filter((r) => !progress[r.id]?.[today - 1]).length}
+          </span>
         </div>
       </button>
 
-      <DashboardDailyRoutine 
-        isOpen={isDailRoutineOpen} 
-        onClose={() => setIsDailRoutineOpen(false)} 
-        targetedExams={targetedExams} 
-        dailyRituals={dailyRituals} 
-        progress={progress} 
-        today={today} 
+      <DashboardDailyRoutine
+        isOpen={isDailRoutineOpen}
+        onClose={() => setIsDailRoutineOpen(false)}
+        targetedExams={targetedExams}
+        dailyRituals={dailyRituals}
+        progress={progress}
+        today={today}
         handleToggle={handleToggle}
       />
       <QuickScheduleModal
@@ -455,23 +500,28 @@ const UserDashboard = () => {
 
 export default UserDashboard;
 
-
-
 const QuickScheduleModal = ({
   isOpen,
   onClose,
   habit,
   day,
-  onUpdate
+  onUpdate,
 }: {
-  isOpen: boolean,
-  onClose: () => void,
-  habit: Habit | null,
-  day: number,
-  onUpdate: (id: string, isMastery: boolean, newDay: number, newTime: string) => Promise<void>
+  isOpen: boolean;
+  onClose: () => void;
+  habit: Habit | null;
+  day: number;
+  onUpdate: (
+    id: string,
+    isMastery: boolean,
+    newDay: number,
+    newTime: string,
+  ) => Promise<void>;
 }) => {
   const [selectedDay, setSelectedDay] = useState(day);
-  const [selectedTime, setSelectedTime] = useState(habit?.start_time || "09:00");
+  const [selectedTime, setSelectedTime] = useState(
+    habit?.start_time || "09:00",
+  );
   const [updating, setUpdating] = useState(false);
 
   useEffect(() => {
@@ -487,25 +537,38 @@ const QuickScheduleModal = ({
 
   return (
     <div className="fixed inset-0 z-100 flex items-center justify-center p-6 lg:p-12 animate-in fade-in duration-500">
-      <div className="absolute inset-0 bg-on-surface/20 backdrop-blur-xl" onClick={onClose} />
+      <div
+        className="absolute inset-0 bg-on-surface/20 backdrop-blur-xl"
+        onClick={onClose}
+      />
       <div className="relative bg-white dark:bg-surface-container-high rounded-[3rem] shadow-ambient-lg w-full max-w-lg overflow-hidden border border-white/20 p-10 animate-in zoom-in-95 slide-in-from-bottom-8 duration-700 scale-105">
         <header className="mb-8">
-          <h3 className="text-3xl font-black tracking-tighter leading-none mb-2">Update Schedule</h3>
-          <p className="text-xs opacity-60 font-medium">Update the scheduled time for <span className="font-bold text-primary italic">“{habit.name}”</span></p>
+          <h3 className="text-3xl font-black tracking-tighter leading-none mb-2">
+            Change Your Schedule
+          </h3>
+          <p className="text-xs opacity-60 font-medium">
+            Change the time for{" "}
+            <span className="font-bold text-primary italic">
+              “{habit.name}”
+            </span>
+          </p>
         </header>
 
         <div className="space-y-8">
           <div>
-            <label className="text-[10px] font-technical font-black uppercase tracking-[0.4em] text-primary mb-4 block">Day of the Month</label>
+            <label className="text-[10px] font-technical font-black uppercase tracking-[0.4em] text-primary mb-4 block">
+              Pick a Day
+            </label>
             <div className="grid grid-cols-7 gap-1">
-              {daysInMonth.map(d => (
+              {daysInMonth.map((d) => (
                 <button
                   key={d}
                   onClick={() => setSelectedDay(d)}
-                  className={`h-10 rounded-xl text-[11px] font-black transition-all ${selectedDay === d
-                    ? "bg-primary text-white shadow-md shadow-primary/20 scale-110"
-                    : "bg-surface-container-low/40 hover:bg-surface-container-low text-on-surface opacity-60"
-                    }`}
+                  className={`h-10 rounded-xl text-[11px] font-black transition-all ${
+                    selectedDay === d
+                      ? "bg-primary text-white shadow-md shadow-primary/20 scale-110"
+                      : "bg-surface-container-low/40 hover:bg-surface-container-low text-on-surface opacity-60"
+                  }`}
                 >
                   {d}
                 </button>
@@ -514,7 +577,9 @@ const QuickScheduleModal = ({
           </div>
 
           <div>
-            <label className="text-[10px] font-technical font-black uppercase tracking-[0.4em] text-primary mb-4 block">Scheduled Start Time</label>
+            <label className="text-[10px] font-technical font-black uppercase tracking-[0.4em] text-primary mb-4 block">
+              Start Time
+            </label>
             <input
               type="time"
               value={selectedTime}
@@ -528,20 +593,29 @@ const QuickScheduleModal = ({
               onClick={onClose}
               className="flex-1 py-5 rounded-full font-technical font-black text-[11px] uppercase tracking-widest text-on-surface-variant hover:bg-on-surface/5 transition-all"
             >
-              Discard
+              Cancel
             </button>
             <button
               disabled={updating}
               onClick={async () => {
                 setUpdating(true);
-                await onUpdate(habit.id, habit.is_mastery || false, selectedDay, selectedTime);
+                await onUpdate(
+                  habit.id,
+                  habit.is_mastery || false,
+                  selectedDay,
+                  selectedTime,
+                );
                 setUpdating(false);
                 onClose();
               }}
               className="flex-1 py-5 bg-primary text-white rounded-full font-technical font-black text-[11px] uppercase tracking-widest shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3"
             >
-              {updating ? <Loader className="size-4 animate-spin" /> : <Sparkles className="size-4" />}
-              Save Schedule
+              {updating ? (
+                <Loader className="size-4 animate-spin" />
+              ) : (
+                <Sparkles className="size-4" />
+              )}
+              Save Changes
             </button>
           </div>
         </div>

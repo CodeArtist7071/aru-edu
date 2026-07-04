@@ -34,12 +34,12 @@ const NotFound: React.FC = () => {
                         </h2>
 
                         {/* Technical Label: Space Grotesk Stamping */}
-                        <div className="flex items-center gap-3 bg-slate-900/5 px-4 py-1.5 rounded-full mb-8">
+                        {/* <div className="flex items-center gap-3 bg-slate-900/5 px-4 py-1.5 rounded-full mb-8">
                              <div className="size-2 bg-[#006e2f] rounded-full animate-pulse" />
                              <span className="font-technical text-[10px] uppercase font-black tracking-[0.3em] text-[#006e2f]">
                                 CODE: PATH_NOT_FOUND
                              </span>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
 

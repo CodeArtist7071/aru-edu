@@ -23,7 +23,7 @@ const SubjectMastery = ({ examid, metrics }: { examid?: string, metrics: any }) 
                 <div className="size-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
                    <Target size={20} />
                 </div>
-                Subject Mastery
+                Your Marks by Subject
             </h3>
             {displayData?.length > 0 ? (
                 <div className="space-y-8">
@@ -51,7 +51,7 @@ const SubjectMastery = ({ examid, metrics }: { examid?: string, metrics: any }) 
             ) : (
                 <div className="flex flex-col items-center justify-center py-20 bg-on-surface/5 rounded-4xl border border-dashed border-outline-variant/20 opacity-40">
                     <p className="text-on-surface-variant text-xs font-black uppercase tracking-widest italic animate-pulse">
-                        Complete tests to cultivate analysis.
+                        Take tests to see your marks here.
                     </p>
                 </div>
             )}

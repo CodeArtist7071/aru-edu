@@ -444,3 +444,28 @@
     opacity: 1;
     transform: scale(1);
   }
+
+
+  /* Chrome, Edge, Safari */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 2px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1); /* Equivalent to on-surface/10 */
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Firefox */
+.custom-scrollbar {
+  scrollbar-width:2px;
+  scrollbar-color:var(--color-green-600) transparent;
+}

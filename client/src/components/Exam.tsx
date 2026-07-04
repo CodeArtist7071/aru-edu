@@ -4,14 +4,24 @@ import { getExamSubjects } from "../services/examService";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchExamSubjects } from "../slice/examSubjectSlice";
 import type { AppDispatch, RootState } from "../store";
-import { BookCopy, Shield, Zap, Coffee, Clock, CheckCircle2, ChevronRight, ChevronDown, Target, ArrowRight } from "lucide-react";
+import {
+  BookCopy,
+  Shield,
+  Zap,
+  Coffee,
+  Clock,
+  CheckCircle2,
+  ChevronRight,
+  ChevronDown,
+  Target,
+  ArrowRight,
+} from "lucide-react";
 import { fetchChapter } from "../slice/chapterSlice";
 import { useNotifications } from "reapop";
 import { supabase } from "../utils/supabase";
 import { ExamTicker } from "../components/ui/ExamTicker";
 
 const Exam = () => {
-
   const { eid } = useParams<{ eid: string }>();
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
@@ -23,14 +33,24 @@ const Exam = () => {
     sid: "",
     cid: "",
     mode: "normal" as "normal" | "speed" | "proctored",
-    time: 30
+    time: 30,
   });
 
-  const { examData } = useSelector((state: RootState) => state.exams ?? { examData: [] });
-  const { data, e_data, loading, error } = useSelector((state: RootState) => state.examSubject ?? null,);
-  const { user, profile } = useSelector((state: RootState) => state.user ?? { user: null, profile: null });
-  const [attemptedChapters, setAttemptedChapters] = useState<Set<string>>(new Set());
-  const [expandedSubjects, setExpandedSubjects] = useState<Set<string>>(new Set());
+  const { examData } = useSelector(
+    (state: RootState) => state.exams ?? { examData: [] },
+  );
+  const { data, e_data, loading, error } = useSelector(
+    (state: RootState) => state.examSubject ?? null,
+  );
+  const { user, profile } = useSelector(
+    (state: RootState) => state.user ?? { user: null, profile: null },
+  );
+  const [attemptedChapters, setAttemptedChapters] = useState<Set<string>>(
+    new Set(),
+  );
+  const [expandedSubjects, setExpandedSubjects] = useState<Set<string>>(
+    new Set(),
+  );
 
   const targetedExams = React.useMemo(() => {
     if (!profile?.target_exams || !examData) return [];
@@ -40,7 +60,7 @@ const Exam = () => {
   const autoOpenChapterId = location.state?.autoOpenChapterId;
 
   const toggleSubject = (sid: string) => {
-    setExpandedSubjects(prev => {
+    setExpandedSubjects((prev) => {
       const next = new Set(prev);
       if (next.has(sid)) {
         next.delete(sid);
@@ -65,7 +85,7 @@ const Exam = () => {
         return;
       }
       if (data) {
-        const ids = new Set(data.map(a => a.chapter_id));
+        const ids = new Set(data.map((a) => a.chapter_id));
         setAttemptedChapters(ids);
       }
     };
@@ -81,7 +101,7 @@ const Exam = () => {
   // Handle Automation from Dashboard
   useEffect(() => {
     if (autoOpenChapterId && data.length > 0 && e_data.length > 0) {
-      const chapter = e_data.find(c => c.id === autoOpenChapterId);
+      const chapter = e_data.find((c) => c.id === autoOpenChapterId);
       if (chapter && chapter.subjects) {
         const sid = chapter.subjects.id;
         setExpandedSubjects(new Set([sid]));
@@ -93,7 +113,7 @@ const Exam = () => {
   }, [autoOpenChapterId, data, e_data]);
 
   function handleButton(sid: string, cid: string) {
-    setPrefs(prev => ({ ...prev, sid, cid }));
+    setPrefs((prev) => ({ ...prev, sid, cid }));
     setShowPrefs(true);
   }
 
@@ -110,157 +130,184 @@ const Exam = () => {
   }
 
   return (
-    <div className="text-on-surface min-h-screen font-narrative antialiased transition-colors duration-700">
+    <div className="text-on-surface h-screen font-narrative antialiased transition-colors duration-700">
       {/* Main Content */}
-      <main className="max-w-300 mx-auto w-full">
+      <main className="max-w-300 w-full mx-auto px-4">
         {/* Page Header - Asymmetrical & Editorial */}
         <div className="md:mb-16 mb-6 max-w-2xl">
           <h1 className="mt-3 text-2xl md:text-5xl font-black tracking-tight mb-6 leading-[0.9] text-on-surface animate-reveal">
-            Subject-wise <span className="text-primary italic">Curriculum</span>
+            Subject List for <span className="text-primary italic">Curriculum</span>
           </h1>
-          <p className="text-on-surface-variant text-sm md:text-lg leading-relaxed max-w-md animate-reveal opacity-80" style={{ animationDelay: '0.1s' }}>
+          <p
+            className="text-on-surface-variant text-sm md:text-lg leading-relaxed max-w-md animate-reveal opacity-80"
+            style={{ animationDelay: "0.1s" }}
+          >
             Target your weak areas and track your growth across the OSSC CGL
             ecosystem.
           </p>
         </div>
 
         {/* --- STICKY EXAM PREFERENCE TICKER --- */}
-        <div className="sticky -top-3 md:-top-6 lg:-top-10 z-40 dark:bg-surface-container-low/80 backdrop-blur-3xl border-b border-on-surface/5 -mx-6 lg:-mx-10 px-6 lg:px-10 py-6 mb-12 shadow-sm transition-all duration-500">
-          <div className="flex-col md:flex-row max-w-300 mx-auto overflow-x-auto custom-scrollbar-hide flex items-center justify-between gap-2">
-            <div className="flex items-center gap-3 mr-6 shrink-0">
+        {!eid && (
+          <div className="sticky -top-3 md:-top-6 lg:-top-10 z-40 dark:bg-surface-container-low/80 backdrop-blur-3xl border-b border-on-surface/5 -mx-6 lg:-mx-10 px-6 lg:px-10 py-6 mb-12 shadow-sm transition-all duration-500">
+            <div className="flex-col md:flex-row max-w-300 mx-auto overflow-x-auto custom-scrollbar-hide flex items-center justify-between gap-2">
+              {/* <div className="flex items-center gap-3 mr-6 shrink-0">
               <Target className="size-4 text-primary" />
               <span className="text-[10px] font-technical uppercase tracking-[0.3em] font-black opacity-40">Active Landscapes:</span>
-            </div>
-            <div className="overflow-x-scroll">
-              <ExamTicker
-                targetedExams={targetedExams}
-                selectedExam={eid || ""}
-                setSelectedExam={(id) => navigate(`/user/dashboard/exam/${id}`)}
-              />
-            </div>
+            </div> */}
 
+              <div className="overflow-x-scroll">
+                <ExamTicker
+                  targetedExams={targetedExams}
+                  selectedExam={eid || ""}
+                  setSelectedExam={(id) =>
+                    navigate(`/user/dashboard/exam/${id}`)
+                  }
+                />
+              </div>
+            </div>
           </div>
-        </div>
+        )}
 
-        {data.map((subject: any, index: number) => {
-          // Technical Verification: ensure parent subject existence manifestation
-          if (!subject.subjects) return null;
+        <div className="h-[80vh] pb-20 overflow-y-auto">
+          {data.map((subject: any, index: number) => {
+            // Technical Verification: ensure parent subject existence manifestation
+            if (!subject.subjects) return null;
 
-          if (subject.exam_id === eid)
-            return (
-              <section
-                key={index}
-                className="bg-surface-container-low rounded-3xl overflow-hidden hover-bloom mb-5 md:mb-12 transition-all duration-500 ease-botanical"
-              >
-                {/* Subject Header - Accordion Toggle */}
-                <div
-                  onClick={() => toggleSubject(subject.subjects.id)}
-                  className="p-4 md:p-8 bg-surface-container-high/40 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 cursor-pointer group"
+            if (subject.exam_id === eid)
+              return (
+                <section
+                  key={index}
+                  className="bg-surface-container-low rounded-3xl overflow-hidden hover-bloom mb-5 md:mb-12 transition-all duration-500 ease-botanical"
                 >
-                  <div className="flex items-center gap-2 md:gap-4 flex-1">
-                    <div className="md:size-14 size-10 bg-primary/10 rounded-xl md:rounded-2xl flex text-black items-center justify-center transition-transform duration-500 group-hover:scale-110">
-                      <span className="text-primary text-2xl">
-                        <BookCopy className="md:w-[50px] md:h-[50px] w-[20px] h-[20px]" />
-                      </span>
-                    </div>
-                    <div>
-                      <h2 className="text-sm md:text-2xl font-bold tracking-tight text-on-surface">
-                        {subject.subjects.name}
-                      </h2>
-                      <p className="text-xs md:text-sm text-on-surface-variant max-w-sm opacity-60">
-                        {subject.subjects.description}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-8 w-full md:w-auto">
-                    <div className="w-full md:w-48">
-                      <div className="flex justify-between items-baseline mb-3">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-primary font-mono opacity-70">Study Progress</span>
-                        <span className="text-sm font-bold font-mono">4 <span className="text-on-surface-variant/40 font-normal">/</span> 12</span>
+                  {/* Subject Header - Accordion Toggle */}
+                  <div
+                    onClick={() => toggleSubject(subject.subjects.id)}
+                    className="p-4 md:p-8 bg-surface-container-high/40 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 cursor-pointer group"
+                  >
+                    <div className="flex items-center gap-2 md:gap-4 flex-1">
+                      <div className="md:size-14 size-10 bg-primary/10 rounded-xl md:rounded-2xl flex text-black items-center justify-center transition-transform duration-500 group-hover:scale-110">
+                        <span className="text-primary text-2xl">
+                          <BookCopy className="md:w-[50px] md:h-[50px] w-[20px] h-[20px]" />
+                        </span>
                       </div>
-                      <div className="w-full h-3 bg-surface-container-highest rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-primary-container rounded-full transition-all duration-1000 ease-botanical"
-                          style={{ width: "33%" }}
-                        />
+                      <div>
+                        <h2 className="text-sm md:text-2xl font-bold tracking-tight text-on-surface">
+                          {subject.subjects.name}
+                        </h2>
+                        <p className="text-xs md:text-sm text-on-surface-variant max-w-sm opacity-60">
+                          {subject.subjects.description}
+                        </p>
                       </div>
                     </div>
 
-                    <div className={`p-2 rounded-full bg-surface-container-highest text-on-surface-variant transition-transform duration-500 ${expandedSubjects.has(subject.subjects.id) ? "rotate-180" : ""}`}>
-                      <ChevronDown size={20} />
+                    <div className="flex items-center gap-8 w-full md:w-auto">
+                      <div className="w-full md:w-48">
+                        <div className="flex justify-between items-baseline mb-3">
+                          <span className="text-[10px] font-bold uppercase tracking-widest text-primary font-mono opacity-70">
+                            Study Progress
+                          </span>
+                          <span className="text-sm font-bold font-mono">
+                            4{" "}
+                            <span className="text-on-surface-variant/40 font-normal">
+                              /
+                            </span>{" "}
+                            12
+                          </span>
+                        </div>
+                        <div className="w-full h-3 bg-surface-container-highest rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-primary-container rounded-full transition-all duration-1000 ease-botanical"
+                            style={{ width: "33%" }}
+                          />
+                        </div>
+                      </div>
+
+                      <div
+                        className={`p-2 rounded-full bg-surface-container-highest text-on-surface-variant transition-transform duration-500 ${expandedSubjects.has(subject.subjects.id) ? "rotate-180" : ""}`}
+                      >
+                        <ChevronDown size={20} />
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Collapsible Content */}
-                <div className={`grid transition-all duration-500 ease-botanical ${expandedSubjects.has(subject.subjects.id) ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
-                  <div className="overflow-hidden">
-                    <div className="px-4 py-8 space-y-2 bg-surface/30">
-                      {/* Chapter Items */}
-                      {e_data.map((item, idx) => {
-                        // Technical Verification: ensure chapter subject manifestation
-                        if (!item.subjects || !subject.subjects) return null;
+                  {/* Collapsible Content */}
+                  <div
+                    className={`grid transition-all duration-500 ease-botanical ${expandedSubjects.has(subject.subjects.id) ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="px-4 py-8 space-y-2 bg-surface/30">
+                        {/* Chapter Items */}
+                        {e_data.map((item, idx) => {
+                          // Technical Verification: ensure chapter subject manifestation
+                          if (!item.subjects || !subject.subjects) return null;
 
-                        if (subject.subjects.id === item.subjects.id) {
-                          return (
-                            <div
-                              onClick={() =>
-                                handleButton(item.subjects.id, item.id)
-                              }
-                              key={idx}
-                              className="group flex flex-row p-2 md:p-5 mx-2 rounded-2xl  justify-between items-center cursor-pointer hover:bg-surface-container-high transition-all duration-300 ease-botanical"
-                            >
-                              <div className="flex mb-6 md:mb-0  items-center gap-5">
-                                <div className={`size-2 rounded-full ${attemptedChapters.has(item.id) ? "bg-primary" : "bg-on-surface-variant/20 group-hover:bg-primary/40"}`} />
-                                <div>
-                                  <h4 className="font-bold text-on-surface  text-lg group-hover:text-primary transition-colors">
-                                    {item.name}
-                                  </h4>
-                                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-on-surface-variant/60">
-                                    Completed 2 days ago
-                                  </span>
+                          if (subject.subjects.id === item.subjects.id) {
+                            return (
+                              <div
+                                onClick={() =>
+                                  handleButton(item.subjects.id, item.id)
+                                }
+                                key={idx}
+                                className="group flex flex-row p-2 md:p-5 mx-2 rounded-2xl  justify-between items-center cursor-pointer hover:bg-surface-container-high transition-all duration-300 ease-botanical"
+                              >
+                                <div className="flex mb-6 md:mb-0  items-center gap-5">
+                                  <div
+                                    className={`size-2 rounded-full ${attemptedChapters.has(item.id) ? "bg-primary" : "bg-on-surface-variant/20 group-hover:bg-primary/40"}`}
+                                  />
+                                  <div>
+                                    <h4 className="font-bold text-on-surface  text-lg group-hover:text-primary transition-colors">
+                                      {item.name}
+                                    </h4>
+                                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-on-surface-variant/60">
+                                      Completed 2 days ago
+                                    </span>
+                                  </div>
+                                </div>
+                                <div className="hidden md:block">
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleButton(item.subjects.id, item.id);
+                                    }}
+                                    className={`md:mt-0 px-6 py-2.5 rounded-full text-sm font-black transition-all duration-300 shadow-sm ${
+                                      attemptedChapters.has(item.id)
+                                        ? "bg-surface-container-highest text-on-surface hover:bg-surface-dim"
+                                        : "bg-linear-to-r from-primary to-primary-container text-white hover:scale-105 active:scale-95 shadow-primary/20 hover:shadow-lg"
+                                    }`}
+                                  >
+                                    {attemptedChapters.has(item.id)
+                                      ? "Retake Test"
+                                      : "Take Test"}
+                                  </button>
+                                </div>
+                                <div className="block md:hidden">
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleButton(item.subjects.id, item.id);
+                                    }}
+                                    className={`md:mt-0 p-2 rounded-full text-sm font-black transition-all duration-300 shadow-sm ${
+                                      attemptedChapters.has(item.id)
+                                        ? "bg-surface-container-highest text-on-surface hover:bg-surface-dim"
+                                        : "bg-linear-to-r from-primary to-primary-container text-white hover:scale-105 active:scale-95 shadow-primary/20 hover:shadow-lg"
+                                    }`}
+                                  >
+                                    <ArrowRight />
+                                  </button>
                                 </div>
                               </div>
-                              <div className="hidden md:block">
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleButton(item.subjects.id, item.id);
-                                  }}
-                                  className={`md:mt-0 px-6 py-2.5 rounded-full text-sm font-black transition-all duration-300 shadow-sm ${attemptedChapters.has(item.id)
-                                      ? "bg-surface-container-highest text-on-surface hover:bg-surface-dim"
-                                      : "bg-linear-to-r from-primary to-primary-container text-white hover:scale-105 active:scale-95 shadow-primary/20 hover:shadow-lg"
-                                    }`}
-                                >
-                                  {attemptedChapters.has(item.id) ? "Retake Test" : "Take Test"}
-                                </button>
-                              </div>
-                              <div className="block md:hidden">
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleButton(item.subjects.id, item.id);
-                                  }}
-                                  className={`md:mt-0 p-2 rounded-full text-sm font-black transition-all duration-300 shadow-sm ${attemptedChapters.has(item.id)
-                                      ? "bg-surface-container-highest text-on-surface hover:bg-surface-dim"
-                                      : "bg-linear-to-r from-primary to-primary-container text-white hover:scale-105 active:scale-95 shadow-primary/20 hover:shadow-lg"
-                                    }`}
-                                >
-                                  <ArrowRight />
-                                </button>
-                              </div>
-                            </div>
-                          );
-                        }
-                        return null;
-                      })}
+                            );
+                          }
+                          return null;
+                        })}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </section>
-            );
-        })}
+                </section>
+              );
+          })}
+        </div>
 
         {/* --- ADAPTIVE PREFERENCES MANIFEST (ACTION SHEET) --- */}
         {showPrefs && (
@@ -277,66 +324,90 @@ const Exam = () => {
 
               {/* Modal Header */}
               <div className="p-8 sm:p-10 pb-4 sm:pb-6 bg-surface-container-low/50">
-                <h3 className="text-2xl sm:text-3xl font-black tracking-tighter text-on-surface">Exam Preferences</h3>
-                <p className="text-on-surface-variant text-sm sm:text-base mt-2 opacity-70">Tailor your attempt for this chapter</p>
+                <h3 className="text-2xl sm:text-3xl font-black tracking-tighter text-on-surface">
+                  Exam Preferences
+                </h3>
+                <p className="text-on-surface-variant text-sm sm:text-base mt-2 opacity-70">
+                  Tailor your attempt for this chapter
+                </p>
               </div>
 
               {/* Modal Content - Scrollable for small screens */}
               <div className="p-8 sm:p-10 pt-4 space-y-4 max-h-[70vh] overflow-y-auto custom-scrollbar">
                 {/* 1. Normal Mode */}
                 <div
-                  onClick={() => setPrefs(p => ({ ...p, mode: "normal" }))}
-                  className={`p-5 sm:p-6 rounded-3xl transition-all duration-300 cursor-pointer flex items-center gap-4 sm:gap-5 ${prefs.mode === "normal"
+                  onClick={() => setPrefs((p) => ({ ...p, mode: "normal" }))}
+                  className={`p-5 sm:p-6 rounded-3xl transition-all duration-300 cursor-pointer flex items-center gap-4 sm:gap-5 ${
+                    prefs.mode === "normal"
                       ? "bg-primary/5 ring-2 ring-primary"
                       : "bg-surface-container-low hover:bg-surface-container-high"
-                    } ${showPrefs ? "animate-reveal" : "opacity-0"}`}
-                  style={{ animationDelay: '100ms' }}
+                  } ${showPrefs ? "animate-reveal" : "opacity-0"}`}
+                  style={{ animationDelay: "100ms" }}
                 >
-                  <div className={`p-3 sm:p-4 rounded-2xl ${prefs.mode === "normal" ? "bg-primary text-white" : "bg-surface-container-highest text-on-surface-variant"}`}>
+                  <div
+                    className={`p-3 sm:p-4 rounded-2xl ${prefs.mode === "normal" ? "bg-primary text-white" : "bg-surface-container-highest text-on-surface-variant"}`}
+                  >
                     <Coffee size={24} />
                   </div>
                   <div className="flex-1">
                     <h4 className="font-bold text-base sm:text-lg flex items-center gap-2 text-on-surface">
                       Relaxed Practice
-                      {prefs.mode === "normal" && <CheckCircle2 size={16} className="text-primary" />}
+                      {prefs.mode === "normal" && (
+                        <CheckCircle2 size={16} className="text-primary" />
+                      )}
                     </h4>
-                    <p className="text-xs sm:text-sm text-on-surface-variant opacity-70">No timer, no proctoring. Study at your own pace.</p>
+                    <p className="text-xs sm:text-sm text-on-surface-variant opacity-70">
+                      No timer, no proctoring. Study at your own pace.
+                    </p>
                   </div>
                 </div>
 
                 {/* 2. Speed Drill */}
                 <div
-                  onClick={() => setPrefs(p => ({ ...p, mode: "speed" }))}
-                  className={`p-5 sm:p-6 rounded-3xl transition-all duration-300 cursor-pointer space-y-4 sm:space-y-5 ${prefs.mode === "speed"
+                  onClick={() => setPrefs((p) => ({ ...p, mode: "speed" }))}
+                  className={`p-5 sm:p-6 rounded-3xl transition-all duration-300 cursor-pointer space-y-4 sm:space-y-5 ${
+                    prefs.mode === "speed"
                       ? "bg-tertiary/5 ring-2 ring-tertiary"
                       : "bg-surface-container-low hover:bg-surface-container-high"
-                    } ${showPrefs ? "animate-reveal" : "opacity-0"}`}
-                  style={{ animationDelay: '200ms' }}
+                  } ${showPrefs ? "animate-reveal" : "opacity-0"}`}
+                  style={{ animationDelay: "200ms" }}
                 >
                   <div className="flex items-center gap-4 sm:gap-5">
-                    <div className={`p-3 sm:p-4 rounded-2xl ${prefs.mode === "speed" ? "bg-tertiary text-white" : "bg-surface-container-highest text-on-surface-variant"}`}>
+                    <div
+                      className={`p-3 sm:p-4 rounded-2xl ${prefs.mode === "speed" ? "bg-tertiary text-white" : "bg-surface-container-highest text-on-surface-variant"}`}
+                    >
                       <Zap size={24} />
                     </div>
                     <div className="flex-1">
                       <h4 className="font-bold text-base sm:text-lg flex items-center gap-2 text-tertiary">
                         Speed Drill
-                        {prefs.mode === "speed" && <CheckCircle2 size={16} className="text-tertiary" />}
+                        {prefs.mode === "speed" && (
+                          <CheckCircle2 size={16} className="text-tertiary" />
+                        )}
                       </h4>
-                      <p className="text-xs sm:text-sm text-on-surface-variant opacity-70">Timer enabled, Camera disabled. Perfect for speed.</p>
+                      <p className="text-xs sm:text-sm text-on-surface-variant opacity-70">
+                        Timer enabled, Camera disabled. Perfect for speed.
+                      </p>
                     </div>
                   </div>
 
                   {prefs.mode === "speed" && (
                     <div className="pl-12 sm:pl-16 flex items-center gap-2 sm:gap-3 animate-in fade-in slide-in-from-top-2">
-                      <span className="text-[9px] sm:text-[10px] font-mono font-bold text-on-surface-variant/40 uppercase tracking-widest">Tempo:</span>
-                      {[30, 60, 90].map(t => (
+                      <span className="text-[9px] sm:text-[10px] font-mono font-bold text-on-surface-variant/40 uppercase tracking-widest">
+                        Tempo:
+                      </span>
+                      {[30, 60, 90].map((t) => (
                         <button
                           key={t}
-                          onClick={(e) => { e.stopPropagation(); setPrefs(p => ({ ...p, time: t })); }}
-                          className={`px-4 sm:px-5 py-1.5 sm:py-2 rounded-full text-[10px] sm:text-xs font-mono font-bold transition-all duration-300 ${prefs.time === t
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setPrefs((p) => ({ ...p, time: t }));
+                          }}
+                          className={`px-4 sm:px-5 py-1.5 sm:py-2 rounded-full text-[10px] sm:text-xs font-mono font-bold transition-all duration-300 ${
+                            prefs.time === t
                               ? "bg-tertiary text-white shadow-lg shadow-tertiary/20"
                               : "bg-surface-container-highest text-on-surface-variant hover:bg-surface-dim"
-                            }`}
+                          }`}
                         >
                           {t}m
                         </button>
@@ -389,15 +460,22 @@ const Exam = () => {
       </main>
 
       {/* Footer - Minimal & Technical */}
-      <footer className="mt-20 py-12 px-4 md:px-10 border-t border-on-surface/5 opacity-40">
+      <footer className="hidden mt-20 py-12 px-4 md:px-10 border-t border-on-surface/5 opacity-40">
         <div className="max-w-300 mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-[10px] font-mono font-bold uppercase tracking-[0.2em]">
-            © 2024 ARUMIND <span className="mx-2 text-primary">•</span> AI STUDY SPACE v1.0
+            © 2024 ARUMIND <span className="mx-2 text-primary">•</span> AI STUDY
+            SPACE v1.0
           </div>
           <div className="flex gap-8 text-[10px] font-mono font-bold uppercase tracking-widest">
-            <a href="#" className="hover:text-primary transition-colors">Integrity Policy</a>
-            <a href="#" className="hover:text-primary transition-colors">Privacy</a>
-            <a href="#" className="hover:text-primary transition-colors">Support</a>
+            <a href="#" className="hover:text-primary transition-colors">
+              Integrity Policy
+            </a>
+            <a href="#" className="hover:text-primary transition-colors">
+              Privacy
+            </a>
+            <a href="#" className="hover:text-primary transition-colors">
+              Support
+            </a>
           </div>
         </div>
       </footer>
@@ -407,12 +485,10 @@ const Exam = () => {
 
 export default Exam;
 
-
 const ExamSkeleton = () => {
   return (
     <div className=" font-narrative min-h-screen animate-pulse">
       <main className="max-w-300 mx-auto w-full px-4 py-12 md:px-10">
-
         {/* Header Skeleton */}
         <div className="mb-16 mt-8">
           <div className="h-16 w-96 bg-surface-container-high rounded-2xl mb-6"></div>
@@ -427,7 +503,6 @@ const ExamSkeleton = () => {
           >
             {/* Subject Header */}
             <div className="p-8 bg-surface-container-high/40 flex justify-between items-center">
-
               <div className="flex items-center gap-4">
                 <div className="size-14 bg-surface-container-highest rounded-2xl"></div>
                 <div>

@@ -10,7 +10,7 @@ const AiInsights = ({ aiInsights }: { aiInsights: any[] }) => {
             <div className="size-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
                <Book size={20} />
             </div>
-            <h3 className="text-xl font-black text-on-surface tracking-tight">Technical Insights</h3>
+            <h3 className="text-xl font-black text-on-surface tracking-tight">What to Study Next</h3>
           </div>
           <div className="grid md:grid-rows-3 gap-6 relative z-10">
             {aiInsights.map((insight, index) => (

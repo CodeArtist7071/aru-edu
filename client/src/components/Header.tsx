@@ -24,12 +24,12 @@ export const Header = () => {
             <h2 className="text-md sm:text-2xl font-bold leading-none tracking-tight text-on-surface">
               Arumind
             </h2>
-            <span className="hidden sm:block text-[10px] sm:text-[11px] font-semibold text-on-surface-variant/60 uppercase tracking-widest mt-0.5">Push Beyond Limits</span>
+            <span className="hidden sm:block text-[10px] sm:text-[11px] font-semibold text-on-surface-variant/60 uppercase tracking-widest mt-0.5">Free Exam Prep</span>
           </div>
         </div>
         
         <nav className="hidden lg:flex items-center gap-8 h-full">
-          {["Exams", "Courses", "Test Series", "Current Affairs"].map((item) => (
+          {["Free Tests", "Subjects", "Mock Tests", "Current Affairs"].map((item) => (
             <a
               key={item}
               className="text-on-surface-variant hover:text-primary text-xs font-bold uppercase tracking-widest transition-colors relative group h-full flex items-center leading-none"
@@ -47,7 +47,7 @@ export const Header = () => {
           <Search className="absolute left-4 text-on-surface-variant/40 size-4 group-focus-within:text-primary transition-colors" />
           <input
             className="bg-surface-container-low border border-transparent focus:border-primary/20 rounded-full pl-11 pr-5 py-2 text-xs font-bold uppercase tracking-widest w-48 lg:w-64 transition-all leading-none"
-            placeholder="Search..."
+            placeholder="Search subjects or topics..."
             type="text"
           />
         </div>
