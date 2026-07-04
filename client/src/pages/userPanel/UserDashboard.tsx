@@ -273,7 +273,7 @@ const UserDashboard = () => {
   if (examsLoading) return <DashboardSkeleton />;
 
   return (
-    <div className="relative min-h-screen">
+    <div className="relative overflow-y-auto md:overscroll-y-none min-h-screen">
       <div className="space-y-6 p-2 lg:p-6 animate-reveal">
         <section className="relative px-2">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">

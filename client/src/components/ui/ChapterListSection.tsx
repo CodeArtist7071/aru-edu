@@ -62,7 +62,7 @@ export const ChapterListSection = ({
   const activeExam = targetedExams.find((e) => e.id === activeSubjectId);
 
   return (
-    <section onClick={()=>setToggle(!toggle)} className="block md:hidden bg-surface-container-high/20 rounded-2xl p-4">
+    <section  className="block md:hidden bg-surface-container-high/20 rounded-2xl p-4">
       {/* Section Header */}
       <div className="flex justify-between items-center mb-4 px-4">
         <div className="space-y-1">
