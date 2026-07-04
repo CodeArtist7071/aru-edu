@@ -25,16 +25,16 @@ interface ExamWithSubjects extends examProps {
   subjects: Subject[];
 }
 
-interface SubjectListSectionProps {
+interface ChapterListSectionProps {
   targetedExams: ExamWithSubjects[];
 }
 
-export const SubjectListSection = ({
+export const ChapterListSection = ({
   targetedExams,
-}: SubjectListSectionProps) => {
+}: ChapterListSectionProps) => {
   // If multiple exams, show tabs; if single, hide tabs and use that exam
   const {
-    data: subjectsData,
+    data: subjectData,
     e_data: chaptersData,
     loading: subjectsLoading,
   } = useSelector(
@@ -43,21 +43,23 @@ export const SubjectListSection = ({
   );
   const [toggle, setToggle] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
-  console.log("subjectsData", subjectsData);
+  console.log("subjectData", subjectData);
   const hasMultipleExams = targetedExams.length > 1;
-  console.log("targetedExams", targetedExams);
+  const listofExams = targetedExams.map((exam) => exam.id);
+  console.log("targetedExams", chaptersData);
   // Default to first exam (or only exam)
-  const [activeExamId, setActiveExamId] = useState<string>(
-    targetedExams[0]?.id || "",
+  const [activeSubjectId, setActiveSubjectId] = useState<string>(
+    subjectData[0]?.subject_id || subjectData[0]?.subjects?.id || "",
   );
+  const filteredChaptersData = chaptersData.filter((chapter => chapter.subjects.id === activeSubjectId));
+ console.log(activeSubjectId, "activeSubjectId");
   useEffect(() => {
-    if (activeExamId) {
-      dispatch(fetchExamSubjects(activeExamId));
-    }
-  }, [activeExamId]);
+    dispatch(fetchExamSubjects(listofExams));
+    setActiveSubjectId(subjectData[0]?.subject_id || subjectData[0]?.subjects?.id || "");
+  }, [activeSubjectId]);
 
   // Get currently active exam data
-  const activeExam = targetedExams.find((e) => e.id === activeExamId);
+  const activeExam = targetedExams.find((e) => e.id === activeSubjectId);
 
   return (
     <section className="block md:hidden">
@@ -65,7 +67,7 @@ export const SubjectListSection = ({
       <div className="flex justify-between items-center mb-4 px-4">
         <div className="space-y-1">
           <h3 className="text-md font-technical font-black text-primary">
-            Practice by Subject
+            Practice Chapter Wise
           </h3>
           <p className="text-xs text-on-surface-variant opacity-60 font-medium">
             {hasMultipleExams
@@ -73,39 +75,45 @@ export const SubjectListSection = ({
               : "Master one subject at a time"}
           </p>
         </div>
-        <button className="p-2 border border-primary rounded-full" onClick={() => setToggle(!toggle)}>
-          <ArrowUp size={15} className={`transform transition-transform ${toggle ? "rotate-180" : "rotate-0"}`} />
+        <button
+          className="p-2 border border-primary rounded-full"
+          onClick={() => setToggle(!toggle)}
+        >
+          <ArrowUp
+            size={15}
+            className={`${toggle ? "rotate-180" : "rotate-0"} text-primary transition-transform tracking-normal tracking-duration-300`}
+          />
         </button>
       </div>
-      <div className={`${toggle ? "block" : "hidden"} space-y-2 transform transition-all duration-500`}>
+      <div
+        className={`${toggle ? "block" : "hidden"} space-y-2 transform transition-all duration-500`}
+      >
         {/* EXAM TABS — Only show if multiple exams */}
-        {hasMultipleExams && (
-          <div className="px-4 mb-4">
-            <div
-              className="flex gap-2 overflow-x-auto scrollbar-hide pb-2"
-              style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-            >
-              {targetedExams.map((exam) => (
-                <button
-                  key={exam.id}
-                  onClick={() => setActiveExamId(exam.id)}
-                  className={`shrink-0 px-4 py-2.5 rounded-full text-xs font-technical font-black uppercase tracking-widest transition-all duration-300 ${
-                    activeExamId === exam.id
-                      ? "bg-primary text-white shadow-md"
-                      : "bg-surface-container-high/40 text-on-surface-variant hover:bg-surface-container-high"
-                  }`}
-                >
-                  <div className="flex items-center gap-2">
-                    <GraduationCap className="size-4" />
-                    <span>{exam.name}</span>
-                  </div>
-                </button>
-              ))}
-            </div>
+        <div className="px-4 mb-4">
+          <div
+            className="flex gap-2 overflow-x-auto scrollbar-hide pb-2"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
+            {subjectData.map((subject, index) => (
+              <button
+                key={index}
+                onClick={() => setActiveSubjectId(subject.subjects.id)}
+                className={`shrink-0 px-4 py-2.5 rounded-full text-xs font-technical font-black uppercase tracking-widest transition-all duration-300 ${
+                  activeSubjectId === subject.subjects.id
+                    ? "bg-primary text-white shadow-md"
+                    : "bg-surface-container-high/40 text-on-surface-variant hover:bg-surface-container-high"
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <GraduationCap className="size-4" />
+                  <span>{subject.subjects.name}</span>
+                </div>
+              </button>
+            ))}
           </div>
-        )}
+        </div>
         {/* SINGLE EXAM HEADER — Show when only one exam (no tabs) */}
-        {!hasMultipleExams && activeExam && (
+        {/* {!hasMultipleExams && activeExam && (
           <div className="px-4 mb-3">
             <div className="flex items-center gap-2 text-on-surface-variant">
               <GraduationCap className="size-4 text-primary" />
@@ -117,17 +125,17 @@ export const SubjectListSection = ({
               </span>
             </div>
           </div>
-        )}
-        {/* SUBJECT LIST */}
+        )} */}
+        {/* CHAPTER LIST */}
         <div className="h-50 overflow-auto px-4 space-y-2 scrollbar-thin scrollbar-none! scrollbar-thumb-gray-400 scrollbar-track-transparent">
-          {subjectsData.map((subject, index) => (
+          {filteredChaptersData.map((chapter, index) => (
             <div
               key={index}
               className="bg-surface-container-high/40 rounded-2xl p-3 hover:bg-surface-container-high transition-all duration-300 cursor-pointer group"
-              onClick={() => setActiveExamId(subject.exam_id)}
+              onClick={() => setActiveSubjectId(chapter.id)}
             >
               <div className="flex items-start gap-3">
-                {/* Subject Icon */}
+                {/* Chapter Icon */}
                 {/* <div className="size-10 rounded-xl bg-surface-container-high flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 shadow-sm flex-shrink-0">
                 <BookOpen className="size-5" />
               </div> */}
@@ -136,7 +144,7 @@ export const SubjectListSection = ({
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between mb-1">
                     <h4 className="font-black text-sm text-on-surface tracking-tight">
-                      {subject.subjects.name}
+                      {chapter.name}
                     </h4>
                     <ChevronRight className="size-4 text-on-surface-variant opacity-40 group-hover:text-primary group-hover:translate-x-1 transition-all duration-300" />
                   </div>
@@ -171,7 +179,7 @@ export const SubjectListSection = ({
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  onStartTest(activeExamId, subject.id);
+                  onStartTest(activeSubjectId, subject.id);
                 }}
                 className="text-[10px] font-technical font-black text-primary uppercase tracking-widest hover:underline"
               >
@@ -182,11 +190,11 @@ export const SubjectListSection = ({
           ))}
 
           {/* Empty State */}
-          {(!subjectsData || subjectsData.length === 0) && (
+          {(!subjectData || subjectData.length === 0) && (
             <div className="py-12 text-center bg-surface-container-high/20 rounded-2xl border-2 border-dashed border-on-surface/5">
               <BookOpen className="size-8 text-on-surface-variant opacity-30 mx-auto mb-3" />
               <h4 className="text-sm font-black text-on-surface-variant mb-1">
-                No subjects available
+                No chapters available
               </h4>
               <p className="text-xs text-on-surface-variant opacity-60">
                 Subjects will appear once content is added

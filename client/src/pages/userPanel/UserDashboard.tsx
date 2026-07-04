@@ -28,6 +28,7 @@ import Exam from "../../components/Exam";
 import { ExamSelectorCardMobile } from "../../components/ui/ExamSelectorCardMobile";
 import { SubjectListSection } from "../../components/ui/SubjectListSection";
 import { fetchExamSubjects } from "../../slice/examSubjectSlice";
+import { ChapterListSection } from "../../components/ui/ChapterListSection";
 
 export interface Habit {
   id: string;
@@ -365,8 +366,11 @@ const UserDashboard = () => {
               </div>
             </section> */}
           </div>
-          <div>
+          <div className="block space-y-5 md:hidden">
             <SubjectListSection
+              targetedExams={targetedExams}
+            />
+            <ChapterListSection
               targetedExams={targetedExams}
             />
           </div>
@@ -467,7 +471,7 @@ const UserDashboard = () => {
 
       <button
         onClick={() => setIsDailRoutineOpen(true)}
-        className="fixed bottom-25 lg:bottom-10 right-5 size-16 bg-primary text-white rounded-[2.5rem] shadow-ambient-lg shadow-primary/20 flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-500 z-50 group overflow-hidden"
+        className="hidden fixed bottom-25 lg:bottom-10 right-5 size-16 bg-primary text-white rounded-[2.5rem] shadow-ambient-lg shadow-primary/20 md:flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-500 z-50 group overflow-hidden"
       >
         <div className="absolute inset-0 bg-linear-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
         <CheckSquare className="size-6 transition-transform group-hover:rotate-12" />

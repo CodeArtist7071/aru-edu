@@ -6,7 +6,7 @@ import {
 
 export const fetchExamSubjects = createAsyncThunk(
   "examSubjects/fetchExamSubjects",
-  async (eid: string, thunkAPI) => {
+  async (eid: string | string[], thunkAPI) => {
     try {
       const data = await getExamSubjects(eid);
       const e_data = await getChaptersByExamID(eid);

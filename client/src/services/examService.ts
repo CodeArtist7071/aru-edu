@@ -34,7 +34,7 @@ export const getExamSubjects = async (exam_id: string) => {
 };
 
 // Function to fetch chapters for a given exam_id
-export const getChaptersByExamID = async (examId: string) => {
+export const getChaptersByExamID = async (examId: string|string[]) => {
   const { data, error } = await supabase
     .from("chapters")
     .select(
