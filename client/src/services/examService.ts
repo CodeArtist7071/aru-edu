@@ -17,7 +17,7 @@ export const getExamsById = async (exam_id: string[]) => {
   return data;
 };
 
-export const getExamSubjects = async (exam_id: string) => {
+export const getExamSubjects = async (exam_id: string | string[]) => {
   const { data, error } = await supabase
     .from("exam_subjects")
     .select(
