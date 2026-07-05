@@ -491,7 +491,7 @@ export default function UserPanelLayout() {
         <div
           ref={scrollRef}
           key={location.pathname}
-          className="flex-1 bg-surface-container-low h-full custom-scrollbar p-0 lg:px-10"
+          className="flex-1 bg-surface-container-low overflow-y-auto h-full custom-scrollbar p-0 lg:px-10"
         >
           <Outlet />
         </div>
