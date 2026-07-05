@@ -121,9 +121,9 @@ export default function ExamGoalSelection() {
         </div>
 
         {/* CUSTOM TICKER UI FOREST: Pill Manifestation */}
-        <div className="flex flex-wrap h-120 py-4 overflow-y-auto gap-3 lg:gap-4">
+        <div className="flex flex-wrap h-120 py-4 gap-3 lg:gap-4">
           {filteredExams.length === 0 && examData.length > 0 && (
-            <div className="w-full py-16 lg:py-20 text-center bg-surface-container-low/50 rounded-4xl border-2 border-dashed border-primary/10 animate-reveal">
+            <div className="w-full h-50 py-16 lg:py-20 text-center bg-surface-container-low/50 rounded-4xl border-2 border-dashed border-primary/10 animate-reveal">
               <Sparkles className="size-10 lg:size-12 mx-auto text-primary/20 mb-4" />
               <p className="text-on-surface-variant font-narrative italic text-lg lg:text-xl px-4 leading-relaxed opacity-60">No exams found matching your search.</p>
             </div>
@@ -172,7 +172,7 @@ export default function ExamGoalSelection() {
           <div className="max-w-300 mx-auto flex justify-end">
             <button
               onClick={handleSaveExams}
-              className={`pointer-events-auto bg-linear-to-r from-primary to-primary-container text-white h-15 lg:h-22 px-10 lg:px-16 rounded-full font-technical font-black text-[11px] lg:text-sm uppercase tracking-[0.4em] lg:tracking-[0.5em] flex items-center gap-4 lg:gap-6 transition-all duration-700 hov-bloom shadow-ambient-lg ${
+              className={`pointer-events-auto w-full bg-linear-to-r from-primary to-primary-container text-white h-15 lg:h-22 px-10 lg:px-16 rounded-full font-technical font-black text-[11px] lg:text-sm uppercase tracking-[0.4em] lg:tracking-[0.5em] flex justify-center items-center gap-4 lg:gap-6 transition-all duration-700 hov-bloom shadow-ambient-lg ${
                 selected.length > 0
                   ? "bg-linear-to-r from-primary to-primary-container scale-105 shadow-primary/30 active:scale-95"
                   : "bg-surface-container-highest cursor-not-allowed opacity-100 border border-black/5"
